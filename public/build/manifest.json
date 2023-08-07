@@ -1,12 +1,17 @@
 {
-  "resources/js/app.js": {
-    "file": "assets/app-55f3e732.js",
+  "resources/js/landing-page/main.js": {
+    "file": "assets/main-f2976fee.js",
     "isEntry": true,
-    "src": "resources/js/app.js"
+    "src": "resources/js/landing-page/main.js"
   },
-  "resources/sass/app.scss": {
-    "file": "assets/app-67dcdfd2.css",
+  "resources/js/landing-page/plugins.js": {
+    "file": "assets/plugins-7e69e0f5.js",
     "isEntry": true,
-    "src": "resources/sass/app.scss"
+    "src": "resources/js/landing-page/plugins.js"
+  },
+  "resources/sass/landing-page/style.scss": {
+    "file": "assets/style-6e8d26a8.css",
+    "isEntry": true,
+    "src": "resources/sass/landing-page/style.scss"
   }
 }
