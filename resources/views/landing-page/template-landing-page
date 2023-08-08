@@ -30,8 +30,6 @@
 @endsection
 
 @section('css')
-    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="/lib/animate.css/animate.css" rel="stylesheet">
     <link href="/lib/et-line-font/et-line-font.css" rel="stylesheet">
     <link href="/lib/flexslider/flexslider.css" rel="stylesheet">
@@ -42,7 +40,6 @@
 @endsection
 
 @section('js')
-    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
     <script src="/lib/isotope/dist/isotope.pkgd.js"></script>
     <script src="/lib/imagesloaded/imagesloaded.pkgd.js"></script>

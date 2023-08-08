@@ -29,6 +29,7 @@
 
     <!-- ==== Stylesheets ==== -->
     <!-- Default stylesheets-->
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template specific stylesheets-->
     @yield('css')
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
@@ -70,6 +71,7 @@
     </main>
     <!-- ==== JavaScripts ==== -->
     <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/lib/wow/dist/wow.js"></script>
     <script src="/lib/smoothscroll.js"></script>
     @yield('js')
