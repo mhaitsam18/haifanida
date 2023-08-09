@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catatan;
 use App\Models\Paket;
 use Illuminate\Http\Request;
 
 class PaketController extends Controller
 {
-    public function index(Request $request) {
-        // dd(Paket::all());
-
+    public function index() {
         return view('landing-page.daftar-paket', [
             'paket' => Paket::all(),
         ]);
     }
 
     public function show(Paket $paket) {
-        dd($paket);
         return view('landing-page.paket', [
             'paket' => $paket,
         ]);

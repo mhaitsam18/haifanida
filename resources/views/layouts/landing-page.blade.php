@@ -51,6 +51,7 @@
         @include('partials.landing-page.nav')
 
         <div class="main">
+            @hasSection ('banner')
             <section class="module bg-dark-60" data-background="@yield('banner')">
                 <div class="container">
                     <div class="row">
@@ -61,6 +62,7 @@
                     </div>
                 </div>
             </section>
+            @endif
 
             @yield('content')
 

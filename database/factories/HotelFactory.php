@@ -19,7 +19,7 @@ class HotelFactory extends Factory
         return [
             'nama' => fake()->company(),
             'alamat' => fake()->address(),
-            'bintang' => fake()->randomElement([1, 2, 3, 4, 5]),
+            'bintang' => fake()->randomElement([3, 4, 5]),
         ];
     }
 }
