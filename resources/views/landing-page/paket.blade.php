@@ -41,6 +41,7 @@
                         <div class="description">
                             <p class="mb-0">Hotel Mekah: {{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
                             <p>Hotel Madinah: {{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
+                            <p>Maskapai: {{ $paket->maskapai->nama }}</p>
                             <p class="font-alt mb-0"><strong>{{ $paket->keberangkatan }}</strong></p>
                         </div>
                     </div>
