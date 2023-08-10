@@ -10,6 +10,42 @@
                 <h4 class="font-alt">Detail Paket</h4>
                 <hr class="divider-w mb-10">
 
+                <div>
+                    @isset($paket->image)
+                        <img src="" alt="">
+                    @endisset
+                </div>
+
+                <div class="mb-1">
+                    {{-- <h5>{{ $paket->nama }}</h5>
+                    <strong class="mb-1">{{ rupiah($paket->harga) }}</strong>
+                    <p class="mb-0">Hotel Mekah: {{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
+                    <p class="mb-0">Hotel Madinah: {{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
+                    <p>Maskapai: {{ $paket->maskapai->nama }}</p>
+                    <p class="font-alt mb-0"><strong>{{ $paket->keberangkatan }}</strong></p> --}}
+
+                    <p class="mb-0"><strong>Nama Paket</strong></p>
+                    <p>{{ $paket->nama }}</p>
+
+                    <p class="mb-0"><strong>Harga</strong></p>
+                    <p>{{ rupiah($paket->harga) }}</p>
+
+                    <p class="mb-0"><strong>Tanggal Keberangkatan</strong></p>
+                    <p>{{ $paket->keberangkatan }}</p>
+
+                    <p class="mb-0"><strong>Hotel Mekah</strong></p>
+                    <p>{{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
+
+                    <p class="mb-0"><strong>Nama Madinah</strong></p>
+                    <p>{{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
+
+                    <p class="mb-0"><strong>Maskapai</strong></p>
+                    <p>{{ $paket->maskapai->nama }}</p>
+                </div>
+
+                <div>
+                    <p>{{ $paket->keterangan }}</p>
+                </div>
             </div>
             <div class="col-sm-5">
                 <h4 class="font-alt">Form Pemesanan</h4>
@@ -18,15 +54,15 @@
                     <div class="form-group">
                         <span>Jenis Kamar</span>
                         <div>
-                            <input type="radio" name="jenis-kamar" value="single" id="single" class="mb-1">
+                            <input type="radio" name="jenis-kamar" value="single" id="single" class="mb-1" required>
                             <label for="single">Single</label>
                         </div>
                         <div>
-                            <input type="radio" name="jenis-kamar" value="couple" id="couple" class="mb-1">
+                            <input type="radio" name="jenis-kamar" value="couple" id="couple" class="mb-1" required>
                             <label for="couple">Couple</label>
                         </div>
                         <div>
-                            <input type="radio" name="jenis-kamar" value="quad" id="quad" class="mb-1">
+                            <input type="radio" name="jenis-kamar" value="quad" id="quad" class="mb-1" required>
                             <label for="quad">Quad</label>
                         </div>
                     </div>
