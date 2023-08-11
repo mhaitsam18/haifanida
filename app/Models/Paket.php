@@ -38,7 +38,7 @@ class Paket extends Model
 
     protected function keberangkatan(): Attribute {
         return Attribute::make(
-            get: fn (string $value) => Carbon::parse($value)->format('d F Y')
+            get: fn (string $value) => Carbon::parse($value)->locale('id')->format('d F Y')
         );
     }
 }
