@@ -51,7 +51,7 @@
                     </div>
                     <div class="post-header" style="font-size: 1.4rem">
                         <h2 class="post-title" style="font-size: 1.6rem"><a href="{{ route('paket', ['paket' => $p]) }}">{{ $p->nama }}</a></h2>
-                        <div class="text-capitalize"><strong>{{ rupiah($p->harga) }} | {{ $p->keberangkatan }}</strong></div>
+                        <div class="text-capitalize"><strong>{{ rupiah($p->harga_single) }} | {{ $p->keberangkatan }}</strong></div>
                         <div class="text-capitalize"> Hotel Mekah: {{ $p->hotelMekah->nama }}</div>
                         <div class="text-capitalize"> Hotel Madinah: {{ $p->hotelMadinah->nama }}</div>
                     </div>

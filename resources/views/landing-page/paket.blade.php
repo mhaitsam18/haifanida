@@ -35,7 +35,7 @@
                     <div class="col-sm-12">
                         <div class="price">
                             <p class="mb-0">Harga mulai dari</p>
-                            <p class="mb-0" style="font-size: 2rem">{{ rupiah($paket->harga) }}</p>
+                            <p class="mb-0" style="font-size: 2rem">{{ rupiah($paket->harga_single) }}</p>
                         </div>
                     </div>
                 </div>

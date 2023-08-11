@@ -20,9 +20,6 @@
                     <p class="mb-0"><strong>Nama Paket</strong></p>
                     <p>{{ $paket->nama }}</p>
 
-                    <p class="mb-0"><strong>Harga</strong></p>
-                    <p>{{ rupiah($paket->harga) }}</p>
-
                     <p class="mb-0"><strong>Lama Program</strong></p>
                     <p>{{ $paket->jumlah_hari }} Hari</p>
 
@@ -53,15 +50,15 @@
                         <span>Jenis Kamar</span>
                         <div>
                             <input type="radio" name="jenis-kamar" value="single" id="single" class="mb-1" required>
-                            <label for="single">Single</label>
+                            <label for="single">Single ({{ rupiah($paket->harga_single) }} per pax)</label>
                         </div>
                         <div>
                             <input type="radio" name="jenis-kamar" value="couple" id="couple" class="mb-1" required>
-                            <label for="couple">Couple</label>
+                            <label for="couple">Couple ({{ rupiah($paket->harga_couple) }} per pax)</label>
                         </div>
                         <div>
                             <input type="radio" name="jenis-kamar" value="quad" id="quad" class="mb-1" required>
-                            <label for="quad">Quad</label>
+                            <label for="quad">Quad ({{ rupiah($paket->harga_quad) }} per pax)</label>
                         </div>
                     </div>
                     <div id="data-jemaah-wrapper">

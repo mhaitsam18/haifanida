@@ -18,13 +18,19 @@ class PaketFactory extends Factory
      */
     public function definition(): array
     {
+        $hargaSingle = fake()->numerify('##000000');
+        $hargaCouple = $hargaSingle + fake()->numerify('#000000');
+        $hargaQuad = $hargaCouple + fake()->numerify('#000000');
+
         return [
             'hotel_madinah_id' => Hotel::factory(),
             'hotel_mekah_id' => Hotel::factory(),
             'maskapai_id' => Maskapai::factory(),
             'nama' => 'Paket '.fake()->numerify(),
             'jenis' => fake()->randomElement(['umrah', 'haji']),
-            'harga' => fake()->numerify('##000000'),
+            'harga_single' => $hargaSingle,
+            'harga_couple' => $hargaCouple,
+            'harga_quad' => $hargaQuad,
             'keberangkatan' => fake()->dateTimeBetween('+3 months', '+2 years'),
             'jumlah_hari' => fake()->randomElement([9, 11]),
             'stok' => fake()->randomNumber(2)
