@@ -22,7 +22,6 @@ class PesananFactory extends Factory
             'pelanggan_id' => Pelanggan::factory(),
             'paket_id' => Paket::factory(),
             'jumlah' => fake()->randomElement([1, 2, 3, 4]),
-            'no_kamar' => fake()->bothify('#??'),
             'tanggal' => fake()->dateTimeBetween('now', '+1 year'),
         ];
     }

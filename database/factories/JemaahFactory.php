@@ -21,6 +21,8 @@ class JemaahFactory extends Factory
             'pesanan_id' => Pesanan::factory(),
             'nama' => fake()->name(),
             'jenis_kelamin' => fake()->randomElement(['laki-laki', 'perempuan']),
+            'no_kamar' => fake()->bothify('#?'),
+            'no_seat' => fake()->bothify('#?'),
         ];
     }
 }
