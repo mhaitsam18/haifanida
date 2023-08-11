@@ -23,6 +23,9 @@
                     <p class="mb-0"><strong>Harga</strong></p>
                     <p>{{ rupiah($paket->harga) }}</p>
 
+                    <p class="mb-0"><strong>Lama Program</strong></p>
+                    <p>{{ $paket->jumlah_hari }} Hari</p>
+
                     <p class="mb-0"><strong>Tanggal Keberangkatan</strong></p>
                     <p>{{ $paket->keberangkatan }}</p>
 

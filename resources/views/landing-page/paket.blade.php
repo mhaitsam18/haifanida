@@ -33,7 +33,10 @@
                 </div> --}}
                 <div class="row mb-20">
                     <div class="col-sm-12">
-                        <div class="price font-alt"><span class="amount">{{ rupiah($paket->harga) }}</span></div>
+                        <div class="price">
+                            <p class="mb-0">Harga mulai dari</p>
+                            <p class="mb-0" style="font-size: 2rem">{{ rupiah($paket->harga) }}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -42,7 +45,7 @@
                             <p class="mb-0">Hotel Mekah: {{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
                             <p>Hotel Madinah: {{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
                             <p>Maskapai: {{ $paket->maskapai->nama }}</p>
-                            <p class="font-alt mb-0"><strong>{{ $paket->keberangkatan }}</strong></p>
+                            <p class="font-alt mb-0"><strong>{{ $paket->keberangkatan }} | Program {{ $paket->jumlah_hari }} Hari</strong></p>
                         </div>
                     </div>
                 </div>
