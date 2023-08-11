@@ -6,6 +6,7 @@ use App\Models\Jemaah;
 use App\Models\Paket;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PelangganPaketController extends Controller
 {
@@ -31,6 +32,8 @@ class PelangganPaketController extends Controller
                 'jenis-kelamin' => $request->input('jenis-kelamin')[$i],
             ]);
         }
+
+        DB::table('paket')->decreament('stok');
 
         return 'berhasil';
         // return redirect('pelanggan.pesanan');
