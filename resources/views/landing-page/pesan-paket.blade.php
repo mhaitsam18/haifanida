@@ -17,13 +17,6 @@
                 </div>
 
                 <div class="mb-1">
-                    {{-- <h5>{{ $paket->nama }}</h5>
-                    <strong class="mb-1">{{ rupiah($paket->harga) }}</strong>
-                    <p class="mb-0">Hotel Mekah: {{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
-                    <p class="mb-0">Hotel Madinah: {{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
-                    <p>Maskapai: {{ $paket->maskapai->nama }}</p>
-                    <p class="font-alt mb-0"><strong>{{ $paket->keberangkatan }}</strong></p> --}}
-
                     <p class="mb-0"><strong>Nama Paket</strong></p>
                     <p>{{ $paket->nama }}</p>
 
@@ -36,7 +29,7 @@
                     <p class="mb-0"><strong>Hotel Mekah</strong></p>
                     <p>{{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
 
-                    <p class="mb-0"><strong>Nama Madinah</strong></p>
+                    <p class="mb-0"><strong>Hotel Madinah</strong></p>
                     <p>{{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
 
                     <p class="mb-0"><strong>Maskapai</strong></p>
@@ -50,7 +43,9 @@
             <div class="col-sm-5">
                 <h4 class="font-alt">Form Pemesanan</h4>
                 <hr class="divider-w mb-10">
-                <form class="form">
+                <form action="{{ route('pelanggan.paket.store') }}" method="POST" class="form">
+                    @csrf
+                    <input type="hidden" name="paket" value="{{ $paket->id }}">
                     <div class="form-group">
                         <span>Jenis Kamar</span>
                         <div>
@@ -94,14 +89,7 @@
 @endsection
 
 @section('css')
-{{--
-<link href="/lib/animate.css/animate.css" rel="stylesheet">
-<link href="/lib/et-line-font/et-line-font.css" rel="stylesheet">
-<link href="/lib/flexslider/flexslider.css" rel="stylesheet">
-<link href="/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-<link href="/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-<link href="/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-<link href="/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet"> --}}
+
 @endsection
 
 @section('js')
@@ -116,6 +104,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <select class="form-control" name="jenis-kelamin[]">
+                                    <option value="">Jenis kelamin</option>
                                     <option value="laki-laki">Laki-laki</option>
                                     <option value="perempuan">Perempuan</option>
                                 </select>
@@ -151,12 +140,4 @@
         });
 
     </script>
-
-{{-- <script src="/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
-<script src="/lib/isotope/dist/isotope.pkgd.js"></script>
-<script src="/lib/imagesloaded/imagesloaded.pkgd.js"></script>
-<script src="/lib/flexslider/jquery.flexslider.js"></script>
-<script src="/lib/owl.carousel/dist/owl.carousel.min.js"></script>
-<script src="/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
-<script src="/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script> --}}
 @endsection

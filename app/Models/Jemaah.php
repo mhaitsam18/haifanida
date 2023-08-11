@@ -11,7 +11,7 @@ class Jemaah extends Model
     use HasFactory;
 
     protected $table = 'jemaah';
-    protected $guard = ['id'];
+    protected $guarded = ['id'];
 
     public function pesanan(): BelongsTo {
         return $this->belongsTo(Pesanan::class);

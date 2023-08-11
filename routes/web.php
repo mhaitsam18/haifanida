@@ -28,11 +28,10 @@ Route::get('/paket/{paket}', [PaketController::class, 'show'])->name('paket');
 
 Auth::routes();
 
-Route::get('pesan/{paket}', [PelangganPaketController::class, 'create'])->name('pelanggan.paket');
 
 Route::middleware('auth')->group(function() {
     Route::middleware('pelanggan')->group(function() {
-        // Route::get('pesan/{paket}', [PelangganPaketController::class, 'create'])->name('pelanggan.paket');
+        Route::get('pesan/{paket}', [PelangganPaketController::class, 'create'])->name('pelanggan.paket');
         Route::post('pesan', [PelangganPaketController::class, 'store'])->name('pelanggan.paket.store');
     });
 });
