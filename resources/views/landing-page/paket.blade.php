@@ -209,7 +209,8 @@
             window.onload = () => {
                 Swal.fire({
                     icon: 'success',
-                    text: '{{ session('alert') }}',
+                    title: '{{ session('alert') }}',
+                    text: 'Selanjutnya Anda akan diundang ke grup WhatsApp dan melakukan penyelesaian registrasi seperti dokumen yang dibutuhkan dll.',
                 });
             }
         </script>

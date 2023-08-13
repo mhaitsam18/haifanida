@@ -49,15 +49,15 @@
                     <div class="form-group">
                         <span>Jenis Kamar</span>
                         <div>
-                            <input type="radio" name="jenis-kamar" value="single" id="single" class="mb-1" required>
+                            <input type="radio" name="jenis-kamar" value="single" id="single" class="mb-1" data-harga="{{ $paket->harga_single }}" required checked>
                             <label for="single">Single ({{ rupiah($paket->harga_single) }} per pax)</label>
                         </div>
                         <div>
-                            <input type="radio" name="jenis-kamar" value="couple" id="couple" class="mb-1" required>
+                            <input type="radio" name="jenis-kamar" value="couple" id="couple" class="mb-1" data-harga="{{ $paket->harga_couple }}" required>
                             <label for="couple">Couple ({{ rupiah($paket->harga_couple) }} per pax)</label>
                         </div>
                         <div>
-                            <input type="radio" name="jenis-kamar" value="quad" id="quad" class="mb-1" required>
+                            <input type="radio" name="jenis-kamar" value="quad" id="quad" class="mb-1" data-harga="{{ $paket->harga_quad }}" required>
                             <label for="quad">Quad ({{ rupiah($paket->harga_quad) }} per pax)</label>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                 <strong>Jemaah 1</strong>
                             </div>
                             <div class="col-sm-8">
-                                <input class="form-control" type="text" name="jemaah[]" placeholder="Nama jemaah"/>
+                                <input class="form-control jemaah" type="text" name="jemaah[]" placeholder="Nama jemaah"/>
                             </div>
                             <div class="col-sm-4">
                                 <select class="form-control" name="jenis-kelamin[]">
@@ -80,6 +80,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-block btn-round btn-b">Pesan</button>
+                        <p><strong>Total: Rp<span id="total"></span>,00</strong></p>
                     </div>
                 </form>
             </div>
@@ -94,13 +95,41 @@
 
 @section('js')
     <script>
+        const hitungTotal = () => {
+            const jemaah = document.getElementsByClassName('jemaah');
+            const harga  = document.querySelector('input[type="radio"]:checked').dataset.harga;
+            let total  = 0;
+
+            for (let i of jemaah) {
+                if (i.value != '') {
+                    total += parseInt(harga);
+                }
+            }
+
+            document.querySelector('#total').innerText = total;
+        }
+
+        const bindEvent = () => {
+            const jemaah = document.getElementsByClassName('jemaah');
+            for (let i of jemaah) {
+                i.addEventListener('input',(event)  => {
+                    hitungTotal();
+                });
+            }
+        }
+
+        window.onload = (event) => {
+            hitungTotal();
+            bindEvent();
+        }
+
         const input = (i) => {
             return `<div class="form-group row">
                             <div class="col-sm-12">
                                 <strong>Jemaah ${i}</strong>
                             </div>
                             <div class="col-sm-8">
-                                <input class="form-control" type="text" name="jemaah[]" placeholder="Nama jemaah"/>
+                                <input class="form-control jemaah" type="text" name="jemaah[]" placeholder="Nama jemaah"/>
                             </div>
                             <div class="col-sm-4">
                                 <select class="form-control" name="jenis-kelamin[]">
@@ -129,15 +158,23 @@
 
         singleInput.addEventListener('change', (event) => {
             generateInput(1);
+            bindEvent();
+            hitungTotal();
         });
 
         coupleInput.addEventListener('change', (event) => {
             generateInput(2);
+            bindEvent();
+            hitungTotal();
         });
 
         quadInput.addEventListener('change', (event) => {
             generateInput(4);
+            bindEvent();
+            hitungTotal();
         });
+
+
 
     </script>
 @endsection
