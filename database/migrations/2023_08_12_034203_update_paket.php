@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('harga_couple')
                 ->after('harga_single');
             $table->integer('harga_quad')
-                ->after('harga_quad');
+                ->after('harga_couple');
         });
     }
 
