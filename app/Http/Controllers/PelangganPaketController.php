@@ -34,7 +34,7 @@ class PelangganPaketController extends Controller
             ]);
         }
 
-        DB::table('paket')->decrement('stok', $jumlahJemaah);
+        DB::table('paket')->where('id', $request->paket)->decrement('stok', $jumlahJemaah);
 
         $request->session()->flash('alert', 'Pesanan berhasil dibuat');
         return redirect()->route('paket', ['paket' => $request->paket]);
