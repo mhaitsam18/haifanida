@@ -47,7 +47,7 @@
             @foreach ($paket as $p)
             <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="post">
-                    <div class="post-thumbnail"><a href="{{ route('paket', ['paket' => $p]) }}"><img src="/img/post-4.jpg" alt="Thumbnail Paket" /></a>
+                    <div class="post-thumbnail"><a href="{{ route('paket', ['paket' => $p]) }}"><img src="{{ asset('img/paket/'.$p->image) }}" alt="Thumbnail Paket" style="aspect-ratio: 40/23; object-fit: cover;"/></a>
                     </div>
                     <div class="post-header" style="font-size: 1.4rem">
                         <h2 class="post-title" style="font-size: 1.6rem"><a href="{{ route('paket', ['paket' => $p]) }}">{{ $p->nama }}</a></h2>

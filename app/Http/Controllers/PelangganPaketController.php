@@ -19,13 +19,14 @@ class PelangganPaketController extends Controller
     public function store(Request $request) {
         // dd($request->input());
 
+        $jumlahJemaah = count($request->input('jemaah'));
         $pesanan = Pesanan::create([
             'pelanggan_id' => auth()->user()->id,
             'paket_id' => $request->paket,
-            'jumlah' => 1,
+            'jumlah' => $jumlahJemaah,
         ]);
 
-        for ($i=0; $i < count($request->input('jemaah')); $i++) {
+        for ($i=0; $i < $jumlahJemaah; $i++) {
             Jemaah::create([
                 'pesanan_id' => $pesanan->id,
                 'nama' => $request->input('jemaah')[$i],
@@ -33,7 +34,7 @@ class PelangganPaketController extends Controller
             ]);
         }
 
-        DB::table('paket')->decrement('stok', count($request->input('jemaah')));
+        DB::table('paket')->decrement('stok', $jumlahJemaah);
 
         $request->session()->flash('alert', 'Pesanan berhasil dibuat');
         return redirect()->route('paket', ['paket' => $request->paket]);

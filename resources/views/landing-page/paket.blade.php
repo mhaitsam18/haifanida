@@ -8,16 +8,8 @@
 <section class="module">
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 mb-sm-40"><a class="gallery" href="assets/images/shop/product-7.jpg"><img
-                        src="assets/images/shop/product-7.jpg" alt="Single Product Image" /></a>
-                <ul class="product-gallery">
-                    <li><a class="gallery" href="assets/images/shop/product-8.jpg"></a><img
-                            src="assets/images/shop/product-8.jpg" alt="Single Product" /></li>
-                    <li><a class="gallery" href="assets/images/shop/product-9.jpg"></a><img
-                            src="assets/images/shop/product-9.jpg" alt="Single Product" /></li>
-                    <li><a class="gallery" href="assets/images/shop/product-10.jpg"></a><img
-                            src="assets/images/shop/product-10.jpg" alt="Single Product" /></li>
-                </ul>
+            <div class="col-sm-6 mb-sm-40"><a class="gallery" href="{{ asset('img/paket/'.$paket->image) }}"><img
+                        src="{{ asset('img/paket/'.$paket->image) }}" alt="Single Product Image" /></a>
             </div>
             <div class="col-sm-6">
                 <div class="row">
