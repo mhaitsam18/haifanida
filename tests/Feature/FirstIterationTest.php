@@ -108,7 +108,7 @@ class FirstIterationTest extends TestCase
         $this->assertContains('Jemaah Test 1', $dataBaru);
     }
 
-        public function test_menerima_request_input() : void {
+    public function test_menerima_request_input() : void {
         $pelanggan = User::where('role', 'pelanggan')->first();
 
         $request = $this->actingAs($pelanggan)

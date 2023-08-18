@@ -67,8 +67,8 @@
                 <ul class="nav nav-tabs font-alt" role="tablist">
                     <li class="active"><a href="#include" data-toggle="tab"><span class="fa fa-plus"
                                 style="margin-right: 0.5rem"></span><i title="Termasuk" lang="en">Include</i></a></li>
-                    {{-- <li><a href="#syarat" data-toggle="tab"><span class="fa fa-file-text"
-                                style="margin-right: 0.5rem"></span>Syarat</a></li> --}}
+                    <li><a href="#syarat" data-toggle="tab"><span class="fa fa-file-text"
+                                style="margin-right: 0.5rem"></span>Syarat</a></li>
                     {{-- <li><a href="#testimoni" data-toggle="tab"><span class="fa fa-comments"
                                 style="margin-right: 0.5rem"></span>Testimoni</a></li> --}}
                 </ul>
@@ -96,9 +96,28 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="tab-pane" id="syarat">
-
-                    </div> --}}
+                    <div class="tab-pane" id="syarat">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <strong>Ketentuan pemesanan paket:</strong>
+                                <ul>
+                                    <li>Melakukan booking seat Rp10.0000.0000,-</li>
+                                    <li>Melunasi pembayaran paket paling lambat <strong>30 hari</strong> sebelum tanggal keberangkatan</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-5">
+                                <strong>Dokumen yang akan diperlukan:</strong>
+                                <ul>
+                                    <li>KTP</li>
+                                    <li>KK</li>
+                                    <li>Buku Nikah (jika ada)</li>
+                                    <li>Paspor <sup>*</sup></li>
+                                    <li>Foto terbaru ukuran 4&times;6, 5 lembar, zoom wajah</li>
+                                </ul>
+                                <small>*&#41; Bisa sekalian pesan layanan pembuatan paspor</small>
+                            </div>
+                        </div>
+                    </div>
                     {{-- <div class="tab-pane" id="testimoni">
                         <div class="comments reviews">
                             <div class="comment clearfix">
