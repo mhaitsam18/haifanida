@@ -1,16 +1,6 @@
 {
-  "resources/js/landing-page/main.js": {
-    "file": "assets/main-f2976fee.js",
-    "isEntry": true,
-    "src": "resources/js/landing-page/main.js"
-  },
-  "resources/js/landing-page/plugins.js": {
-    "file": "assets/plugins-7e69e0f5.js",
-    "isEntry": true,
-    "src": "resources/js/landing-page/plugins.js"
-  },
   "resources/sass/landing-page/style.scss": {
-    "file": "assets/style-6e8d26a8.css",
+    "file": "assets/style-be159e82.css",
     "isEntry": true,
     "src": "resources/sass/landing-page/style.scss"
   }
