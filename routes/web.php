@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PelangganPaketController;
+use App\Http\Controllers\PelangganPesananController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,13 @@ Route::middleware('auth')->group(function() {
     Route::middleware('pelanggan')->group(function() {
         Route::get('pesan/{paket}', [PelangganPaketController::class, 'create'])->name('pelanggan.paket');
         Route::post('pesan', [PelangganPaketController::class, 'store'])->name('pelanggan.paket.store');
+
+        Route::prefix('pelanggan')->group(function() {
+            Route::get('/', [PelangganController::class, 'index'])->name('dashboard.pelanggan');
+
+            Route::get('/pesanan', [PelangganPesananController::class, 'index'])->name('dashboard.pelanggan');
+            Route::get('/pesanan/{pesanan}', [PelangganPesananController::class, 'show'])->name('dashboard.pelanggan');
+        });
     });
 });
 
