@@ -54,4 +54,19 @@ class SecondIterationTest extends TestCase
 
     }
 
+    public function test_routing_kontak_berhasil() : void {
+
+    }
+
+    public function test_respon_mengembalikan_halaman_kontak() : void {
+
+    }
+
+    public function test_menampilkan_data_kontak_di_halaman_kontak() : void {
+
+    }
+
+    public function test_menampilkan_data_kontak_di_footer() : void {
+
+    }
 }

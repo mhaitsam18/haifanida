@@ -27,6 +27,7 @@ use App\Http\Controllers\PelangganPesananController;
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/paket', [PaketController::class, 'index'])->name('daftar-paket');
 Route::get('/paket/{paket}', [PaketController::class, 'show'])->name('paket');
+Route::get('/kontak', [HomeController::class, 'kontak'])->name('kontak');
 
 Auth::routes();
 
