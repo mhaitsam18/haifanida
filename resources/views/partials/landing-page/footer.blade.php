@@ -32,7 +32,7 @@
                     <h5 class="widget-title font-alt">Kontak Kami</h5>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-phone ml-2"></i> 0812-2074-7000</li>
-                        <li><i class="fa fa-envelope ml-2"></i> admin@haifanida.com</li>
+                        <li><i class="fa fa-envelope ml-2"></i> haifanidawisata12@gmail.com</li>
                         <li><i class="fa fa-facebook ml-2"></i> haifanidaofficial </li>
                         <li><i class="fa fa-globe ml-2"></i> haifanida.com </li>
                     </ul>
