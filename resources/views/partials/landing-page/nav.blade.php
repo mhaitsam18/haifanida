@@ -8,10 +8,10 @@
         </div>
         <div class="collapse navbar-collapse" id="custom-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a href="#" data-toggle="dropdown">Beranda</a></li>
-                <li class="dropdown"><a href="#" data-toggle="dropdown">Daftar Paket</a></li>
-                <li class="dropdown"><a href="#" data-toggle="dropdown">Kontak</a></li>
-                <li class="dropdown"><a href="#" data-toggle="dropdown">Registrasi</a></li>
+                <li><a href="{{ route('beranda') }}">Beranda</a></li>
+                <li><a href="{{ route('daftar-paket') }}">Daftar Paket</a></li>
+                <li><a href="{{ route('kontak') }}">Kontak</a></li>
+                <li><a href="{{ route('login') }}">Registrasi</a></li>
                 <!--li.dropdown.navbar-cart-->
                 <!--    a.dropdown-toggle(href='#', data-toggle='dropdown')-->
                 <!--        span.icon-basket-->

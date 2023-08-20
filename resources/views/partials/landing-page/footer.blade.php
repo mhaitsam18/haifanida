@@ -1,58 +1,40 @@
 <div class="module-small bg-dark">
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="widget">
-                    <h5 class="widget-title font-alt">About Titan</h5>
-                    <p>The languages only differ in their grammar, their pronunciation and their most common words.</p>
-                    <p>Phone: +1 234 567 89 10</p>Fax: +1 234 567 89 10
-                    <p>Email:<a href="#">somecompany@example.com</a></p>
+                    <h5 class="widget-title font-alt">Haifa Nida Wisata</h5>
+                    <p>Haifa Nida Wisata adalah perusahaan travel yang menyediakan layanan haji &amp; umrah.</p>
+                    <p>
+                        <address>
+                            Jl. Ra. Kartini No.1, Karangpawitan, Kec. Karawang Bar., Karawang, Jawa Barat 41315
+                        </address>
+                    </p>
                 </div>
             </div>
+            <div class="col-sm-2"></div>
             <div class="col-sm-3">
                 <div class="widget">
-                    <h5 class="widget-title font-alt">Recent Comments</h5>
+                    <h5 class="widget-title font-alt">Jam Buka</h5>
                     <ul class="icon-list">
-                        <li>Maria on <a href="#">Designer Desk Essentials</a></li>
-                        <li>John on <a href="#">Realistic Business Card Mockup</a></li>
-                        <li>Andy on <a href="#">Eco bag Mockup</a></li>
-                        <li>Jack on <a href="#">Bottle Mockup</a></li>
-                        <li>Mark on <a href="#">Our trip to the Alps</a></li>
+                        <li><a href="#">Sen: 09.00-17.00</a></li>
+                        <li><a href="#">Sel: 09.00-17.00</a></li>
+                        <li><a href="#">Rab: 09.00-17.00</a></li>
+                        <li><a href="#">Kam: 09.00-17.00</a></li>
+                        <li><a href="#">Jum: 09.00-17.00</a></li>
+                        <li><a href="#">Sab: 09.00-17.00</a></li>
+                        <li><a href="#">Min: Tutup</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="widget">
-                    <h5 class="widget-title font-alt">Blog Categories</h5>
-                    <ul class="icon-list">
-                        <li><a href="#">Photography - 7</a></li>
-                        <li><a href="#">Web Design - 3</a></li>
-                        <li><a href="#">Illustration - 12</a></li>
-                        <li><a href="#">Marketing - 1</a></li>
-                        <li><a href="#">Wordpress - 16</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="widget">
-                    <h5 class="widget-title font-alt">Popular Posts</h5>
-                    <ul class="widget-posts">
-                        <li class="clearfix">
-                            <div class="widget-posts-image"><a href="#"><img src="/img/rp-1.jpg"
-                                        alt="Post Thumbnail" /></a></div>
-                            <div class="widget-posts-body">
-                                <div class="widget-posts-title"><a href="#">Designer Desk Essentials</a></div>
-                                <div class="widget-posts-meta">23 january</div>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="widget-posts-image"><a href="#"><img src="/img/rp-2.jpg"
-                                        alt="Post Thumbnail" /></a></div>
-                            <div class="widget-posts-body">
-                                <div class="widget-posts-title"><a href="#">Realistic Business Card Mockup</a></div>
-                                <div class="widget-posts-meta">15 February</div>
-                            </div>
-                        </li>
+                    <h5 class="widget-title font-alt">Kontak Kami</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-phone ml-2"></i> 0812-2074-7000</li>
+                        <li><i class="fa fa-envelope ml-2"></i> admin@haifanida.com</li>
+                        <li><i class="fa fa-facebook ml-2"></i> haifanidaofficial </li>
+                        <li><i class="fa fa-globe ml-2"></i> haifanida.com </li>
                     </ul>
                 </div>
             </div>
