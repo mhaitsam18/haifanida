@@ -11,21 +11,21 @@
             <div class="col-sm-3 mb-sm-20">
                 <select name="jenis-paket" class="form-control">
                     <option value="">Jenis Paket</option>
-                    <option value="haji">Haji</option>
-                    <option value="umrah">Umrah</option>
+                    <option value="haji" @selected(request()->query('jenis-paket') == 'haji')>Haji</option>
+                    <option value="umrah" @selected(request()->query('jenis-paket') == 'umrah')>Umrah</option>
                 </select>
             </div>
             <div class="col-sm-3 mb-sm-20">
                 <select name="rentang-harga" class="form-control">
                     <option value="">Rentang harga</option>
-                    <option value="2">Rp20.000.000,00 s.d. Rp30.000.000,00</option>
-                    <option value="3">Rp31.000.000,00 s.d. Rp40.000.000,00</option>
-                    <option value="4">Rp41.000.000,00 s.d. Rp50.000.000,00</option>
-                    <option value="5">Rp51.000.000,00 s.d. Rp60.000.000,00</option>
-                    <option value="6">Rp61.000.000,00 s.d. Rp70.000.000,00</option>
-                    <option value="7">Rp71.000.000,00 s.d. Rp80.000.000,00</option>
-                    <option value="8">Rp81.000.000,00 s.d. Rp90.000.000,00</option>
-                    <option value="9">Rp91.000.000,00 s.d. Rp100.000.000,00</option>
+
+                    @foreach ($rentangHarga as $rh)
+                        @php
+                            $harga = explode('-', $rh)
+                        @endphp
+
+                        <option value="{{ $loop->iteration }}" @selected(request()->query('rentang-harga') == $loop->iteration)>{{ rupiah($harga[0]) }} s.d. {{ rupiah($harga[1]) }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-sm-3 mb-sm-20">
