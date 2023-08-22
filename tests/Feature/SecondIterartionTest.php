@@ -90,4 +90,11 @@ class SecondIterationTest extends TestCase
 
     }
 
+    public function test_menampilkan_informasi_alamat_hotel_mekah() : void {
+
+    }
+
+    public function test_menampilkan_informasi_alamat_hotel_madinah() : void {
+
+    }
 }
