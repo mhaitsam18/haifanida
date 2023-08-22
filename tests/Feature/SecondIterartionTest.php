@@ -69,4 +69,25 @@ class SecondIterationTest extends TestCase
     public function test_menampilkan_data_kontak_di_footer() : void {
 
     }
+
+    public function test_filter_harga_paket() : void {
+
+    }
+
+    public function test_filter_harga_paket_sembarang() : void {
+
+    }
+
+    public function test_filter_tanggal_keberangkatan_paket() : void {
+
+    }
+
+    public function test_tanggal_keberangkatan_paket_sembarang() : void {
+
+    }
+
+    public function test_daftar_paket_tanpa_filter() : void {
+
+    }
+
 }
