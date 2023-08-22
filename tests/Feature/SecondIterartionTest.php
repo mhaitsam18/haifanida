@@ -20,9 +20,10 @@ class SecondIterationTest extends TestCase
             'Dokumen yang akan diperlukan:',
             'KTP',
             'KK',
-            'Buku Nikah (jika ada)',
+            'Buku Nikah',
             'Paspor minimal 2 nama dan berlaku minimal 8 bulan dari tanggal kepulangan',
             'Foto terbaru ukuran 4&times;6, 5 lembar, zoom wajah',
+            'Bukti vaksin'
         ];
 
         $request = $this->get('/paket/1');

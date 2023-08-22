@@ -126,10 +126,11 @@
                                 <ul>
                                     <li>KTP</li>
                                     <li>KK</li>
-                                    <li>Buku Nikah (jika ada)</li>
+                                    <li>Buku Nikah</li>
                                     <li>Paspor minimal 2 nama dan berlaku minimal 8 bulan dari tanggal kepulangan
                                         <sup>*</sup></li>
                                     <li>Foto terbaru ukuran 4&times;6, 5 lembar, zoom wajah</li>
+                                    <li>Bukti vaksin</li>
                                 </ul>
 
                                 <small>*&#41; Bisa sekalian pesan layanan pembuatan paspor</small>
@@ -159,7 +160,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane active" id="barang">
+                    <div class="tab-pane" id="barang">
                         <div class="row">
                             <div class="col-sm-6">
                                 <strong>Barang yang boleh dibawah:</strong>
