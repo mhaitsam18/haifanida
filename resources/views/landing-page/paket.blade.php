@@ -34,13 +34,22 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="description">
-                            <p class="mb-0">Hotel Mekah: {{ $paket->hotelMekah->nama }}/Setara | &starf; {{
-                                $paket->hotelMekah->bintang }}/5</p>
-                            <p>Hotel Madinah: {{ $paket->hotelMadinah->nama }}/Setara | &starf; {{
-                                $paket->hotelMadinah->bintang }}/5</p>
-                            <p>Maskapai: {{ $paket->maskapai->nama }}</p>
-                            <p class="font-alt mb-0"><strong>{{ $paket->keberangkatan }} | Program {{
-                                    $paket->jumlah_hari }} Hari</strong></p>
+                            <div>
+                                <p class="mb-0">Hotel Mekah: </p>
+                                <p class="mb-0">{{ $paket->hotelMekah->nama }}/Setara | &starf; {{ $paket->hotelMekah->bintang }}/5</p>
+                                <p>{{ $paket->hotelMekah->alamat }}</p>
+                            </div>
+                            <div>
+                                <p class="mb-0">Hotel Madinah: </p>
+                                <p class="mb-0">{{ $paket->hotelMadinah->nama }}/Setara | &starf; {{ $paket->hotelMadinah->bintang }}/5</p>
+                                <p>{{ $paket->hotelMadinah->alamat }}</p>
+                            </div>
+                            <div>Maskapai: {{ $paket->maskapai->nama }}</div>
+                            <div class="font-alt">
+                                <strong>
+                                    {{ $paket->keberangkatan }} | Program {{ $paket->jumlah_hari }} Hari
+                                </strong>
+                            </div>
                         </div>
                     </div>
                 </div>
