@@ -41,7 +41,19 @@
                             <div class="testimonial-author">
                                 <div class="testimonial-caption font-alt">
                                     <div class="testimonial-title">{{ $t->pelanggan->user->name }}</div>
-                                    <div class="testimonial-descr">{{ $t->rating }}/5</div>
+                                    <div class="testimonial-descr">
+                                        @php
+                                            $rating = $t->rating;
+                                        @endphp
+
+                                        @for ($i = 0; $i < $rating; $i++)
+                                            <i class="fa fa-star"></i>
+                                        @endfor
+
+                                         @for ($i = 0; $i < 5-$rating; $i++)
+                                            <i class="fa fa-star-o"></i>
+                                        @endfor
+                                    </div>
                                 </div>
                             </div>
                         </div>
