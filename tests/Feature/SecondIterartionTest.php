@@ -31,10 +31,6 @@ class SecondIterationTest extends TestCase
         $request->assertSee($fasilitas, false);
     }
 
-    public function test_menyediakan_informasi_jadwal() : void {
-
-    }
-
     public function test_menyediakan_informasi_barang_boleh_dibawah() : void {
 
     }
@@ -43,11 +39,15 @@ class SecondIterationTest extends TestCase
 
     }
 
-    public function test_menyediakan_informasi_testimoni() : void {
+    public function test_menyediakan_informasi_jadwal() : void {
 
     }
 
-    public function test_hanya_menampilkan_testimoni_yang_diberi_label() : void {
+    public function test_hanya_menampilkan_testimoni_yang_diizinkan() : void {
+
+    }
+
+    public function test_menyediakan_informasi_testimoni() : void {
 
     }
 
@@ -71,11 +71,23 @@ class SecondIterationTest extends TestCase
 
     }
 
+    public function test_filter_harga_menerima_input() : void {
+
+    }
+
     public function test_filter_harga_paket() : void {
 
     }
 
-    public function test_filter_harga_paket_sembarang() : void {
+    public function test_filter_harga_paket_dengan_inputan_kosong() : void {
+
+    }
+
+    public function test_filter_harga_paket_dengan_inputan_tidak_valid() : void {
+
+    }
+
+    public function test_filter_tanggal_keberangkatan_menerima_input() : void {
 
     }
 
@@ -83,11 +95,11 @@ class SecondIterationTest extends TestCase
 
     }
 
-    public function test_tanggal_keberangkatan_paket_sembarang() : void {
+    public function test_filter_tanggal_keberangkatan_dengan_inputan_kosong() : void {
 
     }
 
-    public function test_daftar_paket_tanpa_filter() : void {
+    public function test_tanggal_keberangkatan_paket_dengan_inputan_tidak_valid() : void {
 
     }
 
