@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index() {
         return view('landing-page.index', [
-            'testimoni' => Testimoni::all(),
+            'testimoni' => Testimoni::where('shown', 1)->get(),
             'faq' => Faq::all()
         ]);
     }
