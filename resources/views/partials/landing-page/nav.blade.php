@@ -4,7 +4,7 @@
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span
                     class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
                     class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand"
-                href="index.html">Haifa Nida Wisata</a>
+                href="{{ route('beranda') }}">Haifa Nida Wisata</a>
         </div>
         <div class="collapse navbar-collapse" id="custom-collapse">
             <ul class="nav navbar-nav navbar-right">
