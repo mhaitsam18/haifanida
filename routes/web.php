@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function() {
         Route::prefix('pelanggan')->group(function() {
             Route::get('/', [PelangganController::class, 'index'])->name('dashboard.pelanggan');
 
-            Route::get('/pesanan', [PelangganPesananController::class, 'index'])->name('dashboard.pelanggan');
-            Route::get('/pesanan/{pesanan}', [PelangganPesananController::class, 'show'])->name('dashboard.pelanggan');
+            Route::get('/pesanan', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan');
+            Route::get('/pesanan/{pesanan}', [PelangganPesananController::class, 'show']);
         });
     });
 });

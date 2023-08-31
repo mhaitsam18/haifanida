@@ -11,7 +11,13 @@
                 <li><a href="{{ route('beranda') }}">Beranda</a></li>
                 <li><a href="{{ route('daftar-paket') }}">Daftar Paket</a></li>
                 <li><a href="{{ route('kontak') }}">Kontak</a></li>
-                <li><a href="{{ route('login') }}">Registrasi</a></li>
+                @auth
+                    <li><a href="{{ route('dashboard.pelanggan') }}">Dashboard</a></li>
+                @endauth
+
+                @guest
+                    <li><a href="{{ route('login') }}">Login</a></li>
+                @endguest
                 <!--li.dropdown.navbar-cart-->
                 <!--    a.dropdown-toggle(href='#', data-toggle='dropdown')-->
                 <!--        span.icon-basket-->
