@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function() {
 
         Route::prefix('pelanggan')->group(function() {
             Route::get('/', [PelangganController::class, 'index'])->name('dashboard.pelanggan');
+            Route::get('/kontak-admin', [PelangganController::class, 'kontak'])->name('pelanggan.kontak');
 
             Route::get('/pesanan', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan');
             Route::get('/pesanan/{pesanan}', [PelangganPesananController::class, 'show'])->name('pelanggan.detail-pesanan');
