@@ -14,6 +14,8 @@ class PelangganPesananController extends Controller
     }
 
     public function show(Pesanan $pesanan) {
-        dd($pesanan);
+        return view('pelanggan.detail-pesanan', [
+            'pesanan' => $pesanan,
+        ]);
     }
 }

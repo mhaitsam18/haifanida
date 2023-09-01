@@ -11,20 +11,20 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table id="daftar-pesanan" class="table-bordered">
+                    <table id="daftar-pesanan" class="table table-bordered">
                        <thead>
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
                                 <th>Tanggal Keberangkatan</th>
                                 <th>Jumlah</th>
-                                <th></th>
+                                <th>Aksi</th>
                             </tr>
                        </thead>
                        <tbody>
                            @foreach ($pesanan as $p)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration.'.' }}</td>
                                 <td>{{ $p->paket->nama }}</td>
                                 <td>{{ $p->paket->keberangkatan }}</td>
                                 <td>{{ $p->jumlah }}</td>
@@ -44,15 +44,17 @@
     </div>
 @stop
 
-@section('css')
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> --}}
-@endsection
+@section('plugins.Datatables', true)
 
 @section('js')
     <script>
         new DataTable('#daftar-pesanan', {
             responsive: true,
-            autoWidht: false
+            autoWidht: false,
+            columnDefs: [{
+                orderable: false,
+                targets: 4
+            }]
         });
     </script>
 @endsection
