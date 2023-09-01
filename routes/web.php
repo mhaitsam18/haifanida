@@ -7,6 +7,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PelangganPaketController;
 use App\Http\Controllers\PelangganPesananController;
+use App\Http\Controllers\PelangganTestimoniController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(function() {
 
             Route::get('/pesanan', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan');
             Route::get('/pesanan/{pesanan}', [PelangganPesananController::class, 'show'])->name('pelanggan.detail-pesanan');
+
+            Route::get('/testimoni', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni');
+            Route::get('/testimoni/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('pelanggan.testimoni.create');
         });
     });
 });

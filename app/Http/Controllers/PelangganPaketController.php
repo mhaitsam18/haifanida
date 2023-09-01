@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class PelangganPaketController extends Controller
 {
-    public function create(Paket $paket) {
+    public function create(Paket $paket)
+    {
         return view('landing-page.pesan-paket', [
             'paket' => $paket,
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // dd($request->input());
 
         $jumlahJemaah = count($request->input('jemaah'));
@@ -26,7 +28,7 @@ class PelangganPaketController extends Controller
             'jumlah' => $jumlahJemaah,
         ]);
 
-        for ($i=0; $i < $jumlahJemaah; $i++) {
+        for ($i = 0; $i < $jumlahJemaah; $i++) {
             Jemaah::create([
                 'pesanan_id' => $pesanan->id,
                 'nama' => $request->input('jemaah')[$i],

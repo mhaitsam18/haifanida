@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('pelanggan.index', [
             'pesanan' => Pesanan::orderBy('id', 'DESC')->get(),
         ]);
     }
 
-    public function kontak() {
+    public function kontak()
+    {
         return view('pelanggan.kontak', [
             'kontak' => Kontak::get(),
         ]);
