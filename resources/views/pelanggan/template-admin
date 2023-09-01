@@ -1,0 +1,27 @@
+@extends('adminlte::page')
+
+@section('title', 'Isi tag `title`')
+
+@section('content_header')
+    <h1>Judul Halaman</h1>
+@stop
+
+@section('content')
+    Conten
+@stop
+
+@section('plugins.Datatables', true)
+@section('plugins.Sweetalert2', true)
+@section('plugins.Chartjs', true)
+@section('plugins.Select2', true)
+@section('plugins.Pace', true)
+{{-- Install plugin lain selain 5 plugin atas --}}
+{{-- https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Plugins-Configuration#install-a-plugin-with-the-artisan-command --}}
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop
