@@ -30,7 +30,18 @@ class PelangganTestimoniController extends Controller
         ]);
     }
 
-    public function store() {
+    public function store(Request $request)
+    {
+        Testimoni::firstOrCreate([
+            'pelanggan_id' => auth()->user()->id,
+            'pesanan_id' => $request->p,
+        ], [
+            'testimoni' => $request->testimoni,
+            'rating' => $request->rating,
+        ]);
 
+        $request->session()->flash('alert-class', 'success');
+        $request->session()->flash('alert', ['Berhasil', 'Berhasil menyimpan testimoni']);
+        return redirect()->route('pelanggan.testimoni');
     }
 }

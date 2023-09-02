@@ -14,7 +14,9 @@
                     <form action="{{ route('pelanggan.testimoni.store') }}" method="post">
                         @csrf
 
-                        <x-adminlte-textarea name="testimoni" label="Testimoni" error-key="testimoni" enable-old-support="true"></x-adminlte-textarea>
+                        <input type="hidden" name="p" value="{{ $pesanan->id }}">
+
+                        <x-adminlte-textarea name="testimoni" label="Testimoni" error-key="testimoni" enable-old-support="true" rows="4"></x-adminlte-textarea>
 
                         <x-adminlte-select name="rating" label="Rating" enable-old-support="true">
                             <option value="5">5</option>

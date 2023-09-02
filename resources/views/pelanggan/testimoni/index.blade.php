@@ -47,11 +47,11 @@
                                             @endphp
 
                                             @for ($i = 0; $i < $rating; $i++)
-                                                <i class="fa fa-star"></i>
+                                                <i class="fas fa-star"></i>
                                             @endfor
 
                                                 @for ($i = 0; $i < 5-$rating; $i++)
-                                                <i class="fa fa-star-o"></i>
+                                                <i class="fas fa-star-o"></i>
                                             @endfor
                                         </div>
                                     </td>
@@ -67,6 +67,7 @@
 @stop
 
 @section('plugins.Datatables', true)
+@section('plugins.Sweetalert2', true)
 
 @section('js')
     <script>
@@ -78,5 +79,13 @@
                 targets: 4
             }]
         });
+
+        @if (request()->session()->has('alert'))
+            Swal.fire({
+                icon: '{{ session('alert-class') }}',
+                title: '{{ session('alert')[0] }}',
+                text: '{{ session('alert')[1] }}',
+            });
+        @endif
     </script>
 @endsection
