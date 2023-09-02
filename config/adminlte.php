@@ -309,6 +309,36 @@ return [
             'icon'  => 'fa fa-home mr-2',
             'can'   => 'admin'
         ],
+        [
+            'text'  => 'Pesanan',
+            'url'   => 'admin/pesanan',
+            'icon'  => 'fa fa-box mr-2',
+            'can'   => 'admin'
+        ],
+        [
+            'text'  => 'FAQ',
+            'url'   => 'admin/faq',
+            'icon'  => 'fa fa-question-circle mr-2',
+            'can'   => 'admin'
+        ],
+        [
+            'text'  => 'Kontak',
+            'url'   => 'admin/kontak',
+            'icon'  => 'fa fa-id-card mr-2',
+            'can'   => 'admin'
+        ],
+        [
+            'text'  => 'Catatan',
+            'url'   => 'admin/catatan',
+            'icon'  => 'fa fa-info-circle mr-2',
+            'can'   => 'admin'
+        ],
+        [
+            'text'  => 'Testimoni',
+            'url'   => 'admin/testimoni',
+            'icon'  => 'fa fa-comment mr-2',
+            'can'   => 'admin'
+        ],
 
         // Menu pelanggan:
         [
