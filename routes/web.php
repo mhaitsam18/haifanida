@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
             Route::prefix('testimoni')->group(function () {
                 Route::get('/', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni');
                 Route::get('/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('pelanggan.testimoni.create');
+                Route::post('/', [PelangganTestimoniController::class, 'store'])->name('pelanggan.testimoni.store');
             });
         });
     });

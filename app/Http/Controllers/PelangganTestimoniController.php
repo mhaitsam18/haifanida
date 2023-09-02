@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paket;
 use App\Models\Pesanan;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
@@ -27,5 +28,9 @@ class PelangganTestimoniController extends Controller
         return view('pelanggan.testimoni.create', [
             'pesanan' => $pesanan,
         ]);
+    }
+
+    public function store() {
+
     }
 }
