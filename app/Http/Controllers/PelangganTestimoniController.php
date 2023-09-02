@@ -16,7 +16,7 @@ class PelangganTestimoniController extends Controller
             ->leftJoin('testimoni', 'pesanan_id', '=', 'pesanan.id')
             ->get();
 
-        return view('pelanggan.testimoni', [
+        return view('pelanggan.testimoni.index', [
             // 'testimoni' => Testimoni::where('pelanggan_id', auth()->user()->id)->get(),
             'testimoni' => $testimoni,
         ]);
@@ -24,5 +24,8 @@ class PelangganTestimoniController extends Controller
 
     public function create(Pesanan $pesanan)
     {
+        return view('pelanggan.testimoni.create', [
+            'pesanan' => $pesanan,
+        ]);
     }
 }

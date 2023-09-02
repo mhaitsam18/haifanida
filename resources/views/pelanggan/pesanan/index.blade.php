@@ -29,7 +29,7 @@
                                 <td>{{ $p->paket->keberangkatan }}</td>
                                 <td>{{ $p->jumlah }}</td>
                                 <td>
-                                    <a href="{{ route('pelanggan.detail-pesanan', $p->id) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('pelanggan.pesanan.show', $p->id) }}" class="btn btn-sm btn-primary">
                                         <i class="fa fa-eye mr-2"></i>
                                         Lihat detail
                                     </a>

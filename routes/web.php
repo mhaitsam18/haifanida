@@ -25,6 +25,7 @@ use App\Http\Controllers\PelangganTestimoniController;
 | Route Landing Page
 |----------------------
 */
+
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/paket', [PaketController::class, 'index'])->name('daftar-paket');
 Route::get('/paket/{paket}', [PaketController::class, 'show'])->name('paket');
@@ -33,20 +34,24 @@ Route::get('/kontak', [HomeController::class, 'kontak'])->name('kontak');
 Auth::routes();
 
 
-Route::middleware('auth')->group(function() {
-    Route::middleware('pelanggan')->group(function() {
+Route::middleware('auth')->group(function () {
+    Route::middleware('pelanggan')->group(function () {
         Route::get('pesan/{paket}', [PelangganPaketController::class, 'create'])->name('pelanggan.paket');
         Route::post('pesan', [PelangganPaketController::class, 'store'])->name('pelanggan.paket.store');
 
-        Route::prefix('pelanggan')->group(function() {
+        Route::prefix('pelanggan')->group(function () {
             Route::get('/', [PelangganController::class, 'index'])->name('dashboard.pelanggan');
             Route::get('/kontak-admin', [PelangganController::class, 'kontak'])->name('pelanggan.kontak');
 
-            Route::get('/pesanan', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan');
-            Route::get('/pesanan/{pesanan}', [PelangganPesananController::class, 'show'])->name('pelanggan.detail-pesanan');
+            Route::prefix('pesanan')->group(function () {
+                Route::get('/', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan');
+                Route::get('/{pesanan}', [PelangganPesananController::class, 'show'])->name('pelanggan.pesanan.show');
+            });
 
-            Route::get('/testimoni', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni');
-            Route::get('/testimoni/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('pelanggan.testimoni.create');
+            Route::prefix('testimoni')->group(function () {
+                Route::get('/', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni');
+                Route::get('/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('pelanggan.testimoni.create');
+            });
         });
     });
 });
