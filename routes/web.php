@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminFaqController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -76,9 +77,10 @@ Route::middleware('auth')->group(function () {
     | Route Admin
     |----------------------
     */
-    Route::middleware('admin')->group(function () {
-        Route::prefix('admin')->group(function () {
-            Route::get('/', [AdminController::class, 'index'])->name('dashboard.admin');
-        });
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+            Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+
+            Route::resource('faq', AdminFaqController::class);
+
     });
 });
