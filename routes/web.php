@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminFaqController;
+use App\Http\Controllers\AdminKontakController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -60,12 +61,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/kontak-admin', [PelangganController::class, 'kontak'])->name('pelanggan.kontak');
 
             Route::prefix('pesanan')->group(function () {
-                Route::get('/', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan');
+                Route::get('/', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan.index');
                 Route::get('/{pesanan}', [PelangganPesananController::class, 'show'])->name('pelanggan.pesanan.show');
             });
 
             Route::prefix('testimoni')->group(function () {
-                Route::get('/', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni');
+                Route::get('/', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni.index');
                 Route::get('/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('pelanggan.testimoni.create');
                 Route::post('/', [PelangganTestimoniController::class, 'store'])->name('pelanggan.testimoni.store');
             });
@@ -82,5 +83,8 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('faq', AdminFaqController::class);
 
+            Route::get('kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
+            Route::get('kontak/{kontak}/edit', [AdminKontakController::class, 'edit'])->name('kontak.edit');
+            Route::put('kontak/{kontak}', [AdminKontakController::class, 'update'])->name('kontak.update');
     });
 });

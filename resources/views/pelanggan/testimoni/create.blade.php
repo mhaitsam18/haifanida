@@ -28,7 +28,7 @@
 
                         <div>
                             <x-adminlte-button label="Kirim" theme="primary" type="submit" icon="fas fa-paper-plane mr-2"></x-adminlte-button>
-                            <a href="{{ route('pelanggan.testimoni') }}" class="btn btn-secondary">
+                            <a href="{{ route('pelanggan.testimoni.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-times mr-2"></i>
                                 Batal
                             </a>
