@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -33,12 +34,26 @@ Route::get('/kontak', [HomeController::class, 'kontak'])->name('kontak');
 
 Auth::routes();
 
-
 Route::middleware('auth')->group(function () {
+    /*
+    |----------------------
+    | Route Pelanggan
+    |----------------------
+    */
     Route::middleware('pelanggan')->group(function () {
+        /*
+        |----------------------
+        | landing page
+        |----------------------
+        */
         Route::get('pesan/{paket}', [PelangganPaketController::class, 'create'])->name('pelanggan.paket');
         Route::post('pesan', [PelangganPaketController::class, 'store'])->name('pelanggan.paket.store');
 
+        /*
+        |----------------------
+        | dashboard
+        |----------------------
+        */
         Route::prefix('pelanggan')->group(function () {
             Route::get('/', [PelangganController::class, 'index'])->name('dashboard.pelanggan');
             Route::get('/kontak-admin', [PelangganController::class, 'kontak'])->name('pelanggan.kontak');
@@ -55,6 +70,15 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
-});
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    /*
+    |----------------------
+    | Route Admin
+    |----------------------
+    */
+    Route::middleware('admin')->group(function () {
+        Route::prefix('admin')->group(function () {
+            Route::get('/', [AdminController::class, 'index'])->name('dashboard.admin');
+        });
+    });
+});
