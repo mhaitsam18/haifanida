@@ -44,15 +44,25 @@
                                 <td>{{ $t->pelanggan->user->name }}</td>
                                 <td>
                                     @if ($t->shown == 0)
-                                        <a href="{{ route('admin.testimoni.aktif', $t->id) }}" class="btn btn-sm btn-secondary">
-                                            <i class="fa fa-check mr-2"></i>
-                                            Tampilkan
-                                        </a>
+                                        <x-adminlte-button
+                                            label="Tampilkan"
+                                            theme="secondary"
+                                            type="submit"
+                                            class="btn-sm update-testimoni"
+                                            icon="fas fa-paper-plane mr-2"
+                                            form="testimoni-aktif"
+                                            data-t="{{ $t->id }}">
+                                        </x-adminlte-button>
                                     @else
-                                        <a href="{{ route('admin.testimoni.nonaktif', $t->id) }}" class="btn btn-sm btn-danger">
-                                            <i class="fa fa-times mr-2"></i>
-                                            Sembunyikan
-                                        </a>
+                                        <x-adminlte-button
+                                            label="Sembunyikan"
+                                            theme="danger"
+                                            type="submit"
+                                            class="btn-sm update-testimoni"
+                                            icon="fas fa-paper-plane mr-2"
+                                            form="testimoni-nonaktif"
+                                            data-t="{{ $t->id }}">
+                                        </x-adminlte-button>
                                     @endif
                                 </td>
                             </tr>
@@ -64,9 +74,16 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.testimoni.aktif', $t->id) }}" method="POST" id="testimoni-aktif">
+    <form action="{{ route('admin.testimoni.aktif') }}" method="POST" id="testimoni-aktif">
         @method('PUT')
         @csrf
+        <input type="hidden" name="t" id="ta">
+    </form>
+
+    <form action="{{ route('admin.testimoni.nonaktif') }}" method="POST" id="testimoni-nonaktif">
+        @method('PUT')
+        @csrf
+        <input type="hidden" name="t" id="tn">
     </form>
 @stop
 
@@ -91,5 +108,22 @@
                 text: '{{ session('alert')[1] }}',
             });
         @endif
+
+        const updateTestimoni = (event) => {
+            event.preventDefault();
+
+            const form = document.getElementById(event.target.getAttribute('form'));
+            {{-- form.children[2] adalah input hidden pada form yang berisi id testimoni --}}
+            form.children[2].value = event.target.getAttribute('data-t');
+
+            form.submit();
+        }
+
+        const btnUpdate = document.getElementsByClassName('update-testimoni');
+        for (let i of btnUpdate) {
+            i.addEventListener('click',(event)  => {
+                updateTestimoni(event);
+            });
+        }
     </script>
 @endsection

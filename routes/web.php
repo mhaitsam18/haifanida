@@ -89,8 +89,7 @@ Route::middleware('auth')->group(function () {
             Route::put('kontak/{kontak}', [AdminKontakController::class, 'update'])->name('kontak.update');
 
             Route::get('testimoni', [AdminTestimoniController::class, 'index'])->name('testimoni.index');
-            // ganti dua route ini dg method post/put
-            Route::put('testimoni/{testimoni}/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
-            Route::put('testimoni/{testimoni}/nonaktif', [AdminTestimoniController::class, 'nonaktif'])->name('testimoni.nonaktif');
+            Route::put('testimoni/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
+            Route::put('testimoni/nonaktif', [AdminTestimoniController::class, 'nonaktif'])->name('testimoni.nonaktif');
     });
 });
