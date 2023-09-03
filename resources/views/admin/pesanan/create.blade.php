@@ -12,11 +12,9 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('admin.pesanan.store') }}" method="POST">
-                        @method('PUT')
                         @csrf
 
-                        <x-adminlte-input name="email" type="email" label="Email Pelanggan" error-key="email" enable-old-support="true"></x-adminlte-input>
-                        <x-adminlte-input name="keberangkatan" type="date" label="Tanggal Keberangkatan" error-key="keberangkatan" enable-old-support="true"></x-adminlte-input>
+                        <x-adminlte-input name="email" type="email" label="Email Pelanggan" error-key="email" enable-old-support="true" required></x-adminlte-input>
 
                         <div class="form-group">
                             <span>Jenis Kamar</span>
@@ -34,14 +32,14 @@
                             </div>
                         </div>
 
-                        <x-adminlte-select2 name="paket" label="Paket" error-key="paket" enable-old-support="true">
+                        <x-adminlte-select2 name="paket" label="Paket" error-key="paket" enable-old-support="true" required>
                             <option value="0">Pilih Paket</option>
                             @foreach ($paket as $p)
                                 <option value="{{ $p->id }}">{{ $p->nama }}</option>
                             @endforeach
                         </x-adminlte-select2>
 
-                        <x-adminlte-input name="harga" type="number" label="Harga Paket" error-key="harga" enable-old-support="true"></x-adminlte-input>
+                        <x-adminlte-input name="harga" type="number" label="Total Harga Paket" error-key="harga" enable-old-support="true"></x-adminlte-input>
 
                         <div id="data-jemaah-wrapper">
                             <div class="form-group row">
@@ -79,6 +77,14 @@
 
 @section('js')
     <script>
+        @if (request()->session()->has('alert'))
+            Swal.fire({
+                icon: '{{ session('alert-class') }}',
+                title: '{{ session('alert')[0] }}',
+                text: '{{ session('alert')[1] }}',
+            });
+        @endif
+
         const input = (i) => {
             return `<div class="form-group row">
                         <div class="col-sm-12">
