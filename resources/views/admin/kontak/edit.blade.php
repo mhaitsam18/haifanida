@@ -11,8 +11,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.kontak.update', $kontak->key) }}" method="post">
-                        @method('put')
+                    <form action="{{ route('admin.kontak.update', $kontak->key) }}" method="POST">
+                        @method('PUT')
                         @csrf
 
                         <x-adminlte-input name="key" label="Nama Kontak" error-key="key" enable-old-support="true" value="{{ $kontak->key }}"></x-adminlte-input>

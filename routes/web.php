@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminFaqController;
 use App\Http\Controllers\AdminKontakController;
+use App\Http\Controllers\AdminTestimoniController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -56,19 +57,19 @@ Route::middleware('auth')->group(function () {
         | dashboard
         |----------------------
         */
-        Route::prefix('pelanggan')->group(function () {
-            Route::get('/', [PelangganController::class, 'index'])->name('dashboard.pelanggan');
-            Route::get('/kontak-admin', [PelangganController::class, 'kontak'])->name('pelanggan.kontak');
+        Route::prefix('pelanggan')->name('pelanggan.')->group(function () {
+            Route::get('/', [PelangganController::class, 'index'])->name('dashboard');
+            Route::get('/kontak-admin', [PelangganController::class, 'kontak'])->name('kontak');
 
             Route::prefix('pesanan')->group(function () {
-                Route::get('/', [PelangganPesananController::class, 'index'])->name('pelanggan.pesanan.index');
-                Route::get('/{pesanan}', [PelangganPesananController::class, 'show'])->name('pelanggan.pesanan.show');
+                Route::get('/', [PelangganPesananController::class, 'index'])->name('pesanan.index');
+                Route::get('/{pesanan}', [PelangganPesananController::class, 'show'])->name('pesanan.show');
             });
 
             Route::prefix('testimoni')->group(function () {
-                Route::get('/', [PelangganTestimoniController::class, 'index'])->name('pelanggan.testimoni.index');
-                Route::get('/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('pelanggan.testimoni.create');
-                Route::post('/', [PelangganTestimoniController::class, 'store'])->name('pelanggan.testimoni.store');
+                Route::get('/', [PelangganTestimoniController::class, 'index'])->name('testimoni.index');
+                Route::get('/{pesanan}', [PelangganTestimoniController::class, 'create'])->name('testimoni.create');
+                Route::post('/', [PelangganTestimoniController::class, 'store'])->name('testimoni.store');
             });
         });
     });
@@ -86,5 +87,10 @@ Route::middleware('auth')->group(function () {
             Route::get('kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
             Route::get('kontak/{kontak}/edit', [AdminKontakController::class, 'edit'])->name('kontak.edit');
             Route::put('kontak/{kontak}', [AdminKontakController::class, 'update'])->name('kontak.update');
+
+            Route::get('testimoni', [AdminTestimoniController::class, 'index'])->name('testimoni.index');
+            // ganti dua route ini dg method post/put
+            Route::put('testimoni/{testimoni}/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
+            Route::put('testimoni/{testimoni}/nonaktif', [AdminTestimoniController::class, 'nonaktif'])->name('testimoni.nonaktif');
     });
 });
