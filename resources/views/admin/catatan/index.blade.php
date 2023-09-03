@@ -37,14 +37,14 @@
                                 Edit catatan
                             </a>
 
-                            <form action="{{ route('admin.catatan.destroy', $k[0]->kategori_catatan_id) }}" method="post" id="form-hapus">
+                            {{-- <form action="{{ route('admin.catatan.destroy', $k[0]->kategori_catatan_id) }}" method="post" id="form-hapus">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-outline-danger btn-sm" data-c="{{ $k[0]->kategori_catatan_id }}" form="form-hapus">
                                     <i class="fa fa-trash mr-2"></i>
                                     Hapus catatan
                                 </button>
-                            </form>
+                            </form> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -80,22 +80,5 @@
                 text: '{{ session('alert')[1] }}',
             });
         @endif
-
-        // const hapusCatatan = (event) => {
-        //     event.preventDefault();
-
-        //     const form = document.getElementById(event.target.getAttribute('form'));
-        //     {{-- form.children[2] adalah input hidden pada form yang berisi id testimoni --}}
-        //     form.children[2].value = event.target.getAttribute('data-c');
-
-        //     form.submit();
-        // }
-
-        // const btnHapus = document.getElementsByClassName('hapus-catatan');
-        // for (let i of btnHapus) {
-        //     i.addEventListener('click',(event)  => {
-        //         hapusCatatan(event);
-        //     });
-        // }
     </script>
 @endsection

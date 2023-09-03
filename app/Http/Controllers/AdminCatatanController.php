@@ -40,7 +40,7 @@ class AdminCatatanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $idKategori)
     {
         //
     }
@@ -48,15 +48,17 @@ class AdminCatatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $idKategori)
     {
-        //
+        return view('admin.catatan.edit', [
+            'catatan' => Catatan::with('kategori')->where('kategori_catatan_id', $idKategori)->get(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $idKategori)
     {
         //
     }
@@ -64,7 +66,7 @@ class AdminCatatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $idKategori)
     {
         //
     }
