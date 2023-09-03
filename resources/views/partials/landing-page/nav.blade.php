@@ -12,7 +12,7 @@
                 <li><a href="{{ route('daftar-paket') }}">Daftar Paket</a></li>
                 <li><a href="{{ route('kontak') }}">Kontak</a></li>
                 @auth
-                    <li><a href="{{ route('dashboard.pelanggan') }}">Dashboard</a></li>
+                    <li><a href="{{ route('pelanggan.dashboard') }}">Dashboard</a></li>
                 @endauth
 
                 @guest
