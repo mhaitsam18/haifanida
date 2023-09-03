@@ -1,12 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminCatatanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminFaqController;
 use App\Http\Controllers\AdminKontakController;
 use App\Http\Controllers\AdminPesananController;
 use App\Http\Controllers\AdminTestimoniController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PelangganController;
@@ -96,5 +97,8 @@ Route::middleware('auth')->group(function () {
         Route::get('pesanan', [AdminPesananController::class, 'index'])->name('pesanan.index');
         Route::get('pesanan/create', [AdminPesananController::class, 'create'])->name('pesanan.create');
         Route::post('pesanan', [AdminPesananController::class, 'store'])->name('pesanan.store');
+
+        // Route::get('catatan', [AdminCatatanController::class, 'index'])->name('catatan.index');
+        Route::resource('catatan', AdminCatatanController::class);
     });
 });
