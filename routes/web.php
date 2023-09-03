@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminFaqController;
 use App\Http\Controllers\AdminKontakController;
+use App\Http\Controllers\AdminPesananController;
 use App\Http\Controllers\AdminTestimoniController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -91,5 +92,8 @@ Route::middleware('auth')->group(function () {
             Route::get('testimoni', [AdminTestimoniController::class, 'index'])->name('testimoni.index');
             Route::put('testimoni/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
             Route::put('testimoni/nonaktif', [AdminTestimoniController::class, 'nonaktif'])->name('testimoni.nonaktif');
+
+            Route::get('pesanan', [AdminPesananController::class, 'index'])->name('pesanan.index');
+            Route::get('pesanan/create', [AdminPesananController::class, 'create'])->name('pesanan.create');
     });
 });
