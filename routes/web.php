@@ -81,19 +81,20 @@ Route::middleware('auth')->group(function () {
     |----------------------
     */
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-            Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 
-            Route::resource('faq', AdminFaqController::class);
+        Route::resource('faq', AdminFaqController::class);
 
-            Route::get('kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
-            Route::get('kontak/{kontak}/edit', [AdminKontakController::class, 'edit'])->name('kontak.edit');
-            Route::put('kontak/{kontak}', [AdminKontakController::class, 'update'])->name('kontak.update');
+        Route::get('kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
+        Route::get('kontak/{kontak}/edit', [AdminKontakController::class, 'edit'])->name('kontak.edit');
+        Route::put('kontak/{kontak}', [AdminKontakController::class, 'update'])->name('kontak.update');
 
-            Route::get('testimoni', [AdminTestimoniController::class, 'index'])->name('testimoni.index');
-            Route::put('testimoni/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
-            Route::put('testimoni/nonaktif', [AdminTestimoniController::class, 'nonaktif'])->name('testimoni.nonaktif');
+        Route::get('testimoni', [AdminTestimoniController::class, 'index'])->name('testimoni.index');
+        Route::put('testimoni/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
+        Route::put('testimoni/nonaktif', [AdminTestimoniController::class, 'nonaktif'])->name('testimoni.nonaktif');
 
-            Route::get('pesanan', [AdminPesananController::class, 'index'])->name('pesanan.index');
-            Route::get('pesanan/create', [AdminPesananController::class, 'create'])->name('pesanan.create');
+        Route::get('pesanan', [AdminPesananController::class, 'index'])->name('pesanan.index');
+        Route::get('pesanan/create', [AdminPesananController::class, 'create'])->name('pesanan.create');
+        Route::post('pesanan', [AdminPesananController::class, 'store'])->name('pesanan.store');
     });
 });
