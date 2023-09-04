@@ -12,7 +12,9 @@ class AdminFaqController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.faq.index', [
+            'faq' => Faq::get(),
+        ]);
     }
 
     /**
@@ -33,7 +35,9 @@ class AdminFaqController extends Controller
             'jawaban'    => $request->jawaban,
         ]);
 
-        return redirect()->route('admin.faq.create');
+        $request->session()->flash('alert-class', 'success');
+        $request->session()->flash('alert', ['Berhasil', 'Berhasil menyimpan faq']);
+        return redirect()->route('admin.faq.index');
     }
 
     /**
@@ -49,7 +53,9 @@ class AdminFaqController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.faq.edit', [
+            'faq' => Faq::where('id', $id)->first(),
+        ]);
     }
 
     /**
@@ -57,7 +63,14 @@ class AdminFaqController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Faq::where('id', $id)->update([
+            'pertanyaan' => $request->pertanyaan,
+            'jawaban' => $request->jawaban,
+        ]);
+
+        $request->session()->flash('alert-class', 'success');
+        $request->session()->flash('alert', ['Berhasil', 'Berhasil mengubah faq']);
+        return redirect()->route('admin.faq.index');
     }
 
     /**
@@ -65,6 +78,10 @@ class AdminFaqController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Faq::where('id', $id)->delete();
+
+        request()->session()->flash('alert-class', 'success');
+        request()->session()->flash('alert', ['Berhasil', 'Berhasil menghapus faq']);
+        return redirect()->route('admin.faq.index');
     }
 }

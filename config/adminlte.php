@@ -317,7 +317,7 @@ return [
         ],
         [
             'text'  => 'FAQ',
-            'url'   => 'admin/faq/create',
+            'url'   => 'admin/faq',
             'icon'  => 'fa fa-question-circle mr-2',
             'can'   => 'admin'
         ],
