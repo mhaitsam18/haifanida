@@ -2,20 +2,57 @@
 
 @section('title', 'Beranda')
 
-@section('banner', '/img/image.png')
+@section('banner', '/img/banner.png')
 
-@section('h1', 'Header H1')
-@section('sub-h1', 'Sub Header H1')
+@section('h1', 'Haifa Nida Wisata')
+@section('sub-h1', 'Solusi mudah ke Baitullah')
 
 @section('content')
-<section class="module">
+<section class="module-extra-small">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Daftar Paket</h2>
             </div>
         </div>
-    </div>
+
+        <div class="row multi-columns-row post-columns">
+
+            @foreach ($paket as $p)
+            <div class="col-sm-6 col-md-3 col-lg-3">
+                <div class="post">
+                    <div class="post-thumbnail"><a href="{{ route('paket', ['paket' => $p]) }}"><img
+                                src="{{ asset('img/paket/'.$p->image) }}" alt="Thumbnail Paket"
+                                style="aspect-ratio: 40/23; object-fit: cover;" /></a>
+                    </div>
+                    <div class="post-header" style="font-size: 1.4rem">
+                        <h2 class="post-title" style="font-size: 1.6rem"><a
+                                href="{{ route('paket', ['paket' => $p]) }}">{{ $p->nama }}</a></h2>
+                        <div class="text-capitalize"><strong>{{ rupiah($p->harga_single) }} | {{ $p->keberangkatan
+                                }}</strong></div>
+                        <div class="text-capitalize"> Hotel Mekah: {{ $p->hotelMekah->nama }}</div>
+                        <div class="text-capitalize"> Hotel Madinah: {{ $p->hotelMadinah->nama }}</div>
+                    </div>
+                    <div class="post-entry">
+                        <p>{{ Str::limit($p->keterangan, 80, '...') }}</p>
+                    </div>
+                    <div class="post-more"><a class="btn btn-block btn-d"
+                            href="{{ route('paket', ['paket' => $p]) }}">Lihat detail</a></div>
+                </div>
+            </div>
+            @endforeach
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <center>
+                    <a href="{{ route('daftar-paket') }}" class="btn btn-primary">
+                        Lihat lebih banyak paket
+                    </a>
+                </center>
+            </div>
+        </div>
 </section>
 
 <section class="module bg-dark-60 pt-0 pb-0 parallax-bg testimonial" data-background="assets/images/testimonial_bg.jpg">
@@ -43,16 +80,14 @@
                                     <div class="testimonial-title">{{ $t->pelanggan->user->name }}</div>
                                     <div class="testimonial-descr">
                                         @php
-                                            $rating = $t->rating;
+                                        $rating = $t->rating;
                                         @endphp
 
-                                        @for ($i = 0; $i < $rating; $i++)
-                                            <i class="fa fa-star"></i>
-                                        @endfor
+                                        @for ($i = 0; $i < $rating; $i++) <i class="fa fa-star"></i>
+                                            @endfor
 
-                                         @for ($i = 0; $i < 5-$rating; $i++)
-                                            <i class="fa fa-star-o"></i>
-                                        @endfor
+                                            @for ($i = 0; $i < 5-$rating; $i++) <i class="fa fa-star-o"></i>
+                                                @endfor
                                     </div>
                                 </div>
                             </div>
@@ -69,10 +104,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
-              <h2 class="module-title font-alt">FAQ</h2>
-              <div class="module-subtitle font-serif">Pertanyaan yang sering ditanyakan</div>
+                <h2 class="module-title font-alt">FAQ</h2>
+                <div class="module-subtitle font-serif">Pertanyaan yang sering ditanyakan</div>
             </div>
-          </div>
+        </div>
 
 
         <div class="row">
@@ -80,16 +115,17 @@
                 @foreach ($faq as $f)
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion" href="{{ "#sales".$loop->iteration }}">{{ $f->pertanyaan }}</a></h4>
-                      </div>
-                      <div class="panel-collapse collapse" id="{{ "sales".$loop->iteration }}">
-                        <div class="panel-body">
-                            {{ $f->jawaban }}
+                        <div class="panel-heading">
+                            <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion"
+                                    href="{{ " #sales".$loop->iteration }}">{{ $f->pertanyaan }}</a></h4>
                         </div>
-                      </div>
+                        <div class="panel-collapse collapse" id="{{ " sales".$loop->iteration }}">
+                            <div class="panel-body">
+                                {{ $f->jawaban }}
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
                 @endforeach
             </div>
         </div>
