@@ -11,7 +11,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.catatan.update', $catatan[0]->kategori->kategori) }}" method="POST">
+                    <form action="{{ route('admin.catatan.update', $catatan[0]->kategori->id) }}" method="POST" id="update-catatan">
                         @method('PUT')
                         @csrf
 
@@ -20,8 +20,6 @@
                         <strong>Daftar:</strong>
                         <div id="container-input">
                             @foreach ($catatan as $c)
-                                {{-- <x-adminlte-input name="catatan[]" class="mb-0" error-key="catatan[]" enable-old-support="true" value="{{ $c->catatan }}"></x-adminlte-input> --}}
-
                                 <div class="form-group mb-1 input-lama" id="input-{{ $loop->iteration }}">
                                     <div class="row">
                                         <div class="col-md-11">
@@ -48,7 +46,7 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <x-adminlte-button label="Kirim" theme="primary" type="submit" icon="fas fa-paper-plane mr-2"></x-adminlte-button>
+                    <x-adminlte-button label="Kirim" theme="primary" type="submit" icon="fas fa-paper-plane mr-2" form="update-catatan"></x-adminlte-button>
                     <a href="{{ route('admin.catatan.index') }}" class="btn btn-secondary">
                         <i class="fas fa-times mr-2"></i>
                         Batal
@@ -102,5 +100,13 @@
 			const input_baru = document.getElementById('input-' + idx);
 			input_baru.remove();
 		}
+
+        @if (request()->session()->has('alert'))
+            Swal.fire({
+                icon: '{{ session('alert-class') }}',
+                title: '{{ session('alert')[0] }}',
+                text: '{{ session('alert')[1] }}',
+            });
+        @endif
     </script>
 @endsection

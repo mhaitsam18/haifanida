@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catatan;
+use App\Models\KategoriCatatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdminCatatanController extends Controller
 {
@@ -60,7 +62,25 @@ class AdminCatatanController extends Controller
      */
     public function update(Request $request, string $idKategori)
     {
-        //
+        KategoriCatatan::where('id', $idKategori)->update([
+            'nama' => $request->kategori,
+            'kategori' => Str::snake($request->kategori),
+        ]);
+
+        Catatan::where('kategori_catatan_id',$idKategori)->delete();
+
+        $input = $request->catatan;
+
+        foreach ($input as $i) {
+            Catatan::create([
+                'kategori_catatan_id' => $idKategori,
+                'catatan' => $i,
+            ]);
+        }
+
+        $request->session()->flash('alert-class', 'success');
+        $request->session()->flash('alert', ['Berhasil', 'Berhasil edit catatan']);
+        return redirect()->route('admin.catatan.index');
     }
 
     /**
