@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'jenis_kelamin' => $data['jk'],
             'alamat' => $data['alamat'],
-            'no_hp  ' => $data['no-hp'],
+            'no_hp' => $data['no-hp'],
         ]);
 
         return $user;
