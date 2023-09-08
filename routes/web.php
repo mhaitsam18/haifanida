@@ -86,9 +86,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('faq', AdminFaqController::class);
 
-        Route::get('kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
-        Route::get('kontak/{kontak}/edit', [AdminKontakController::class, 'edit'])->name('kontak.edit');
-        Route::put('kontak/{kontak}', [AdminKontakController::class, 'update'])->name('kontak.update');
+        Route::resource('kontak', AdminKontakController::class);
 
         Route::get('testimoni', [AdminTestimoniController::class, 'index'])->name('testimoni.index');
         Route::put('testimoni/aktif', [AdminTestimoniController::class, 'aktif'])->name('testimoni.aktif');
