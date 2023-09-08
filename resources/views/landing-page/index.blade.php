@@ -113,13 +113,13 @@
         <div class="row">
             <div class="col-12">
                 @foreach ($faq as $f)
-                <div class="panel-group" id="accordion">
+                <div class="panel-group" id="accordion{{ $loop->iteration }}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion"
-                                    href="{{ " #sales".$loop->iteration }}">{{ $f->pertanyaan }}</a></h4>
+                            <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion{{ $loop->iteration }}"
+                                    href="#faq{{ $loop->iteration }}">{{ $f->pertanyaan }}</a></h4>
                         </div>
-                        <div class="panel-collapse collapse" id="{{ " sales".$loop->iteration }}">
+                        <div class="panel-collapse collapse" id="faq{{ $loop->iteration }}">
                             <div class="panel-body">
                                 {{ $f->jawaban }}
                             </div>
