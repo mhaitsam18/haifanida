@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => 'Haifa Nida',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'img/logo/logo_compressed.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,8 +86,8 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
+            'path' => 'img/logo/logo_compressed.png',
+            'alt' => 'Haifa Nida Logo',
             'class' => '',
             'width' => 50,
             'height' => 50,
@@ -109,8 +109,8 @@ return [
     'preloader' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'img/logo/logo_compressed.png',
+            'alt' => 'Haifa Nida Logo',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -363,6 +363,14 @@ return [
             'text'  => 'Kontak Admin',
             'url'   => 'pelanggan/kontak-admin',
             'icon'  => 'fa fa-id-badge mr-2',
+            'can'   => 'pelanggan'
+        ],
+
+        [
+            'text'  => 'Kembali ke Beranda',
+            'url'   => '/',
+            'icon'  => 'fa fa-arrow-left mr-2',
+            'classes' => 'mt-3',
             'can'   => 'pelanggan'
         ],
     ],
