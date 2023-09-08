@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jemaah;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class PelangganPesananController extends Controller
     {
         return view('pelanggan.pesanan.show', [
             'pesanan' => $pesanan,
+            'jemaah' => Jemaah::where('pesanan_id', $pesanan->id)->get(),
         ]);
     }
 }
