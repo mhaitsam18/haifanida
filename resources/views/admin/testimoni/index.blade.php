@@ -49,7 +49,7 @@
                                             theme="secondary"
                                             type="submit"
                                             class="btn-sm update-testimoni"
-                                            icon="fas fa-paper-plane mr-2"
+                                            icon="fas fa-eye mr-2"
                                             form="testimoni-aktif"
                                             data-t="{{ $t->id }}">
                                         </x-adminlte-button>
@@ -59,7 +59,7 @@
                                             theme="danger"
                                             type="submit"
                                             class="btn-sm update-testimoni"
-                                            icon="fas fa-paper-plane mr-2"
+                                            icon="fas fa-eye-slash mr-2"
                                             form="testimoni-nonaktif"
                                             data-t="{{ $t->id }}">
                                         </x-adminlte-button>
