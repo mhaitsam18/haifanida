@@ -64,6 +64,8 @@ class PaketController extends Controller
             'jadwal' => Catatan::where('kategori_catatan_id', 4)->get(),
             'barangBoleh' => Catatan::where('kategori_catatan_id', 1)->get(),
             'barangDilarang' => Catatan::where('kategori_catatan_id', 2)->get(),
+            'syarat' => Catatan::where('kategori_catatan_id', 5)->get(),
+            'dokumen' => Catatan::where('kategori_catatan_id', 6)->get(),
         ]);
     }
 }

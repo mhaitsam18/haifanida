@@ -16,6 +16,7 @@ class SecondIterationTest extends TestCase
 
     public function test_menyediakan_informasi_hal_yang_perlu_dipersiapkan(): void
     {
+        // Mungkin test case ini perlu di-update
         $syarat = [
             'Ketentuan pemesanan paket:',
             'Melakukan pembayaran uang muka sebesar Rp10.0000.0000,-',

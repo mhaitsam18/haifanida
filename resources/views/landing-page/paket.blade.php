@@ -116,21 +116,17 @@
                             <div class="col-sm-7">
                                 <strong>Ketentuan pemesanan paket:</strong>
                                 <ul>
-                                    <li>Melakukan pembayaran uang muka sebesar Rp10.0000.0000,-</li>
-                                    <li>Melunasi pembayaran paket paling lambat <strong>30 hari</strong> sebelum tanggal
-                                        keberangkatan</li>
+                                    @foreach ($syarat as $s)
+                                        <li>{{ $s->catatan  }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="col-sm-5">
                                 <strong>Dokumen yang akan diperlukan:</strong>
                                 <ul>
-                                    <li>KTP</li>
-                                    <li>KK</li>
-                                    <li>Buku Nikah</li>
-                                    <li>Paspor minimal 2 nama dan berlaku minimal 8 bulan dari tanggal kepulangan
-                                        <sup>*</sup></li>
-                                    <li>Foto terbaru ukuran 4&times;6, 5 lembar, zoom wajah</li>
-                                    <li>Bukti vaksin</li>
+                                    @foreach ($dokumen as $d)
+                                        <li>{{ $d->catatan  }}</li>
+                                    @endforeach
                                 </ul>
 
                                 <small>*&#41; Bisa sekalian pesan layanan pembuatan paspor</small>
