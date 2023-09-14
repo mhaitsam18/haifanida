@@ -48,8 +48,10 @@ class PelangganPaketController extends Controller
         }
 
         DB::table('paket')->where('id', $request->paket)->decrement('stok', $jumlahJemaah);
+        $paket = Paket::select('link_grup')->where('id', $request->paket)->first();
 
         $request->session()->flash('alert', 'Pesanan berhasil dibuat');
+        $request->session()->flash('link_grup', $paket->link_grup);
         return redirect()->route('paket', ['paket' => $request->paket]);
     }
 }

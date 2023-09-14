@@ -198,6 +198,7 @@
                     icon: 'success',
                     title: '{{ session('alert') }}',
                     text: 'Selanjutnya Anda akan diundang ke grup WhatsApp dan melakukan penyelesaian registrasi seperti dokumen yang dibutuhkan dll.',
+                    footer: '<a href="{{ session('link_grup') }}" target="_blank">Bergabung ke grup WA</a>'
                 });
             }
 </script>
