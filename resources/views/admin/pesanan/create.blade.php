@@ -32,12 +32,12 @@
                             </div>
                         </div>
 
-                        <x-adminlte-select2 name="paket" label="Paket" error-key="paket" enable-old-support="true" required>
+                        <x-adminlte-select name="paket" label="Paket" error-key="paket" enable-old-support="true" required>
                             <option value="0">Pilih Paket</option>
                             @foreach ($paket as $p)
                                 <option value="{{ $p->id }}">{{ $p->nama }}</option>
                             @endforeach
-                        </x-adminlte-select2>
+                        </x-adminlte-select>
 
                         <x-adminlte-input name="harga" type="number" label="Total Harga Paket" error-key="harga" enable-old-support="true"></x-adminlte-input>
 

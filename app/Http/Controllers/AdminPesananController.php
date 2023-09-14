@@ -31,7 +31,15 @@ class AdminPesananController extends Controller
             ->join('users', 'user_id', '=', 'users.id')
             ->where('email', $request->email)->first();
 
-        $jumlahJemaah = count($request->input('jemaah'));
+        $jumlahJemaah = 0;
+        $jemaah = $request->input('jemaah');
+
+        foreach ($jemaah as $j) {
+            if (! empty($j)) {
+                $jumlahJemaah++;
+            }
+        }
+
         $pesanan = Pesanan::create([
             'pelanggan_id' => $pelanggan->id,
             'paket_id'     => $request->paket,
