@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jemaah;
 use App\Models\Paket;
+use App\Models\Pelanggan;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +22,19 @@ class PelangganPaketController extends Controller
     {
         // dd($request->input());
 
-        $jumlahJemaah = count($request->input('jemaah'));
+        $jumlahJemaah = 0;
+        $jemaah = $request->input('jemaah');
+
+        foreach ($jemaah as $j) {
+            if (! empty($j)) {
+                $jumlahJemaah++;
+            }
+        }
+
+        $pelanggan = Pelanggan::select('id')->where('user_id', auth()->user()->id)->first();
+
         $pesanan = Pesanan::create([
-            'pelanggan_id' => auth()->user()->id,
+            'pelanggan_id' => $pelanggan->id,
             'paket_id' => $request->paket,
             'jumlah' => $jumlahJemaah,
         ]);
