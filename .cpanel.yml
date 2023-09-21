@@ -2,9 +2,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/haif1056/public_html/
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp style.css $DEPLOYPATH
-    - /bin/cp artisan $DEPLOYPATH
     - /bin/cp .editorconfig $DEPLOYPATH
     - /bin/cp .env.example $DEPLOYPATH
     - /bin/cp .gitattributes $DEPLOYPATH
