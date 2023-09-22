@@ -2,7 +2,8 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/haif1056/public_html/
-    - /bin/cp public/* $DEPLOYPATH
+    - /bin/cp public/!(index.php) $DEPLOYPATH
     - export DEPLOYPATH=/home/haif1056/laravel/
     - /bin/cp !(public)/* $DEPLOYPATH
+
 
