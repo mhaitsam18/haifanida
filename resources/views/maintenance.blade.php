@@ -28,7 +28,7 @@
 
 <link rel="stylesheet" href="/assets-techex-demo/css/theme-dark.css">
 
-<link rel="icon" type="image/png" href="/assets-techex-demo/images/favicon.png">
+<link rel="icon" type="image/png" href="/assets/img/logo.png">
 <title>Haifa Nida Wisata</title>
 </head>
 <body>
