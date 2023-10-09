@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProvinsiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('maintenance');
-});
+// Route::get('/', function () {
+//     return view('maintenance', [
+//         'title' => 'Haifa Nida Wisata',
+//         'page' => 'maintenance',
+//         'judul' => 'Coming Soon',
+//         'pesan' => 'Kami akan segera hadir untuk Anda! :)',
+//     ]);
+// });
 
+Route::get('/', [HomeController::class, 'index'])->name('provinsi.index');
+
+Route::get('/provinsi', [ProvinsiController::class, 'index'])->name('provinsi.index');
