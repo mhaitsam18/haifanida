@@ -4,7 +4,7 @@
             <div class="col-lg-7 col-md-6">
                 <div class="top-head-left">
                     <div class="top-contact">
-                        <h3>Support By : <a href="tel:+1(212)-255-5511">+1 (212) 255-5511</a></h3>
+                        {{-- <h3>Support By : <a href="tel:+1(212)-255-5511">+1 (212) 255-5511</a></h3> --}}
                     </div>
                 </div>
             </div>
@@ -13,28 +13,33 @@
                     <div class="top-header-social">
                         <ul>
                             <li>
-                                <a href="https://www.facebook.com/" target="_blank">
+                                <a href="https://www.tiktok.com/@haifanidaofficial" target="_blank">
+                                    <i class='bx bxl-tiktok'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/haifanidaofficial" target="_blank">
                                     <i class='bx bxl-facebook'></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://twitter.com/?lang=en" target="_blank">
+                                <a href="https://x.com/haifanidaoffice" target="_blank">
                                     <i class='bx bxl-twitter'></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.linkedin.com/" target="_blank">
+                                <a href="https://www.linkedin.com/company/pt-haifa-nida-wisata/" target="_blank">
                                     <i class='bx bxl-linkedin-square'></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.instagram.com/" target="_blank">
+                                <a href="https://instagram.com/haifanidaofficial" target="_blank">
                                     <i class='bx bxl-instagram'></i>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div class="language-list">
+                    {{-- <div class="language-list">
                         <select class="language-list-item">
                             <option>English</option>
                             <option>العربيّة</option>
@@ -42,7 +47,7 @@
                             <option>Português</option>
                             <option>简体中文</option>
                         </select>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -70,7 +75,7 @@
                 </a>
                 <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                     <ul class="navbar-nav m-auto">
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 Home
                                 <i class='bx bx-caret-down'></i>
@@ -107,29 +112,34 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
-                            <a href="about.html" class="nav-link">
-                                About
+                            <a href="/" class="nav-link">
+                                Beranda
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                Pages
+                                Layanan Kami
                                 <i class='bx bx-caret-down'></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
                                     <a href="team.html" class="nav-link">
-                                        Team
+                                        Umroh
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="testimonials.html" class="nav-link">
-                                        Testimonials
+                                        Haji
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="testimonials.html" class="nav-link">
+                                        Wisata Halal
+                                    </a>
+                                </li>
+                                {{-- <li class="nav-item">
                                     <a href="faq.html" class="nav-link">
                                         FAQ
                                     </a>
@@ -151,50 +161,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        User
-                                        <i class='bx bx-caret-down'></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="log-in.html" class="nav-link">
-                                                Log In
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="register.html" class="nav-link">
-                                                Registration
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="forget-password.html" class="nav-link">
-                                                Forget Password
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="terms-condition.html" class="nav-link">
-                                        Terms & Conditions
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="privacy-policy.html" class="nav-link">
-                                        Privacy Policy
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="404.html" class="nav-link">
-                                        404 page
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="coming-soon.html" class="nav-link">
-                                        Coming Soon
-                                    </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
                         <li class="nav-item">
