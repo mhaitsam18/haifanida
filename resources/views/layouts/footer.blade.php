@@ -4,67 +4,75 @@
             <div class="row">
                 <div class="col-lg-4 col-sm-6">
                     <div class="footer-widget">
-                        <div class="footer-logo">
+                        <div class="footer-call-content p-2 my-2">
                             <a href="index.html">
                                 <img src="/assets/img/logos/logo-lanskap-2.png" style="max-width: 280px" alt="Images"
                                     loading="lazy">
                             </a>
+                            {{-- <div class="footer-logo">
+                            </div> --}}
                         </div>
                         <p>
-                            Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                            auct.Aenean, lorem quis bibendum auct. Aenean sollicitudin lorem.
+                            Kami adalah PT. Haifa Nida Wisata Karawang, sebuah perusahaan travel yang telah melayani
+                            perjalanan Haji, Umroh, dan wisata halal sejak tahun 2007. Berawal dari pengalaman bisnis
+                            perhotelan dan catering di Madinah, kami tumbuh menjadi penyedia jasa terkemuka dalam
+                            perjalanan ibadah.
                         </p>
-                        <div class="footer-call-content">
+                        <p>
+                            Kami bangga memiliki citra yang kuat dalam memberikan pelayanan terbaik kepada para jamaah,
+                            dengan sepenuh hati melayani tamu-tamu Allah. Kantor kami terletak di Karawang, tepatnya di
+                            samping Islamic Center Al Jihad. Kami siap memberikan pengalaman perjalanan yang tak
+                            terlupakan untuk Anda.
+                        </p>
+                        {{-- <div class="footer-call-content">
                             <h3>Talk to Our Support</h3>
                             <span><a href="tel:+1002-123-4567">+1 002-123-4567</a></span>
                             <i class='bx bx-headphone'></i>
+                        </div> --}}
+                        <div class="">
+                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                src="/assets/img/logos/logo-kemenag.png" alt="Images" loading="lazy">
+                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                src="/assets/img/logos/logo-IATA.png" alt="Images" loading="lazy">
+                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                src="/assets/img/logos/logo-asita.png" alt="Images" loading="lazy">
+                            <a href="https://umrahcerdas.kemenag.go.id/home/detail/1854">
+                                <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                    src="/assets/img/logos/Logo-Siskopatuh.jpg" alt="Images" loading="lazy">
+                            </a>
+                            <a href="https://himpuh.or.id/daftar-anggota/detail/307/pt-haifa-nida-wisata-karawang">
+                                <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                    src="/assets/img/logos/logo-himpuh.png" alt="Images" loading="lazy">
+                            </a>
+                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                src="/assets/img/logos/logo-kan.png" alt="Images" loading="lazy">
+                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;" src="/assets/img/logos/TIMS.png"
+                                alt="Images" loading="lazy">
+                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                src="/assets/img/logos/logo-pastiumrah.png" alt="Images" loading="lazy">
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-sm-6">
                     <div class="footer-widget pl-2">
-                        <h3>Services</h3>
+                        <h3>Layanan Kami</h3>
                         <ul class="footer-list">
                             <li>
-                                <a href="service-details.html" target="_blank">
+                                <a href="/umroh" target="_blank">
                                     <i class='bx bx-chevron-right'></i>
-                                    IT Consultancy
+                                    Umroh
                                 </a>
                             </li>
                             <li>
-                                <a href="service-details.html" target="_blank">
+                                <a href="/haji" target="_blank">
                                     <i class='bx bx-chevron-right'></i>
-                                    Business Solution
+                                    Haji
                                 </a>
                             </li>
                             <li>
-                                <a href="service-details.html" target="_blank">
+                                <a href="/wisata-halal" target="_blank">
                                     <i class='bx bx-chevron-right'></i>
-                                    Digital Services
-                                </a>
-                            </li>
-                            <li>
-                                <a href="compare.html" target="_blank">
-                                    <i class='bx bx-chevron-right'></i>
-                                    Business Reform
-                                </a>
-                            </li>
-                            <li>
-                                <a href="service-details.html" target="_blank">
-                                    <i class='bx bx-chevron-right'></i>
-                                    Web Development
-                                </a>
-                            </li>
-                            <li>
-                                <a href="service-details.html" target="_blank">
-                                    <i class='bx bx-chevron-right'></i>
-                                    Cloud Computing
-                                </a>
-                            </li>
-                            <li>
-                                <a href="service-details.html" target="_blank">
-                                    <i class='bx bx-chevron-right'></i>
-                                    Data Analysis
+                                    Wisata Halal
                                 </a>
                             </li>
                         </ul>
@@ -72,7 +80,7 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="footer-widget pl-5">
-                        <h3>Our Blog</h3>
+                        <h3>Kontak</h3>
                         <ul class="footer-blog">
                             <li>
                                 <a href="blog-details.html">
@@ -112,16 +120,49 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="footer-widget">
+                        <h3>Ingat 5 Pasti Umroh</h3>
+                        <ul class="footer-list pl-5 mb-5">
+                            <li>
+                                <a href="#">
+                                    <i class='bx bx-chevron-right'></i>
+                                    PASTIKAN Travel Umrah Berizin Kemenag
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class='bx bx-chevron-right'></i>
+                                    PASTIKAN Tiket Pesawat dan Jadwal Penerbangan.
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class='bx bx-chevron-right'></i>
+                                    PASTIKAN Harga dan Paket Layanannya.
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class='bx bx-chevron-right'></i>
+                                    PASTIKAN Akomodasi (Hotel) selama berada di Arab Saudi.
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class='bx bx-chevron-right'></i>
+                                    PASTIKAN Visanya.
+                                </a>
+                            </li>
+                        </ul>
                         <h3>Newsletter</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus molestie
-                            molestie. Phasellus ac rutrum massa, et volutpat nisl. Fusce ultrices suscipit nisl.</p>
+                        <p>Tidak ingin ketinggalan info? Masukkan emailmu!</p>
                         <div class="newsletter-area">
                             <form class="newsletter-form" data-toggle="validator" method="POST">
-                                <input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL"
-                                    required autocomplete="off">
+                                <input type="email" class="form-control" placeholder="Masukkan email"
+                                    name="EMAIL" required autocomplete="off">
                                 <button class="subscribe-btn" type="submit">
                                     <i class='bx bx-paper-plane'></i>
                                 </button>
+                                <small class="text-light">Saya menyetujui semua syarat dan kebijakan</small>
                                 <div id="validator-newsletter" class="form-result"></div>
                             </form>
                         </div>
@@ -135,8 +176,9 @@
                     Copyright ©
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> Haifa Nida Wisata. All Rights Reserved by
-                    <a href="https://haifanida.com/" target="_blank">Haitsam</a>
+                    </script> Haifa Nida Wisata. Built by
+                    <a href="https://www.instagram.com/mhaitsam18" target="_blank">Haitsam</a>
+                    All Rights Reserved
                 </p>
             </div>
         </div>

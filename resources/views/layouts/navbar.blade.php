@@ -125,110 +125,87 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a href="team.html" class="nav-link">
+                                    <a href="/umroh" class="nav-link">
                                         Umroh
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="testimonials.html" class="nav-link">
+                                    <a href="/haji" class="nav-link">
                                         Haji
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="testimonials.html" class="nav-link">
+                                    <a href="/wisata-halal" class="nav-link">
                                         Wisata Halal
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a href="faq.html" class="nav-link">
-                                        FAQ
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        Case Study
-                                        <i class='bx bx-caret-down'></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="case-study.html" class="nav-link">
-                                                Case Study
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="case-details.html" class="nav-link">
-                                                Case Study Details
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li> --}}
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                Services
+                                Konten Kami
                                 <i class='bx bx-caret-down'></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a href="services-1.html" class="nav-link">
-                                        Services Style One
+                                    <a href="/galeri" class="nav-link">
+                                        Galeri & Testimoni
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="services-2.html" class="nav-link">
-                                        Services Style Two
+                                    <a href="/artikel" class="nav-link">
+                                        Artikel
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="service-details.html" class="nav-link">
-                                        Service Details
+                                    <a href="/kajian" class="nav-link">
+                                        Kajian
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                Blog
+                                Tentang Kami
                                 <i class='bx bx-caret-down'></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a href="blog-1.html" class="nav-link">
-                                        Blog Style One
+                                    <a href="/profil" class="nav-link">
+                                        Profil
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="blog-2.html" class="nav-link">
-                                        Blog Style Two
+                                    <a href="/visi-misi" class="nav-link">
+                                        Visi dan Misi
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="blog-details.html" class="nav-link">
-                                        Blog Details
+                                    <a href="/kantor-kami" class="nav-link">
+                                        Kantor Perwakilan, Cabang dan Agen
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="contact.html" class="nav-link">
-                                Contact
+                            <a href="/kontak-kami" class="nav-link">
+                                Kontak Kami
                             </a>
                         </li>
-                    </ul>
-                    <div class="nav-side d-display">
-                        <div class="nav-side-item">
-                            <div class="search-box">
-                                <i class='bx bx-search'></i>
+
+                        <div class="nav-side d-display">
+                            <div class="nav-side-item">
+                                <div class="search-box">
+                                    <i class='bx bx-search'></i>
+                                </div>
+                            </div>
+                            <div class="nav-side-item">
+                                <div class="get-btn">
+                                    <a href="contact.html" class="default-btn btn-bg-two border-radius-50">Login
+                                        <i class='bx bx-chevron-right'></i></a>
+                                </div>
                             </div>
                         </div>
-                        <div class="nav-side-item">
-                            <div class="get-btn">
-                                <a href="contact.html" class="default-btn btn-bg-two border-radius-50">Get A Quote
-                                    <i class='bx bx-chevron-right'></i></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </nav>
         </div>

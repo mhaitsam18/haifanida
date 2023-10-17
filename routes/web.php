@@ -24,6 +24,6 @@ use Illuminate\Support\Facades\Route;
 //     ]);
 // });
 
-Route::get('/', [HomeController::class, 'index'])->name('provinsi.index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::get('/provinsi', [ProvinsiController::class, 'index'])->name('provinsi.index');
