@@ -36,11 +36,12 @@
                                 src="/assets/img/logos/logo-IATA.png" alt="Images" loading="lazy">
                             <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
                                 src="/assets/img/logos/logo-asita.png" alt="Images" loading="lazy">
-                            <a href="https://umrahcerdas.kemenag.go.id/home/detail/1854">
+                            <a href="https://umrahcerdas.kemenag.go.id/home/detail/1854" target="_blank">
                                 <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
                                     src="/assets/img/logos/Logo-Siskopatuh.jpg" alt="Images" loading="lazy">
                             </a>
-                            <a href="https://himpuh.or.id/daftar-anggota/detail/307/pt-haifa-nida-wisata-karawang">
+                            <a href="https://himpuh.or.id/daftar-anggota/detail/307/pt-haifa-nida-wisata-karawang"
+                                target="_blank">
                                 <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
                                     src="/assets/img/logos/logo-himpuh.png" alt="Images" loading="lazy">
                             </a>
@@ -79,40 +80,32 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <div class="footer-widget pl-5">
-                        <h3>Kontak</h3>
-                        <ul class="footer-blog">
+                    <div class="contact-info m-0 p-0">
+                        <div class="footer-widget pl-5">
+                            <h3>Kontak</h3>
+                        </div>
+                        <ul>
                             <li>
-                                <a href="blog-details.html">
-                                    <img src="/assets-techex-demo/images/blog/blog-img-footer.jpg" alt="Images"
-                                        loading="lazy">
-                                </a>
                                 <div class="content">
-                                    <h3><a href="blog-details.html">Product Idea Solution For New Generation</a>
-                                    </h3>
-                                    <span>04 Dec 2020</span>
+                                    <i class='bx bx-phone-call'></i>
+                                    <h3>Nomor WhatsApp </h3>
+                                    <a href="https://wa.me/6282117503125">+62 (821) 1750-3125</a>
                                 </div>
                             </li>
                             <li>
-                                <a href="blog-details.html">
-                                    <img src="/assets-techex-demo/images/blog/blog-img-footer2.jpg" alt="Images"
-                                        loading="lazy">
-                                </a>
                                 <div class="content">
-                                    <h3><a href="blog-details.html">New Device Invention for Digital Platform</a>
-                                    </h3>
-                                    <span>07 Dec 2020</span>
+                                    <i class='bx bxs-map'></i>
+                                    <h3>Alamat</h3>
+                                    <span>Jl. Ra. Kartini No.1, Karangpawitan, Kec. Karawang Barat, Karawang, Jawa Barat
+                                        41315</span>
                                 </div>
                             </li>
                             <li>
-                                <a href="blog-details.html">
-                                    <img src="/assets-techex-demo/images/blog/blog-img-footer3.jpg" alt="Images"
-                                        loading="lazy">
-                                </a>
                                 <div class="content">
-                                    <h3><a href="blog-details.html">Business Strategy Make His Goal Acheive</a>
-                                    </h3>
-                                    <span>10 Dec 2020</span>
+                                    <i class='bx bx-message'></i>
+                                    <h3>Email</h3>
+                                    <a href="mailto:cs@haifanida.com"><span class="__cf_email__"
+                                            data-cfemail="761e131a1a19360213151e130e5815191b">[cs@haifanida.com]</span></a>
                                 </div>
                             </li>
                         </ul>
@@ -123,31 +116,36 @@
                         <h3>Ingat 5 Pasti Umroh</h3>
                         <ul class="footer-list pl-5 mb-5">
                             <li>
-                                <a href="#">
+                                <a href="https://himpuh.or.id/blog/detail/60/ingat-5-pasti-sebelum-umrah"
+                                    target="_blank">
                                     <i class='bx bx-chevron-right'></i>
                                     PASTIKAN Travel Umrah Berizin Kemenag
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://himpuh.or.id/blog/detail/60/ingat-5-pasti-sebelum-umrah"
+                                    target="_blank">
                                     <i class='bx bx-chevron-right'></i>
                                     PASTIKAN Tiket Pesawat dan Jadwal Penerbangan.
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://himpuh.or.id/blog/detail/60/ingat-5-pasti-sebelum-umrah"
+                                    target="_blank">
                                     <i class='bx bx-chevron-right'></i>
                                     PASTIKAN Harga dan Paket Layanannya.
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://himpuh.or.id/blog/detail/60/ingat-5-pasti-sebelum-umrah"
+                                    target="_blank">
                                     <i class='bx bx-chevron-right'></i>
                                     PASTIKAN Akomodasi (Hotel) selama berada di Arab Saudi.
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="https://himpuh.or.id/blog/detail/60/ingat-5-pasti-sebelum-umrah"
+                                    target="_blank">
                                     <i class='bx bx-chevron-right'></i>
                                     PASTIKAN Visanya.
                                 </a>
@@ -177,7 +175,7 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script> Haifa Nida Wisata. Built by
-                    <a href="https://www.instagram.com/mhaitsam18" target="_blank">Haitsam</a>
+                    <a href="https://www.instagram.com/mhaitsam18" target="_blank">Haitsam</a>.
                     All Rights Reserved
                 </p>
             </div>
