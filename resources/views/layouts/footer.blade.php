@@ -5,7 +5,7 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="footer-widget">
                         <div class="footer-call-content p-2 my-2">
-                            <a href="index.html">
+                            <a href="/">
                                 <img src="/assets/img/logos/logo-lanskap-2.png" style="max-width: 280px" alt="Images"
                                     loading="lazy">
                             </a>

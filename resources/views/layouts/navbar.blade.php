@@ -58,7 +58,7 @@
 <div class="navbar-area">
 
     <div class="mobile-nav">
-        <a href="index.html" class="logo">
+        <a href="/" class="logo">
             <img src="/assets/img/logos/logo-lanskap-2.png" style="max-height: 60px;" class="logo-one" alt="Logo">
             <img src="/assets/img/logos/logo-lanskap-2.png" style="max-height: 60px;" class="logo-two" alt="Logo">
         </a>
@@ -67,7 +67,7 @@
     <div class="main-nav">
         <div class="container">
             <nav class="navbar navbar-expand-md navbar-light ">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="/">
                     <img src="/assets/img/logos/logo-lanskap-2.png" style="max-height: 60px;" class="logo-one"
                         alt="Logo">
                     <img src="/assets/img/logos/logo-lanskap-2.png" style="max-height: 60px;" class="logo-two"
@@ -201,7 +201,7 @@
                             </div>
                             <div class="nav-side-item">
                                 <div class="get-btn">
-                                    <a href="contact.html" class="default-btn btn-bg-two border-radius-50">Login
+                                    <a href="/login" class="default-btn btn-bg-two border-radius-50">Login
                                         <i class='bx bx-chevron-right'></i></a>
                                 </div>
                             </div>
@@ -227,7 +227,7 @@
                                 <i class='bx bx-search'></i>
                             </div>
                             <div class="get-btn">
-                                <a href="contact.html" class="default-btn btn-bg-two border-radius-50">Get A Quote
+                                <a href="/login" class="default-btn btn-bg-two border-radius-50">Login
                                     <i class='bx bx-chevron-right'></i></a>
                             </div>
                         </div>

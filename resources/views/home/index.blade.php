@@ -11,18 +11,20 @@
                     <div class="d-table-cell">
                         <div class="container">
                             <div class="banner-item-content">
-                                <span>Only High Quality Services</span>
-                                <h1>Excellent IT Services for Your Success</h1>
+                                {{-- <span>Only High Quality Services</span> --}}
+                                <h1>Haifa Nida Wisata</h1>
                                 <p>
-                                    Aenean Sollicitudin, Lorem quis Bibendum auctor, nisi elit consequat ipsum,
-                                    nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit
-                                    amet
+                                    Tour & Travel
+                                    <br>
+                                    No. SK : 91202027102820002
+                                    <br>
+                                    2 Agustus 2022
                                 </p>
                                 <div class="banner-btn">
-                                    <a href="about.html" class="default-btn btn-bg-two border-radius-50">Learn More <i
+                                    <a href="/tentang-kami" class="default-btn btn-bg-two border-radius-50">Tentang Kami<i
                                             class='bx bx-chevron-right'></i></a>
-                                    <a href="contact.html" class="default-btn btn-bg-one border-radius-50 ml-20">Get A
-                                        Quote <i class='bx bx-chevron-right'></i></a>
+                                    <a href="/layanan-kami" class="default-btn btn-bg-one border-radius-50 ml-20">Paket Kami
+                                        <i class='bx bx-chevron-right'></i></a>
                                 </div>
                             </div>
                         </div>
@@ -34,19 +36,14 @@
                     <div class="d-table-cell">
                         <div class="container">
                             <div class="banner-item-content">
-                                <span>Only High Quality Services</span>
-                                <h1>We Provide Best IT Services for Your Need</h1>
+                                <h1>Berdiri sejak tahun 2007</h1>
                                 <p>
-                                    Aenean Sollicitudin, Lorem quis Bibendum auctor, nisi elit consequat ipsum,
-                                    nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit
-                                    amet
+                                    didirikan oleh Dr. Fakhrurrozi, Lc., MA, seorang alumni Universitas Islam Madinah yang
+                                    memiliki pengalaman mendalam dan wawasan yang tak ternilai tentang Mekkah dan Madinah.
+                                    Kombinasi pengetahuannya yang mendalam tentang destinasi suci bersama keahliannya dalam
+                                    ilmu agama, menjadikan kami pilihan utama untuk perjalanan Haji, Umroh, dan wisata halal
+                                    Anda.
                                 </p>
-                                <div class="banner-btn">
-                                    <a href="about.html" class="default-btn btn-bg-two border-radius-50">Learn More <i
-                                            class='bx bx-chevron-right'></i></a>
-                                    <a href="contact.html" class="default-btn btn-bg-one border-radius-50 ml-20">Get A
-                                        Quote <i class='bx bx-chevron-right'></i></a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,19 +54,15 @@
                     <div class="d-table-cell">
                         <div class="container">
                             <div class="banner-item-content">
-                                <span>Only High Quality Services</span>
-                                <h1>Digital IT Service With Excellent Quality</h1>
+                                <h1>Aman, Nyaman dan Amanah</h1>
                                 <p>
-                                    Aenean Sollicitudin, Lorem quis Bibendum auctor, nisi elit consequat ipsum,
-                                    nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit
-                                    amet
+                                    Aman, Nyaman, dan Amanah" adalah sebuah moto yang sangat kuat dan menggambarkan prinsip
+                                    utama PT. Haifa Nida Wisata dalam memberikan pelayanan kepada para jamaah. Kombinasi
+                                    dari keamanan, kenyamanan, dan keamanahan mencerminkan komitmen kami untuk memberikan
+                                    pengalaman perjalanan ibadah yang tak terlupakan. Dalam setiap perjalanan bersama kami,
+                                    kami berusaha untuk menjaga ketiga nilai ini sebagai fondasi utama dalam layanan kami
+                                    kepada Anda.
                                 </p>
-                                <div class="banner-btn">
-                                    <a href="about.html" class="default-btn btn-bg-two border-radius-50">Learn More <i
-                                            class='bx bx-chevron-right'></i></a>
-                                    <a href="contact.html" class="default-btn btn-bg-one border-radius-50 ml-20">Get A
-                                        Quote <i class='bx bx-chevron-right'></i></a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,15 +78,37 @@
                 <div class="col-lg-6">
                     <div class="about-content mr-20">
                         <div class="section-title">
-                            <span class="sp-color2">15 Years of Experience</span>
-                            <h2>Right Partner for Software Innovation</h2>
+                            @php
+                                $startDate = Carbon::create(2007, 8, 2);
+                                $currentDate = Carbon::now();
+                                $experienceYears = $currentDate->diffInYears($startDate);
+                            @endphp
+                            <span class="sp-color2">{{ $experienceYears }} Tahun Pengalaman</span>
+                            <h2>Sejarah PT. Haifa Nida Wisata Karawang</h2>
                             <p>
-                                Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis
-                                sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi
-                                accumsan ipsum velit nam nec tellus a odio tincidunt auctor.
+                                PT. Haifa Nida Wisata Karawang, didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA,
+                                seorang alumni Universitas Islam Madinah yang memiliki pengalaman mendalam dan wawasan yang
+                                tak ternilai tentang Mekkah dan Madinah. Kombinasi pengetahuannya yang mendalam tentang
+                                destinasi suci bersama keahliannya dalam ilmu agama, menjadikan kami pilihan utama untuk
+                                perjalanan Haji, Umroh, dan wisata halal Anda
+                            </p>
+                            <p>
+                                Pendiri bukan hanya seorang alumni Universitas Islam Madinah yang berpengalaman dalam bidang
+                                perjalanan ibadah, tetapi juga merupakan otak di balik Catering Al-Haidari di Madinah.
+                                Pengalamannya yang luas dalam bisnis perhotelan dan sarana transportasi di Kota Mekkah dan
+                                Madinah membuatnya menjadi sumber pengetahuan yang tak ternilai dalam menyediakan pelayanan
+                                berkualitas tinggi kepada para jamaah Haji dan Umroh.
+                            </p>
+                            <p>
+                                Tak hanya itu, Dr. Fakhrurrozi juga merupakan pemilik Bakso Si Adoel yang terkenal di
+                                Madinah dan selalu buka selama musim Haji. Kombinasi pengalaman dan dedikasi dalam
+                                memberikan pengalaman terbaik kepada para tamu Allah menjadikannya alasan yang sangat kuat
+                                untuk memilih PT. Haifa Nida Wisata sebagai mitra perjalanan Haji dan Umroh Anda.
+                                Keberadaannya yang berpengalaman adalah jaminan kualitas dalam setiap perjalanan ibadah
+                                Anda.
                             </p>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-lg-6 col-6">
                                 <div class="about-content-card">
                                     <i class="flaticon-practice"></i>
@@ -108,19 +123,19 @@
                                     <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="about-img">
-                        <img src="/assets-techex-demo/images/about/about-img1.jpg" alt="About Images">
-                        <div class="sub-content">
+                        <img src="/assets/img/haifa/karyawan.jpg" alt="About Images">
+                        {{-- <div class="sub-content">
                             <img src="/assets-techex-demo/images/about/about-img2.jpg" alt="About Images" loading="lazy">
                             <div class="content">
                                 <h3>4.5k</h3>
                                 <span>Satisfied Clients</span>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -128,7 +143,7 @@
     </div>
 
 
-    <section class="services-area pt-100 pb-70">
+    {{-- <section class="services-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color1">Our Services</span>
@@ -180,10 +195,10 @@
         <div class="service-shape">
             <img src="/assets-techex-demo/images/shape/service-shape1.png" alt="Images" loading="lazy">
         </div>
-    </section>
+    </section> --}}
 
 
-    <section class="work-process-area pt-100 pb-70">
+    {{-- <section class="work-process-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Our Working Process</span>
@@ -228,10 +243,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
-    <div class="build-area pt-100 pb-70">
+    {{-- <div class="build-area pt-100 pb-70">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 col-md-8">
@@ -261,10 +276,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <div class="counter-area pb-70">
+    {{-- <div class="counter-area pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Numbers Are Talking</span>
@@ -312,10 +327,10 @@
                 <img src="/assets-techex-demo/images/shape/shape2.png" alt="Images" loading="lazy">
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <div class="call-us-area">
+    {{-- <div class="call-us-area">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -332,22 +347,20 @@
                         <img src="/assets-techex-demo/images/call-us/call-us-img1.png" alt="Images" loading="lazy">
                         <div class="call-shape">
                             <div class="shape1">
-                                <img src="/assets-techex-demo/images/call-us/call-shap2.png" alt="Images"
-                                    loading="lazy">
+                                <img src="/assets-techex-demo/images/call-us/call-shap2.png" alt="Images" loading="lazy">
                             </div>
                             <div class="shape2 shape2-rs">
-                                <img src="/assets-techex-demo/images/call-us/call-shap3.png" alt="Images"
-                                    loading="lazy">
+                                <img src="/assets-techex-demo/images/call-us/call-shap3.png" alt="Images" loading="lazy">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <div class="case-study-area pt-100 pb-70">
+    {{-- <div class="case-study-area pt-100 pb-70">
         <div class="container-fluid p-0">
             <div class="section-title text-center">
                 <span class="sp-color2">Case Study</span>
@@ -434,10 +447,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <section class="technology-area pt-100 pb-70">
+    {{-- <section class="technology-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color1">Technology Index</span>
@@ -482,54 +495,54 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
-    <div class="brand-area ptb-100">
+    {{-- <div class="brand-area ptb-100">
         <div class="container">
             <div class="brand-slider owl-carousel owl-theme">
                 <div class="brand-item">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-logo1.png" class="brand-logo-one"
-                        alt="Images" loading="lazy">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-style1.png" class="brand-logo-two"
-                        alt="Images" loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-logo1.png" class="brand-logo-one" alt="Images"
+                        loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-style1.png" class="brand-logo-two" alt="Images"
+                        loading="lazy">
                 </div>
                 <div class="brand-item">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-logo2.png" class="brand-logo-one"
-                        alt="Images" loading="lazy">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-style2.png" class="brand-logo-two"
-                        alt="Images" loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-logo2.png" class="brand-logo-one" alt="Images"
+                        loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-style2.png" class="brand-logo-two" alt="Images"
+                        loading="lazy">
                 </div>
                 <div class="brand-item">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-logo3.png" class="brand-logo-one"
-                        alt="Images" loading="lazy">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-style3.png" class="brand-logo-two"
-                        alt="Images" loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-logo3.png" class="brand-logo-one" alt="Images"
+                        loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-style3.png" class="brand-logo-two" alt="Images"
+                        loading="lazy">
                 </div>
                 <div class="brand-item">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-logo4.png" class="brand-logo-one"
-                        alt="Images" loading="lazy">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-style4.png" class="brand-logo-two"
-                        alt="Images" loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-logo4.png" class="brand-logo-one" alt="Images"
+                        loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-style4.png" class="brand-logo-two" alt="Images"
+                        loading="lazy">
                 </div>
                 <div class="brand-item">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-logo5.png" class="brand-logo-one"
-                        alt="Images" loading="lazy">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-style5.png" class="brand-logo-two"
-                        alt="Images" loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-logo5.png" class="brand-logo-one" alt="Images"
+                        loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-style5.png" class="brand-logo-two" alt="Images"
+                        loading="lazy">
                 </div>
                 <div class="brand-item">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-logo3.png" class="brand-logo-one"
-                        alt="Images" loading="lazy">
-                    <img src="/assets-techex-demo/images/brand-logo/brand-style3.png" class="brand-logo-two"
-                        alt="Images" loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-logo3.png" class="brand-logo-one" alt="Images"
+                        loading="lazy">
+                    <img src="/assets-techex-demo/images/brand-logo/brand-style3.png" class="brand-logo-two" alt="Images"
+                        loading="lazy">
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <section class="clients-area pt-100 pb-70">
+    {{-- <section class="clients-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Our Clients</span>
@@ -603,10 +616,10 @@
                 <div class="circle"></div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
-    <div class="blog-area pt-100 pb-70">
+    {{-- <div class="blog-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Latest Blog</span>
@@ -617,8 +630,7 @@
                     <div class="blog-card">
                         <div class="blog-img">
                             <a href="blog-details.html">
-                                <img src="/assets-techex-demo/images/blog/blog-img1.jpg" alt="Blog Images"
-                                    loading="lazy">
+                                <img src="/assets-techex-demo/images/blog/blog-img1.jpg" alt="Blog Images" loading="lazy">
                             </a>
                             <div class="blog-tag">
                                 <h3>11</h3>
@@ -639,8 +651,7 @@
                             </h3>
                             <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
                                 auctor, nisi elit consequat ipsum.</p>
-                            <a href="blog-details.html" class="read-btn">Read More <i
-                                    class='bx bx-chevron-right'></i></a>
+                            <a href="blog-details.html" class="read-btn">Read More <i class='bx bx-chevron-right'></i></a>
                         </div>
                     </div>
                 </div>
@@ -648,8 +659,7 @@
                     <div class="blog-card">
                         <div class="blog-img">
                             <a href="blog-details.html">
-                                <img src="/assets-techex-demo/images/blog/blog-img2.jpg" alt="Blog Images"
-                                    loading="lazy">
+                                <img src="/assets-techex-demo/images/blog/blog-img2.jpg" alt="Blog Images" loading="lazy">
                             </a>
                             <div class="blog-tag">
                                 <h3>14</h3>
@@ -670,8 +680,7 @@
                             </h3>
                             <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
                                 auctor, nisi elit consequat ipsum.</p>
-                            <a href="blog-details.html" class="read-btn">Read More <i
-                                    class='bx bx-chevron-right'></i></a>
+                            <a href="blog-details.html" class="read-btn">Read More <i class='bx bx-chevron-right'></i></a>
                         </div>
                     </div>
                 </div>
@@ -679,8 +688,7 @@
                     <div class="blog-card">
                         <div class="blog-img">
                             <a href="blog-details.html">
-                                <img src="/assets-techex-demo/images/blog/blog-img3.jpg" alt="Blog Images"
-                                    loading="lazy">
+                                <img src="/assets-techex-demo/images/blog/blog-img3.jpg" alt="Blog Images" loading="lazy">
                             </a>
                             <div class="blog-tag">
                                 <h3>17</h3>
@@ -701,12 +709,11 @@
                             </h3>
                             <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
                                 auctor, nisi elit consequat ipsum.</p>
-                            <a href="blog-details.html" class="read-btn">Read More <i
-                                    class='bx bx-chevron-right'></i></a>
+                            <a href="blog-details.html" class="read-btn">Read More <i class='bx bx-chevron-right'></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
