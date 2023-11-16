@@ -56,7 +56,7 @@
                             <div class="banner-item-content">
                                 <h1>Aman, Nyaman dan Amanah</h1>
                                 <p>
-                                    Aman, Nyaman, dan Amanah" adalah sebuah moto yang sangat kuat dan menggambarkan prinsip
+                                    "Aman, Nyaman, dan Amanah" adalah sebuah moto yang sangat kuat dan menggambarkan prinsip
                                     utama PT. Haifa Nida Wisata dalam memberikan pelayanan kepada para jamaah. Kombinasi
                                     dari keamanan, kenyamanan, dan keamanahan mencerminkan komitmen kami untuk memberikan
                                     pengalaman perjalanan ibadah yang tak terlupakan. Dalam setiap perjalanan bersama kami,

@@ -158,9 +158,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/kajian" class="nav-link">
+                                    <a href="https://www.karawangmengaji.com/" class="nav-link" target="_blank">
                                         Kajian
                                     </a>
+                                    {{-- <a href="/kajian" class="nav-link">
+                                        Kajian
+                                    </a> --}}
                                 </li>
                             </ul>
                         </li>
@@ -188,9 +191,27 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="/kontak-kami" class="nav-link">
-                                Kontak Kami
+                            <a href="#" class="nav-link">
+                                Bantuan
+                                <i class='bx bx-caret-down'></i>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a href="/kontak-kami" class="nav-link">
+                                        Kontak Kami
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/faq" class="nav-link">
+                                        FAQ
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/panduan" class="nav-link">
+                                        Panduan
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <div class="nav-side d-display">

@@ -89,15 +89,18 @@
                                 <div class="content">
                                     <i class='bx bx-phone-call'></i>
                                     <h3>Nomor WhatsApp </h3>
-                                    <a href="https://wa.me/6282117503125">+62 (821) 1750-3125</a>
+                                    <a href="https://wa.me/6282117503125" target="_blank">+62 (821) 1750-3125</a>
                                 </div>
                             </li>
                             <li>
                                 <div class="content">
                                     <i class='bx bxs-map'></i>
                                     <h3>Alamat</h3>
-                                    <span>Jl. Ra. Kartini No.1, Karangpawitan, Kec. Karawang Barat, Karawang, Jawa Barat
-                                        41315</span>
+                                    <a href="https://maps.app.goo.gl/KBnuhdfFfJ12pNRp9" target="_blank">
+                                        Jl. Ra. Kartini No.1, Karangpawitan, Kec. Karawang Barat, Karawang, Jawa
+                                        Barat
+                                        41315
+                                    </a>
                                 </div>
                             </li>
                             <li>
