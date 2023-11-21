@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kantor', function (Blueprint $table) {
+        Schema::create('kabupaten', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kantor')->nullable();
-            $table->string('alamat_kantor')->nullable();
-            $table->foreignId('kabupaten_id')->nullable()
-                ->constrained('kabupaten')
+            $table->string('kabupaten')->nullable();
+            $table->foreignId('provinsi_id')->nullable()
+                ->constrained('provinsi')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            $table->string('kecamatan')->nullable();
-            $table->enum('jenis_kantor', ['pusat', 'perwakilan', 'cabang', 'agen']);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kantor');
+        Schema::dropIfExists('kabupaten');
     }
 };
