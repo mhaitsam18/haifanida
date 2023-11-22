@@ -50,7 +50,8 @@ class ProvinsiTableSeeder extends Seeder
             'Papua Barat',
             'Papua Selatan',
             'Papua Tengah',
-            'Papua Pegunungan Papua Barat Daya',
+            'Papua Pegunungan',
+            'Papua Barat Daya',
             'Nusantara',
         ];
 
