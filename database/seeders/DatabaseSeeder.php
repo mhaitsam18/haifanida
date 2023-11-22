@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ProvinsiTableSeeder::class);
         $this->call(KabupatenTableSeeder::class);
+        $this->call(KantorTableSeeder::class);
     }
 }

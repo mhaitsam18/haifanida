@@ -20,6 +20,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->nullOnDelete();
             $table->string('kecamatan')->nullable();
+            $table->string('kode_pos')->nullable();
             $table->enum('jenis_kantor', ['pusat', 'perwakilan', 'cabang', 'agen']);
             $table->timestamps();
         });
