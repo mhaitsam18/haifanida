@@ -5,26 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kabupaten extends Model
+class MenuRole extends Model
 {
     use HasFactory;
 
-    protected $table = 'kabupaten';
+    protected $table = 'menu_roles';
     protected $guarded = [
         'id'
     ];
 
     protected $with = [
-        'provinsi'
+        'menu',
+        'role'
     ];
 
-    public function provinsi()
+    public function menu()
     {
-        return $this->belongsTo(Provinsi::class);
+        return $this->belongsTo(Menu::class);
     }
-
-    public function kantors()
+    public function role()
     {
-        return $this->hasMany(Kantor::class);
+        return $this->belongsTo(Role::class);
     }
 }

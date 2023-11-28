@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('agen', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->foreignId('role_id')->nullable()
-                ->constrained('roles')
+            $table->foreignId('user_id')->nullable()
+                ->constrained('users')
                 ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->rememberToken();
+                ->onDelete('cascade');
+            $table->foreignId('kantor_id')->nullable()
+                ->constrained('kantor')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('agen');
     }
 };

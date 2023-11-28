@@ -22,4 +22,31 @@ class Kantor extends Model
     {
         return $this->belongsTo(Kabupaten::class);
     }
+
+
+    public function pakets()
+    {
+        return $this->hasMany(Paket::class);
+    }
+
+    public function admins()
+    {
+        return $this->hasMany(Admin::class);
+    }
+
+    public function agens()
+    {
+        return $this->hasMany(Agen::class);
+    }
+
+
+    public function perwakilans()
+    {
+        return $this->hasMany(Perwakilan::class);
+    }
+
+    public function cabangs()
+    {
+        return $this->hasMany(Cabang::class);
+    }
 }

@@ -17,10 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+    protected $guarded = [
+        'id'
     ];
 
     /**
@@ -41,4 +44,49 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    public function agen()
+    {
+        return $this->hasOne(Agen::class);
+    }
+
+    public function member()
+    {
+        return $this->hasOne(Member::class);
+    }
+
+    public function author()
+    {
+        return $this->hasOne(Author::class);
+    }
+
+    public function kontens()
+    {
+        return $this->hasMany(Konten::class);
+    }
+
+    public function pesans()
+    {
+        return $this->hasMany(Pesan::class);
+    }
+    public function referals()
+    {
+        return $this->hasMany(Referal::class);
+    }
+
+    // public function pemesanans()
+    // {
+    //     return $this->hasMany(Pemesanan::class);
+    // }
 }

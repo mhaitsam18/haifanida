@@ -5,26 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kabupaten extends Model
+class Referal extends Model
 {
     use HasFactory;
 
-    protected $table = 'kabupaten';
+    protected $table = 'referal';
     protected $guarded = [
         'id'
     ];
 
     protected $with = [
-        'provinsi'
+        'user',
     ];
 
-    public function provinsi()
+    public function user()
     {
-        return $this->belongsTo(Provinsi::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function kantors()
+    public function referal_poins()
     {
-        return $this->hasMany(Kantor::class);
+        return $this->hasMany(ReferalPoin::class);
     }
 }

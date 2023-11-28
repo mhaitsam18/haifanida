@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('cabang', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->foreignId('role_id')->nullable()
-                ->constrained('roles')
+            $table->foreignId('perwakilan_id')->nullable()
+                ->constrained('perwakilan')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            $table->rememberToken();
-            $table->softDeletes();
+            $table->foreignId('kantor_id')->nullable()
+                ->constrained('kantor')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('cabang');
     }
 };

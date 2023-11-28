@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('kantor', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kantor')->nullable();
+            $table->string('nama_ketua')->nullable();
+            $table->string('kontak_kantor')->nullable();
             $table->string('alamat_kantor')->nullable();
             $table->foreignId('kabupaten_id')->nullable()
                 ->constrained('kabupaten')

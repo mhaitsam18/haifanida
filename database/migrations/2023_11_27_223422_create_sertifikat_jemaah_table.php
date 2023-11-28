@@ -11,18 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('sertifikat_jemaah', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->foreignId('role_id')->nullable()
-                ->constrained('roles')
+            $table->foreignId('jemaah_id')->nullable()
+                ->constrained('jemaah')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            $table->rememberToken();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('sertifikat_jemaah');
     }
 };

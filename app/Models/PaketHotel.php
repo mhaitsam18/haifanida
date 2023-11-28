@@ -5,26 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kabupaten extends Model
+class PaketHotel extends Model
 {
     use HasFactory;
 
-    protected $table = 'kabupaten';
+    protected $table = 'paket_hotel';
     protected $guarded = [
         'id'
     ];
 
     protected $with = [
-        'provinsi'
+        'paket',
+        'hotel'
     ];
 
-    public function provinsi()
+    public function paket()
     {
-        return $this->belongsTo(Provinsi::class);
+        return $this->belongsTo(Paket::class);
     }
-
-    public function kantors()
+    public function hotel()
     {
-        return $this->hasMany(Kantor::class);
+        return $this->belongsTo(Hotel::class);
     }
 }
