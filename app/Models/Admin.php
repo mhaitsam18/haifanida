@@ -30,8 +30,8 @@ class Admin extends Model
         return $this->belongsTo(Kantor::class);
     }
 
-    public function pemesanans()
-    {
-        return $this->hasMany(Pemesanan::class);
-    }
+    // public function pemesanans()
+    // {
+    //     return $this->hasMany(Pemesanan::class);
+    // }
 }

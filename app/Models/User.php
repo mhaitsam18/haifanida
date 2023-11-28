@@ -85,8 +85,8 @@ class User extends Authenticatable
         return $this->hasMany(Referal::class);
     }
 
-    // public function pemesanans()
-    // {
-    //     return $this->hasMany(Pemesanan::class);
-    // }
+    public function pemesanans()
+    {
+        return $this->hasMany(Pemesanan::class);
+    }
 }

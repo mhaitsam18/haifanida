@@ -37,10 +37,10 @@ class Agen extends Model
         return $this->hasMany(Grup::class);
     }
 
-    public function pemesanans()
-    {
-        return $this->hasMany(Pemesanan::class);
-    }
+    // public function pemesanans()
+    // {
+    //     return $this->hasMany(Pemesanan::class);
+    // }
 
     public function poins()
     {

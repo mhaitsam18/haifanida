@@ -17,22 +17,22 @@ return new class extends Migration
                 ->constrained('paket')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
-            // $table->foreignId('user_id')->nullable()
-            //     ->constrained('users')
+            $table->foreignId('user_id')->nullable()
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
+            // $table->foreignId('agen_id')->nullable()
+            //     ->constrained('agen')
             //     ->onUpdate('cascade')
             //     ->nullOnDelete();
-            $table->foreignId('agen_id')->nullable()
-                ->constrained('agen')
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->foreignId('member_id')->nullable()
-                ->constrained('member')
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->foreignId('admin_id')->nullable()
-                ->constrained('admin')
-                ->onUpdate('cascade')
-                ->nullOnDelete();
+            // $table->foreignId('member_id')->nullable()
+            //     ->constrained('member')
+            //     ->onUpdate('cascade')
+            //     ->nullOnDelete();
+            // $table->foreignId('admin_id')->nullable()
+            //     ->constrained('admin')
+            //     ->onUpdate('cascade')
+            //     ->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

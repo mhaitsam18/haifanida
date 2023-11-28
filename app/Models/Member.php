@@ -24,8 +24,8 @@ class Member extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function pemesanans()
-    {
-        return $this->hasMany(Pemesanan::class);
-    }
+    // public function pemesanans()
+    // {
+    //     return $this->hasMany(Pemesanan::class);
+    // }
 }

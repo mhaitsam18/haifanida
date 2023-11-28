@@ -24,22 +24,22 @@ class Pemesanan extends Model
         return $this->belongsTo(Paket::class);
     }
 
-    // public function user()
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    // public function agen()
     // {
-    //     return $this->belongsTo(User::class);
+    //     return $this->belongsTo(Agen::class);
     // }
-    public function agen()
-    {
-        return $this->belongsTo(Agen::class);
-    }
-    public function member()
-    {
-        return $this->belongsTo(Member::class);
-    }
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class);
-    }
+    // public function member()
+    // {
+    //     return $this->belongsTo(Member::class);
+    // }
+    // public function admin()
+    // {
+    //     return $this->belongsTo(Admin::class);
+    // }
 
     public function jemaahs()
     {
