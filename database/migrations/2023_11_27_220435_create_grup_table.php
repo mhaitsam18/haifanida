@@ -21,6 +21,10 @@ return new class extends Migration
                 ->constrained('agen')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->string('nama_grup')->nullable();
+            $table->text('keterangan_grup')->nullable();
+            $table->string('status_grup')->nullable();
+            $table->integer('kuota_grup')->nullable();
             $table->timestamps();
         });
     }

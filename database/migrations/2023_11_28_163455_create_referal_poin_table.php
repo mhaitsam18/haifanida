@@ -17,6 +17,8 @@ return new class extends Migration
                 ->constrained('referal')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->integer('jumlah_poin')->default(0);
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

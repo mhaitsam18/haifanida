@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('galeri', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('paket_id')->nullable()
+            $table->foreignId('paket_id')
+                ->nullable()
                 ->constrained('paket')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->string('nama')->nullable(); // Nama atau judul untuk galeri
+            $table->text('deskripsi')->nullable(); // Deskripsi atau keterangan untuk galeri
+            $table->string('file_path'); // Path atau URL ke file gambar atau video
+            $table->enum('jenis', ['gambar', 'video'])->default('gambar'); // Jenis media (gambar atau video)
             $table->timestamps();
         });
     }

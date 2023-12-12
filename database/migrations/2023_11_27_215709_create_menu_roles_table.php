@@ -21,6 +21,9 @@ return new class extends Migration
                 ->constrained('roles')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->boolean('can_view')->default(false);
+            $table->boolean('can_edit')->default(false);
+            $table->boolean('can_delete')->default(false);
             $table->timestamps();
         });
     }

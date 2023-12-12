@@ -17,6 +17,12 @@ return new class extends Migration
                 ->constrained('jemaah')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('berkas_id')->nullable()
+                ->constrained('berkas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('file_path')->nullable();
+            $table->enum('status', ['tertunda', 'diverifikasi', 'ditolak'])->nullable();
             $table->timestamps();
         });
     }

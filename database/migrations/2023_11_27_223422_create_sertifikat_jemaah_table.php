@@ -17,6 +17,10 @@ return new class extends Migration
                 ->constrained('jemaah')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->string('nomor_sertifikat')->nullable();
+            $table->date('tanggal_penerbitan')->nullable();
+            $table->date('tanggal_kadaluarsa')->nullable();
+            $table->string('jenis_sertifikat')->nullable();
             $table->timestamps();
         });
     }

@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('isu_perjalanan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('grup_id')->nullable()
+            $table->foreignId('grup_id')
+                ->nullable()
                 ->constrained('grup')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->text('masalah')->nullable(); // Deskripsi masalah atau isu perjalanan
+            $table->text('solusi')->nullable(); // Solusi atau tindakan yang diambil terkait isu perjalanan
+            $table->timestamp('tanggal_pelaporan')->nullable(); // Tanggal pelaporan isu perjalanan
+            $table->timestamp('tanggal_penyelesaian')->nullable(); // Tanggal penyelesaian isu perjalanan
+            $table->boolean('status')->default(false); // Status isu perjalanan (dalam penanganan atau sudah selesai)
             $table->timestamps();
         });
     }

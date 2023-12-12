@@ -18,6 +18,11 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             //detail bus
+            $table->string('nomor_rombongan')->nullable(); // Nomor rombongan
+            $table->string('nomor_polisi')->nullable(); // Nomor polisi bus
+            $table->string('merek')->nullable(); // Merek atau jenis bus
+            $table->string('kapasitas')->nullable(); // Kapasitas maksimum penumpang bus
+            $table->text('fasilitas')->nullable(); // Fasilitas yang disediakan di dalam bus
             $table->timestamps();
         });
     }

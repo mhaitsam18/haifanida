@@ -17,6 +17,9 @@ return new class extends Migration
                 ->constrained('users')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->string('kode_referal')->nullable();
+            $table->integer('jumlah_pengguna_referal')->default(0); // Jumlah pengguna yang mendaftar melalui referal ini
+            $table->float('bonus_referal', 16, 2)->default(0); // Bonus yang diberikan untuk setiap pengguna yang mendaftar melalui referal ini
             $table->timestamps();
         });
     }

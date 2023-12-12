@@ -71,4 +71,9 @@ class Jemaah extends Model
     {
         return $this->belongsToMany(Kamar::class, 'kamar_jemaah');
     }
+
+    public function berkass()
+    {
+        return $this->belongsToMany(Berkas::class, 'berkas_jemaah');
+    }
 }

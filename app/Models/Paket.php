@@ -48,6 +48,16 @@ class Paket extends Model
     }
 
 
+    public function paketEkstras()
+    {
+        return $this->hasMany(PaketEkstra::class);
+    }
+
+    public function ekstras()
+    {
+        return $this->belongsToMany(Ekstra::class, 'paket_ekstra');
+    }
+
     public function paketHotels()
     {
         return $this->hasMany(PaketHotel::class);

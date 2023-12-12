@@ -16,7 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()
                 ->constrained('users')
                 ->onUpdate('cascade')
-                ->nullOnDelete();
+                ->nullOnDelete(); // opsional, terisi hanya jika user login
+            $table->string('nama_pengirim');
+            $table->string('email_pengirim');
+            $table->string('nomor_wa_pengirim');
+            $table->string('subjek');
+            $table->text('pesan');
+            $table->boolean('dibaca')->default(false);
             $table->timestamps();
         });
     }

@@ -21,6 +21,19 @@ return new class extends Migration
                 ->constrained('maskapai')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->string('nomor_penerbangan')->nullable();
+            $table->string('nomor_pnr')->nullable();
+            $table->string('kelas')->nullable();
+            $table->integer('kuota')->nullable();
+            $table->text('keterangan_penerbangan')->nullable();
+            $table->float('harga_tiket', 16, 2)->nullable();
+            $table->string('bandara_asal')->nullable();
+            $table->string('bandara_tujuan')->nullable();
+            $table->time('waktu_keberangkatan')->nullable();
+            $table->time('waktu_kedatangan')->nullable();
+            $table->string('status_penerbangan')->nullable();
+            $table->enum('tipe_penerbangan', ['Langsung', 'Transit'])->nullable();
+            $table->string('gate_penerbangan')->nullable();
             $table->timestamps();
         });
     }

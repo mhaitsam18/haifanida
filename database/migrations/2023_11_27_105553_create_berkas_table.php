@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('poin', function (Blueprint $table) {
+        Schema::create('berkas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agen_id')->nullable()
-                ->constrained('agen')
-                ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->integer('jumlah_poin')->default(0);
-            $table->string('keterangan')->nullable();
+            $table->string('nama_berkas')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('poin');
+        Schema::dropIfExists('berkas');
     }
 };

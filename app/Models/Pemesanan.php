@@ -45,9 +45,9 @@ class Pemesanan extends Model
     {
         return $this->hasMany(Jemaah::class);
     }
-    public function detailPemesanans()
+    public function pemesananEkstras()
     {
-        return $this->hasMany(DetailPemesanan::class);
+        return $this->hasMany(PemesananEkstra::class);
     }
 
     public function pembayarans()

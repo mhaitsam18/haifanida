@@ -17,6 +17,11 @@ return new class extends Migration
                 ->constrained('menus')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->string('sub_menu')->nullable();
+            $table->boolean('is_active')->nullable()->default(true);
+            $table->string('url')->nullable();
+            $table->string('icon')->nullable();
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('maskapai', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_maskapai')->unique(); // Kode unik untuk maskapai
+            $table->string('nama_maskapai')->nullable(); // Nama maskapai
+            $table->string('negara_asal')->nullable(); // Negara asal maskapai
+            $table->string('logo')->nullable(); // Path/logo file untuk logo maskapai (bisa bernilai null)
+            $table->text('deskripsi')->nullable(); // Deskripsi maskapai (bisa bernilai null)
             $table->softDeletes();
             $table->timestamps();
         });

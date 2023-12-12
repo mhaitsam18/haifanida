@@ -23,7 +23,7 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->string('kecamatan')->nullable();
             $table->string('kode_pos')->nullable();
-            $table->enum('jenis_kantor', ['pusat', 'perwakilan', 'cabang', 'agen']);
+            $table->enum('jenis_kantor', ['pusat', 'perwakilan', 'cabang', 'agen'])->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,9 @@ return new class extends Migration
                 ->constrained('jemaah')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->text('isi_testimoni')->nullable();
+            $table->integer('rating')->nullable(); // misalnya rating dari 1-5
+            $table->boolean('disetujui')->default(false); // status apakah testimoni disetujui atau belum
             $table->timestamps();
         });
     }

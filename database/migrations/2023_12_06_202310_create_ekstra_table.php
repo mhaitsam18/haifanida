@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_pemesanan', function (Blueprint $table) {
+        Schema::create('ekstra', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pemesanan_id')->nullable()
-                ->constrained('pemesanan')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->string('nama_ekstra')->nullable();
+            $table->float('harga_default', 16, 2)->nullable();
+            $table->enum('jenis_ekstra', ['perlengkapan', 'jasa', 'permintaan kamar', 'tipe kamar', 'pesawat'])->nullable();
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_pemesanan');
+        Schema::dropIfExists('ekstra');
     }
 };

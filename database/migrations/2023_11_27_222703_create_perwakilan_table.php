@@ -17,6 +17,9 @@ return new class extends Migration
                 ->constrained('kantor')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->string('nama_ketua')->nullable();
+            $table->string('kontak')->nullable();
+            $table->string('surat_izin')->nullable();
             $table->timestamps();
         });
     }

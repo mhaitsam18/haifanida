@@ -17,6 +17,15 @@ return new class extends Migration
                 ->constrained('author')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->string('slug')->nullable()->unique();
+            $table->string('judul')->nullable();
+            $table->text('isi_artikel')->nullable();
+            $table->string('gambar_sampul')->nullable();
+            $table->boolean('published')->default(false);
+            $table->timestamp('tanggal_publikasi')->nullable();
+            $table->integer('jumlah_pembaca')->default(0);
+            $table->string('kategori')->nullable();
+            $table->text('sumber_referensi')->nullable();
             $table->timestamps();
         });
     }

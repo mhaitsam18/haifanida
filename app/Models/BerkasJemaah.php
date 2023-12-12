@@ -15,11 +15,16 @@ class BerkasJemaah extends Model
     ];
 
     protected $with = [
-        'jemaah'
+        'jemaah',
+        'berkas',
     ];
 
     public function jemaah()
     {
         return $this->belongsTo(Jemaah::class);
+    }
+    public function berkas()
+    {
+        return $this->belongsTo(Berkas::class, 'berkas_id');
     }
 }

@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paket_hotel', function (Blueprint $table) {
+        Schema::create('paket_ekstra', function (Blueprint $table) {
             $table->id();
             $table->foreignId('paket_id')->nullable()
                 ->constrained('paket')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('hotel_id')->nullable()
-                ->constrained('hotel')
+            $table->foreignId('ekstra_id')->nullable()
+                ->constrained('ekstra')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('nomor_reservasi')->nullable();
-            $table->date('tanggal_check_in')->nullable();
-            $table->date('tanggal_check_out')->nullable();
-            $table->integer('jumlah_kamar')->nullable();
-            $table->text('keterangan_hotel')->nullable();
+            $table->float('harga', 16, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('paket_hotel');
+        Schema::dropIfExists('paket_ekstra');
     }
 };

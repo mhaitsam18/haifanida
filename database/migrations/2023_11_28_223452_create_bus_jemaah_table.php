@@ -21,6 +21,7 @@ return new class extends Migration
                 ->constrained('jemaah')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->integer('nomor_kursi')->nullable();
             $table->timestamps();
         });
     }

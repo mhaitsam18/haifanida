@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('poin', function (Blueprint $table) {
+        Schema::create('permintaan_kamar', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agen_id')->nullable()
-                ->constrained('agen')
+            $table->foreignId('pemesanan_kamar_id')->nullable()
+                ->constrained('pemesanan_kamar')
                 ->onUpdate('cascade')
-                ->nullOnDelete();
-            $table->integer('jumlah_poin')->default(0);
-            $table->string('keterangan')->nullable();
+                ->onDelete('cascade');
+            $table->string('permintaan')->nullable();
+            $table->float('harga', 16, 2)->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('poin');
+        Schema::dropIfExists('permintaan_kamar');
     }
 };
