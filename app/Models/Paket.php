@@ -37,10 +37,10 @@ class Paket extends Model
     {
         return $this->hasMany(Bus::class);
     }
-    public function kamars()
-    {
-        return $this->hasMany(Kamar::class);
-    }
+    // public function kamars()
+    // {
+    //     return $this->hasMany(Kamar::class);
+    // }
 
     public function pemesanans()
     {

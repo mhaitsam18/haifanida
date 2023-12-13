@@ -23,6 +23,10 @@ class PaketHotel extends Model
     {
         return $this->belongsTo(Paket::class);
     }
+    public function kamars()
+    {
+        return $this->hasMany(Kamar::class);
+    }
     public function hotel()
     {
         return $this->belongsTo(Hotel::class);

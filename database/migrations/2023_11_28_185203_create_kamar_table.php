@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('kamar', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('paket_id')->nullable()
-                ->constrained('paket')
+            $table->foreignId('paket_hotel_id')->nullable()
+                ->constrained('paket_hotel')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('nomor_kamar')->nullable(); // Nomor identifikasi kamar
