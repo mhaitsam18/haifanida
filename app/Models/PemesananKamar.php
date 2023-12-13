@@ -16,7 +16,6 @@ class PemesananKamar extends Model
 
     protected $with = [
         'pemesanan',
-        'permintaans',
     ];
 
     public function pemesanan()
