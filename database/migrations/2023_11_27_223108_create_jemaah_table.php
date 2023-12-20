@@ -52,6 +52,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('nama_keluarga_terdekat')->nullable();
             $table->string('kontak_keluarga_terdekat')->nullable();
+            $table->boolean('is_active')->default(1)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

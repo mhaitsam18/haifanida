@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -54,6 +54,16 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class,
+        'superadmin' => \App\Http\Middleware\IsSuperAdmin::class,
+        'adminkantor' => \App\Http\Middleware\IsAdminKantor::class,
+        'author' => \App\Http\Middleware\IsAuthor::class,
+        'member' => \App\Http\Middleware\IsMember::class,
+        'jemaah' => \App\Http\Middleware\IsJemaah::class,
+        'pusat' => \App\Http\Middleware\IsPusat::class,
+        'perwakilan' => \App\Http\Middleware\IsPerwakilan::class,
+        'cabang' => \App\Http\Middleware\IsCabang::class,
+        'agen' => \App\Http\Middleware\IsAgen::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

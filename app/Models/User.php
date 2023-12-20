@@ -89,4 +89,49 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pemesanan::class);
     }
+
+    //GATE
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    public function isSuperAdmin()
+    {
+        return !$this->admin->kantor_id;
+    }
+    public function isAdminKantor()
+    {
+        return $this->admin->is_superadmin !== true;
+    }
+    public function isAuthor()
+    {
+        return $this->role === 'author';
+    }
+    public function isMember()
+    {
+        return $this->role === 'member';
+    }
+    public function isJemaah()
+    {
+        return $this->pemesanans()->whereHas('jemaah', function ($query) {
+            $query->where('is_active', 1);
+        })->exists();
+    }
+    public function isPusat()
+    {
+        return $this->admin->kantor->jenis_kantor !== 'pusat';
+    }
+    public function isPerwakilan()
+    {
+        return $this->admin->kantor->jenis_kantor !== 'perwakilan';
+    }
+    public function isCabang()
+    {
+        return $this->admin->kantor->jenis_kantor !== 'cabang';
+    }
+    public function isAgen()
+    {
+        return $this->role === 'agen';
+    }
 }
