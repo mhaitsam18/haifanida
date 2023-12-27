@@ -63,6 +63,8 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'table' => 'users',
+            'remember' => env('USER_REMEMBER_ME', true),
         ],
 
         // 'users' => [

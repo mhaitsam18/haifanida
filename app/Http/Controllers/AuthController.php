@@ -16,6 +16,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AuthController extends Controller
 {
@@ -133,8 +134,8 @@ class AuthController extends Controller
         if ($user && !$user->admin_verified_at && $user->role == 'member') {
             return back()->with('loginError', 'Akun Anda belum diverifikasi oleh admin.');
         }
-
-        if (Auth::attempt($credentials)) {
+        $remember = $request->has('remember');
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             switch (auth()->user()->role) {
                 case 'admin':
