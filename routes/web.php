@@ -62,6 +62,7 @@ Route::middleware('guest')->group(function () {
 
 
     Route::get('/reset-password/{token}/{email}', [AuthController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
     Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');

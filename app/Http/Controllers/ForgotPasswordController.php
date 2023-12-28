@@ -21,11 +21,48 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function showResetForm()
+    public function showResetForm(Request $request, string $token, string $email)
     {
-        return view('auth.reset-form', [
-            'title' => 'Atur Ulang Kata Sandi'
+        $request->validate(['token' => 'required']);
+
+        $user = User::where('email', $email)
+            ->where('password_reset_token', $token)
+            ->first();
+
+        if (!$user) {
+            return back()->withErrors(['token' => 'Link reset password tidak valid.']);
+        }
+
+        return view('auth.reset-password', [
+            'token' => $token,
+            'email' => $email,
         ]);
+    }
+
+    function updatePassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
     }
 
     public function resetPassword(Request $request, User $user)
@@ -57,19 +94,25 @@ class ForgotPasswordController extends Controller
 
     public function sendForgotPasswordEmail(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-        ]);
+        $request->validate(['email' => 'required|email']);
 
         $user = User::where('email', $request->email)
             ->first();
 
         if ($user) {
-            $resetLink = $this->generatePasswordResetLink($user);
+            // $resetLink = $this->generatePasswordResetLink($user);
 
-            Mail::to($user->email)->send(new ForgotPasswordEmail($resetLink));
+            // Mail::to($user->email)->send(new ForgotPasswordEmail($resetLink));
 
-            return redirect('/login')->with('status', 'Kami telah mengirimkan link reset kata sandi ke email Anda.');
+            $status = Password::sendResetLink(
+                $request->only('email')
+            );
+
+            return $status === Password::RESET_LINK_SENT
+                ? redirect('/login')->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+
+            // return redirect('/login')->with('status', 'Kami telah mengirimkan link reset kata sandi ke email Anda.');
         } else {
             return back()->withErrors(['email' => 'User dengan email atau username tersebut tidak ditemukan.']);
         }
