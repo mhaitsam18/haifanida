@@ -37,18 +37,18 @@
                     <div class="user-form">
                         <div class="contact-form">
                             <h2>Daftar</h2>
-                            @if (session()->has('error'))
-                                <div class="alert alert-danger mb-3 mx-auto" style="width: 50%;" role="alert">
-                                    {{ session('error') }}
+                            @if (session()->has('loginError'))
+                                <div class="alert alert-danger mb-3 mx-auto" role="alert">
+                                    {{ session('loginError') }}
                                 </div>
                             @endif
                             @if (session()->has('success'))
-                                <div class="alert alert-success mb-3 mx-auto" style="width: 50%;" role="alert">
+                                <div class="alert alert-success mb-3 mx-auto" role="alert">
                                     {{ session('success') }}
                                 </div>
                             @endif
                             @if (session()->has('status'))
-                                <div class="alert alert-info mb-3 mx-auto" style="width: 50%;" role="alert">
+                                <div class="alert alert-info mb-3 mx-auto" role="alert">
                                     {{ session('status') }}
                                 </div>
                             @endif

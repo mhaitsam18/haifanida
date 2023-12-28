@@ -37,7 +37,22 @@
                     <div class="user-form">
                         <div class="contact-form">
                             <h2>Atur Ulang Kata Sandi</h2>
-                            <form action="/reset-password" method="post">
+                            @if (session()->has('loginError'))
+                                <div class="alert alert-danger mb-3 mx-auto" role="alert">
+                                    {{ session('loginError') }}
+                                </div>
+                            @endif
+                            @if (session()->has('success'))
+                                <div class="alert alert-success mb-3 mx-auto" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session()->has('status'))
+                                <div class="alert alert-info mb-3 mx-auto" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+                            <form action="/reset-password/{{ $user->id }}" method="post">
                                 @csrf
                                 <input type="hidden" name="token" value="{{ $token }}">
                                 <div class="row">

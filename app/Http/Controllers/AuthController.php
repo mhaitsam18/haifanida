@@ -194,92 +194,12 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-
-    // public function updatePhoto(Request $request, User $user)
-    // {
-    //     $user->update([
-    //         'foto' => $request->nama_foto
-    //     ]);
-    //     return back()->with('success', 'Foto Berhasil diperbarui');
-    // }
-
-
     public function forgotPassword()
     {
         return view('auth.forgot-password', [
             'title' => 'Lupa Kata Sandi'
         ]);
     }
-
-    public function showResetForm(Request $request, string $token, string $email)
-    {
-        // $request->validate(['token' => 'required']);
-
-        $user = User::where('email', $email)->first();
-
-        if (!$user) {
-            return back()->withErrors(['token' => 'Link reset password tidak valid.']);
-        }
-
-        return view('auth.reset-password', [
-            'title' => 'Atur Ulang Kata Sandi',
-            'token' => $token,
-            'email' => $email,
-        ]);
-    }
-
-    function updatePassword(Request $request)
-    {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
-        ]);
-
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-
-                event(new PasswordReset($user));
-            }
-        );
-
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
-    }
-
-    public function resetPassword(Request $request, User $user)
-    {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-        ]);
-
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-
-                event(new PasswordReset($user));
-            }
-        );
-
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
-    }
-
 
     public function sendForgotPasswordEmail(Request $request)
     {
@@ -319,6 +239,121 @@ class AuthController extends Controller
         );
 
         return $temporarySignedURL;
+    }
+
+    public function showResetForm(Request $request, string $token, string $email)
+    {
+        // $request->validate(['token' => 'required']);
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['token' => 'Link reset password tidak valid.']);
+        }
+
+        return view('auth.reset-password', [
+            'title' => 'Atur Ulang Kata Sandi',
+            'user' => $user,
+            'token' => $token,
+            'email' => $email,
+        ]);
+    }
+
+    function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
+    }
+
+    /**
+     * Mengirim email verifikasi ke user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendVerificationEmail(Request $request)
+    {
+        $email = $request->input('email'); // Ambil alamat email dari request
+
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            if ($user->email_verified_at === null) {
+                $user->sendEmailVerificationNotification();
+
+                // $verificationLink = $this->generateVerificationLink($user);
+
+                // Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+
+                return response()->json(['message' => 'Email verifikasi telah dikirim. Silakan cek email Anda.'], 200);
+            } else {
+                return response()->json(['message' => 'Email Anda sudah terverifikasi.'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'User dengan email tersebut tidak ditemukan.'], 404);
+        }
+    }
+
+    /**
+     * Generate link verifikasi untuk user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @return string
+     */
+    private function generateVerificationLink($user)
+    {
+        $expires = now()->addMinutes(config('auth.verification.expire', 60));
+        $hash = sha1($user->getEmailForVerification());
+
+        return URL::temporarySignedRoute(
+            'verification.verify',
+            $expires,
+            ['id' => $user->id, 'hash' => $hash]
+        );
+    }
+
+    public function verifyEmail(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            abort(404, 'User not found.');
+        }
+        // dd(sha1($user->getEmailForVerification()));
+        // dd($request->route('hash'));
+        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            abort(403, 'Invalid verification link.');
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return redirect('/login')->with('status', 'Email ini sudah diverifikasi'); // Atau URL tujuan setelah verifikasi
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return redirect('/login')->with('success', 'Email berhasil diverifikasi');
     }
 
     public function redirectToGoogle()
@@ -426,75 +461,5 @@ class AuthController extends Controller
                 return redirect('/login')->with('loginError', 'Akun Anda tidak memiliki otoritas apapun, Hubungi Admin terkait');
                 break;
         }
-    }
-
-
-    /**
-     * Mengirim email verifikasi ke user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function sendVerificationEmail(Request $request)
-    {
-        $email = $request->input('email'); // Ambil alamat email dari request
-
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            if ($user->email_verified_at === null) {
-                $verificationLink = $this->generateVerificationLink($user);
-
-                Mail::to($user->email)->send(new VerificationEmail($verificationLink));
-
-                return response()->json(['message' => 'Email verifikasi telah dikirim. Silakan cek email Anda.'], 200);
-            } else {
-                return response()->json(['message' => 'Email Anda sudah terverifikasi.'], 400);
-            }
-        } else {
-            return response()->json(['message' => 'User dengan email tersebut tidak ditemukan.'], 404);
-        }
-    }
-
-    /**
-     * Generate link verifikasi untuk user.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $user
-     * @return string
-     */
-    private function generateVerificationLink($user)
-    {
-        $expires = now()->addMinutes(config('auth.verification.expire', 60));
-        $hash = sha1($user->getEmailForVerification());
-
-        return URL::temporarySignedRoute(
-            'verification.verify',
-            $expires,
-            ['id' => $user->id, 'hash' => $hash]
-        );
-    }
-
-    public function verifyEmail(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            abort(404, 'User not found.');
-        }
-        // dd(sha1($user->getEmailForVerification()));
-        // dd($request->route('hash'));
-        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
-            abort(403, 'Invalid verification link.');
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return redirect('/login')->with('status', 'Email ini sudah diverifikasi'); // Atau URL tujuan setelah verifikasi
-        }
-
-        if ($user->markEmailAsVerified()) {
-            event(new Verified($user));
-        }
-
-        return redirect('/login')->with('success', 'Email berhasil diverifikasi');
     }
 }

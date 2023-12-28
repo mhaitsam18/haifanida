@@ -38,6 +38,21 @@
                         <div class="contact-form">
                             <h2>Lupa Kata Sandi</h2>
                             <p>Kami akan mengirim anda link ke Email Anda</p>
+                            @if (session()->has('loginError'))
+                                <div class="alert alert-danger mb-3 mx-auto" role="alert">
+                                    {{ session('loginError') }}
+                                </div>
+                            @endif
+                            @if (session()->has('success'))
+                                <div class="alert alert-success mb-3 mx-auto" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session()->has('status'))
+                                <div class="alert alert-info mb-3 mx-auto" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
                             <form action="/forgot-password" method="post">
                                 @csrf
                                 <div class="row">
