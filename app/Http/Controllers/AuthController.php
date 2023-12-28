@@ -18,16 +18,28 @@ use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+
+use App\Mail\VerificationEmail;
+use App\Mail\ForgotPasswordEmail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Log;
+
 class AuthController extends Controller
 {
+
     public function index()
     {
         if (!auth()->check()) {
             return redirect()->route('login');
             // return redirect('/home');
-        } else if (auth()->user()->role == "admin") {
+        } else if (auth()->user()->role_id == 1) {
             return redirect('/admin/index');
-        } else if (auth()->user()->role == "member") {
+        } else if (auth()->user()->role_id == 2) {
+            return redirect('/author/index');
+        } else if (auth()->user()->role_id == 3) {
             return redirect('/member/index');
         } else {
             Auth::logout();
@@ -44,6 +56,20 @@ class AuthController extends Controller
         ]);
     }
 
+    public function checkUsernameAvailability($username)
+    {
+        $isAvailable = User::where('username', $username)->count() === 0;
+
+        return response()->json(['status' => $isAvailable ? 'available' : 'used']);
+    }
+
+    public function checkEmailAvailability($email)
+    {
+        $isAvailable = User::where('email', $email)->count() === 0;
+
+        return response()->json(['status' => $isAvailable ? 'available' : 'used']);
+    }
+
     public function register()
     {
         return view('auth.register', [
@@ -52,70 +78,39 @@ class AuthController extends Controller
         ]);
     }
 
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_lengkap' => 'required',
-            'alamat_ktp' => 'required',
-            'alamat_domisili' => 'required',
-            'kabupaten_id' => 'required',
-            'kecamatan' => 'required',
-            'nomor_telepon' => 'required',
-            'nomor_hp' => 'required',
+            'name' => 'required',
             'email' => 'required|email:dns|unique:users',
-            'kewarganegaraan' => 'required',
-            'wna' => '',
-            'tanggal_lahir' => 'required',
-            'negara_tempat_lahir' => '',
-            'provinsi_tempat_lahir' => 'required',
-            'kota_tempat_lahir' => 'required',
-            'jenis_kelamin' => 'required',
-            'status_menikah' => 'required',
-            'agama' => 'required',
+            'username' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
-        $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['role'] = 'member';
 
-        if ($request->file('foto')) {
-            $validatedData['foto'] = $request->file('foto')->store('foto-profil');
-        };
+        // if ($request->file('foto')) {
+        //     $validatedData['foto'] = $request->file('foto')->store('foto-profil');
+        // };
 
         $user = User::create([
-            'name' => $request->nama_lengkap,
-            'email' => $request->email,
-            'password' => $validatedData['password'],
-            'role' => 'member',
-            'foto' => $validatedData['foto'],
-
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'username' => $validatedData['username'],
+            'password' => Hash::make($validatedData['password']),
+            'role_id' => 3,
+            // 'foto' => $validatedData['foto'],
         ]);
-
-        $validatedmember['user_id'] = $user->id;
-
 
         Member::create([
             'user_id' => $user->id,
-            'nama_lengkap' => $request->nama_lengkap,
-            'alamat_ktp' => $request->alamat_ktp,
-            'alamat_domisili' => $request->alamat_domisili,
-            'kabupaten_id' => $request->kabupaten_id,
-            'kecamatan' => $request->kecamatan,
-            'nomor_telepon' => $request->nomor_telepon,
-            'nomor_hp' => $request->nomor_hp,
-            'email' => $request->email,
-            'kewarganegaraan' => $request->kewarganegaraan,
-            'wna' => $request->wna,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'negara_tempat_lahir' => $request->negara_tempat_lahir,
-            'provinsi_tempat_lahir' => $request->provinsi_tempat_lahir,
-            'kota_tempat_lahir' => $request->kota_tempat_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'status_menikah' => $request->status_menikah,
-            'agama' => $request->agama,
-            'foto' => $validatedData['foto'],
+            'nama_lengkap' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            // 'foto' => $validatedData['foto'],
         ]);
+        $verificationLink = $this->generateVerificationLink($user);
 
-        return redirect('/login')->with('success', 'Menunggu Verifikasi dari admin!');
+        Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+        return redirect('/login')->with('success', 'Email verifikasi telah dikirim. Silakan cek email Anda!');
     }
 
 
@@ -125,23 +120,54 @@ class AuthController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => ['required'],
+            'email_or_username' => ['required'], // Ubah 'email' menjadi 'email_or_username'
             'password' => ['required'],
         ]);
 
-        $user = User::where('email', $credentials['email'])->first();
+        // Periksa apakah 'email_or_username' adalah alamat email
+        $isEmail = filter_var($credentials['email_or_username'], FILTER_VALIDATE_EMAIL);
 
-        if ($user && !$user->admin_verified_at && $user->role == 'member') {
-            return back()->with('loginError', 'Akun Anda belum diverifikasi oleh admin.');
+        // Jika itu adalah alamat email, cari user berdasarkan email, jika tidak cari berdasarkan username
+        $user = $isEmail
+            ? User::where('email', $credentials['email_or_username'])->first()
+            : User::where('username', $credentials['email_or_username'])->first();
+
+        if (!$user) {
+            return back()->with('loginError', 'Email atau Username atau Password Salah');
         }
+
+        if (!$user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+            return back()->with('loginError', 'Email Anda belum diverifikasi, Silahkan cek Email Anda');
+        }
+        // if ($user && !$user->email_verified_at && $user->role_id == 3) {
+        //     return back()->with('loginError', 'Email Anda belum diverifikasi, Silahkan cek Email Anda');
+        // }
+
+        $credential['password'] = $request->input('password');
+        if ($user->email) {
+            $credential['email'] = $user->email;
+        } elseif ($user->username) {
+            $credential['username'] = $user->username;
+        } else {
+            return back()->with('loginError', 'Email atau Username atau Password Salah');
+        }
+
+
         $remember = $request->has('remember');
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($credential, $remember)) {
             $request->session()->regenerate();
-            switch (auth()->user()->role) {
-                case 'admin':
+            switch (auth()->user()->role_id) {
+                case 1:
                     return redirect()->intended('/admin/index');
                     break;
-                case 'member':
+                case 2:
+                    return redirect()->intended('/author/index');
+                    break;
+                case 4:
+                    return redirect()->intended('/agen/index');
+                    break;
+                case 3:
                     $member = Member::where('user_id', auth()->user()->id)->first();
                     $request->session()->put('member', $member);
                     $request->session()->put('member_id', $member->id);
@@ -152,20 +178,10 @@ class AuthController extends Controller
                     $request->session()->invalidate();
                     $request->session()->regenerateToken();
                     return back()->with('loginError', 'Akun Anda tidak memiliki otoritas apapun, Hubungi Admin terkait');
-                    # code...
                     break;
             }
         }
-
-        return back()->with('loginError', 'Email atau Password Salah');
-    }
-
-    public function updatePhoto(Request $request, User $user)
-    {
-        $user->update([
-            'foto' => $request->nama_foto
-        ]);
-        return back()->with('success', 'Foto Berhasil diperbarui');
+        return back()->with('loginError', 'Email atau Username atau Password Salah');
     }
 
     public function logout(Request $request)
@@ -174,6 +190,30 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+
+    // public function updatePhoto(Request $request, User $user)
+    // {
+    //     $user->update([
+    //         'foto' => $request->nama_foto
+    //     ]);
+    //     return back()->with('success', 'Foto Berhasil diperbarui');
+    // }
+
+
+    public function forgotPassword()
+    {
+        return view('auth.forgot-password', [
+            'title' => 'Lupa Kata Sandi'
+        ]);
+    }
+
+    public function showResetForm()
+    {
+        return view('auth.reset-form', [
+            'title' => 'Atur Ulang Kata Sandi'
+        ]);
     }
 
     public function resetPassword(Request $request, User $user)
@@ -203,15 +243,39 @@ class AuthController extends Controller
     }
 
 
-    public function getKabupaten($provinsi_id)
+    public function sendForgotPasswordEmail(Request $request)
     {
-        $kabupatenData = Kabupaten::where('provinsi_id', $provinsi_id)->get();
+        $request->validate([
+            'email' => 'required',
+        ]);
 
-        return response()->json($kabupatenData);
+        $user = User::where('email', $request->email)
+            ->first();
+
+        if ($user) {
+            $resetLink = $this->generatePasswordResetLink($user);
+
+            Mail::to($user->email)->send(new ForgotPasswordEmail($resetLink));
+
+            return redirect('/login')->with('status', 'Kami telah mengirimkan link reset kata sandi ke email Anda.');
+        } else {
+            return back()->withErrors(['email' => 'User dengan email atau username tersebut tidak ditemukan.']);
+        }
     }
 
+    private function generatePasswordResetLink($user)
+    {
+        $temporarySignedURL = URL::temporarySignedRoute(
+            'password.reset',
+            now()->addMinutes(config('auth.passwords.users.expire', 60)),
+            [
+                'token' => app('auth.password.broker')->createToken($user),
+                'email' => $user->email,
+            ]
+        );
 
-
+        return $temporarySignedURL;
+    }
 
     public function redirectToGoogle()
     {
@@ -220,28 +284,18 @@ class AuthController extends Controller
 
     public function handleGoogleCallback(Request $request)
     {
-
         try {
             $user = Socialite::driver('google')->user();
             $finduser = User::where('google_id', $user->getId())->first();
+            $checkemail = User::where('email', $user->getEmail())->first();
+
             if ($finduser) {
-                Auth::login($finduser);
-                $request->session()->regenerate();
-                switch (auth()->user()->role) {
-                    case 'admin':
-                        return redirect()->intended('/admin/index');
-                        break;
-                    case 'member':
-                        return redirect()->intended('/member/index');
-                        break;
-                    default:
-                        Auth::logout();
-                        $request->session()->invalidate();
-                        $request->session()->regenerateToken();
-                        return back()->with('loginError', 'Akun Anda tidak memiliki otoritas apapun, Hubungi Admin terkait');
-                        # code...
-                        break;
-                }
+                $login = $finduser;
+            } elseif ($checkemail) {
+                $checkemail->update([
+                    'google_id' => $user->getId()
+                ]);
+                $login = $checkemail;
             } else {
                 $newUser = User::create([
                     'name' => $user->getName(),
@@ -250,17 +304,153 @@ class AuthController extends Controller
                     'google_id' => $user->getId(),
                     'avatar' => $user->getAvatar(),
                     'google_token' => $user->token,
-                    'role' => 'member',
+                    'role_id' => 3,
                 ]);
 
-                Auth::login($newUser);
-                $request->session()->regenerate();
-                return redirect()->intended('/member/index');
+                Member::create([
+                    'user_id' => $newUser->id,
+                    'nama_lengkap' => $user->getName(),
+                    'email' => $user->getEmail(),
+                ]);
+
+                // Send email verification notification
+                $newUser->sendEmailVerificationNotification();
+                $login = $newUser;
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            return redirect('/login')->with('loginError', 'Terjadi kesalahan selama autentikasi Google. Silakan coba lagi.');
+        }
+        if ($login) {
+            session()->regenerate();
+            Auth::login($login);
+
+            // Check and update email verification status
+            if (!$login->hasVerifiedEmail()) {
+                $login->sendEmailVerificationNotification();
+            }
+            switch ($login->role_id) {
+                case 1:
+                    return redirect()->intended('/admin/index');
+                    break;
+                case 2:
+                    return redirect()->intended('/author/index');
+                    break;
+                case 3:
+                    return redirect()->intended('/member/index');
+                    break;
+                case 4:
+                    return redirect()->intended('/agen/index');
+                    break;
+                default:
+                    Auth::logout();
+                    session()->invalidate();
+                    session()->regenerateToken();
+                    return redirect('/login')->with('loginError', 'Akun Anda tidak memiliki otoritas apapun, Hubungi Admin terkait');
+                    break;
+            }
+        } else {
+            return redirect('/home');
+        }
+    }
+
+    private function processLogin(User $user)
+    {
+        session()->regenerate();
+        Auth::login($user);
+
+        // Check and update email verification status
+        if (!$user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+        }
+        switch ($user->role_id) {
+            case 1:
+                return redirect()->intended('/admin/index');
+                break;
+            case 2:
+                return redirect()->intended('/author/index');
+                break;
+            case 3:
+                return redirect()->intended('/member/index');
+                break;
+            case 4:
+                return redirect()->intended('/agen/index');
+                break;
+            default:
+                Auth::logout();
+                session()->invalidate();
+                session()->regenerateToken();
+                return redirect('/login')->with('loginError', 'Akun Anda tidak memiliki otoritas apapun, Hubungi Admin terkait');
+                break;
+        }
+    }
+
+
+    /**
+     * Mengirim email verifikasi ke user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendVerificationEmail(Request $request)
+    {
+        $email = $request->input('email'); // Ambil alamat email dari request
+
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            if ($user->email_verified_at === null) {
+                $verificationLink = $this->generateVerificationLink($user);
+
+                Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+
+                return response()->json(['message' => 'Email verifikasi telah dikirim. Silakan cek email Anda.'], 200);
+            } else {
+                return response()->json(['message' => 'Email Anda sudah terverifikasi.'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'User dengan email tersebut tidak ditemukan.'], 404);
+        }
+    }
+
+    /**
+     * Generate link verifikasi untuk user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @return string
+     */
+    private function generateVerificationLink($user)
+    {
+        $expires = now()->addMinutes(config('auth.verification.expire', 60));
+        $hash = sha1($user->getEmailForVerification());
+
+        return URL::temporarySignedRoute(
+            'verification.verify',
+            $expires,
+            ['id' => $user->id, 'hash' => $hash]
+        );
+    }
+
+    public function verifyEmail(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            abort(404, 'User not found.');
+        }
+        // dd(sha1($user->getEmailForVerification()));
+        // dd($request->route('hash'));
+        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            abort(403, 'Invalid verification link.');
         }
 
-        return redirect('/home');
+        if ($user->hasVerifiedEmail()) {
+            return redirect('/login')->with('status', 'Email ini sudah diverifikasi'); // Atau URL tujuan setelah verifikasi
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return redirect('/login')->with('success', 'Email berhasil diverifikasi');
     }
 }

@@ -36,20 +36,47 @@
                 <div class="col-lg-6">
                     <div class="user-form">
                         <div class="contact-form">
-                            <h2>Log In</h2>
-                            <form>
+                            @if (session()->has('loginError'))
+                                <div class="alert alert-danger mb-3 mx-auto" style="width: 50%;" role="alert">
+                                    {{ session('loginError') }}
+                                </div>
+                            @endif
+                            @if (session()->has('success'))
+                                <div class="alert alert-success mb-3 mx-auto" style="width: 50%;" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if (session()->has('status'))
+                                <div class="alert alert-info mb-3 mx-auto" style="width: 50%;" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+                            <form action="/login" method="post">
+                                @csrf
                                 <div class="row">
                                     <div class="col-lg-12 ">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required
-                                                data-error="Please enter your Username or Email"
-                                                placeholder="Username or Email">
+                                            <input type="text"
+                                                class="form-control @error('email_or_username') is-invalid @enderror"
+                                                name="email_or_username" id="email_or_username" required
+                                                data-error="Masukkan Username atau Email Anda"
+                                                placeholder="Username atau Email" value="{{ old('email_or_username') }}">
+                                            @error('email_or_username')
+                                                <div class="text-danger fs-6">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input class="form-control" type="password" name="password"
-                                                placeholder="Password">
+                                            <input class="form-control @error('password') is-invalid @enderror"
+                                                type="password" name="password" id="password" placeholder="Kata Sandi">
+                                            @error('password')
+                                                <div class="text-danger fs-6">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-12 form-condition">
@@ -57,7 +84,7 @@
                                             <input type="checkbox" name="remember" id="remember"
                                                 {{ old('remember') ? 'checked' : '' }}>
                                             <label for="remember">
-                                                Ingat Saya <a class="forget" href="/logout">Lupa Kata
+                                                Ingat Saya <a class="forget" href="/forgot-password">Lupa Kata
                                                     Sandi?</a>
                                             </label>
                                         </div>

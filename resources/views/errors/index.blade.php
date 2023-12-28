@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" href="/assets-techex-demo/css/theme-dark.css">
 
-    <link rel="icon" type="image/png" href="/assets-techex-demo/images/favicon.png">
+    <link rel="icon" type="image/png" href="/assets/img/logos/logo.png">
     <title>{{ $title }}</title>
 </head>
 
@@ -58,10 +58,20 @@
                 </div>
             </div>
         </div>
+    @elseif($code == '403')
+        <div class="row w-100 mx-0 auth-page">
+            <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center">
+                <img src="/assets-techex-demo/images/error-403.png" class="img-fluid mb-2" alt="403">
+                <h1 class="fw-bolder mb-22 mt-2 tx-80 text-muted">{{ $code }}</h1>
+                <h4 class="mb-2">{{ $title }}</h4>
+                <h6 class="text-muted mb-3 text-center">{{ $message }}</h6>
+                <a href="/" class="btn btn-primary">Kembali ke beranda</a>
+            </div>
+        </div>
     @else
         <div class="row w-100 mx-0 auth-page">
             <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center">
-                <img src="/assets-nobleui/images/others/404.svg" class="img-fluid mb-2" alt="404">
+                <img src="/assets-techex-demo/images/404-error.jpg" class="img-fluid mb-2" alt="500">
                 <h1 class="fw-bolder mb-22 mt-2 tx-80 text-muted">{{ $code }}</h1>
                 <h4 class="mb-2">{{ $title }}</h4>
                 <h6 class="text-muted mb-3 text-center">{{ $message }}</h6>

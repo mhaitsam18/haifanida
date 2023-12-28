@@ -221,10 +221,18 @@
                                 </div>
                             </div>
                             <div class="nav-side-item">
-                                <div class="get-btn">
-                                    <a href="/login" class="default-btn btn-bg-two border-radius-50">Login
-                                        <i class='bx bx-chevron-right'></i></a>
-                                </div>
+                                @guest
+                                    <div class="get-btn">
+                                        <a href="/login" class="default-btn btn-bg-two border-radius-50">Login
+                                            <i class='bx bx-chevron-right'></i></a>
+                                    </div>
+                                @endguest
+                                @auth
+                                    <div class="get-btn">
+                                        <a href="/logout" class="default-btn btn-bg-two border-radius-50">Logout
+                                            <i class='bx bx-chevron-right'></i></a>
+                                    </div>
+                                @endauth
                             </div>
                         </div>
                 </div>

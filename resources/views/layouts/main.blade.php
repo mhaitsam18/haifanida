@@ -36,7 +36,7 @@
 
 <body>
     <div class="flash-data" data-success="{{ session()->get('success') }}"
-        data-error="@if ($errors->any()) Terjadi kesalahan! @else{{ session()->get('error') }} @endif"
+        data-error="{{ $errors->any() ? 'Terjadi kesalahan!' : session()->get('error') }}"
         data-warning="{{ session()->get('warning') }}"></div>
 
     <div class="preloader">
@@ -84,6 +84,77 @@
     <script src="/assets-techex-demo/js/contact-form-script.js"></script>
 
     <script src="/assets-techex-demo/js/custom.js"></script>
+
+    <!-- End custom js for this page -->
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <!-- Misalnya, jika Anda menggunakan adapter untuk tampilan pratinjau -->
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+
+
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const success = $('.flash-data').data('success');
+        if (success) {
+            //'Data ' +
+            Swal.fire({
+                title: 'Berhasil',
+                text: success,
+                icon: 'success'
+            });
+        }
+        const error = $('.flash-data').data('error');
+        if (error) {
+            //'Data ' +
+            Swal.fire({
+                title: 'Gagal',
+                text: error,
+                icon: 'error'
+            });
+        }
+        const warning = $('.flash-data').data('warning');
+        if (warning) {
+            //'Data ' +
+            Swal.fire({
+                title: 'Perhatian',
+                text: warning,
+                icon: 'warning'
+            });
+        }
+        $('.access-denied').on('click', function(e) {
+            e.preventDefault(); // Mencegah pengiriman formulir secara langsung
+
+            //'Data ' +
+            Swal.fire({
+                title: 'Akses ditolak',
+                text: 'Anda tidak memiliki otoritas untuk membuka fitur ini',
+                icon: 'warning'
+            });
+        });
+        $('.tombol-hapus').on('click', function(e) {
+            e.preventDefault(); // Mencegah pengiriman formulir secara langsung
+
+            const form = $(this).closest('form'); // Menemukan formulir terdekat
+
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Data ini akan dihapus!",
+                icon: 'warning',
+                confirmButtonText: 'Hapus',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Mengirimkan formulir setelah konfirmasi
+                }
+            });
+        });
+    </script>
 
     @yield('script')
     @yield('modal')

@@ -15,7 +15,7 @@ class IsAgen
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role != 'agen') {
+        if (auth()->user()->role_id != 4) {
             // abort(403);
             return response()->view('errors.index', [
                 'title' => 'Akses ditolak',

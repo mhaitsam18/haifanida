@@ -15,7 +15,7 @@ class IsAuthor
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role != 'author') {
+        if (auth()->user()->role_id != 2) {
             // abort(403);
             return response()->view('errors.index', [
                 'title' => 'Akses ditolak',

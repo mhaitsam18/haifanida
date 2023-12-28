@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Mail\VerificationEmail;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
+
+use Illuminate\Auth\Events\Verified;
+
+class VerificationController extends Controller
+{
+
+
+    /**
+     * Mengirim email verifikasi ke user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendVerificationEmail(Request $request)
+    {
+        $email = $request->input('email'); // Ambil alamat email dari request
+
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            if ($user->email_verified_at === null) {
+                $verificationLink = $this->generateVerificationLink($user);
+
+                Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+
+                return response()->json(['message' => 'Email verifikasi telah dikirim. Silakan cek email Anda.'], 200);
+            } else {
+                return response()->json(['message' => 'Email Anda sudah terverifikasi.'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'User dengan email tersebut tidak ditemukan.'], 404);
+        }
+    }
+
+    /**
+     * Generate link verifikasi untuk user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $user
+     * @return string
+     */
+    private function generateVerificationLink($user)
+    {
+        $expires = now()->addMinutes(config('auth.verification.expire', 60));
+        $hash = sha1($user->getEmailForVerification());
+
+        return URL::temporarySignedRoute(
+            'verification.verify',
+            $expires,
+            ['id' => $user->id, 'hash' => $hash]
+        );
+    }
+
+    public function verifyEmail(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            abort(404, 'User not found.');
+        }
+        // dd(sha1($user->getEmailForVerification()));
+        // dd($request->route('hash'));
+        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            abort(403, 'Invalid verification link.');
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return redirect('/login')->with('status', 'Email ini sudah diverifikasi'); // Atau URL tujuan setelah verifikasi
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        return redirect('/login')->with('success', 'Email berhasil diverifikasi');
+    }
+}
