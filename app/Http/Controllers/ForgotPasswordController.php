@@ -30,7 +30,6 @@ class ForgotPasswordController extends Controller
 
         if ($user) {
             // $resetLink = $this->generatePasswordResetLink($user);
-
             // Mail::to($user->email)->send(new ForgotPasswordEmail($resetLink));
 
             $status = Password::sendResetLink(
@@ -40,8 +39,6 @@ class ForgotPasswordController extends Controller
             return $status === Password::RESET_LINK_SENT
                 ? redirect('/login')->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
-
-            // return redirect('/login')->with('status', 'Kami telah mengirimkan link reset kata sandi ke email Anda.');
         } else {
             return back()->withErrors(['email' => 'User dengan email atau username tersebut tidak ditemukan.']);
         }
@@ -63,14 +60,10 @@ class ForgotPasswordController extends Controller
 
     public function showResetForm(Request $request, string $token, string $email)
     {
-        // $request->validate(['token' => 'required']);
-
         $user = User::where('email', $email)->first();
-
         if (!$user) {
             return back()->withErrors(['token' => 'Link reset password tidak valid.']);
         }
-
         return view('auth.reset-password', [
             'title' => 'Atur Ulang Kata Sandi',
             'user' => $user,

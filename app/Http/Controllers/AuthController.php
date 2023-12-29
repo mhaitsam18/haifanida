@@ -34,7 +34,6 @@ class AuthController extends Controller
     {
         if (!auth()->check()) {
             return redirect()->route('login');
-            // return redirect('/home');
         } else if (auth()->user()->role_id == 1) {
             return redirect('/admin/index');
         } else if (auth()->user()->role_id == 2) {
@@ -61,22 +60,19 @@ class AuthController extends Controller
     public function checkUsernameAvailability($username)
     {
         $isAvailable = User::where('username', $username)->count() === 0;
-
         return response()->json(['status' => $isAvailable ? 'available' : 'used']);
     }
 
     public function checkEmailAvailability($email)
     {
         $isAvailable = User::where('email', $email)->count() === 0;
-
         return response()->json(['status' => $isAvailable ? 'available' : 'used']);
     }
 
     public function register()
     {
         return view('auth.register', [
-            'title' => 'Registrasi',
-            'data_provinsi' => Provinsi::all(),
+            'title' => 'Registrasi'
         ]);
     }
 
@@ -89,11 +85,9 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
-
         // if ($request->file('foto')) {
         //     $validatedData['foto'] = $request->file('foto')->store('foto-profil');
         // };
-
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
@@ -102,7 +96,6 @@ class AuthController extends Controller
             'role_id' => 3,
             // 'foto' => $validatedData['foto'],
         ]);
-
         Member::create([
             'user_id' => $user->id,
             'nama_lengkap' => $validatedData['name'],
@@ -110,42 +103,27 @@ class AuthController extends Controller
             // 'foto' => $validatedData['foto'],
         ]);
         $verificationLink = $this->generateVerificationLink($user);
-
         Mail::to($user->email)->send(new VerificationEmail($verificationLink));
         return redirect('/login')->with('success', 'Email verifikasi telah dikirim. Silakan cek email Anda!');
     }
 
-
-    /**
-     * Handle an authentication attempt.
-     */
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email_or_username' => ['required'], // Ubah 'email' menjadi 'email_or_username'
+            'email_or_username' => ['required'],
             'password' => ['required'],
         ]);
-
-        // Periksa apakah 'email_or_username' adalah alamat email
         $isEmail = filter_var($credentials['email_or_username'], FILTER_VALIDATE_EMAIL);
-
-        // Jika itu adalah alamat email, cari user berdasarkan email, jika tidak cari berdasarkan username
         $user = $isEmail
             ? User::where('email', $credentials['email_or_username'])->first()
             : User::where('username', $credentials['email_or_username'])->first();
-
         if (!$user) {
             return back()->with('loginError', 'Email atau Username atau Password Salah');
         }
-
         if (!$user->hasVerifiedEmail()) {
             $user->sendEmailVerificationNotification();
             return back()->with('loginError', 'Email Anda belum diverifikasi, Silahkan cek Email Anda');
         }
-        // if ($user && !$user->email_verified_at && $user->role_id == 3) {
-        //     return back()->with('loginError', 'Email Anda belum diverifikasi, Silahkan cek Email Anda');
-        // }
-
         $credential['password'] = $request->input('password');
         if ($user->email) {
             $credential['email'] = $user->email;
@@ -154,8 +132,6 @@ class AuthController extends Controller
         } else {
             return back()->with('loginError', 'Email atau Username atau Password Salah');
         }
-
-
         $remember = $request->has('remember');
         if (Auth::attempt($credential, $remember)) {
             $request->session()->regenerate();
