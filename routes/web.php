@@ -4,11 +4,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgenController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JemaahController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,13 +45,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/check-username/{username}', [AuthController::class, 'checkUsernameAvailability']);
 Route::get('/check-email/{email}', [AuthController::class, 'checkEmailAvailability']);
 
-
-// Rute untuk mengirimkan email verifikasi
-Route::post('/send-verification-email', [AuthController::class, 'sendVerificationEmail'])->name('verification.send');
-// Rute untuk verifikasi email
-Route::get('/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-// Rute untuk verifikasi email
-Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verify'])->name('verify');
+Route::post('/send-verification-email', [VerificationController::class, 'sendVerificationEmail'])->name('verification.send');
+Route::get('/verify-email/{id}/{hash}', [VerificationController::class, 'verifyEmail'])->name('verification.verify');
 
 
 Route::middleware('guest')->group(function () {
@@ -56,16 +54,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'store'])->name('register.store');
-    Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-    Route::post('/forgot-password', [AuthController::class, 'sendForgotPasswordEmail'])->name('forgot-password');
+
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendForgotPasswordEmail'])->name('forgot-password');
+    Route::get('/reset-password/{token}/{email}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password/{user}', [ForgotPasswordController::class, 'updatePassword'])->name('password.update');
 
 
-
-    Route::get('/reset-password/{token}/{email}', [AuthController::class, 'showResetForm'])->name('password.reset');
-    Route::post('/reset-password/{user}', [AuthController::class, 'updatePassword'])->name('password.update');
-
-    Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 });
 
 

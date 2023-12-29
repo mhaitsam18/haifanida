@@ -12,8 +12,6 @@ use Illuminate\Auth\Events\Verified;
 
 class VerificationController extends Controller
 {
-
-
     /**
      * Mengirim email verifikasi ke user.
      *
@@ -28,9 +26,11 @@ class VerificationController extends Controller
 
         if ($user) {
             if ($user->email_verified_at === null) {
-                $verificationLink = $this->generateVerificationLink($user);
+                $user->sendEmailVerificationNotification();
 
-                Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+                // $verificationLink = $this->generateVerificationLink($user);
+
+                // Mail::to($user->email)->send(new VerificationEmail($verificationLink));
 
                 return response()->json(['message' => 'Email verifikasi telah dikirim. Silakan cek email Anda.'], 200);
             } else {

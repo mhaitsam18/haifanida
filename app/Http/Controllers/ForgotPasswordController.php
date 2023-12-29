@@ -21,77 +21,6 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
-    public function showResetForm(Request $request, string $token, string $email)
-    {
-        $request->validate(['token' => 'required']);
-
-        $user = User::where('email', $email)
-            ->where('password_reset_token', $token)
-            ->first();
-
-        if (!$user) {
-            return back()->withErrors(['token' => 'Link reset password tidak valid.']);
-        }
-
-        return view('auth.reset-password', [
-            'token' => $token,
-            'email' => $email,
-        ]);
-    }
-
-    function updatePassword(Request $request)
-    {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
-        ]);
-
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-
-                event(new PasswordReset($user));
-            }
-        );
-
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
-    }
-
-    public function resetPassword(Request $request, User $user)
-    {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-        ]);
-
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-
-                $user->save();
-
-                event(new PasswordReset($user));
-            }
-        );
-
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
-    }
-
-
     public function sendForgotPasswordEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
@@ -130,5 +59,49 @@ class ForgotPasswordController extends Controller
         );
 
         return $temporarySignedURL;
+    }
+
+    public function showResetForm(Request $request, string $token, string $email)
+    {
+        // $request->validate(['token' => 'required']);
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['token' => 'Link reset password tidak valid.']);
+        }
+
+        return view('auth.reset-password', [
+            'title' => 'Atur Ulang Kata Sandi',
+            'user' => $user,
+            'token' => $token,
+            'email' => $email,
+        ]);
+    }
+
+    function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
     }
 }
