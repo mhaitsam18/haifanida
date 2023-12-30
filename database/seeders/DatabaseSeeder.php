@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MaskapaiTableSeeder::class);
         $this->call(EkstraTableSeeder::class);
         $this->call(RoleTableSeeder::class);
+        $this->call(UserTableSeeder::class);
     }
 }
