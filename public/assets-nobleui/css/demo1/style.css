@@ -5,6 +5,12 @@
 * Licensed under ThemeForest License
 */
 :root {
+  --bs-haifa: #282461;
+  --bs-air: #4372A6;
+  --bs-langit: #329CD0;
+  --bs-api: #EE3724;
+  --bs-awan: #EAF5FA;
+  --bs-maroon: #8C0001;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -22420,6 +22426,10 @@ svg.icon-xxl {
 .main-wrapper .page-wrapper {
   min-height: 100vh;
   background: #f9fafb;
+    background-image: url('../../../assets/img/pattern/web-pattern-01-01-01.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   width: calc(100% - 240px);
   margin-left: 240px;
   display: flex;
@@ -24748,8 +24758,8 @@ div.apexcharts-canvas .apexcharts-yaxistooltip-right:after {
 }
 div.apexcharts-canvas .apexcharts-tooltip-marker {
   /*rtl:raw:
-  margin-right: 0; 
-  margin-left: 10px; 
+  margin-right: 0;
+  margin-left: 10px;
   */
 }
 
@@ -25577,7 +25587,7 @@ div.tox .tox-dialog__body {
 
 .wizard > .actions {
   /*rtl:raw:
-    text-align: left; 
+    text-align: left;
   */
 }
 
