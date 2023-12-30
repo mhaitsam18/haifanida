@@ -1,12 +1,31 @@
 @extends('admin.auth.layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- <style>
+        .btn-google {
+            background-color: #4285F4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-google:hover {
+            background-color: #357AE8;
+        }
+    </style> --}}
 @section('content')
     <div class="row w-100 mx-0 auth-page">
         <div class="col-md-8 col-xl-6 mx-auto">
-            <div class="card">
+            <div class="card d-flex align-items-center">
                 <div class="row">
                     <div class="col-md-4 pe-md-0">
-                        <div class="">
+                        <div class="text-center">
                             <img src="/assets/img/logos/logo-full.png" class="img-fluid" alt="">
                         </div>
                     </div>
@@ -37,7 +56,7 @@
                                 <div class="mb-3">
                                     <label for="email_or_username" class="form-label">Email atau
                                         Username</label>
-                                    <input type="email"
+                                    <input type="text"
                                         class="form-control @error('email_or_username') is-invalid @enderror"
                                         name="email_or_username" id="email_or_username" placeholder="Email atau Username"
                                         value="{{ old('email_or_username') }}">
@@ -66,11 +85,11 @@
                                     </label>
                                 </div>
                                 <div>
-                                    <button type="submit"
-                                        class="btn btn-primary me-2 mb-2 mb-md-0 text-white">Login</button>
+                                    <button type="submit" class="btn btn-haifa me-2 mb-2 mb-md-0 text-white">Login</button>
                                     <a href="{{ url('/auth/google') }}"
-                                        class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
-                                        <i class="btn-icon-prepend" data-feather="google"></i>
+                                        class="btn btn-outline-haifa btn-icon-text mb-2 mb-md-0">
+                                        {{-- <i class="btn-icon-prepend" data-feather="google"></i> --}}
+                                        <i class="fa-brands fa-google"></i>
                                         Login with google
                                     </a>
                                 </div>

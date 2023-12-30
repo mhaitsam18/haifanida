@@ -21,6 +21,13 @@ class ForgotPasswordController extends Controller
         ]);
     }
 
+    public function admin()
+    {
+        return view('admin.auth.forgot-password', [
+            'title' => 'Lupa Kata Sandi'
+        ]);
+    }
+
     public function sendForgotPasswordEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
