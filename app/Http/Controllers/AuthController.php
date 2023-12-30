@@ -56,6 +56,12 @@ class AuthController extends Controller
             'title' => 'login'
         ]);
     }
+    public function loginAdmin()
+    {
+        return view('admin.auth.index', [
+            'title' => 'login'
+        ]);
+    }
 
     public function checkUsernameAvailability($username)
     {
