@@ -100,8 +100,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+            Route::get('/index', [AdminController::class, 'index'])->name('superadmin.index');
             Route::middleware('superadmin')->group(function () {
-                Route::get('/index', [SuperAdminController::class, 'index'])->name('superadmin.index');
                 Route::resource('user-admin', AdminAdminController::class)->parameters([
                     'user-admin' => 'admin'
                 ]);
