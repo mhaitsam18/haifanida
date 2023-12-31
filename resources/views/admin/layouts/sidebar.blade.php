@@ -14,7 +14,16 @@
             use App\Models\Menu;
             $role['is_superadmin'] = auth()->user()->admin->is_superadmin;
             $role['is_adminkantor'] = auth()->user()->admin->kantor_id;
-            $menus = Menu::with('children')
+            $menus = Menu::with([
+                'children' => function ($query) {
+                    $query->where('is_active', true); // Filter active submenus
+                    $query->with([
+                        'children' => function ($query) {
+                            $query->where('is_active', true); // Filter active submenus
+                        },
+                    ]); // Filter active submenus
+                },
+            ])
                 ->where('is_active', true)
                 ->where('parent_id', null)
                 ->orderBy('order')
