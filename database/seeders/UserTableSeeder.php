@@ -48,6 +48,7 @@ class UserTableSeeder extends Seeder
                     Admin::create(
                         [
                             'user_id' => $user->id,
+                            'kantor_id' => 1,
                             'is_superadmin' => ($user->id == 1) ? 1 : 0
                         ]
                     );

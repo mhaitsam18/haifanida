@@ -13,7 +13,9 @@ class Menu extends Model
     protected $guarded = [
         'id'
     ];
-
+    protected $with = [
+        'children'
+    ];
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'menu_roles');
@@ -28,4 +30,13 @@ class Menu extends Model
     {
         return $this->hasMany(SubMenu::class);
     }
+    public function children()
+    {
+        return $this->hasMany(Menu::class, 'parent_id');
+    }
+
+    // public function hasChildren()
+    // {
+    //     return $this->children->count() > 0;
+    // }
 }

@@ -18,6 +18,12 @@ class RoleTableSeeder extends Seeder
             'author',
             'member',
             'agen',
+            'superadmin', //additional
+            'adminkantor', //additional
+            'jemaah', //additional
+            'pusat', //additional
+            'cabang', //additional
+            'perwakilan', //additional
         ];
 
         foreach ($roles as $role) {
