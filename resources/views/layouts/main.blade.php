@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="/assets-techex-demo/css/responsive.css">
 
     <link rel="stylesheet" href="/assets-techex-demo/css/theme-dark.css">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet" />
 
     <link rel="icon" type="image/png" href="/assets/img/logos/logo.png">
     <title>{{ $title }}</title>

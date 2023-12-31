@@ -13,6 +13,13 @@ class AdminController extends Controller
             'page' => 'index',
         ]);
     }
+    public function profile()
+    {
+        return view('admin.profile', [
+            'title' => 'Dashboard',
+            'page' => 'index',
+        ]);
+    }
     public function pusat()
     {
     }

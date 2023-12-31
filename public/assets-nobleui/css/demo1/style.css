@@ -26157,8 +26157,7 @@ div.tox .buy-now-wrapper .tox-button svg,
 
 .main-wrapper .page-wrapper {
     min-height: 100vh;
-    background: #f9fafb;
-    background-image: url('../../../assets/img/pattern/web-pattern-01-01-01.png');
+    background: rgba(249, 250, 251, 0.6) url('../../../assets/img/pattern/web-pattern-01-01-01.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -26168,6 +26167,8 @@ div.tox .buy-now-wrapper .tox-button svg,
     flex-direction: column;
     -webkit-transition: margin 0.1s ease, width 0.1s ease;
     transition: margin 0.1s ease, width 0.1s ease;
+    /* Tambahkan properti opacity */
+    /* opacity: 0.7; */
 }
 
 .main-wrapper .page-wrapper .page-content {

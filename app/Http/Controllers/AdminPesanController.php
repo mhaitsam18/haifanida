@@ -12,7 +12,11 @@ class AdminPesanController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.pesan.index', [
+            'title' => 'Saran dan Keluhan',
+            'page' => 'pesan',
+            'pesans' => Pesan::all(),
+        ]);
     }
 
     /**

@@ -1,6 +1,9 @@
 @extends('admin.auth.layouts.main')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="row w-100 mx-0 auth-page">
         <div class="col-md-8 col-xl-6 mx-auto">
             <div class="card d-flex align-items-center">
