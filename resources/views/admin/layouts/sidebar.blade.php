@@ -2,7 +2,6 @@
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
             <img src="/assets/img/logos/logo-lanskap-2.png" class="img-fluid" alt="">
-            {{-- Noble<span>UI</span> --}}
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -13,58 +12,6 @@
     <div class="sidebar-body">
         @php
             use App\Models\Menu;
-            // $menus = Menu::with('children')
-            //     ->where('is_active', true)
-            //     ->orderBy('order')
-            //     ->get();
-
-            // Import dependencies
-            // use Illuminate\Support\Facades\DB;
-
-            // // Get all menus
-            // $menus = DB::table('menus')
-            //     ->where('is_active', true)
-            //     ->orderBy('order')
-            //     ->get();
-
-            // // Loop through menus
-            // foreach ($menus as $menu) {
-            //     // Check if menu has parent
-            //     if ($menu->parent_id) {
-            //         // Get parent menu
-            //         $parentMenu = DB::table('menus')
-            //             ->where('id', $menu->parent_id)
-            //             ->first();
-
-            //         // Add menu to parent menu
-            //         $parentMenu->submenus[] = $menu;
-            //     } else {
-            //         // Add menu to root array
-            //         $root[] = $menu;
-            //     }
-            // }
-
-            // // Render sidebar menu
-            // echo view('sidebar', [
-            //     'menus' => $root,
-            // ]);
-
-            // // Import dependencies
-            // use Illuminate\Database\Eloquent\Builder;
-
-            // // Get all menus
-            // $menus = Menu::all();
-
-            // // Get menu hierarchy
-            // $menuHierarchy = $menus->toNestedSet();
-
-            // // Render sidebar menu
-            // echo view('sidebar', [
-            //     'menus' => $menuHierarchy,
-            // ]);
-
-            // Ambil role user yang sedang login
-            // Cari menu yang dapat dilihat oleh role tersebut
             $role['is_superadmin'] = auth()->user()->admin->is_superadmin;
             $role['is_adminkantor'] = auth()->user()->admin->kantor_id;
             $menus = Menu::with('children')
@@ -90,7 +37,6 @@
                     <li class="nav-item">
                         <a class="nav-link"
                             @if ($submenu1->has_dropdown) data-bs-toggle="collapse" href="#menu_{{ $submenu1->id }}" role="button" aria-expanded="false" aria-controls="menu_{{ $submenu1->id }}" @else href="{{ $submenu1->url }}" @endif>
-                            {{-- <i class="link-icon" data-feather="{{ $submenu1->icon }}"></i> --}}
                             <i class="link-icon {{ $submenu1->icon }}"></i>
                             <span class="link-title">{{ $submenu1->menu }}</span>
                             @if ($submenu1->has_dropdown)
@@ -104,8 +50,6 @@
                                         <li class="nav-item">
                                             <a href="{{ $submenu2->url }}" class="nav-link">
                                                 {{ $submenu2->menu }}
-                                                {{-- <i class="link-icon" data-feather="{{ $submenu2->icon }}"></i>
-                                                <span class="link-title">{{ $submenu2->menu }}</span> --}}
                                             </a>
                                         </li>
                                     @endforeach
@@ -117,64 +61,6 @@
             @endforeach
         </ul>
         {{-- <ul class="nav">
-            @foreach ($menus as $menu)
-                @if (!$menu->parent_id)
-                    <li class="nav-item nav-category">
-                        {{ $menu->menu }}
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a href="{{ $menu->url }}" class="nav-link">
-                            <i class="link-icon {{ $menu->icon }}"></i>
-                            <span class="link-title">{{ $menu->menu }}</span>
-                            @if ($menu->has_dropdown)
-                                <i class="link-arrow" data-feather="chevron-down"></i>
-                            @endif
-                        </a>
-                        @if ($menu->has_dropdown)
-                            <div class="collapse" id="{{ $menu->menu }}">
-                                <ul class="nav sub-menu">
-                                    @foreach ($menu->children as $child)
-                                        <li class="nav-item">
-                                            <a href="{{ $child->url }}" class="nav-link">
-                                                <i class="link-icon" data-feather="{{ $child->icon }}"></i>
-                                                <span class="link-title">{{ $child->menu }}</span>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                    </li>
-                @endif
-            @endforeach
-        </ul> --}}
-        {{-- <ul class="nav">
-            @foreach ($menus as $menu)
-                <li class="nav-item">
-                    <a href="{{ $menu->url }}" class="nav-link">
-                        <i class="link-icon" data-feather="{{ $menu->icon }}"></i>
-                        <span class="link-title">{{ $menu->name }}</span>
-                    </a>
-                    @if ($menu->hasChildren())
-                        <ul class="nav sub-menu">
-                            @foreach ($menu->children as $child)
-                                <li class="nav-item">
-                                    <a href="{{ $child->url }}" class="nav-link">
-                                        {{ $child->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </li>
-            @endforeach
-        </ul> --}}
-
-
-
-
-        <ul class="nav">
             <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
                 <a href="dashboard.html" class="nav-link">
@@ -204,7 +90,7 @@
                     </ul>
                 </div>
             </li>
-        </ul>
+        </ul> --}}
     </div>
 </nav>
 <nav class="settings-sidebar">
