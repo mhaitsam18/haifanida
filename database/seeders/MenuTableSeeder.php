@@ -15,141 +15,85 @@ class MenuTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Menu::create([
-            'menu' => 'Main',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '',
-            'icon' => '',
-            'order' => 1000,
-            'indelible' => 1
-        ]);
-        Menu::create([
-            'menu' => 'Superadmin',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '',
-            'icon' => '',
-            'order' => 2000,
-            'indelible' => 1
-        ]);
-        Menu::create([
-            'menu' => 'Adminkantor',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '',
-            'icon' => '',
-            'order' => 3000,
-            'indelible' => 1
-        ]);
-        Menu::create([
-            'menu' => 'Dashboard',
-            'parent_id' => '1',
-            'has_dropdown' => 0,
-            'is_active' => 1,
-            'url' => '/admin/index',
-            'icon' => 'fa-solid fa-tachograph-digital',
-            'order' => 1100
-        ]);
-        Menu::create([ //5
-            'menu' => 'Akun Saya',
-            'parent_id' => '1',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-user',
-            'order' => 1200
-        ]);
-        Menu::create([
-            'menu' => 'Autentikasi & Otorisasi',
-            'parent_id' => '2',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-face-smile',
-            'order' => 2100
-        ]);
-        Menu::create([
-            'menu' => 'Manajemen Pengguna',
-            'parent_id' => '2',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-users',
-            'order' => 2200
-        ]);
-        Menu::create([
-            'menu' => 'Manajemen Aplikasi',
-            'parent_id' => '2',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-regular fa-window-restore',
-            'order' => 2300
-        ]);
-        Menu::create([
-            'menu' => 'Manajemen Kantor',
-            'parent_id' => '2',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-building',
-            'order' => 2400
-        ]);
-        Menu::create([
-            'menu' => 'Master Data',
-            'parent_id' => '2',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-database',
-            'order' => 2500
-        ]);
-        Menu::create([
-            'menu' => "Kantor Saya",
-            'parent_id' => '3',
-            'has_dropdown' => 0,
-            'is_active' => 1,
-            'url' => '/admin/kantor-saya',
-            'icon' => 'fa-solid fa-building',
-            'order' => 3100
-        ]);
-        Menu::create([
-            'menu' => 'Manajemen Paket Wisata',
-            'parent_id' => '3',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-box-open',
-            'order' => 3200
-        ]);
-        Menu::create([
-            'menu' => "Manajemen Jema'ah",
-            'parent_id' => '3',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-person-praying',
-            'order' => 3300
-        ]);
-        Menu::create([
-            'menu' => "Manajemen Grup",
-            'parent_id' => '3',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-people-group',
-            'order' => 3400
-        ]);
-        Menu::create([
-            'menu' => "Pelayanan",
-            'parent_id' => '3',
-            'has_dropdown' => 1,
-            'is_active' => 1,
-            'url' => '#',
-            'icon' => 'fa-solid fa-handshake-angle',
-            'order' => 3500
-        ]);
+        $menus = ['Main', 'Superadmin', 'Adminkantor'];
+        foreach ($menus as $key => $value) {
+            Menu::create([
+                'menu' => $value,
+                'has_dropdown' => 1,
+                'is_active' => 1,
+                'order' => ($key + 1) . "000",
+                'indelible' => 1
+            ]);
+        }
+        $submenus1 = [
+            "Dashboard" => [
+                'parent_id' => 1,
+                'url' => '/admin/index',
+                'icon' => 'fa-solid fa-tachograph-digital',
+            ],
+            "Akun Saya" => [
+                'parent_id' => 1,
+                'icon' => 'fa-solid fa-user',
+            ],
+            "Autentikasi & Otorisasi" => [
+                'parent_id' => 2,
+                'icon' => 'fa-solid fa-face-smile',
+            ],
+            "Manajemen Pengguna" => [
+                'parent_id' => 2,
+                'icon' => 'fa-solid fa-user',
+            ],
+            "Manajemen Aplikasi" => [
+                'parent_id' => 2,
+                'icon' => 'fa-regular fa-window-restore',
+            ],
+            "Manajemen Kantor" => [
+                'parent_id' => 2,
+                'icon' => 'fa-solid fa-building',
+            ],
+            "Master Data" => [
+                'parent_id' => 2,
+                'icon' => 'fa-solid fa-database',
+            ],
+            "Kantor Saya" => [
+                'parent_id' => 3,
+                'url' => '/admin/kantor-saya',
+                'icon' => 'fa-solid fa-building',
+            ],
+            "Manajemen Paket Wisata" => [
+                'parent_id' => 3,
+                'icon' => 'fa-solid fa-box-open',
+            ],
+            "Manajemen Jema'ah" => [
+                'parent_id' => 3,
+                'icon' => 'fa-solid fa-person-praying',
+            ],
+            "Manajemen Grup" => [
+                'parent_id' => 3,
+                'icon' => 'fa-solid fa-people-group',
+            ],
+            "Pelayanan" => [
+                'parent_id' => 3,
+                'icon' => 'fa-solid fa-handshake-angle',
+            ]
+        ];
+        $index = 1;
+        $old_parent = 1;
+        foreach ($submenus1 as $key => $value) {
+            if ($value['parent_id'] != $old_parent) {
+                $old_parent = $value['parent_id'];
+                $index = 1;
+            }
+            Menu::create([
+                'menu' => $key,
+                'parent_id' => $value['parent_id'],
+                'has_dropdown' => isset($value['url']) ? 0 : 1,
+                'is_active' => 1,
+                'url' => isset($menuItem['url']) ? $menuItem['url'] : '#',
+                'icon' => $value['icon'],
+                'order' => $value['parent_id'] . $index++ . '00'
+            ]);
+        }
         Menu::create([
             'menu' => "Profil Saya",
             'parent_id' => '5',
