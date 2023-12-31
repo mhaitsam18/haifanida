@@ -12,7 +12,11 @@ class AdminAdminController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.admin.index', [
+            'title' => 'Data Admin',
+            'page' => 'admin',
+            'admins' => Admin::with('user')->get(),
+        ]);
     }
 
     /**

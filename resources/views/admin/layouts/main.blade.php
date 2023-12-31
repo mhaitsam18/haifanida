@@ -42,6 +42,7 @@ License: For each use you must have a valid license purchased only from above li
 
     <!-- Layout styles -->
     <link rel="stylesheet" href="/assets-nobleui/css/demo1/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <!-- End layout styles -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"

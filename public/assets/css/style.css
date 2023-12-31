@@ -1,0 +1,19 @@
+/* #background-haifa{
+    background-image: url('../img/app/latar.png');
+    background-size: cover;
+} */
+
+.button-a{
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0px;
+}
+
+.badge-a{
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}

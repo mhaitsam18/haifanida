@@ -12,7 +12,11 @@ class AdminAgenController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.agen.index', [
+            'title' => 'Data agen',
+            'page' => 'agen',
+            'agens' => Agen::with('user')->get(),
+        ]);
     }
 
     /**

@@ -12,7 +12,12 @@ class AdminAuthorController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('admin.author.index', [
+            'title' => 'Data Author',
+            'page' => 'author',
+            'authors' => Author::with('user')->get(),
+        ]);
     }
 
     /**

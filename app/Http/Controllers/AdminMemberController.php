@@ -12,7 +12,11 @@ class AdminMemberController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.member.index', [
+            'title' => 'Data member',
+            'page' => 'member',
+            'members' => Member::with('user')->get(),
+        ]);
     }
 
     /**

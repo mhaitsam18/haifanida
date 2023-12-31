@@ -12,7 +12,11 @@ class AdminRoleController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.role.index', [
+            'title' => 'Data role',
+            'page' => 'role',
+            'roles' => Role::all(),
+        ]);
     }
 
     /**
