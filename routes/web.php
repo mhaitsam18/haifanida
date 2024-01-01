@@ -99,9 +99,11 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::prefix('admin')->group(function () {
-            Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-            Route::get('/index', [AdminController::class, 'index'])->name('superadmin.index');
-            Route::get('/profile', [AdminController::class, 'profile'])->name('superadmin.index');
+            Route::get('/', [AdminController::class, 'index'])->name('admin');
+            Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
+            Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
+            Route::put('/profile/{user}', [AdminController::class, 'profileUpdate'])->name('admin.profile.update');
+            Route::put('/password/{user}', [AdminController::class, 'passwordUpdate'])->name('admin.password.update');
             Route::middleware('superadmin')->group(function () {
                 Route::resource('user-admin', AdminAdminController::class)->parameters([
                     'user-admin' => 'admin'

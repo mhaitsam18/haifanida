@@ -39,22 +39,93 @@
                         </div>
                     </div>
                     <div class="mt-2">
-                        <form>
+                        <form action="/admin/profile/{{ auth()->user()->id }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" name="id" value="{{ auth()->user()->id }}">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control @error('role') is-invalid @enderror"
+                                    name="name" id="name" value="{{ old('name', auth()->user()->name) }}"
+                                    placeholder="Nama Lengkap">
+                                @error('name')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="Email"
+                                    value="{{ old('email', auth()->user()->email) }}">
+                                @error('email')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    id="username" name="username" placeholder="Username"
+                                    value="{{ old('username', auth()->user()->username) }}">
+                                @error('username')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <button type="submit" class="btn btn-haifa">Submit</button>
+                            <div class="mb-3">
+                                <label for="phone_number" class="form-label">Nomor Ponsel</label>
+                                <input type="tel" class="form-control @error('phone_number') is-invalid @enderror"
+                                    id="phone_number" name="phone_number" placeholder="Nomor Ponsel"
+                                    value="{{ old('phone_number', auth()->user()->phone_number) }}"
+                                    pattern="^(?:\+|0)[0-9\s\-\*#\,]+$">
+                                @error('phone_number')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- <div class="mb-3">
+                                <label for="photo" class="form-label">Foto</label>
+                                <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                    id="photo" name="photo">
+                                <img src="{{ asset('storage/' . auth()->user()->photo) }}"
+                                    class="img-thumbnail img-preview">
+                                @error('photo')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div> --}}
+                            <div class="mb-3 row">
+                                <div class="col-sm-2">Foto</div>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <img src="{{ asset('storage/' . auth()->user()->photo) }}"
+                                                class="img-thumbnail img-preview">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                {{-- <label class="input-group-text" for="photo">Foto</label> --}}
+                                                <input type="file"
+                                                    class="form-control @error('photo') is-invalid @enderror img-input"
+                                                    id="photo" name="photo">
+                                                @error('photo')
+                                                    <div class="text-danger fs-6">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-haifa">Simpan</button>
                         </form>
                     </div>
                 </div>
@@ -88,22 +159,43 @@
                         </div>
                     </div>
                     <div class="d-flex flex-column">
-                        <form>
+                        <form action="/admin/password/{{ auth()->user()->id }}" method="post">
+                            @method('put')
+                            @csrf
+                            <input type="hidden" name="id" value="{{ auth()->user()->id }}">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <label for="current_password" class="form-label">Kata Sandi saat ini</label>
+                                <input type="password" class="form-control @error('current_password') is-invalid @enderror"
+                                    id="current_password" name="current_password" placeholder="Kata Sandi Saat Ini">
+                                @error('current_password')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="password" class="form-label">Kata Sandi Baru</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    id="password" name="password" placeholder="Kata Sandi Saat Ini">
+                                @error('password')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
+                                <input type="password"
+                                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                                    id="password_confirmation" name="password_confirmation"
+                                    placeholder="Konfirmasi Kata Sandi">
+                                @error('password_confirmation')
+                                    <div class="text-danger fs-6">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <button type="submit" class="btn btn-haifa">Submit</button>
+                            <button type="submit" class="btn btn-haifa">Simpan</button>
                         </form>
                     </div>
                 </div>
@@ -111,4 +203,20 @@
         </div>
 
     </div> <!-- row -->
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#photo').on('change', function() {
+                const file = $(this).prop('files')[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.img-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
 @endsection
