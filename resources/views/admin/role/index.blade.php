@@ -5,7 +5,7 @@
     @endphp
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">{{ $title }}</h4>
+            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
         </div>
         <div class="d-flex align-items-center flex-wrap text-nowrap">
         </div>
@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-0">Data Role</h6>
+                        <h6 class="card-title mb-0">{{ $title }}</h6>
                         <div class="dropdown mb-2">
                             <button class="btn p-0" type="button" id="tambah" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">

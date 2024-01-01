@@ -89,7 +89,7 @@ class MenuTableSeeder extends Seeder
                 'parent_id' => $value['parent_id'],
                 'has_dropdown' => isset($value['url']) ? 0 : 1,
                 'is_active' => 1,
-                'url' => isset($menuItem['url']) ? $menuItem['url'] : '#',
+                'url' => isset($value['url']) ? $value['url'] : '#',
                 'icon' => $value['icon'],
                 'order' => $value['parent_id'] . $index++ . '00'
             ]);

@@ -24,7 +24,10 @@ class AdminRoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.role.create', [
+            'title' => 'Tambah role',
+            'page' => 'role',
+        ]);
     }
 
     /**
@@ -32,7 +35,15 @@ class AdminRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'role' => 'required',
+        ]);
+
+        Role::create([
+            'role' => $request->role,
+        ]);
+
+        return redirect('/admin/role')->with('success', 'Data Role berhasil ditambahkan');
     }
 
     /**
@@ -40,7 +51,11 @@ class AdminRoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return view('admin.role.show', [
+            'title' => 'Detail role',
+            'page' => 'role',
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -48,7 +63,11 @@ class AdminRoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('admin.role.edit', [
+            'title' => 'Detail role',
+            'page' => 'role',
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -56,7 +75,13 @@ class AdminRoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'role' => 'required',
+        ]);
+        $role->update([
+            'role' => $request->role,
+        ]);
+        return redirect('/admin/role')->with('success', 'Data Role berhasil diubah');
     }
 
     /**
@@ -64,6 +89,7 @@ class AdminRoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return redirect('/admin/role')->with('success', 'Data Role berhasil dihapus');
     }
 }
