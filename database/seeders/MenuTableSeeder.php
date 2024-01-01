@@ -58,7 +58,7 @@ class MenuTableSeeder extends Seeder
             "Kantor Saya" => [
                 'parent_id' => 3,
                 'url' => '/admin/kantor-saya',
-                'icon' => 'fa-solid fa-building',
+                'icon' => 'fa-solid fa-house-user',
             ],
             "Manajemen Paket Wisata" => [
                 'parent_id' => 3,
