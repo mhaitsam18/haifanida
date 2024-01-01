@@ -38,11 +38,9 @@ class AdminRoleController extends Controller
         $request->validate([
             'role' => 'required',
         ]);
-
         Role::create([
             'role' => $request->role,
         ]);
-
         return redirect('/admin/role')->with('success', 'Data Role berhasil ditambahkan');
     }
 

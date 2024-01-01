@@ -12,7 +12,11 @@ class AdminMenuController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.menu.index', [
+            'title' => 'Data Menu',
+            'page' => 'menu',
+            'menus' => Menu::all(),
+        ]);
     }
 
     /**
@@ -20,7 +24,10 @@ class AdminMenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.menu.create', [
+            'title' => 'Tambah Menu',
+            'page' => 'menu',
+        ]);
     }
 
     /**
@@ -28,7 +35,17 @@ class AdminMenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'parent_id' => 'nullable',
+            'menu' => 'required',
+            'has_dropdown' => 'nullable',
+            'is_active' => 'nullable',
+            'url' => 'nullable',
+            'icon' => 'nullable',
+            'order' => 'required',
+        ]);
+        menu::create($validateData);
+        return redirect('/admin/menu')->with('success', 'Data Menu berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +53,11 @@ class AdminMenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        //
+        return view('admin.menu.show', [
+            'title' => 'Detail Menu',
+            'page' => 'menu',
+            'menu' => $menu,
+        ]);
     }
 
     /**
@@ -44,7 +65,11 @@ class AdminMenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        return view('admin.menu.edit', [
+            'title' => 'Detail Menu',
+            'page' => 'menu',
+            'menu' => $menu,
+        ]);
     }
 
     /**
@@ -52,7 +77,17 @@ class AdminMenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        //
+        $validateData = $request->validate([
+            'parent_id' => 'nullable',
+            'menu' => 'required',
+            'has_dropdown' => 'nullable',
+            'is_active' => 'nullable',
+            'url' => 'nullable',
+            'icon' => 'nullable',
+            'order' => 'required',
+        ]);
+        $menu->update($validateData);
+        return redirect('/admin/menu')->with('success', 'Data Menu berhasil diubah');
     }
 
     /**
@@ -60,6 +95,7 @@ class AdminMenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+        return redirect('/admin/menu')->with('success', 'Data Menu berhasil dihapus');
     }
 }
