@@ -34,7 +34,7 @@
     <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet" />
 
     <link rel="icon" type="image/png" href="/assets/img/logos/logo.png">
-    <title>{{ $title }}</title>
+    <title>{{ $title }} | Haifa Nida Wisata</title>
     @yield('style')
 </head>
 

@@ -34,7 +34,10 @@ use App\Http\Controllers\AuthorKajianController;
 use App\Http\Controllers\AuthorKontenController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HomeArtikelController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeGaleriController;
+use App\Http\Controllers\HomeKajianController;
 use App\Http\Controllers\JemaahController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProvinsiController;
@@ -64,8 +67,30 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/coba', [AuthController::class, 'coba'])->name('coba');
 
 
+
+//untuk semua user
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+
+
+Route::get('/umroh', [HomeController::class, 'umroh'])->name('home.umroh');
+Route::get('/haji', [HomeController::class, 'haji'])->name('home.haji');
+Route::get('/wisata-halal', [HomeController::class, 'wisataHalal'])->name('home.wisata-halal');
+
+Route::get('/galeri', [HomeGaleriController::class, 'index'])->name('home.galeri');
+Route::get('/artikel', [HomeArtikelController::class, 'index'])->name('home.artikel');
+Route::get('/kajian', [HomeKajianController::class, 'index'])->name('home.kajian');
+
+Route::get('/profil', [HomeController::class, 'profil'])->name('home.profil');
+Route::get('/visi-misi', [HomeController::class, 'visiMisi'])->name('home.visi-misi');
+Route::get('/kantor-kami', [HomeController::class, 'kantorKami'])->name('home.kantor-kami');
+
+Route::get('/faq', [HomeController::class, 'faq'])->name('home.faq');
+Route::get('/panduan', [HomeController::class, 'panduan'])->name('home.panduan');
+Route::get('/kontak-kami', [HomeController::class, 'kontakKami'])->name('home.kontak-kami');
+
+
+
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('get.logout');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -77,6 +102,9 @@ Route::post('/send-verification-email', [VerificationController::class, 'sendVer
 Route::get('/verify-email/{id}/{hash}', [VerificationController::class, 'verifyEmail'])->name('verification.verify');
 
 
+
+
+//untuk User yang belum terautentikasi
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/login-admin', [AuthController::class, 'loginAdmin'])->name('login-admin');
@@ -96,6 +124,8 @@ Route::middleware('guest')->group(function () {
 });
 
 
+
+//untuk User yang sudah terautentikasi
 Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::prefix('admin')->group(function () {
