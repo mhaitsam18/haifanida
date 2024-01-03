@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('provinsi')->nullable();
             $table->string('kode_pos')->nullable();
             $table->string('nomor_telepon')->nullable();
+            $table->string('email')->nullable();
             $table->enum('tingkat_pendidikan', ['SD', 'SLTP', 'SLTA', 'D1/D2/D3', 'D4/S1', 'S2', 'S3'])->nullable();
             $table->string('pekerjaan')->nullable();
             $table->string('nomor_paspor')->nullable();

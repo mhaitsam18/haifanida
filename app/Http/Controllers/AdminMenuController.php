@@ -66,7 +66,7 @@ class AdminMenuController extends Controller
     public function edit(Menu $menu)
     {
         return view('admin.menu.edit', [
-            'title' => 'Detail Menu',
+            'title' => 'Edit Menu',
             'page' => 'menu',
             'menu' => $menu,
         ]);

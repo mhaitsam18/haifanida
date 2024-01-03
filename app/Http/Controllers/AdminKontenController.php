@@ -12,7 +12,11 @@ class AdminKontenController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.konten.index', [
+            'title' => 'Data konten',
+            'page' => 'konten',
+            'kontens' => Konten::all(),
+        ]);
     }
 
     /**
@@ -20,7 +24,10 @@ class AdminKontenController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.konten.create', [
+            'title' => 'Data konten',
+            'page' => 'konten',
+        ]);
     }
 
     /**
@@ -28,7 +35,18 @@ class AdminKontenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'user_id' => 'nullable',
+            'judul' => 'required',
+            'isi_konten' => 'required',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3145728',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('konten-gambar');
+            $validateData['gambar'] = $path;
+        }
+        Konten::create($validateData);
+        return redirect('/admin/konten')->with('success', 'Data Konten berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +54,11 @@ class AdminKontenController extends Controller
      */
     public function show(Konten $konten)
     {
-        //
+        return view('admin.konten.show', [
+            'title' => 'Detail Konten',
+            'page' => 'konten',
+            'konten' => $konten,
+        ]);
     }
 
     /**
@@ -44,7 +66,11 @@ class AdminKontenController extends Controller
      */
     public function edit(Konten $konten)
     {
-        //
+        return view('admin.konten.edit', [
+            'title' => 'Ubah Konten',
+            'page' => 'konten',
+            'konten' => $konten,
+        ]);
     }
 
     /**
@@ -52,7 +78,18 @@ class AdminKontenController extends Controller
      */
     public function update(Request $request, Konten $konten)
     {
-        //
+        $validateData = $request->validate([
+            'user_id' => 'nullable',
+            'judul' => 'required',
+            'isi_konten' => 'required',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3145728',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('konten-gambar');
+            $validateData['gambar'] = $path;
+        }
+        $konten->update($validateData);
+        return redirect('/admin/konten')->with('success', 'Data Konten berhasil diperbarui');
     }
 
     /**
@@ -60,6 +97,7 @@ class AdminKontenController extends Controller
      */
     public function destroy(Konten $konten)
     {
-        //
+        $konten->delete();
+        return redirect('/admin/konten')->with('success', 'Data Konten berhasil dihapus');
     }
 }
