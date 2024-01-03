@@ -27,6 +27,7 @@ class AdminMenuController extends Controller
         return view('admin.menu.create', [
             'title' => 'Tambah Menu',
             'page' => 'menu',
+            'menus' => Menu::all(),
         ]);
     }
 
@@ -57,6 +58,7 @@ class AdminMenuController extends Controller
             'title' => 'Detail Menu',
             'page' => 'menu',
             'menu' => $menu,
+            'menus' => Menu::all(),
         ]);
     }
 

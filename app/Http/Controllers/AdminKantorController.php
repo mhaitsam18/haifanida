@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kabupaten;
 use App\Models\Kantor;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 
 class AdminKantorController extends Controller
@@ -12,7 +14,11 @@ class AdminKantorController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.kantor.index', [
+            'title' => 'Data Kantor',
+            'page' => 'kantor',
+            'kantors' => Kantor::all(),
+        ]);
     }
 
     /**
@@ -20,7 +26,12 @@ class AdminKantorController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.kantor.create', [
+            'title' => 'Tambah kantor',
+            'page' => 'kantor',
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => Kabupaten::all(),
+        ]);
     }
 
     /**
@@ -28,7 +39,18 @@ class AdminKantorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'nama_kantor' => 'required',
+            'nama_ketua' => 'required',
+            'kontak_kantor' => 'nullable',
+            'alamat_kantor' => 'required',
+            'kabupaten_id' => 'required',
+            'kecamatan' => 'nullable',
+            'kode_pos' => 'nullable',
+            'jenis_kantor' => 'nullable',
+        ]);
+        Kantor::create($validateData);
+        return redirect('/admin/kantor')->with('success', 'Data Kantor berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +58,11 @@ class AdminKantorController extends Controller
      */
     public function show(Kantor $kantor)
     {
-        //
+        return view('admin.kantor.show', [
+            'title' => 'Detail Kantor',
+            'page' => 'kantor',
+            'kantor' => $kantor,
+        ]);
     }
 
     /**
@@ -44,7 +70,13 @@ class AdminKantorController extends Controller
      */
     public function edit(Kantor $kantor)
     {
-        //
+        return view('admin.kantor.edit', [
+            'title' => 'Edit kantor',
+            'page' => 'kantor',
+            'kantor' => $kantor,
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => Kabupaten::all(),
+        ]);
     }
 
     /**
@@ -52,7 +84,18 @@ class AdminKantorController extends Controller
      */
     public function update(Request $request, Kantor $kantor)
     {
-        //
+        $validateData = $request->validate([
+            'nama_kantor' => 'required',
+            'nama_ketua' => 'required',
+            'kontak_kantor' => 'nullable',
+            'alamat_kantor' => 'required',
+            'kabupaten_id' => 'required',
+            'kecamatan' => 'nullable',
+            'kode_pos' => 'nullable',
+            'jenis_kantor' => 'nullable',
+        ]);
+        $kantor->update($validateData);
+        return redirect('/admin/kantor')->with('success', 'Data kantor berhasil diubah');
     }
 
     /**
@@ -60,6 +103,7 @@ class AdminKantorController extends Controller
      */
     public function destroy(Kantor $kantor)
     {
-        //
+        $kantor->delete();
+        return redirect('/admin/kantor')->with('success', 'Data kantor berhasil dihapus');
     }
 }
