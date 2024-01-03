@@ -87,6 +87,8 @@ class AdminKontenController extends Controller
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('konten-gambar');
             $validateData['gambar'] = $path;
+        } else {
+            $validateData['gambar'] = $konten->gambar;
         }
         $konten->update($validateData);
         return redirect('/admin/konten')->with('success', 'Data Konten berhasil diperbarui');

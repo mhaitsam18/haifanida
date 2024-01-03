@@ -48,7 +48,7 @@ class MaskapaiTableSeeder extends Seeder
                 'kode_maskapai' => $newCode,
                 'nama_maskapai' => $airline['airline_name'],
                 'negara_asal' => $translatedCountry,
-                'logo' => strtolower($newCode) . '.png',
+                'logo' => 'maskapai-logo/' . strtolower($newCode) . '.png',
                 'deskripsi' => 'Maskapai penerbangan ' . $translatedType . ' dari ' . $translatedCountry,
                 'created_at' => now(),
                 'updated_at' => now(),

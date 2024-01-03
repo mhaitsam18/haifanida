@@ -12,7 +12,11 @@ class AdminMaskapaiController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.maskapai.index', [
+            'title' => 'Data Maskapai',
+            'page' => 'maskapai',
+            'maskapais' => Maskapai::all(),
+        ]);
     }
 
     /**
@@ -20,7 +24,11 @@ class AdminMaskapaiController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.maskapai.create', [
+            'title' => 'Tambah Maskapai',
+            'page' => 'maskapai',
+        ]);
     }
 
     /**
@@ -28,7 +36,20 @@ class AdminMaskapaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'kode_maskapai' => 'required|unique:maskapai',
+            'nama_maskapai' => 'required|string',
+            'negara_asal' => 'required|integer',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'deskripsi' => 'nullable|string',
+        ]);
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('maskapai-logo');
+            $validateData['logo'] = $path;
+        }
+
+        Maskapai::create($validateData);
+        return redirect('/admin/maskapai')->with('success', 'Data Maskapai berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +57,11 @@ class AdminMaskapaiController extends Controller
      */
     public function show(Maskapai $maskapai)
     {
-        //
+        return view('admin.maskapai.show', [
+            'title' => 'Detail Maskapai',
+            'page' => 'maskapai',
+            'maskapai' => $maskapai,
+        ]);
     }
 
     /**
@@ -44,7 +69,11 @@ class AdminMaskapaiController extends Controller
      */
     public function edit(Maskapai $maskapai)
     {
-        //
+        return view('admin.maskapai.edit', [
+            'title' => 'Edit Maskapai',
+            'page' => 'maskapai',
+            'maskapai' => $maskapai,
+        ]);
     }
 
     /**
@@ -52,14 +81,33 @@ class AdminMaskapaiController extends Controller
      */
     public function update(Request $request, Maskapai $maskapai)
     {
-        //
+        $validateData = $request->validate([
+            'kode_maskapai' => 'required|unique:maskapais,kode_maskapai,' . $maskapai->id,
+            'nama_maskapai' => 'required|string',
+            'negara_asal' => 'required|integer',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('maskapai-logo');
+            $validateData['logo'] = $path;
+        } else {
+            $validateData['logo'] = $maskapai->logo;
+        }
+
+        $maskapai->update($validateData);
+
+        return redirect('/admin/maskapai')->with('success', 'Data Maskapai berhasil diubah');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Maskapai $maskapai)
     {
-        //
+        $maskapai->delete();
+        return redirect('/admin/maskapai')->with('success', 'Data Maskapai berhasil dihapus');
     }
 }

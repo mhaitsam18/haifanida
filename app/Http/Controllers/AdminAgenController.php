@@ -108,6 +108,8 @@ class AdminAgenController extends Controller
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('user-photo');
             $validateUser['photo'] = $path;
+        } else {
+            $validateUser['photo'] = $user->photo;
         }
 
         if (!empty($validateUser['password'])) {

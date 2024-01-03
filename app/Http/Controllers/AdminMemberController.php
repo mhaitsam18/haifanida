@@ -178,6 +178,9 @@ class AdminMemberController extends Controller
         if ($request->hasFile('photo')) {
             $validateUser['photo'] = $request->file('photo')->store('user-photo');
             $validateMember['foto'] = $request->file('photo')->store('member-foto');
+        } else {
+            $validateUser['photo'] = $user->photo;
+            $validateMember['foto'] = $member->foto;
         }
 
         if (!empty($validateUser['password'])) {

@@ -12,7 +12,11 @@ class AdminHotelController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.hotel.index', [
+            'title' => 'Data Hotel',
+            'page' => 'hotel',
+            'hotels' => Hotel::all(),
+        ]);
     }
 
     /**
@@ -20,7 +24,10 @@ class AdminHotelController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.hotel.create', [
+            'title' => 'Tambah Hotel',
+            'page' => 'hotel',
+        ]);
     }
 
     /**
@@ -28,7 +35,25 @@ class AdminHotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'kode_hotel' => 'nullable',
+            'nama_hotel' => 'required|string',
+            'bintang' => 'required|integer',
+            'bintang_setaraf' => 'nullable|integer',
+            'kota' => 'required|string',
+            'negara' => 'required|string',
+            'alamat' => 'nullable|string',
+            'link_gmaps' => 'nullable|url',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'deskripsi' => 'nullable|string',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('hotel-gambar');
+            $validateData['gambar'] = $path;
+        }
+
+        Hotel::create($validateData);
+        return redirect('/admin/hotel')->with('success', 'Data Hotel berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +61,11 @@ class AdminHotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        return view('admin.hotel.show', [
+            'title' => 'Detail Hotel',
+            'page' => 'hotel',
+            'hotel' => $hotel,
+        ]);
     }
 
     /**
@@ -44,7 +73,11 @@ class AdminHotelController extends Controller
      */
     public function edit(Hotel $hotel)
     {
-        //
+        return view('admin.hotel.edit', [
+            'title' => 'Edit Hotel',
+            'page' => 'hotel',
+            'hotel' => $hotel,
+        ]);
     }
 
     /**
@@ -52,7 +85,26 @@ class AdminHotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        //
+        $validateData = $request->validate([
+            'kode_hotel' => 'nullable',
+            'nama_hotel' => 'required|string',
+            'bintang' => 'required|integer',
+            'bintang_setaraf' => 'nullable|integer',
+            'kota' => 'required|string',
+            'negara' => 'required|string',
+            'alamat' => 'nullable|string',
+            'link_gmaps' => 'nullable|url',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'deskripsi' => 'nullable|string',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('hotel-gambar');
+            $validateData['gambar'] = $path;
+        } else {
+            $validateData['gambar'] = $hotel->gambar;
+        }
+        $hotel->update($validateData);
+        return redirect('/admin/hotel')->with('success', 'Data Hotel berhasil diubah');
     }
 
     /**
@@ -60,6 +112,7 @@ class AdminHotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        return redirect('/admin/hotel')->with('success', 'Data Hotel berhasil dihapus');
     }
 }
