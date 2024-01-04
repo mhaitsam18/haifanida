@@ -54,10 +54,10 @@
                                                 class="img-thumbnail img-fluid"></td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/member/{{ $member->id }}"
-                                                    class="badge bg-haifa d-inline-block m-1">Detail</a>
                                                 <a href="/admin/member/{{ $member->id }}/edit"
-                                                    class="badge bg-success d-inline-block m-1">Edit</a>
+                                                    class="badge bg-haifa d-inline-block m-1">Detail</a>
+                                                {{-- <a href="/admin/member/{{ $member->id }}/edit"
+                                                    class="badge bg-success d-inline-block m-1">Edit</a> --}}
                                                 <form action="/admin/member/{{ $member->id }}" method="post">
                                                     @method('delete')
                                                     @csrf

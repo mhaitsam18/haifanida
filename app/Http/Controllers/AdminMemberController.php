@@ -150,7 +150,7 @@ class AdminMemberController extends Controller
         ]);
 
         $validateMember = $request->validate([
-            'nomor_ktp' => 'required|string',
+            'nomor_ktp' => 'nullable|string',
             'nama_sesuai_paspor' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
@@ -199,7 +199,7 @@ class AdminMemberController extends Controller
 
         $member->update($validateMember);
 
-        return redirect('/admin/member')->with('success', 'Data Member berhasil ditambahkan');
+        return back()->with('success', 'Data Member berhasil diperbarui');
     }
 
     /**
