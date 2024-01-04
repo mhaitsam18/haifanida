@@ -35,6 +35,11 @@ class MenuTableSeeder extends Seeder
                 'parent_id' => 1,
                 'icon' => 'fa-solid fa-user',
             ],
+            "Halaman Web" => [
+                'parent_id' => 1,
+                'url' => '/home',
+                'icon' => 'fa-solid fa-globe',
+            ],
             "Autentikasi & Otorisasi" => [
                 'parent_id' => 2,
                 'icon' => 'fa-solid fa-face-smile',

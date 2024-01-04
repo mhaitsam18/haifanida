@@ -139,6 +139,13 @@
                                         Wisata Halal
                                     </a>
                                 </li>
+                                @can('admin')
+                                    <li class="nav-item">
+                                        <a href="/admin/index" class="nav-link">
+                                            Halaman Admin
+                                        </a>
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
                         <li class="nav-item">
