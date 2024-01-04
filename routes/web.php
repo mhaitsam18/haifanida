@@ -180,6 +180,7 @@ Route::middleware('auth')->group(function () {
                 Route::resource('pesan', AdminPesanController::class)->parameters([
                     'pesan' => 'pesan'
                 ]);;
+                Route::post('pesan/kirim-email', [AdminPesanController::class, 'kirimEmail'])->name('admin.pesan.kirim-email');
             });
             Route::middleware('adminkantor')->group(function () {
                 Route::middleware('pusat')->group(function () {

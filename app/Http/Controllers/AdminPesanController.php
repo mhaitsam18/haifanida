@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendingEmail;
 use App\Models\Pesan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AdminPesanController extends Controller
 {
@@ -17,6 +19,17 @@ class AdminPesanController extends Controller
             'page' => 'pesan',
             'pesans' => Pesan::all(),
         ]);
+    }
+
+    public function kirimEmail(Request $request)
+    {
+        $request->validate([
+            'subjek' => 'required',
+            'email_pengirim' => 'required|email',
+            'pesan' => 'required|string',
+        ]);
+        Mail::to($request->email_pengirim)->send(new SendingEmail("Haifa Nida Menjawab : " . $request->subjek, $request->pesan));
+        return back()->with('success', 'Email berhasil dikirim');
     }
 
     /**

@@ -10,20 +10,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VerificationEmail extends Mailable
+class SendingEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $verificationLink;
+    public $subjek;
+    public $pesan;
 
     /**
      * Create a new message instance.
-     *
-     * @param string $verificationLink
      */
-    public function __construct($verificationLink)
+    public function __construct($subjek, $pesan)
     {
-        $this->verificationLink = $verificationLink;
+        $this->subjek = $subjek;
+        $this->pesan = $pesan;
     }
 
     /**
@@ -33,7 +33,7 @@ class VerificationEmail extends Mailable
     {
         return new Envelope(
             from: new Address('no-reply@haifanida.com', 'Haifa Nida Wisata'),
-            subject: 'Verifikasi Email Anda di Haifa Nida Wisata',
+            subject: $this->subjek,
         );
     }
 
@@ -43,7 +43,7 @@ class VerificationEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.verification', // Ubah 'view.name' sesuai dengan nama file view Anda,
+            view: 'emails.sending-email',
         );
     }
 
