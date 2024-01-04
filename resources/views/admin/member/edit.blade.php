@@ -95,15 +95,36 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Kata Sandi Baru</label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" name="password" placeholder="Kata Sandi Saat Ini">
+                                    @error('password')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
+                                    <input type="password"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        id="password_confirmation" name="password_confirmation"
+                                        placeholder="Konfirmasi Kata Sandi">
+                                    @error('password_confirmation')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <h4 class="mb-3">Biodata Member</h4>
                                 <div class="mb-3">
                                     <label for="nomor_ktp" class="form-label">Nomor KTP</label>
                                     <input type="number" class="form-control @error('nomor_ktp') is-invalid @enderror"
-                                        id="nomor_ktp" name="nomor_ktp" value="{{ old('nomor_ktp', $member->nomor_ktp) }}"
-                                        placeholder="Nomor KTP">
+                                        id="nomor_ktp" name="nomor_ktp"
+                                        value="{{ old('nomor_ktp', $member->nomor_ktp) }}" placeholder="Nomor KTP">
                                     @error('nomor_ktp')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
