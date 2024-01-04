@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agen;
+use App\Models\Kantor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +30,7 @@ class AdminAgenController extends Controller
         return view('admin.agen.create', [
             'title' => 'Tambah Agen',
             'page' => 'agen',
+            'kantors' => Kantor::all(),
         ]);
     }
 
@@ -82,6 +84,7 @@ class AdminAgenController extends Controller
             'title' => 'Edit Data Agen',
             'page' => 'agen',
             'agen' => $agen,
+            'kantors' => Kantor::all(),
         ]);
     }
 

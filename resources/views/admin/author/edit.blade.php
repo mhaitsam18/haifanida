@@ -17,29 +17,106 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    {{-- <form action="/admin/index/{{ $index->id }}" method="post">
+                    <form action="/admin/author/{{ $author->id }}" method="post" enctype="multipart/form-data">
                         @method('put')
                         @csrf
+                        <input type="hidden" name="id" id="id" value="{{ $author->id }}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label for="index" class="form-label">index</label>
-                                    <input type="text" class="form-control  @error('index') is-invalid @enderror"
-                                        id="index" name="index" value="{{ old('index', $index->index) }}"
-                                        placeholder="index">
-                                    @error('index')
+                                    <label for="name" class="form-label">Nama Lengkap / Nama Pena</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="name" name="name" value="{{ old('name', $author->user->name) }}"
+                                        placeholder="Nama Lengkap / Nama Pena">
+                                    @error('name')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" name="email" value="{{ old('email', $author->user->email) }}"
+                                        placeholder="Email">
+                                    <span id="email-availability"></span>
+                                    @error('email')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                        id="username" name="username"
+                                        value="{{ old('username', $author->user->username) }}" placeholder="Username">
+                                    <span id="username-availability"></span>
+                                    @error('username')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone_number" class="form-label">Nomor Ponsel</label>
+                                    <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
+                                        id="phone_number" name="phone_number"
+                                        value="{{ old('phone_number', $author->user->phone_number) }}"
+                                        placeholder="Nomor Ponsel">
+                                    @error('phone_number')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 row">
+                                    <div class="col-sm-2">Foto</div>
+                                    <div class="col-sm-10">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <img src="{{ asset('storage/' . $author->user->photo) }}"
+                                                    class="img-thumbnail img-preview">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    {{-- <label class="input-group-text" for="photo">Foto</label> --}}
+                                                    <input type="file"
+                                                        class="form-control @error('photo') is-invalid @enderror img-input"
+                                                        id="photo" name="photo">
+                                                    @error('photo')
+                                                        <div class="text-danger fs-6">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/index" class="btn btn-secondary float-end m-2">Kembali</a>
+                                <a href="/admin/author" class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
                         </div>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
         </div>
     </div> <!-- row -->
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#photo').on('change', function() {
+                const file = $(this).prop('files')[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.img-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Kantor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +30,7 @@ class AdminAdminController extends Controller
         return view('admin.admin.create', [
             'title' => 'Tambah Admin',
             'page' => 'admin',
+            'kantors' => Kantor::all(),
         ]);
     }
 
@@ -91,6 +93,7 @@ class AdminAdminController extends Controller
             'title' => 'Edit Data Admin',
             'page' => 'admin',
             'admin' => $admin,
+            'kantors' => Kantor::all(),
         ]);
     }
 

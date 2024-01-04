@@ -97,6 +97,20 @@
                                             <span id="email-availability"></span>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 ">
+                                        <div class="form-group">
+                                            <input type="text"
+                                                class="form-control @error('phone_number') is-invalid @enderror"
+                                                name="phone_number" id="phone_number" required
+                                                data-error="Masukkan phone_number" placeholder="Nomor Ponsel"
+                                                value="{{ old('phone_number') }}">
+                                            @error('phone_number')
+                                                <div class="text-danger fs-6">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                     <!-- ... -->
                                     <div class="col-12">
                                         <div class="form-group">

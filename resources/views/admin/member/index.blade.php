@@ -35,6 +35,10 @@
                                 <tr>
                                     <th class="pt-0">#</th>
                                     <th class="pt-0">Nama</th>
+                                    <th class="pt-0">Email</th>
+                                    <th class="pt-0">Username</th>
+                                    <th class="pt-0">Nomor Ponsel</th>
+                                    <th class="pt-0">Foto</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -43,15 +47,22 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $member->user->name }}</td>
+                                        <td>{{ $member->user->email }}</td>
+                                        <td>{{ $member->user->username }}</td>
+                                        <td>{{ $member->user->phone_number }}</td>
+                                        <td> <img src="{{ asset('storage/' . $member->user->photo) }}" alt="Foto"
+                                                class="img-thumbnail img-fluid"></td>
                                         <td>
                                             <div class="d-flex align-items-center">
+                                                <a href="/admin/member/{{ $member->id }}"
+                                                    class="badge bg-haifa d-inline-block m-1">Detail</a>
                                                 <a href="/admin/member/{{ $member->id }}/edit"
-                                                    class="badge bg-success d-inline-block">Edit</a>
+                                                    class="badge bg-success d-inline-block m-1">Edit</a>
                                                 <form action="/admin/member/{{ $member->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
                                                 </form>
                                             </div>
                                         </td>

@@ -35,6 +35,11 @@
                                 <tr>
                                     <th class="pt-0">#</th>
                                     <th class="pt-0">Nama</th>
+                                    <th class="pt-0">Email</th>
+                                    <th class="pt-0">Username</th>
+                                    <th class="pt-0">Nomor Ponsel</th>
+                                    <th class="pt-0">Kantor</th>
+                                    <th class="pt-0">Foto</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -43,6 +48,12 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $agen->user->name }}</td>
+                                        <td>{{ $agen->user->email }}</td>
+                                        <td>{{ $agen->user->username }}</td>
+                                        <td>{{ $agen->user->phone_number }}</td>
+                                        <td> <img src="{{ asset('storage/' . $agen->user->photo) }}" alt="Foto"
+                                                class="img-thumbnail img-fluid"></td>
+                                        <td>{{ $agen->kantor->nama_kantor }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/agen/{{ $agen->id }}/edit"

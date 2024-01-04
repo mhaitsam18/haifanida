@@ -22,12 +22,12 @@
                                 <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/admin/create"><i
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/user-admin/create"><i
                                         data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-sm btn-haifa my-2" href="/admin/admin/create"><i data-feather="plus"
+                    <a class="btn btn-sm btn-haifa my-2" href="/admin/user-admin/create"><i data-feather="plus"
                             class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
@@ -35,6 +35,14 @@
                                 <tr>
                                     <th class="pt-0">#</th>
                                     <th class="pt-0">Nama</th>
+                                    <th class="pt-0">Email</th>
+                                    <th class="pt-0">Username</th>
+                                    <th class="pt-0">Nomor Ponsel</th>
+                                    {{-- Data Admin --}}
+                                    <th class="pt-0">SuperAdmin?</th>
+                                    <th class="pt-0">Kantor</th>
+                                    {{-- Data Admin --}}
+                                    <th class="pt-0">Foto</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -43,11 +51,26 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $admin->user->name }}</td>
+                                        <td>{{ $admin->user->email }}</td>
+                                        <td>{{ $admin->user->username }}</td>
+                                        <td>{{ $admin->user->phone_number }}</td>
+                                        {{-- Data Admin --}}
+                                        <td>
+                                            @if ($admin->is_superadmin)
+                                                <span class="badge bg-success"><i class="fa-solid fa-x"></i></span>
+                                            @else
+                                                <span class="badge bg-danger"><i class="fa-solid fa-check"></i></span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $admin->kantor->nama_kantor }}</td>
+                                        {{-- Data Admin --}}
+                                        <td> <img src="{{ asset('storage/' . $admin->user->photo) }}" alt="Foto"
+                                                class="img-thumbnail img-fluid"></td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/admin/{{ $admin->id }}/edit"
+                                                <a href="/admin/user-admin/{{ $admin->id }}/edit"
                                                     class="badge bg-success d-inline-block">Edit</a>
-                                                <form action="/admin/admin/{{ $admin->id }}" method="post">
+                                                <form action="/admin/user-admin/{{ $admin->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"

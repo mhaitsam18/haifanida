@@ -35,6 +35,10 @@
                                 <tr>
                                     <th class="pt-0">#</th>
                                     <th class="pt-0">Nama</th>
+                                    <th class="pt-0">Email</th>
+                                    <th class="pt-0">Username</th>
+                                    <th class="pt-0">Nomor Ponsel</th>
+                                    <th class="pt-0">Foto</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -43,6 +47,11 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $author->user->name }}</td>
+                                        <td>{{ $author->user->email }}</td>
+                                        <td>{{ $author->user->username }}</td>
+                                        <td>{{ $author->user->phone_number }}</td>
+                                        <td> <img src="{{ asset('storage/' . $author->user->photo) }}" alt="Foto"
+                                                class="img-thumbnail img-fluid"></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/author/{{ $author->id }}/edit"

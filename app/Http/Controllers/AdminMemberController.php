@@ -48,8 +48,8 @@ class AdminMemberController extends Controller
         ]);
 
         $validateMember = $request->validate([
-            'nomor_ktp' => 'required|string',
-            // 'nama_lengkap' => 'required|string',
+            'nomor_ktp' => 'nullable|string',
+            // 'nama_lengkap' => 'nullable|string',
             'nama_sesuai_paspor' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',

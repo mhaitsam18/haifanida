@@ -89,6 +89,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email:dns|unique:users',
             'username' => 'required|unique:users',
+            'phone_number' => 'nullable',
             'password' => 'required|confirmed',
         ]);
         // if ($request->file('foto')) {
@@ -98,6 +99,7 @@ class AuthController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'username' => $validatedData['username'],
+            'phone_number' => $validatedData['phone_number'],
             'password' => Hash::make($validatedData['password']),
             'role_id' => 3,
             // 'foto' => $validatedData['foto'],
@@ -106,6 +108,7 @@ class AuthController extends Controller
             'user_id' => $user->id,
             'nama_lengkap' => $validatedData['name'],
             'email' => $validatedData['email'],
+            'nomor_telepon' => $validatedData['phone_number'],
             // 'foto' => $validatedData['foto'],
         ]);
         $verificationLink = $this->generateVerificationLink($user);
