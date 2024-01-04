@@ -82,6 +82,30 @@
                                         </div>
                                     @enderror
                                 </div>
+
+                                {{-- <div class="mb-3">
+                                    <label for="kantor_id" class="form-label">Kantor</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-select @error('kantor_id') is-invalid @enderror"
+                                            placeholder="Pilih Kantor" aria-label="Pilih Kantor"
+                                            aria-describedby="button-edit-kantor" id="kantor_id" name="kantor_id">
+                                            <option value="" selected>Pilih Kantor</option>
+                                            @foreach ($kantors as $kantor)
+                                                <option value="{{ $kantor->id }}" @selected($kantor->id == old('kantor_id'))>
+                                                    {{ $kantor->nama_kantor }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <a href="/admin/kantor/{{ old('kantor_id') }}/edit"
+                                            class="btn btn-outline-secondary" type="button" id="button-edit-kantor">Edit
+                                            Kantor</a>
+                                    </div>
+                                    @error('kantor_id')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div> --}}
                                 <div class="mb-3 row">
                                     <div class="col-sm-2">Foto</div>
                                     <div class="col-sm-10">
