@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -50,9 +51,10 @@ class AdminRoleController extends Controller
     public function show(Role $role)
     {
         return view('admin.role.show', [
-            'title' => 'Detail role',
+            'title' => 'Detail role: ' . $role->role,
             'page' => 'role',
             'role' => $role,
+            'menus' => Menu::whereNull('parent_id')->get(),
         ]);
     }
 

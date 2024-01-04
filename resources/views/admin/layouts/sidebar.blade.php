@@ -35,6 +35,9 @@
                         $query->whereNot('roles.id', 6);
                     }
                 })
+                ->whereHas('menuRoles', function ($query) {
+                    $query->whereNot('menu_roles.can_view', 0);
+                })
                 ->get();
         @endphp
         <ul class="nav">

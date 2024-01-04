@@ -40,6 +40,7 @@ use App\Http\Controllers\HomeGaleriController;
 use App\Http\Controllers\HomeKajianController;
 use App\Http\Controllers\JemaahController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MenuRoleController;
 use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
@@ -143,43 +144,45 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::resource('author', AdminAuthorController::class)->parameters([
                     'author' => 'author'
-                ]);;
+                ]);
                 Route::resource('member', AdminMemberController::class)->parameters([
                     'member' => 'member'
-                ]);;
+                ]);
                 Route::resource('agen', AdminAgenController::class)->parameters([
                     'agen' => 'agen'
-                ]);;
+                ]);
                 Route::resource('role', AdminRoleController::class)->parameters([
                     'role' => 'role'
-                ]);;
+                ]);
                 Route::resource('menu', AdminMenuController::class)->parameters([
                     'menu' => 'menu'
-                ]);;
+                ]);
+
+                Route::post('/menu_roles/store', [MenuRoleController::class, 'store'])->name('menu_roles.store');
                 Route::resource('sub-menu', AdminSubMenuController::class)->parameters([
                     'sub-menu' => 'sub_menu'
-                ]);;
+                ]);
                 Route::resource('konten', AdminKontenController::class)->parameters([
                     'konten' => 'konten'
-                ]);;
+                ]);
                 Route::resource('kantor', AdminKantorController::class)->parameters([
                     'kantor' => 'kantor'
-                ]);;
+                ]);
                 Route::resource('perwakilan', AdminPerwakilanController::class)->parameters([
                     'perwakilan' => 'perwakilan'
-                ]);;
+                ]);
                 Route::resource('cabang', AdminCabangController::class)->parameters([
                     'cabang' => 'cabang'
-                ]);;
+                ]);
                 Route::resource('hotel', AdminHotelController::class)->parameters([
                     'hotel' => 'hotel'
-                ]);;
+                ]);
                 Route::resource('maskapai', AdminMaskapaiController::class)->parameters([
                     'maskapai' => 'maskapai'
-                ]);;
+                ]);
                 Route::resource('pesan', AdminPesanController::class)->parameters([
                     'pesan' => 'pesan'
-                ]);;
+                ]);
                 Route::post('pesan/kirim-email', [AdminPesanController::class, 'kirimEmail'])->name('admin.pesan.kirim-email');
             });
             Route::middleware('adminkantor')->group(function () {
@@ -194,30 +197,30 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::resource('paket', AdminPaketController::class)->parameters([
                     'paket' => 'paket'
-                ]);;
+                ]);
                 Route::resource('galeri', AdminGaleriController::class)->parameters([
                     'galeri' => 'galeri'
-                ]);;
+                ]);
                 Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->parameters([
                     'isu-perjalanan' => 'isu_perjalanan'
-                ]);;
+                ]);
                 Route::resource('jadwal', AdminJadwalController::class)->parameters([
                     'jadwal' => 'jadwal'
-                ]);;
+                ]);
                 Route::resource('jemaah', AdminJemaahController::class)->parameters([
                     'jemaah' => 'jemaah'
-                ]);;
+                ]);
                 Route::resource('kamar-jemaah', AdminKamarJemaahController::class)->parameters([
                     'kamar-jemaah' => 'kamar_jemaah'
-                ]);;
+                ]);
                 Route::resource('bus-jemaah', AdminBusJemaahController::class)->parameters([
                     'bus-jemaah' => 'bus_jemaah'
-                ]);;
+                ]);
                 Route::prefix('bus-jemaah')->group(function () {
                 });
                 Route::resource('grup', AdminGrupController::class)->parameters([
                     'grup' => 'grup'
-                ]);;
+                ]);
                 Route::prefix('grup')->group(function () {
                 });
                 Route::prefix('pelayanan')->group(function () {
@@ -231,13 +234,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/index', [AuthorController::class, 'index'])->name('author.index');
             Route::resource('kajian', AuthorKajianController::class)->parameters([
                 'kajian' => 'kajian'
-            ]);;
+            ]);
             Route::resource('artikel', AuthorArtikelController::class)->parameters([
                 'artikel' => 'artikel'
-            ]);;
+            ]);
             Route::resource('konten', AuthorKontenController::class)->parameters([
                 'konten' => 'konten'
-            ]);;
+            ]);
         });
     });
     Route::middleware('member')->group(function () {
@@ -258,13 +261,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/index', [AgenController::class, 'index'])->name('agen');
             Route::resource('grup', AgenGrupController::class)->parameters([
                 'grup' => 'grup'
-            ]);;
+            ]);
             Route::resource('jemaah', AgenJemaahController::class)->parameters([
                 'jemaah' => 'jemaah'
-            ]);;
+            ]);
             Route::resource('poin', AgenPoinController::class)->parameters([
                 'poin' => 'poin'
-            ]);;
+            ]);
         });
     });
 });

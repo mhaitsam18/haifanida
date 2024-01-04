@@ -45,13 +45,15 @@
                                         <td>{{ $role->role }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
+                                                <a href="/admin/role/{{ $role->id }}"
+                                                    class="badge bg-haifa d-inline-block m-1">Akses Menu</a>
                                                 <a href="/admin/role/{{ $role->id }}/edit"
-                                                    class="badge bg-success d-inline-block">Edit</a>
+                                                    class="badge bg-success d-inline-block m-1">Edit</a>
                                                 <form action="/admin/role/{{ $role->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
                                                 </form>
                                             </div>
                                         </td>
