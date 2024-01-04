@@ -50,6 +50,7 @@ class AdminAuthorController extends Controller
             $validateUser['photo'] = $path;
         }
         $validateUser['role_id'] = 2;
+        $validateUser['email_verified_at'] = now();
         $user = User::create($validateUser);
         Author::create([
             'user_id' => $user->id,

@@ -55,6 +55,7 @@ class AdminAgenController extends Controller
             $validateUser['photo'] = $path;
         }
         $validateUser['role_id'] = 4;
+        $validateUser['email_verified_at'] = now();
         $user = User::create($validateUser);
         Agen::create([
             'user_id' => $user->id,

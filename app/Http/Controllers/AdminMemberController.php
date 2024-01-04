@@ -91,6 +91,7 @@ class AdminMemberController extends Controller
 
         // Tambahkan role_id untuk User
         $validateUser['role_id'] = 3; // Role ID for "member"
+        $validateUser['email_verified_at'] = now();
 
         // Buat User
         $user = User::create($validateUser);

@@ -59,6 +59,7 @@ class AdminAdminController extends Controller
         }
 
         $validateUser['role_id'] = 1;
+        $validateUser['email_verified_at'] = now();
         $user = User::create($validateUser);
 
         Admin::create([
@@ -131,7 +132,6 @@ class AdminAdminController extends Controller
             // Jika password kosong, gunakan password yang sudah ada
             $validateUser['password'] = $user->password;
         }
-
         $user->update($validateUser);
 
         $admin->update($validateAdmin);
