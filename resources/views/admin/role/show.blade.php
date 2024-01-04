@@ -63,6 +63,7 @@
                             @csrf
                             <button type="submit">Save Permissions</button>
                         </form> --}}
+                        <a href="/admin/role" class="btn btn-secondary btn-sm">Kembali</a>
                     </div>
                 </div>
             </div>
