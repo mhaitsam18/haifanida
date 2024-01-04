@@ -211,6 +211,16 @@
                                         Panduan
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="/syarat-ketentuan" class="nav-link">
+                                        Syarat & Ketentuan
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/kebijakan-privasi" class="nav-link">
+                                        Kebijakan Privasi
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 

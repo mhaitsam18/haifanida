@@ -85,9 +85,12 @@ Route::get('/profil', [HomeController::class, 'profil'])->name('home.profil');
 Route::get('/visi-misi', [HomeController::class, 'visiMisi'])->name('home.visi-misi');
 Route::get('/kantor-kami', [HomeController::class, 'kantorKami'])->name('home.kantor-kami');
 
+Route::get('/kontak-kami', [HomeController::class, 'kontakKami'])->name('home.kontak-kami');
+Route::post('/kontak-kami', [HomeController::class, 'kirimPesan'])->name('home.kirim-pesan');
 Route::get('/faq', [HomeController::class, 'faq'])->name('home.faq');
 Route::get('/panduan', [HomeController::class, 'panduan'])->name('home.panduan');
-Route::get('/kontak-kami', [HomeController::class, 'kontakKami'])->name('home.kontak-kami');
+Route::get('/syarat-ketentuan', [HomeController::class, 'syaratKetentuan'])->name('home.syarat-ketentuanZ');
+Route::get('/kebijakan-privasi', [HomeController::class, 'kebijakanPrivasi'])->name('home.syarat-ketentuanZ');
 
 
 

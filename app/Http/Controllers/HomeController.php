@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Konten;
+use App\Models\Pesan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -67,6 +68,19 @@ class HomeController extends Controller
             'kontens' => Konten::all()
         ]);
     }
+    public function kirimPesan(Request $request)
+    {
+        $validateData = $request->validate([
+            'user_id' => 'nullable',
+            'nama_pengirim' => 'required',
+            'email_pengirim' => 'required',
+            'nomor_wa_pengirim' => 'required',
+            'subjek' => 'required',
+            'pesan' => 'required',
+        ]);
+        Pesan::create($validateData);
+        return back()->with('success', 'Pesan Terkirim');
+    }
 
     public function kontakKami()
     {
@@ -91,6 +105,22 @@ class HomeController extends Controller
         return view('home.panduan', [
             'title' => 'Panduan',
             'page' => 'panduan',
+            'kontens' => Konten::all()
+        ]);
+    }
+    public function syaratKetentuan()
+    {
+        return view('home.syarat-ketentuan', [
+            'title' => 'Syarat & Ketentuan',
+            'page' => 'syarat-ketentuan',
+            'kontens' => Konten::all()
+        ]);
+    }
+    public function kebijakanPrivasi()
+    {
+        return view('home.kebijakan-privasi', [
+            'title' => 'Kebijakan Privasi',
+            'page' => 'kebijakan-privasi',
             'kontens' => Konten::all()
         ]);
     }
