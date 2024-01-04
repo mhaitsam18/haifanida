@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kabupaten;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 
 class KabupatenController extends Controller
@@ -63,9 +64,16 @@ class KabupatenController extends Controller
         //
     }
 
-    public function getKabupaten($provinsi_id)
+    public function getKabupaten(Request $request)
     {
-        $kabupatenData = Kabupaten::where('provinsi_id', $provinsi_id)->get();
+        $kabupatenData = [];
+        if ($request->provinsi_id) {
+            $kabupatenData = Kabupaten::where('provinsi_id', $request->provinsi_id)->get();
+        }
+        if ($request->provinsi) {
+            $provinsi = Provinsi::where('provinsi', $request->provinsi)->first();
+            $kabupatenData = Kabupaten::where('provinsi_id', $provinsi->id)->get();
+        }
 
         return response()->json($kabupatenData);
     }

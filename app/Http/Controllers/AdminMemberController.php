@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Provinsi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -129,6 +130,7 @@ class AdminMemberController extends Controller
             'title' => 'Edit member',
             'page' => 'member',
             'member' => $member,
+            'provinsis' => Provinsi::all()
         ]);
     }
 
@@ -140,9 +142,9 @@ class AdminMemberController extends Controller
         $user = $member->user;
         $validateUser = $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'username' => 'required|string|unique:users,username',
-            'phone_number' => ['nullable', 'string', 'unique:users,phone_number', 'regex:/^(?:\+62|0)[0-9\s-]+$/'],
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'required|string|unique:users,username,' . $user->id,
+            'phone_number' => ['nullable', 'string', 'unique:users,phone_number,' . $user->id, 'regex:/^(?:\+62|0)[0-9\s-]+$/'],
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
             'password' => 'nullable|string|confirmed',
         ]);

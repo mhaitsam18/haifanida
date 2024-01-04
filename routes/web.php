@@ -39,6 +39,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeGaleriController;
 use App\Http\Controllers\HomeKajianController;
 use App\Http\Controllers\JemaahController;
+use App\Http\Controllers\KabupatenController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MenuRoleController;
 use App\Http\Controllers\ProvinsiController;
@@ -94,6 +95,7 @@ Route::get('/syarat-ketentuan', [HomeController::class, 'syaratKetentuan'])->nam
 Route::get('/kebijakan-privasi', [HomeController::class, 'kebijakanPrivasi'])->name('home.syarat-ketentuanZ');
 
 
+Route::post('/get-kabupaten', [KabupatenController::class, 'getKabupaten'])->name('get-kabupaten');
 
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('get.logout');

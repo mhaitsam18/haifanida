@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Lengkap</label>
+                                    <label for="name" class="form-label">Nama Lengkap (Sesuai KTP)</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         id="name" name="name" value="{{ old('name') }}"
                                         placeholder="Nama Lengkap">
