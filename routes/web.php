@@ -159,7 +159,6 @@ Route::middleware('auth')->group(function () {
                 Route::resource('menu', AdminMenuController::class)->parameters([
                     'menu' => 'menu'
                 ]);
-
                 Route::post('/menu_roles/store', [MenuRoleController::class, 'store'])->name('menu_roles.store');
                 Route::resource('sub-menu', AdminSubMenuController::class)->parameters([
                     'sub-menu' => 'sub_menu'

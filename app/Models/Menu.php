@@ -14,7 +14,7 @@ class Menu extends Model
         'id'
     ];
     protected $with = [
-        'children'
+        'children',
     ];
     public function roles()
     {
@@ -29,6 +29,10 @@ class Menu extends Model
     public function subMenus()
     {
         return $this->hasMany(SubMenu::class);
+    }
+    public function parent()
+    {
+        return $this->belongsTo(Menu::class, 'parent_id');
     }
     public function children()
     {

@@ -58,7 +58,6 @@ class AdminMenuController extends Controller
             'title' => 'Detail Menu',
             'page' => 'menu',
             'menu' => $menu,
-            'menus' => Menu::all(),
         ]);
     }
 
@@ -71,6 +70,7 @@ class AdminMenuController extends Controller
             'title' => 'Edit Menu',
             'page' => 'menu',
             'menu' => $menu,
+            'parents' => Menu::all(),
         ]);
     }
 

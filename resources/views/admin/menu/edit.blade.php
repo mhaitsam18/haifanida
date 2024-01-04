@@ -17,27 +17,104 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    {{-- <form action="/admin/index/{{ $index->id }}" method="post">
+                    <form action="/admin/menu/{{ $menu->id }}" method="post">
                         @method('put')
                         @csrf
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label for="index" class="form-label">index</label>
-                                    <input type="text" class="form-control  @error('index') is-invalid @enderror"
-                                        id="index" name="index" value="{{ old('index', $index->index) }}"
-                                        placeholder="index">
-                                    @error('index')
+                                    <label for="menu" class="form-label">Menu</label>
+                                    <input type="text" class="form-control  @error('menu') is-invalid @enderror"
+                                        id="menu" name="menu" value="{{ old('menu', $menu->menu) }}"
+                                        placeholder="Menu">
+                                    @error('menu')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3">
+                                    <label for="parent_id" class="form-label">Parent</label>
+                                    <select class="form-select  @error('parent_id') is-invalid @enderror" id="parent_id"
+                                        name="parent_id">
+                                        <option value="" selected>Pilih Parent</option>
+                                        @foreach ($parents as $parent)
+                                            <option value="{{ $parent->id }}" @selected(old('parent_id', $menu->parent_id) == $parent->id)>
+                                                {{ $parent->order . ' | ' . $parent->menu }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('parent_id')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input @error('has_dropdown') is-invalid @enderror"
+                                            type="checkbox" value="1" id="has_dropdown" name="has_dropdown"
+                                            @checked(old('has_dropdown', $menu->has_dropdown))>
+                                        <label class="form-check-label" for="has_dropdown">
+                                            Ada Dropdown?
+                                        </label>
+                                    </div>
+                                    @error('has_dropdown')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input @error('is_active') is-invalid @enderror"
+                                            type="checkbox" value="1" id="is_active" name="is_active"
+                                            @checked(old('is_active', $menu->is_active))>
+                                        <label class="form-check-label" for="is_active">
+                                            Apakah Aktif?
+                                        </label>
+                                    </div>
+                                    @error('is_active')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <div class="mb-3">
+                                        <label for="url" class="form-label">URL</label>
+                                        <input type="text" class="form-control  @error('url') is-invalid @enderror"
+                                            id="url" name="url" value="{{ old('url', $menu->url) }}"
+                                            placeholder="URL">
+                                        @error('url')
+                                            <div class="text-danger fs-6">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="icon" class="form-label">Ikon</label>
+                                        <input type="text" class="form-control  @error('icon') is-invalid @enderror"
+                                            id="icon" name="icon" value="{{ old('icon', $menu->icon) }}"
+                                            placeholder="Ikon">
+                                        @error('icon')
+                                            <div class="text-danger fs-6">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="order" class="form-label">Nomor Urut</label>
+                                        <input type="number" class="form-control  @error('order') is-invalid @enderror"
+                                            id="order" name="order" value="{{ old('order', $menu->order) }}"
+                                            placeholder="Nomor Urut">
+                                        @error('order')
+                                            <div class="text-danger fs-6">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/index" class="btn btn-secondary float-end m-2">Kembali</a>
+                                <a href="/admin/menu" class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
                         </div>
-                    </form> --}}
+                    </form>
                 </div>
             </div>
         </div>
