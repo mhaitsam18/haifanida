@@ -20,6 +20,7 @@
                     <form action="/admin/menu/{{ $menu->id }}" method="post">
                         @method('put')
                         @csrf
+                        <input type="hidden" name="id" id="id" value="{{ $menu->id }}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">

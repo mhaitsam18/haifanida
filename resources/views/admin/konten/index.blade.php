@@ -22,41 +22,49 @@
                                 <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/index/create"><i
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/konten/create"><i
                                         data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-sm btn-haifa my-2" href="/admin/index/create"><i data-feather="plus"
+                    <a class="btn btn-sm btn-haifa my-2" href="/admin/konten/create"><i data-feather="plus"
                             class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
                             <thead>
                                 <tr>
                                     <th class="pt-0">#</th>
-                                    <th class="pt-0">index</th>
+                                    <th class="pt-0">Penulis</th>
+                                    <th class="pt-0">Judul</th>
+                                    <th class="pt-0">Isi Konten</th>
+                                    <th class="pt-0">Gambar</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($indexs as $index)
+                                @foreach ($kontens as $konten)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $index->index }}</td>
+                                        <td>{{ $konten->user->name }}</td>
+                                        <td>{{ $konten->judul }}</td>
+                                        <td>{{ $konten->isi_konten }}</td>
+                                        <td><img src="{{ asset('storage/' . $konten->gambar) }}" alt=""></td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/index/{{ $index->id }}/edit"
-                                                    class="badge bg-success d-inline-block">Edit</a>
-                                                <form action="/admin/index/{{ $index->id }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                </form>
+                                                @if (auth()->user()->id == $konten->user_id)
+                                                    <a href="/admin/konten/{{ $konten->id }}/edit"
+                                                        class="badge bg-success d-inline-block">Edit</a>
+                                                    <form action="/admin/konten/{{ $konten->id }}" method="post">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -20,6 +20,7 @@
                     {{-- <form action="/admin/index/{{ $index->id }}" method="post">
                         @method('put')
                         @csrf
+                        <input type="hidden" name="id" id="id" value="{{ $index->id }}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
