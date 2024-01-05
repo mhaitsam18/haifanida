@@ -30,7 +30,7 @@ class AdminKantorController extends Controller
             'title' => 'Tambah kantor',
             'page' => 'kantor',
             'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::all(),
+            'kabupatens' => (old('provinsi_id')) ? Kabupaten::where('provinsi_id', old('provinsi_id'))->get() : Kabupaten::all(),
         ]);
     }
 
@@ -48,7 +48,12 @@ class AdminKantorController extends Controller
             'kecamatan' => 'nullable',
             'kode_pos' => 'nullable',
             'jenis_kantor' => 'nullable',
+            'foto_kantor' => 'nullable|image|mimes:jpeg,png,jpg,gif,jpeg|max:3145728',
         ]);
+        if ($request->hasFile('foto_kantor')) {
+            $path = $request->file('foto_kantor')->store('kantor-foto');
+            $validateUser['foto_kantor'] = $path;
+        }
         Kantor::create($validateData);
         return redirect('/admin/kantor')->with('success', 'Data Kantor berhasil ditambahkan');
     }
@@ -75,7 +80,7 @@ class AdminKantorController extends Controller
             'page' => 'kantor',
             'kantor' => $kantor,
             'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::all(),
+            'kabupatens' => Kabupaten::where('provinsi_id', old('provinsi_id', $kantor->kabupaten->provinsi_id))->get(),
         ]);
     }
 
@@ -93,7 +98,15 @@ class AdminKantorController extends Controller
             'kecamatan' => 'nullable',
             'kode_pos' => 'nullable',
             'jenis_kantor' => 'nullable',
+            'foto_kantor' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
         ]);
+
+        if ($request->hasFile('foto_kantor')) {
+            $path = $request->file('foto_kantor')->store('kantor-foto');
+            $validateUser['foto_kantor'] = $path;
+        } else {
+            $validateUser['foto_kantor'] = $kantor->foto_kantor;
+        }
         $kantor->update($validateData);
         return redirect('/admin/kantor')->with('success', 'Data kantor berhasil diubah');
     }

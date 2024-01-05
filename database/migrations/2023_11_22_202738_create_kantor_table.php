@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('kecamatan')->nullable();
             $table->string('kode_pos')->nullable();
             $table->enum('jenis_kantor', ['pusat', 'perwakilan', 'cabang', 'agen'])->nullable();
+            $table->string('foto_kantor')->nullable();
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ class KantorTableSeeder extends Seeder
             'kabupaten_id' => Kabupaten::where('kabupaten', 'Kabupaten Karawang')->first()->id,
             'kecamatan' => 'Karawang Barat',
             'jenis_kantor' => 'Pusat',
+            'foto_kantor' => 'kantor-foto/kantor-haifa-pusat.jpeg',
         ]);
     }
 }
