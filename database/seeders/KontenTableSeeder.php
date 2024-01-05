@@ -15,6 +15,7 @@ class KontenTableSeeder extends Seeder
     {
         $kontens = [
             [
+                'user_id' => 1,
                 'nama' => 'Beranda 1',
                 'judul' => 'Haia Nida Wisata',
                 'isi_konten' => '<p>
@@ -28,6 +29,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Beranda 2',
                 'judul' => 'Berdiri sejak tahun 2007',
                 'isi_konten' => '<p>
@@ -41,6 +43,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Beranda 3',
                 'judul' => 'Aman, Nyaman dan Amanah',
                 'isi_konten' => '<p>
@@ -55,6 +58,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Beranda 4',
                 'judul' => 'Sejarah PT. Haifa Nida Wisata Karawang',
                 'isi_konten' => '<p>
@@ -83,6 +87,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Profil Perusahaan',
                 'judul' => 'Profil Perusahaan',
                 'isi_konten' => '<p>
@@ -92,6 +97,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Visi Misi',
                 'judul' => 'Visi Misi',
                 'isi_konten' => '<p>
@@ -101,6 +107,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'FAQ',
                 'judul' => 'Frequently Asked Questions',
                 'isi_konten' => '<p>
@@ -110,6 +117,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Panduan',
                 'judul' => 'Panduan',
                 'isi_konten' => '<p>
@@ -119,6 +127,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Syarat dan Ketentuan',
                 'judul' => 'Syarat & Ketentuan',
                 'isi_konten' => '<p>
@@ -128,6 +137,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Kebijakan Privasi',
                 'judul' => 'Kebijakan Privasi',
                 'isi_konten' => '<p>
@@ -137,6 +147,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Akte Perusahaan',
                 'judul' => 'Akte Perusahaan',
                 'isi_konten' => '<p>
@@ -146,6 +157,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'NIB',
                 'judul' => 'NIB',
                 'isi_konten' => '<p>
@@ -155,6 +167,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'PPIU',
                 'judul' => 'PPIU',
                 'isi_konten' => '<p>
@@ -164,6 +177,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'PIHK',
                 'judul' => 'PIHK',
                 'isi_konten' => '<p>
@@ -173,6 +187,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'ASITA',
                 'judul' => 'ASITA',
                 'isi_konten' => '<p>
@@ -182,6 +197,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'IATA',
                 'judul' => 'IATA',
                 'isi_konten' => '<p>
@@ -191,6 +207,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Motto',
                 'judul' => 'Motto',
                 'isi_konten' => '<p>
@@ -200,6 +217,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Slogan',
                 'judul' => 'Slogan',
                 'isi_konten' => '<p>
@@ -209,6 +227,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Struktur Organisasi',
                 'judul' => 'Struktur Organisasi',
                 'isi_konten' => '<p>
@@ -218,6 +237,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Alamat Kantor Pusat',
                 'judul' => 'Alamat',
                 'isi_konten' => '<p>
@@ -227,6 +247,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Rekening Perusahaan',
                 'judul' => 'Rekening Rekening Perusahaan',
                 'isi_konten' => '<p>
@@ -235,6 +256,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'sejarah',
                 'judul' => 'sejarah',
                 'isi_konten' => '<p>
@@ -243,6 +265,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Arti Motto',
                 'judul' => 'Arti Motto',
                 'isi_konten' => '<p>
@@ -251,6 +274,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Logo Mitra',
                 'judul' => 'Logo Mitra',
                 'isi_konten' => '<p>
@@ -259,6 +283,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Sosial Media',
                 'judul' => 'Sosial Media',
                 'isi_konten' => '<p>
@@ -267,6 +292,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 1
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Konten',
                 'judul' => 'Konten',
                 'isi_konten' => '<p>
@@ -275,6 +301,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Kontak Utama',
                 'judul' => 'Kontak Utama',
                 'isi_konten' => '<p>
@@ -283,6 +310,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Email Utama',
                 'judul' => 'Email Utama',
                 'isi_konten' => '<p>
@@ -291,6 +319,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Email CS',
                 'judul' => 'Email CS',
                 'isi_konten' => '<p>
@@ -299,6 +328,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Email Admin',
                 'judul' => 'Email Admin',
                 'isi_konten' => '<p>
@@ -307,6 +337,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Nomor Direksi',
                 'judul' => 'Nomor Direksi',
                 'isi_konten' => '<p>
@@ -315,6 +346,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Nomor Marketing',
                 'judul' => 'Nomor Marketing',
                 'isi_konten' => '<p>
@@ -323,6 +355,7 @@ class KontenTableSeeder extends Seeder
                 'indelible' => 0
             ],
             [
+                'user_id' => 1,
                 'nama' => 'Nomor Keuangan',
                 'judul' => 'Nomor Keuangan',
                 'isi_konten' => '<p>

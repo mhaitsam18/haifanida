@@ -2,6 +2,7 @@
 @section('content')
     @php
         use Carbon\Carbon;
+        use Illuminate\Support\Str;
     @endphp
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
@@ -37,7 +38,7 @@
                                     <th class="pt-0">Penulis</th>
                                     <th class="pt-0">Nama Konten</th>
                                     <th class="pt-0">Judul</th>
-                                    <th class="pt-0">Isi Konten</th>
+                                    {{-- <th class="pt-0">Isi Konten</th> --}}
                                     <th class="pt-0">Gambar</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
@@ -46,14 +47,15 @@
                                 @foreach ($kontens as $konten)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $konten->user->name }}</td>
+                                        <td>{{ $konten->user->name ?? null }}</td>
                                         <td>{{ $konten->nama }}</td>
                                         <td>{{ $konten->judul }}</td>
-                                        <td>{{ $konten->isi_konten }}</td>
+                                        {{-- <td>{{ Str::limit($konten->isi_konten, 200, '...') }}</td> --}}
+
                                         <td><img src="{{ asset('storage/' . $konten->gambar) }}" alt=""></td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                @if (auth()->user()->id == $konten->user_id)
+                                                @if (!$konten->user_id || auth()->user()->id == $konten->user_id)
                                                     <a href="/admin/konten/{{ $konten->id }}/edit"
                                                         class="badge bg-success d-inline-block">Edit</a>
                                                     @if (!$konten->indelible)
