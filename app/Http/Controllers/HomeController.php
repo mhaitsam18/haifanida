@@ -13,7 +13,11 @@ class HomeController extends Controller
         return view('home.index', [
             'title' => 'Beranda',
             'page' => 'beranda',
-            'kontens' => Konten::all()
+            'kontens' => Konten::all(),
+            'beranda1' => Konten::find(1),
+            'beranda2' => Konten::find(2),
+            'beranda3' => Konten::find(3),
+            'beranda4' => Konten::find(4),
         ]);
     }
 

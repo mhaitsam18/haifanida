@@ -2,15 +2,15 @@
 @section('style')
     <style>
         .item-bg-1 {
-            background-image: {{ asset('storage/' . $beranda1->gambar) }}
+            background-image: url('storage/{{ $beranda1->gambar }}')
         }
 
         .item-bg-2 {
-            background-image: {{ asset('storage/' . $beranda1->gambar) }}
+            background-image: url('storage/{{ $beranda2->gambar }}')
         }
 
         .item-bg-3 {
-            background-image: {{ asset('storage/' . $beranda1->gambar) }}
+            background-image: url('storage/{{ $beranda3->gambar }}')
         }
     </style>
 @endsection
@@ -20,20 +20,22 @@
     @endphp
     <div class="banner-slider-area">
         <div class="banner-slider owl-carousel owl-theme">
-            <div class="banner-item item-bg1">
+            <div class="banner-item item-bg-1">
                 <div class="d-table">
                     <div class="d-table-cell">
                         <div class="container">
                             <div class="banner-item-content">
                                 {{-- <span>Only High Quality Services</span> --}}
-                                <h1>Haifa Nida Wisata</h1>
-                                <p>
+                                {{-- <h1>Haifa Nida Wisata</h1> --}}
+                                <h1>{{ $beranda1->judul }}</h1>
+                                {!! $beranda1->isi_konten !!}
+                                {{-- <p>
                                     Tour & Travel
                                     <br>
                                     No. SK : 91202027102820002
                                     <br>
                                     2 Agustus 2022
-                                </p>
+                                </p> --}}
                                 <div class="banner-btn">
                                     <a href="/tentang-kami" class="default-btn btn-bg-two border-radius-50">Tentang Kami<i
                                             class='bx bx-chevron-right'></i></a>
@@ -45,19 +47,21 @@
                     </div>
                 </div>
             </div>
-            <div class="banner-item item-bg2">
+            <div class="banner-item item-bg-2">
                 <div class="d-table">
                     <div class="d-table-cell">
                         <div class="container">
                             <div class="banner-item-content">
-                                <h1>Berdiri sejak tahun 2007</h1>
-                                <p>
+                                {{-- <h1>Berdiri sejak tahun 2007</h1> --}}
+                                <h1>{{ $beranda2->judul }}</h1>
+                                {!! $beranda2->isi_konten !!}
+                                {{-- <p>
                                     didirikan oleh Dr. Fakhrurrozi, Lc., MA, seorang alumni Universitas Islam Madinah yang
                                     memiliki pengalaman mendalam dan wawasan yang tak ternilai tentang Mekkah dan Madinah.
                                     Kombinasi pengetahuannya yang mendalam tentang destinasi suci bersama keahliannya dalam
                                     ilmu agama, menjadikan kami pilihan utama untuk perjalanan Haji, Umroh, dan wisata halal
                                     Anda.
-                                </p>
+                                </p> --}}
                             </div>
                         </div>
                     </div>
@@ -68,15 +72,17 @@
                     <div class="d-table-cell">
                         <div class="container">
                             <div class="banner-item-content">
-                                <h1>Aman, Nyaman dan Amanah</h1>
-                                <p>
+                                {{-- <h1>Aman, Nyaman dan Amanah</h1> --}}
+                                <h1>{{ $beranda3->judul }}</h1>
+                                {!! $beranda3->isi_konten !!}
+                                {{-- <p>
                                     "Aman, Nyaman, dan Amanah" adalah sebuah moto yang sangat kuat dan menggambarkan prinsip
                                     utama PT. Haifa Nida Wisata dalam memberikan pelayanan kepada para jamaah. Kombinasi
                                     dari keamanan, kenyamanan, dan keamanahan mencerminkan komitmen kami untuk memberikan
                                     pengalaman perjalanan ibadah yang tak terlupakan. Dalam setiap perjalanan bersama kami,
                                     kami berusaha untuk menjaga ketiga nilai ini sebagai fondasi utama dalam layanan kami
                                     kepada Anda.
-                                </p>
+                                </p> --}}
                             </div>
                         </div>
                     </div>
@@ -98,8 +104,10 @@
                                 $experienceYears = $currentDate->diffInYears($startDate);
                             @endphp
                             <span class="sp-color2">{{ $experienceYears }} Tahun Pengalaman</span>
-                            <h2>Sejarah PT. Haifa Nida Wisata Karawang</h2>
-                            <p>
+                            {{-- <h2>Sejarah PT. Haifa Nida Wisata Karawang</h2> --}}
+                            <h2>{{ $beranda4->judul }}</h2>
+                            {!! $beranda4->isi_konten !!}
+                            {{-- <p>
                                 PT. Haifa Nida Wisata Karawang, didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA,
                                 seorang alumni Universitas Islam Madinah yang memiliki pengalaman mendalam dan wawasan yang
                                 tak ternilai tentang Mekkah dan Madinah. Kombinasi pengetahuannya yang mendalam tentang
@@ -120,7 +128,7 @@
                                 untuk memilih PT. Haifa Nida Wisata sebagai mitra perjalanan Haji dan Umroh Anda.
                                 Keberadaannya yang berpengalaman adalah jaminan kualitas dalam setiap perjalanan ibadah
                                 Anda.
-                            </p>
+                            </p> --}}
                         </div>
                         {{-- <div class="row">
                             <div class="col-lg-6 col-6">
@@ -142,7 +150,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="about-img">
-                        <img src="/assets/img/haifa/karyawan.jpg" alt="About Images">
+                        <img src="{{ asset('storage/' . $beranda4->gambar) }}" alt="About Images">
+                        {{-- <img src="/assets/img/haifa/karyawan.jpg" alt="About Images"> --}}
                         {{-- <div class="sub-content">
                             <img src="/assets-techex-demo/images/about/about-img2.jpg" alt="About Images" loading="lazy">
                             <div class="content">
