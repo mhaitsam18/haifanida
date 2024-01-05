@@ -22,32 +22,52 @@
                                 <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/index/create"><i
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/hotel/create"><i
                                         data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-sm btn-haifa my-2" href="/admin/index/create"><i data-feather="plus"
+                    <a class="btn btn-sm btn-haifa my-2" href="/admin/hotel/create"><i data-feather="plus"
                             class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
                             <thead>
                                 <tr>
                                     <th class="pt-0">#</th>
-                                    <th class="pt-0">index</th>
+                                    <th class="pt-0">Kode Hotel</th>
+                                    <th class="pt-0">Nama Hotel</th>
+                                    <th class="pt-0">Bintang</th>
+                                    <th class="pt-0">Bintang Setaraf</th>
+                                    <th class="pt-0">Kota</th>
+                                    <th class="pt-0">Negara</th>
+                                    <th class="pt-0">Alamat</th>
+                                    <th class="pt-0">Link Gmaps</th>
+                                    <th class="pt-0">Deskripsi</th>
+                                    <th class="pt-0">Gambar</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($indexs as $index)
+                                @foreach ($hotels as $hotel)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $index->index }}</td>
+                                        <td>{{ $hotel->kode_hotel }}</td>
+                                        <td>{{ $hotel->nama_hotel }}</td>
+                                        <td>{{ $hotel->bintang }}</td>
+                                        <td>{{ $hotel->bintang_setaraf }}</td>
+                                        <td>{{ $hotel->kota }}</td>
+                                        <td>{{ $hotel->negara }}</td>
+                                        <td>{{ $hotel->alamat }}</td>
+                                        <td>{{ $hotel->link_gmaps }}</td>
+                                        <td>{{ $hotel->deskripsi }}</td>
+                                        <td><img src="{{ asset('storage/' . $hotel->gambar) }}" alt="Foto Kantor"
+                                                style="border-radius: 0%; width: 150px; height: 100px;">
+                                        </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/index/{{ $index->id }}/edit"
+                                                <a href="/admin/hotel/{{ $hotel->id }}/edit"
                                                     class="badge bg-success d-inline-block">Edit</a>
-                                                <form action="/admin/index/{{ $index->id }}" method="post">
+                                                <form action="/admin/hotel/{{ $hotel->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
@@ -56,7 +76,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
