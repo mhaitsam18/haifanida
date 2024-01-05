@@ -17,7 +17,7 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    <form action="/admin/kantor/{{ $kantor->id }}" method="post">
+                    <form action="/admin/kantor/{{ $kantor->id }}" method="post" enctype="multipart/form-data">
                         @method('put')
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ $kantor->id }}">

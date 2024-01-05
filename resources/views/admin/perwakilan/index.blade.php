@@ -22,32 +22,46 @@
                                 <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/index/create"><i
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/perwakilan/create"><i
                                         data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-sm btn-haifa my-2" href="/admin/index/create"><i data-feather="plus"
+                    <a class="btn btn-sm btn-haifa my-2" href="/admin/perwakilan/create"><i data-feather="plus"
                             class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
                             <thead>
                                 <tr>
                                     <th class="pt-0">#</th>
-                                    <th class="pt-0">index</th>
+                                    <th class="pt-0">Nama Perwakilan</th>
+                                    <th class="pt-0">Nama Ketua</th>
+                                    <th class="pt-0">Kontak</th>
+                                    <th class="pt-0">Surat Izin</th>
+                                    <th class="pt-0">Kantor</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($indexs as $index)
+                                @foreach ($perwakilans as $perwakilan)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $index->index }}</td>
+                                        <td>{{ $perwakilan->nama_perwakilan }}</td>
+                                        <td>{{ $perwakilan->nama_ketua }}</td>
+                                        <td>{{ $perwakilan->kontak }}</td>
+                                        <td><a href="{{ asset('storage/' . $perwakilan->surat_izin) }}"
+                                                class="badge bg-info">Lihat Surat Izin</a></td>
+                                        <td>
+                                            <a href="/admin/kantor/{{ $perwakilan->kantor_id }}/edit">
+                                                <img src="{{ asset('storage/' . $perwakilan->kantor->foto_kantor) }}"
+                                                    alt="">
+                                            </a>
+                                        </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/index/{{ $index->id }}/edit"
+                                                <a href="/admin/perwakilan/{{ $perwakilan->id }}/edit"
                                                     class="badge bg-success d-inline-block">Edit</a>
-                                                <form action="/admin/index/{{ $index->id }}" method="post">
+                                                <form action="/admin/perwakilan/{{ $perwakilan->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
@@ -56,7 +70,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

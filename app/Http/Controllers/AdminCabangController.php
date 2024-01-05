@@ -44,8 +44,9 @@ class AdminCabangController extends Controller
     public function store(Request $request)
     {
         $validateCabang = $request->validate([
-            'kantor_id' => 'nullable',
+            'kantor_id' => 'required',
             'perwakilan_id' => 'nullable',
+            'nama_cabang' => 'required',
             'nama_ketua' => 'required',
             'kontak' => 'nullable',
             'surat_izin' => 'nullable'
@@ -102,8 +103,9 @@ class AdminCabangController extends Controller
     public function update(Request $request, Cabang $cabang)
     {
         $validateCabang = $request->validate([
-            'kantor_id' => 'nullable',
+            'kantor_id' => 'required',
             'perwakilan_id' => 'nullable',
+            'nama_cabang' => 'required',
             'nama_ketua' => 'required',
             'kontak' => 'nullable',
             'surat_izin' => 'nullable'

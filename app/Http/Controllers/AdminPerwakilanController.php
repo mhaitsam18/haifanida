@@ -42,7 +42,8 @@ class AdminPerwakilanController extends Controller
     public function store(Request $request)
     {
         $validatePerwakilan = $request->validate([
-            'kantor_id' => 'nullable',
+            'kantor_id' => 'required',
+            'nama_perwakilan' => 'required',
             'nama_ketua' => 'required',
             'kontak' => 'nullable',
             'surat_izin' => 'nullable'
@@ -98,7 +99,8 @@ class AdminPerwakilanController extends Controller
     public function update(Request $request, Perwakilan $perwakilan)
     {
         $validatePerwakilan = $request->validate([
-            'kantor_id' => 'nullable',
+            'kantor_id' => 'required',
+            'nama_perwakilan' => 'required',
             'nama_ketua' => 'required',
             'kontak' => 'nullable',
             'surat_izin' => 'nullable'
