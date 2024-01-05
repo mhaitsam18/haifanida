@@ -22,32 +22,40 @@
                                 <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/index/create"><i
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/maskapai/create"><i
                                         data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-sm btn-haifa my-2" href="/admin/index/create"><i data-feather="plus"
+                    <a class="btn btn-sm btn-haifa my-2" href="/admin/maskapai/create"><i data-feather="plus"
                             class="icon-sm me-2"></i> <span class="">Tambah</span></a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
                             <thead>
                                 <tr>
                                     <th class="pt-0">#</th>
-                                    <th class="pt-0">index</th>
+                                    <th class="pt-0">Kode Maskapai</th>
+                                    <th class="pt-0">Nama Maskapai</th>
+                                    <th class="pt-0">Negara Asal</th>
+                                    <th class="pt-0">Deskripsi</th>
+                                    <th class="pt-0">Logo</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($indexs as $index)
+                                @foreach ($maskapais as $maskapai)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $index->index }}</td>
+                                        <td>{{ $maskapai->kode_maskapai }}</td>
+                                        <td>{{ $maskapai->nama_maskapai }}</td>
+                                        <td>{{ $maskapai->negara_asal }}</td>
+                                        <td>{{ $maskapai->deskripsi }}</td>
+                                        <td><img src="{{ asset('storage/' . $maskapai->logo) }}" alt=""></td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/index/{{ $index->id }}/edit"
+                                                <a href="/admin/maskapai/{{ $maskapai->id }}/edit"
                                                     class="badge bg-success d-inline-block">Edit</a>
-                                                <form action="/admin/index/{{ $index->id }}" method="post">
+                                                <form action="/admin/maskapai/{{ $maskapai->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
@@ -56,7 +64,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

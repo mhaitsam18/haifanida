@@ -184,7 +184,8 @@
                                 <a href="/admin/hotel" class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
                             <div class="col-lg-4">
-                                <img src="" alt="" class="img-thumbnail img-fluid img-preview">
+                                <img src="{{ asset('storage/' . $hotel->gambar) }}" alt=""
+                                    class="img-thumbnail img-fluid img-preview">
                             </div>
                         </div>
                     </form>
