@@ -23,6 +23,16 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="mb-3">
+                                    <label for="nama" class="form-label">Nama Konten</label>
+                                    <input type="text" class="form-control  @error('nama') is-invalid @enderror"
+                                        id="nama" name="nama" value="{{ old('nama') }}" placeholder="Nama">
+                                    @error('nama')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
                                     <label for="judul" class="form-label">Judul</label>
                                     <input type="text" class="form-control  @error('judul') is-invalid @enderror"
                                         id="judul" name="judul" value="{{ old('judul') }}" placeholder="Judul">

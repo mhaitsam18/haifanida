@@ -17,9 +17,12 @@ return new class extends Migration
                 ->constrained('users')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->string('nama')->nullable();
             $table->string('judul')->nullable();
             $table->text('isi_konten')->nullable();
             $table->string('gambar')->nullable();
+            $table->boolean('indelible')->default(0)->nullable();
+            $table->boolean('is_active')->nullable();
             $table->timestamps();
         });
     }

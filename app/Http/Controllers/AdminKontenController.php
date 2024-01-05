@@ -37,6 +37,7 @@ class AdminKontenController extends Controller
     {
         $validateData = $request->validate([
             'user_id' => 'nullable',
+            'nama' => 'required',
             'judul' => 'required',
             'isi_konten' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3145728',
@@ -80,6 +81,7 @@ class AdminKontenController extends Controller
     {
         $validateData = $request->validate([
             'user_id' => 'nullable',
+            'nama' => 'required',
             'judul' => 'required',
             'isi_konten' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3145728',

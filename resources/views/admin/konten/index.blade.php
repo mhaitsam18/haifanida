@@ -35,6 +35,7 @@
                                 <tr>
                                     <th class="pt-0">#</th>
                                     <th class="pt-0">Penulis</th>
+                                    <th class="pt-0">Nama Konten</th>
                                     <th class="pt-0">Judul</th>
                                     <th class="pt-0">Isi Konten</th>
                                     <th class="pt-0">Gambar</th>
@@ -46,6 +47,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $konten->user->name }}</td>
+                                        <td>{{ $konten->nama }}</td>
                                         <td>{{ $konten->judul }}</td>
                                         <td>{{ $konten->isi_konten }}</td>
                                         <td><img src="{{ asset('storage/' . $konten->gambar) }}" alt=""></td>
@@ -54,12 +56,14 @@
                                                 @if (auth()->user()->id == $konten->user_id)
                                                     <a href="/admin/konten/{{ $konten->id }}/edit"
                                                         class="badge bg-success d-inline-block">Edit</a>
-                                                    <form action="/admin/konten/{{ $konten->id }}" method="post">
-                                                        @method('delete')
-                                                        @csrf
-                                                        <button type="submit"
-                                                            class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                    </form>
+                                                    @if (!$konten->indelible)
+                                                        <form action="/admin/konten/{{ $konten->id }}" method="post">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                        </form>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </td>

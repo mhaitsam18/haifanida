@@ -1,5 +1,19 @@
 @extends('layouts.main')
+@section('style')
+    <style>
+        .item-bg-1 {
+            background-image: {{ asset('storage/' . $beranda1->gambar) }}
+        }
 
+        .item-bg-2 {
+            background-image: {{ asset('storage/' . $beranda1->gambar) }}
+        }
+
+        .item-bg-3 {
+            background-image: {{ asset('storage/' . $beranda1->gambar) }}
+        }
+    </style>
+@endsection
 @section('content')
     @php
         use Carbon\Carbon;
