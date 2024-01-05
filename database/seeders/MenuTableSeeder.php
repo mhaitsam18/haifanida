@@ -119,7 +119,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Role",
-            'parent_id' => '6',
+            'parent_id' => '7',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/role',
@@ -128,7 +128,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Akses",
-            'parent_id' => '6',
+            'parent_id' => '7',
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/role-menu',
@@ -137,7 +137,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Admin",
-            'parent_id' => '7',
+            'parent_id' => '8',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/user-admin',
@@ -146,7 +146,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Author",
-            'parent_id' => '7',
+            'parent_id' => '8',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/author',
@@ -155,7 +155,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Member",
-            'parent_id' => '7',
+            'parent_id' => '8',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/member',
@@ -164,7 +164,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Agen",
-            'parent_id' => '7',
+            'parent_id' => '8',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/agen',
@@ -173,7 +173,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Menu",
-            'parent_id' => '8',
+            'parent_id' => '9',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/menu',
@@ -182,7 +182,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Sub Menu",
-            'parent_id' => '8',
+            'parent_id' => '9',
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/sub-menu',
@@ -191,7 +191,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Konten",
-            'parent_id' => '8',
+            'parent_id' => '9',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/konten',
@@ -200,7 +200,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Kantor",
-            'parent_id' => '9',
+            'parent_id' => '10',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/kantor',
@@ -209,7 +209,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Perwakilan",
-            'parent_id' => '9',
+            'parent_id' => '10',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/perwakilan',
@@ -218,7 +218,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Cabang",
-            'parent_id' => '9',
+            'parent_id' => '10',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/cabang',
@@ -227,7 +227,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Hotel",
-            'parent_id' => '10',
+            'parent_id' => '11',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/hotel',
@@ -236,7 +236,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Maskapai",
-            'parent_id' => '10',
+            'parent_id' => '11',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/maskapai',
@@ -245,7 +245,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Paket",
-            'parent_id' => '12',
+            'parent_id' => '13',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/paket',
@@ -254,7 +254,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Galeri",
-            'parent_id' => '12',
+            'parent_id' => '13',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/galeri',
@@ -263,7 +263,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Isu Perjalanan",
-            'parent_id' => '12',
+            'parent_id' => '13',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/isu-perjalanan',
@@ -272,7 +272,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Jadwal",
-            'parent_id' => '12',
+            'parent_id' => '13',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/jadwal',
@@ -281,7 +281,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Jema'ah",
-            'parent_id' => '13',
+            'parent_id' => '14',
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/jemaah',
