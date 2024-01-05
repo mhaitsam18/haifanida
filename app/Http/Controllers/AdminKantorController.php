@@ -21,6 +21,18 @@ class AdminKantorController extends Controller
         ]);
     }
 
+    public function kantorSaya()
+    {
+        $kantor = Kantor::find(auth()->user()->admin->kantor_id);
+        return view('admin.kantor.edit', [
+            'title' => 'Kantor Saya',
+            'page' => 'kantor-saya',
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => Kabupaten::where('provinsi_id', old('provinsi_id', $kantor->kabupaten->provinsi_id))->get(),
+            'kantor' => $kantor,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

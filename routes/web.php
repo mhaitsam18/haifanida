@@ -187,6 +187,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('pesan/kirim-email', [AdminPesanController::class, 'kirimEmail'])->name('admin.pesan.kirim-email');
             });
             Route::middleware('adminkantor')->group(function () {
+                Route::get('/kantor-saya', [AdminKantorController::class, 'kantorSaya'])->name('admin.kantor-saya');
                 Route::middleware('pusat')->group(function () {
                     Route::get('/', [AdminController::class, 'pusat'])->name('admin.pusat');
                 });
