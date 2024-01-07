@@ -60,7 +60,7 @@
                                         <td>{{ $paket->destinasi }}</td>
                                         <td>{{ $paket->durasi }}</td>
                                         <td>{{ $paket->harga }}</td>
-                                        <td>{{ $paket->fasilitas }}</td>
+                                        <td>{!! $paket->fasilitas !!}</td>
                                         <td>{{ $paket->deskripsi }}</td>
                                         <td>{{ $paket->tempat_keberangkatan }}</td>
                                         <td>{{ $paket->tempat_kepulangan }}</td>

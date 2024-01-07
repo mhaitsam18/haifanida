@@ -19,7 +19,7 @@ class PaketTableSeeder extends Seeder
                 'nama_paket' => 'Umroh 24.24',
                 'destinasi' => 'Jakarta - Jeddah - Mekkah - Madinah - Jakarta',
                 'jenis_paket' => 'umroh',
-                'durasi' => '9 Hari',
+                'durasi' => '9',
                 'harga' => '24000000',
                 'fasilitas' => '<p>
                     <h4>Harga Termasuk</h4>

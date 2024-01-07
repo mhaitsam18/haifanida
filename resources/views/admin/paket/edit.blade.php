@@ -91,10 +91,10 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="durasi" class="form-label">Durasi</label>
-                                    <input type="text" class="form-control  @error('durasi') is-invalid @enderror"
+                                    <label for="durasi" class="form-label">Durasi (hari)</label>
+                                    <input type="number" class="form-control  @error('durasi') is-invalid @enderror"
                                         id="durasi" name="durasi" value="{{ old('durasi', $paket->durasi) }}"
-                                        placeholder="Durasi: ex. 12 Hari">
+                                        placeholder="Durasi">
                                     @error('durasi')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
