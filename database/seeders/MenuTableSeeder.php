@@ -244,6 +244,15 @@ class MenuTableSeeder extends Seeder
             'order' => 2502
         ]);
         Menu::create([
+            'menu' => "Data Ekstra",
+            'parent_id' => '11',
+            'has_dropdown' => 0,
+            'is_active' => 1,
+            'url' => '/admin/ekstra',
+            'icon' => '',
+            'order' => 2503
+        ]);
+        Menu::create([
             'menu' => "Data Paket",
             'parent_id' => '13',
             'has_dropdown' => 0,
