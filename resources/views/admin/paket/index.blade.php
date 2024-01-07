@@ -58,8 +58,8 @@
                                         <td>{{ $paket->nama_paket }}</td>
                                         <td>{{ $paket->jenis_paket }}</td>
                                         <td>{{ $paket->destinasi }}</td>
-                                        <td>{{ $paket->durasi }}</td>
-                                        <td>Rp.{{ number($paket->harga, 2, ',', '.') }}</td>
+                                        <td>{{ $paket->durasi }} Hari</td>
+                                        <td>Rp.{{ number_format($paket->harga, 2, ',', '.') }}</td>
                                         <td>{!! $paket->fasilitas !!}</td>
                                         <td>{{ $paket->deskripsi }}</td>
                                         <td>{{ $paket->tempat_keberangkatan }}</td>
