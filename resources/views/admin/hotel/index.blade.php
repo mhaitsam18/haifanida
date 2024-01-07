@@ -54,7 +54,7 @@
                                         <td>{{ $hotel->kode_hotel }}</td>
                                         <td>{{ $hotel->nama_hotel }}</td>
                                         <td>
-                                            @for ($i = 0; $i < $paket->bintang; $i++)
+                                            @for ($i = 0; $i < $hotel->bintang; $i++)
                                                 <i class="fa-solid fa-star text-warning m-0"></i>
                                             @endfor
                                         </td>
@@ -63,7 +63,7 @@
                                         <td>{{ $hotel->negara }}</td>
                                         <td>{{ $hotel->alamat }}</td>
                                         <td>
-                                            <a href="{{ $paket->link_gmaps }}">{{ $paket->link_gmaps }}</a>
+                                            <a href="{{ $hotel->link_gmaps }}">{{ $hotel->link_gmaps }}</a>
                                         </td>
                                         <td>{{ $hotel->deskripsi }}</td>
                                         <td>
