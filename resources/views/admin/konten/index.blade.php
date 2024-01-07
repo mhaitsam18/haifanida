@@ -52,7 +52,8 @@
                                         <td>{{ $konten->judul }}</td>
                                         {{-- <td>{{ Str::limit($konten->isi_konten, 200, '...') }}</td> --}}
 
-                                        <td><img src="{{ asset('storage/' . $konten->gambar) }}" alt=""></td>
+                                        <td><img src="{{ asset('storage/' . $konten->gambar) }}" alt=""
+                                                style="border-radius: 0%; width: 150px; height: 100px;"></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if (!$konten->user_id || auth()->user()->id == $konten->user_id)
