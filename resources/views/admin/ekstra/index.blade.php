@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $ekstra->nama_ekstra }}</td>
-                                        <td>{{ $ekstra->harga_default }}</td>
+                                        <td>Rp.{{ number_format($ekstra->harga_default, 2, ',', '.') }}</td>
                                         <td>{{ $ekstra->jenis_ekstra }}</td>
                                         <td>{{ $ekstra->deskripsi }}</td>
                                         <td>
