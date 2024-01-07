@@ -56,6 +56,9 @@
                                             <a href="/admin/paket/{{ $paket->id }}/jemaah"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
+                                            <a href="/admin/paket/{{ $paket->id }}/pemesanan"
+                                                class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
+                                                    class="icon-sm me-2"></i>Lihat Data Pemesanan</a>
                                         </div>
                                     </div>
                                 </div>
@@ -324,8 +327,8 @@
                             <a href="/admin/paket/{{ $paket->id }}/galeri/create"
                                 class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i>
                                 Tambah Foto</a>
-                            <a href="/admin/paket/{{ $paket->id }}/galeri" class="btn btn-sm btn-langit mb-3"><i
-                                    data-feather="eye" class="icon-sm me-2"></i> Lihat Semua Foto</a>
+                            {{-- <a href="/admin/paket/{{ $paket->id }}/galeri" class="btn btn-sm btn-langit mb-3"><i
+                                    data-feather="eye" class="icon-sm me-2"></i> Lihat Semua Foto</a> --}}
                             <div class="owl-carousel owl-theme owl-mouse-wheel">
                                 @if ($paket->galeris->count() > 0)
                                     @foreach ($paket->galeris as $galeri)

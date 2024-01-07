@@ -52,8 +52,16 @@
                                         <td>{{ $konten->judul }}</td>
                                         {{-- <td>{{ Str::limit($konten->isi_konten, 200, '...') }}</td> --}}
 
-                                        <td><img src="{{ asset('storage/' . $konten->gambar) }}" alt=""
-                                                style="border-radius: 0%; width: 150px; height: 100px;"></td>
+                                        <td>
+                                            @if (Storage::disk('public')->exists($konten->gambar))
+                                                <img src="{{ asset('storage/' . $konten->gambar) }}" alt=""
+                                                    style="border-radius: 0%; width: 150px; height: 100px;">
+                                            @else
+                                                <img src="{{ asset('storage/image-not-found-scaled.png') }}"
+                                                    alt="Image Not Found"
+                                                    style="border-radius: 0%; width: 150px; height: 100px;">
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if (!$konten->user_id || auth()->user()->id == $konten->user_id)

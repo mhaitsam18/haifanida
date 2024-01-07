@@ -64,8 +64,9 @@
                                         </td>
                                         <td>{{ $admin->kantor->nama_kantor }}</td>
                                         {{-- Data Admin --}}
-                                        <td> <img src="{{ asset('storage/' . $admin->user->photo) }}" alt="Foto"
-                                                class="img-thumbnail img-fluid"></td>
+                                        <td> <img
+                                                src="{{ asset('storage/' . $admin->user->photo ?? 'image-not-found-scaled.png') }}"
+                                                alt="Foto" class="img-thumbnail img-fluid"></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/user-admin/{{ $admin->id }}/edit"

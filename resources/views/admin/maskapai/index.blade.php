@@ -50,7 +50,13 @@
                                         <td>{{ $maskapai->nama_maskapai }}</td>
                                         <td>{{ $maskapai->negara_asal }}</td>
                                         <td>{{ $maskapai->deskripsi }}</td>
-                                        <td><img src="{{ asset('storage/' . $maskapai->logo) }}" alt=""></td>
+                                        <td>
+                                            @if (Storage::disk('public')->exists($maskapai->logo))
+                                                <img src="{{ asset('storage/' . $maskapai->logo) }}" alt="">
+                                            @else
+                                                <img src="{{ asset('storage/image-not-found-scaled.png') }}"
+                                                    alt="Image Not Found">
+                                            @endif
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/maskapai/{{ $maskapai->id }}/edit"
