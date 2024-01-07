@@ -71,16 +71,16 @@
                                                 style="border-radius: 0%; width: 150px; height: 100px;">
                                         </td>
                                         <td>
-                                            <div class="d-flex align-items-center">
+                                            <div class="d-flex align-items-center ">
                                                 <a href="/admin/paket/{{ $paket->id }}"
-                                                    class="badge bg-haifa d-inline-block">Detail</a>
+                                                    class="badge bg-haifa d-inline-block ms-1">Detail</a>
                                                 <a href="/admin/paket/{{ $paket->id }}/edit"
-                                                    class="badge bg-success d-inline-block">Edit</a>
+                                                    class="badge bg-success d-inline-block ms-1">Edit</a>
                                                 <form action="/admin/paket/{{ $paket->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
                                                 </form>
                                             </div>
                                         </td>
