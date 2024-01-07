@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('kelas')->nullable();
             $table->integer('kuota')->nullable();
             $table->text('keterangan_penerbangan')->nullable();
-            $table->float('harga_tiket', 16, 2)->nullable();
+            $table->float('total_harga', 16, 2)->nullable();
             $table->string('bandara_asal')->nullable();
             $table->string('bandara_tujuan')->nullable();
             $table->time('waktu_keberangkatan')->nullable();

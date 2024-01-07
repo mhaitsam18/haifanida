@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('tanggal_check_in')->nullable();
             $table->date('tanggal_check_out')->nullable();
             $table->integer('jumlah_kamar')->nullable();
+            $table->float('total_harga', 16, 2)->nullable();
             $table->text('keterangan_hotel')->nullable();
             $table->timestamps();
         });

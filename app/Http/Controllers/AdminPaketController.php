@@ -70,6 +70,7 @@ class AdminPaketController extends Controller
             'title' => 'Detail Paket',
             'page' => 'paket',
             'paket' => $paket,
+            'kantors' => Kantor::all(),
         ]);
     }
 

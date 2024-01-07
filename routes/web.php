@@ -19,6 +19,8 @@ use App\Http\Controllers\AdminMaskapaiController;
 use App\Http\Controllers\AdminMemberController;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AdminPaketController;
+use App\Http\Controllers\AdminPenerbanganController;
+use App\Http\Controllers\AdminPenginapanController;
 use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
@@ -199,6 +201,12 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::resource('paket', AdminPaketController::class)->parameters([
                     'paket' => 'paket'
+                ]);
+                Route::resource('penerbangan', AdminPenerbanganController::class)->parameters([
+                    'penerbangan' => 'paket_maskapai'
+                ]);
+                Route::resource('penginapan', AdminPenginapanController::class)->parameters([
+                    'penginapan' => 'paket_hotel'
                 ]);
                 Route::resource('galeri', AdminGaleriController::class)->parameters([
                     'galeri' => 'galeri'

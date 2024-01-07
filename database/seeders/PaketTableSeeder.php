@@ -22,7 +22,7 @@ class PaketTableSeeder extends Seeder
                 'durasi' => '9',
                 'harga' => '24000000',
                 'fasilitas' => '<p>
-                    <h4>Harga Termasuk</h4>
+                    <h6>Harga Termasuk</h6>
                     <ul>
                         <li>Tiket Pesawat</li>
                         <li>Visa</li>
@@ -31,7 +31,7 @@ class PaketTableSeeder extends Seeder
                         <li>Tour & Ziarah</li>
                         <li>Hotel Berbintang 3</li>
                     </ul>
-                    <h4>Harga Tidak Termasuk</h4>
+                    <h6>Harga Tidak Termasuk</h6>
                     <ul>
                         <li>Pembuatan Paspor</li>
                         <li>Vaksin Meningitis</li>

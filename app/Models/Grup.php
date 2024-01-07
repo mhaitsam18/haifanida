@@ -36,4 +36,8 @@ class Grup extends Model
     {
         return $this->hasMany(IsuPerjalanan::class);
     }
+    public function jadwals()
+    {
+        return $this->hasMany(Jadwal::class);
+    }
 }
