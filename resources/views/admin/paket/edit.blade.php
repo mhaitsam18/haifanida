@@ -197,6 +197,21 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input @error('published_at') is-invalid @enderror"
+                                            type="checkbox" value="{{ now() }}" id="published_at"
+                                            name="published_at" @checked(old('published_at', $paket->published_at))>
+                                        <label class="form-check-label" for="published_at">
+                                            Terbitkan?
+                                        </label>
+                                    </div>
+                                    @error('published_at')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
                                 <a href="/admin/paket" class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>

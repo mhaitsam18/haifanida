@@ -74,37 +74,36 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    <div class="mb-3">
-                                        <label for="url" class="form-label">URL</label>
-                                        <input type="text" class="form-control  @error('url') is-invalid @enderror"
-                                            id="url" name="url" value="{{ old('url') }}" placeholder="URL">
-                                        @error('url')
-                                            <div class="text-danger fs-6">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="icon" class="form-label">Ikon</label>
-                                        <input type="text" class="form-control  @error('icon') is-invalid @enderror"
-                                            id="icon" name="icon" value="{{ old('icon') }}" placeholder="Ikon">
-                                        @error('icon')
-                                            <div class="text-danger fs-6">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="order" class="form-label">Nomor Urut</label>
-                                        <input type="number" class="form-control  @error('order') is-invalid @enderror"
-                                            id="order" name="order" value="{{ old('order') }}"
-                                            placeholder="Nomor Urut">
-                                        @error('order')
-                                            <div class="text-danger fs-6">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="url" class="form-label">URL</label>
+                                    <input type="text" class="form-control  @error('url') is-invalid @enderror"
+                                        id="url" name="url" value="{{ old('url') }}" placeholder="URL">
+                                    @error('url')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="icon" class="form-label">Ikon</label>
+                                    <input type="text" class="form-control  @error('icon') is-invalid @enderror"
+                                        id="icon" name="icon" value="{{ old('icon') }}" placeholder="Ikon">
+                                    @error('icon')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="order" class="form-label">Nomor Urut</label>
+                                    <input type="number" class="form-control  @error('order') is-invalid @enderror"
+                                        id="order" name="order" value="{{ old('order') }}" placeholder="Nomor Urut">
+                                    @error('order')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
                                 <a href="/admin/menu" class="btn btn-secondary float-end m-2">Kembali</a>

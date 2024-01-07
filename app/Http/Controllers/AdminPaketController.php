@@ -52,6 +52,7 @@ class AdminPaketController extends Controller
             'tanggal_mulai' => 'required|string',
             'tanggal_selesai' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'published_at' => 'nullable',
         ]);
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('paket-gambar');
@@ -106,6 +107,7 @@ class AdminPaketController extends Controller
             'tanggal_mulai' => 'required|string',
             'tanggal_selesai' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'published_at' => 'nullable',
         ]);
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('paket-gambar');
