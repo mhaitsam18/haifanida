@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kantor;
 use App\Models\Paket;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,11 @@ class AdminPaketController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.paket.index', [
+            'title' => 'Data paket',
+            'page' => 'paket',
+            'pakets' => Paket::all(),
+        ]);
     }
 
     /**
@@ -20,7 +25,12 @@ class AdminPaketController extends Controller
      */
     public function create()
     {
-        //
+        $kantor = Kantor::find(auth()->user()->admin->kantor_id);
+        return view('admin.paket.create', [
+            'title' => 'Tambah Paket',
+            'page' => 'paket',
+            'kantor' => $kantor,
+        ]);
     }
 
     /**
@@ -28,7 +38,27 @@ class AdminPaketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            // 'kode_paket' => 'nullable',
+            'nama_paket' => 'required|string',
+            'destinasi' => 'required|string',
+            'jenis_paket' => 'required|in:haji,umroh,wisata_halal',
+            'durasi' => 'required|string',
+            'harga' => 'required|integer',
+            'fasilitas' => 'required|string',
+            'deskripsi' => 'required|string',
+            'tempat_keberangkatan' => 'required|string',
+            'tempat_kepulangan' => 'required|string',
+            'tanggal_mulai' => 'required|string',
+            'tanggal_selesai' => 'required|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('paket-gambar');
+            $validateData['gambar'] = $path;
+        }
+        Paket::create($validateData);
+        return redirect('/admin/paket')->with('success', 'Data paket berhasil ditambah');
     }
 
     /**
@@ -36,7 +66,11 @@ class AdminPaketController extends Controller
      */
     public function show(Paket $paket)
     {
-        //
+        return view('admin.paket.show', [
+            'title' => 'Detail Paket',
+            'page' => 'paket',
+            'paket' => $paket,
+        ]);
     }
 
     /**
@@ -44,7 +78,12 @@ class AdminPaketController extends Controller
      */
     public function edit(Paket $paket)
     {
-        //
+        return view('admin.paket.edit', [
+            'title' => 'Edit Paket',
+            'page' => 'paket',
+            'paket' => $paket,
+            'kantors' => Kantor::all(),
+        ]);
     }
 
     /**
@@ -52,7 +91,29 @@ class AdminPaketController extends Controller
      */
     public function update(Request $request, Paket $paket)
     {
-        //
+        $validateData = $request->validate([
+            // 'kode_paket' => 'nullable',
+            'nama_paket' => 'required|string',
+            'destinasi' => 'required|string',
+            'jenis_paket' => 'required|in:haji,umroh,wisata_halal',
+            'durasi' => 'required|string',
+            'harga' => 'required|integer',
+            'fasilitas' => 'required|string',
+            'deskripsi' => 'required|string',
+            'tempat_keberangkatan' => 'required|string',
+            'tempat_kepulangan' => 'required|string',
+            'tanggal_mulai' => 'required|string',
+            'tanggal_selesai' => 'required|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+        ]);
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('paket-gambar');
+            $validateData['gambar'] = $path;
+        } else {
+            $validateData['gambar'] = $paket->gambar;
+        }
+        $paket->update($validateData);
+        return redirect('/admin/paket')->with('success', 'Data paket berhasil diubah');
     }
 
     /**
@@ -60,6 +121,7 @@ class AdminPaketController extends Controller
      */
     public function destroy(Paket $paket)
     {
-        //
+        $paket->delete();
+        return redirect('/admin/paket')->with('success', 'Data Paket berhasil dihapus');
     }
 }

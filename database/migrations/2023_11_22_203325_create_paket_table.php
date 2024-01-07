@@ -44,10 +44,12 @@ return new class extends Migration
             // Tanggal mulai dan selesai paket
             $table->date('tanggal_mulai')->nullable();
             $table->date('tanggal_selesai')->nullable();
+            $table->string('gambar')->nullable();
 
             // Kolom untuk mengatur status publish
             $table->timestamp('published_at')->nullable();
 
+            $table->timestamps();
             $table->softDeletes();
         });
     }

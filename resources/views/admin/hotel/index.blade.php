@@ -53,14 +53,21 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $hotel->kode_hotel }}</td>
                                         <td>{{ $hotel->nama_hotel }}</td>
-                                        <td>{{ $hotel->bintang }}</td>
+                                        <td>
+                                            @for ($i = 0; $i < $paket->bintang; $i++)
+                                                <i class="fa-solid fa-star text-warning m-0"></i>
+                                            @endfor
+                                        </td>
                                         <td>{{ $hotel->bintang_setaraf }}</td>
                                         <td>{{ $hotel->kota }}</td>
                                         <td>{{ $hotel->negara }}</td>
                                         <td>{{ $hotel->alamat }}</td>
-                                        <td>{{ $hotel->link_gmaps }}</td>
+                                        <td>
+                                            <a href="{{ $paket->link_gmaps }}">{{ $paket->link_gmaps }}</a>
+                                        </td>
                                         <td>{{ $hotel->deskripsi }}</td>
-                                        <td><img src="{{ asset('storage/' . $hotel->gambar) }}" alt="Foto Kantor"
+                                        <td>
+                                            <img src="{{ asset('storage/' . $hotel->gambar) }}" alt="Foto Kantor"
                                                 style="border-radius: 0%; width: 150px; height: 100px;">
                                         </td>
                                         <td>

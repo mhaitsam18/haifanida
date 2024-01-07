@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KontenTableSeeder::class);
         $this->call(HotelTableSeeder::class);
         $this->call(MaskapaiTableSeeder::class);
+        $this->call(PaketTableSeeder::class);
     }
 }
