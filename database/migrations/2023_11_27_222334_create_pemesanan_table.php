@@ -34,13 +34,13 @@ return new class extends Migration
             //     ->onUpdate('cascade')
             //     ->nullOnDelete();
             // Kolom-kolom yang berkaitan dengan jenis pemesanan (Umroh, Haji, Wisata Halal)
-            $table->boolean('is_umroh')->default(false);
-            $table->boolean('is_haji')->default(false);
-            $table->boolean('is_wisata_halal')->default(false);
+            // $table->boolean('is_umroh')->default(false);
+            // $table->boolean('is_haji')->default(false);
+            // $table->boolean('is_wisata_halal')->default(false);
             // Informasi pemesanan
             $table->string('status')->default('pending'); // Status pemesanan (pending, confirmed, canceled, etc.)
             $table->date('tanggal_pesan')->nullable(); // Tanggal pemesanan
-            $table->date('tanggal_berangkat')->nullable(); // Tanggal keberangkatan
+            // $table->date('tanggal_berangkat')->nullable(); // Tanggal keberangkatan
             $table->integer('jumlah_orang')->nullable(); // Jumlah orang yang memesan
             $table->float('total_harga', 16, 2)->nullable(); // Total harga pemesanan
             // Informasi pembayaran

@@ -44,18 +44,18 @@ class AdminPemesananController extends Controller
         $validateData = $request->validate([
             'paket_id' => 'required|integer',
             'user_id' => 'nullable|integer',
-            'is_umroh' => 'nullable|integer',
-            'is_haji' => 'nullable|integer',
-            'is_wisata_halal' => 'nullable|integer',
+            // 'is_umroh' => 'nullable|integer',
+            // 'is_haji' => 'nullable|integer',
+            // 'is_wisata_halal' => 'nullable|integer',
             'status' => 'nullable|string',
             'tanggal_pesan' => 'nullable|date',
-            'tanggal_berangkat' => 'nullable|date',
+            // 'tanggal_berangkat' => 'nullable|date',
             'jumlah_orang' => 'nullable|integer',
             'total_harga' => 'nullable|integer',
             'metode_pembayaran' => 'nullable|string',
             'is_pembayaran_lunas' => 'nullable|integer',
             'tanggal_pelunasan' => 'nullable|date',
-            'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
+            // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
         ]);
 
         Pemesanan::create($validateData);
@@ -97,18 +97,18 @@ class AdminPemesananController extends Controller
         $validateData = $request->validate([
             'paket_id' => 'required|integer',
             'user_id' => 'nullable|integer',
-            'is_umroh' => 'nullable|integer',
-            'is_haji' => 'nullable|integer',
-            'is_wisata_halal' => 'nullable|integer',
+            // 'is_umroh' => 'nullable|integer',
+            // 'is_haji' => 'nullable|integer',
+            // 'is_wisata_halal' => 'nullable|integer',
             'status' => 'nullable|string',
             'tanggal_pesan' => 'nullable|date',
-            'tanggal_berangkat' => 'nullable|date',
+            // 'tanggal_berangkat' => 'nullable|date',
             'jumlah_orang' => 'nullable|integer',
             'total_harga' => 'nullable|integer',
             'metode_pembayaran' => 'nullable|string',
             'is_pembayaran_lunas' => 'nullable|integer',
             'tanggal_pelunasan' => 'nullable|date',
-            'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
+            // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
         ]);
 
         $pemesanan->update($validateData);
