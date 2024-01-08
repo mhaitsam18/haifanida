@@ -28,6 +28,7 @@ use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminSubMenuController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AgenController;
 use App\Http\Controllers\AgenGrupController;
 use App\Http\Controllers\AgenJemaahController;
@@ -148,6 +149,9 @@ Route::middleware('auth')->group(function () {
             Route::middleware('superadmin')->group(function () {
                 Route::resource('role', AdminRoleController::class)->parameters([
                     'role' => 'role'
+                ]);
+                Route::resource('user', AdminUserController::class)->parameters([
+                    'user' => 'user'
                 ]);
                 Route::resource('user-admin', AdminAdminController::class)->parameters([
                     'user-admin' => 'admin'

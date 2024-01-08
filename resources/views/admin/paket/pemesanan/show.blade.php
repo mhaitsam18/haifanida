@@ -58,7 +58,7 @@
                                                     class="icon-sm me-2"></i>Lihat Data Jema'ah</a> --}}
                                             <a href="/admin/paket/{{ $paket->id }}/pemesanan"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
-                                                    class="icon-sm me-2"></i>Lihat Pemesanan Paket</a>
+                                                    class="icon-sm me-2"></i>Lihat Data Pemesanan</a>
                                         </div>
                                     </div>
                                 </div>
