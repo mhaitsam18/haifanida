@@ -29,8 +29,8 @@ return new class extends Migration
             $table->float('total_harga', 16, 2)->nullable();
             $table->string('bandara_asal')->nullable();
             $table->string('bandara_tujuan')->nullable();
-            $table->time('waktu_keberangkatan')->nullable();
-            $table->time('waktu_kedatangan')->nullable();
+            $table->dateTime('waktu_keberangkatan')->nullable();
+            $table->dateTime('waktu_kedatangan')->nullable();
             $table->string('status_penerbangan')->nullable();
             $table->enum('tipe_penerbangan', ['Langsung', 'Transit'])->nullable();
             $table->string('gate_penerbangan')->nullable();
