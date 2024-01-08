@@ -25,6 +25,10 @@ class Paket extends Model
     }
 
 
+    public function galeries()
+    {
+        return $this->hasMany(Galeri::class);
+    }
     public function galeris()
     {
         return $this->hasMany(Galeri::class);

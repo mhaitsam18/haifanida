@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agen;
 use App\Models\Grup;
+use App\Models\Paket;
 use Illuminate\Http\Request;
 
 class AdminGrupController extends Controller
@@ -10,17 +12,28 @@ class AdminGrupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Paket $paket = null)
     {
-        //
+        return view('admin.paket.grup.index', [
+            'title' => 'Data grup',
+            'page' => 'grup',
+            'paket' => $paket,
+            'grups' => ($paket) ? $paket->grups : Grup::all(),
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Paket $paket = null)
     {
-        //
+        return view('admin.paket.grup.create', [
+            'title' => 'Tambah Data Grup',
+            'page' => 'grup',
+            'paket' => $paket,
+            'pakets' => Paket::all(),
+            'agens' => Agen::all(),
+        ]);
     }
 
     /**
@@ -28,7 +41,17 @@ class AdminGrupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'paket_id' => 'required|integer',
+            'agen_id' => 'nullable|integer',
+            'nama_grup' => 'required|string',
+            'keterangan_grup' => 'nullable|string',
+            'status_grup' => 'nullable|string',
+            'kuota_grup' => 'nullable|integer',
+        ]);
+
+        Grup::create($validateData);
+        return back()->with('success', 'Data Grup berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +59,11 @@ class AdminGrupController extends Controller
      */
     public function show(Grup $grup)
     {
-        //
+        return view('admin.paket.grup.show', [
+            'title' => 'Detail grup',
+            'page' => 'grup',
+            'grup' => $grup,
+        ]);
     }
 
     /**
@@ -44,7 +71,13 @@ class AdminGrupController extends Controller
      */
     public function edit(Grup $grup)
     {
-        //
+        return view('admin.paket.grup.edit', [
+            'title' => 'Edit grup',
+            'page' => 'grup',
+            'grup' => $grup,
+            'pakets' => Paket::all(),
+            'agens' => Agen::all(),
+        ]);
     }
 
     /**
@@ -52,7 +85,17 @@ class AdminGrupController extends Controller
      */
     public function update(Request $request, Grup $grup)
     {
-        //
+        $validateData = $request->validate([
+            'paket_id' => 'required|integer',
+            'agen_id' => 'nullable|integer',
+            'nama_grup' => 'required|string',
+            'keterangan_grup' => 'nullable|string',
+            'status_grup' => 'nullable|string',
+            'kuota_grup' => 'nullable|integer',
+        ]);
+
+        $grup->update($validateData);
+        return back()->with('success', 'Data Grup berhasil diperbarui');
     }
 
     /**
@@ -60,6 +103,7 @@ class AdminGrupController extends Controller
      */
     public function destroy(Grup $grup)
     {
-        //
+        $grup->delete();
+        return back()->with('success', 'Data Grup berhasil dihapus');
     }
 }

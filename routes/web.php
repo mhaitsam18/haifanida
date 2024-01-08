@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminAgenController;
 use App\Http\Controllers\AdminAuthorController;
+use App\Http\Controllers\AdminBusController;
 use App\Http\Controllers\AdminBusJemaahController;
 use App\Http\Controllers\AdminCabangController;
 use App\Http\Controllers\AdminController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\AdminMaskapaiController;
 use App\Http\Controllers\AdminMemberController;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AdminPaketController;
+use App\Http\Controllers\AdminPemesananController;
 use App\Http\Controllers\AdminPenerbanganController;
 use App\Http\Controllers\AdminPenginapanController;
 use App\Http\Controllers\AdminPerwakilanController;
@@ -144,6 +146,9 @@ Route::middleware('auth')->group(function () {
             Route::put('/profile/{user}', [AdminController::class, 'profileUpdate'])->name('admin.profile.update');
             Route::put('/password/{user}', [AdminController::class, 'passwordUpdate'])->name('admin.password.update');
             Route::middleware('superadmin')->group(function () {
+                Route::resource('role', AdminRoleController::class)->parameters([
+                    'role' => 'role'
+                ]);
                 Route::resource('user-admin', AdminAdminController::class)->parameters([
                     'user-admin' => 'admin'
                 ]);
@@ -155,9 +160,6 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::resource('agen', AdminAgenController::class)->parameters([
                     'agen' => 'agen'
-                ]);
-                Route::resource('role', AdminRoleController::class)->parameters([
-                    'role' => 'role'
                 ]);
                 Route::resource('menu', AdminMenuController::class)->parameters([
                     'menu' => 'menu'
@@ -203,6 +205,35 @@ Route::middleware('auth')->group(function () {
                 Route::middleware('cabang')->group(function () {
                     Route::get('/', [AdminController::class, 'cabang'])->name('cabang');
                 });
+
+
+                Route::prefix('paket/{paket}')->group(function () {
+                    Route::prefix('pemesanan')->group(function () {
+                        Route::get('/', [AdminPemesananController::class, 'index'])->name('admin.paket.pemesanan.index');
+                        Route::get('/create', [AdminPemesananController::class, 'create'])->name('admin.paket.pemesanan.create');
+                    });
+                    Route::prefix('grup')->group(function () {
+                        Route::get('/', [AdminGrupController::class, 'index'])->name('admin.paket.grup.index');
+                        Route::get('/create', [AdminGrupController::class, 'create'])->name('admin.paket.grup.create');
+                    });
+                    Route::prefix('penginapan')->group(function () {
+                        Route::get('/', [AdminPenginapanController::class, 'index'])->name('admin.paket.penginapan.index');
+                        Route::get('/create', [AdminPenginapanController::class, 'create'])->name('admin.paket.penginapan.create');
+                    });
+                    Route::prefix('penerbangan')->group(function () {
+                        Route::get('/', [AdminPenerbanganController::class, 'index'])->name('admin.paket.penerbangan.index');
+                        Route::get('/create', [AdminPenerbanganController::class, 'create'])->name('admin.paket.penerbangan.create');
+                    });
+                    Route::prefix('bus')->group(function () {
+                        Route::get('/', [AdminBusController::class, 'index'])->name('admin.paket.bus.index');
+                        Route::get('/create', [AdminBusController::class, 'create'])->name('admin.paket.bus.create');
+                    });
+                    Route::prefix('galeri')->group(function () {
+                        Route::get('/', [AdminGaleriController::class, 'index'])->name('admin.paket.galeri.index');
+                        Route::get('/create', [AdminGaleriController::class, 'create'])->name('admin.paket.galeri.create');
+                    });
+                });
+
                 Route::resource('paket', AdminPaketController::class)->parameters([
                     'paket' => 'paket'
                 ]);
@@ -215,8 +246,16 @@ Route::middleware('auth')->group(function () {
                 Route::resource('galeri', AdminGaleriController::class)->parameters([
                     'galeri' => 'galeri'
                 ]);
+                Route::resource('bus', AdminBusController::class)->parameters([
+                    'bus' => 'bus'
+                ]);
+
                 Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->parameters([
                     'isu-perjalanan' => 'isu_perjalanan'
+                ]);
+
+                Route::resource('pemesanan', AdminPemesananController::class)->parameters([
+                    'pemesanan' => 'pemesanan'
                 ]);
                 Route::resource('jadwal', AdminJadwalController::class)->parameters([
                     'jadwal' => 'jadwal'

@@ -98,6 +98,7 @@
                                 </div>
                                 <a href="/admin/forgot-password" class="d-block mt-3 text-muted">Lupa Kata
                                     Sandi?</a>
+                                <a href="/" class="d-block mt-3 text-muted">Halaman Web</a>
                             </form>
                         </div>
                     </div>

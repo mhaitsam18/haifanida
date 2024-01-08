@@ -53,9 +53,9 @@
                                                 <li>Tanggal Kepulangan :
                                                     {{ Carbon::parse($paket->tanggal_selesai)->isoFormat('LL') }}</li>
                                             </ul>
-                                            <a href="/admin/paket/{{ $paket->id }}/jemaah"
+                                            {{-- <a href="/admin/paket/{{ $paket->id }}/jemaah"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
-                                                    class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
+                                                    class="icon-sm me-2"></i>Lihat Data Jema'ah</a> --}}
                                             <a href="/admin/paket/{{ $paket->id }}/pemesanan"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Data Pemesanan</a>
@@ -174,8 +174,10 @@
                                                     <td>{{ $penerbangan->total_harga }}</td>
                                                     <td>{{ $penerbangan->bandara_asal }}</td>
                                                     <td>{{ $penerbangan->bandara_tujuan }}</td>
-                                                    <td>{{ $penerbangan->waktu_keberangkatan }}</td>
-                                                    <td>{{ $penerbangan->waktu_kedatangan }}</td>
+                                                    <td>{{ Carbon::parse($penerbangan->waktu_keberangkatan)->isoFormat('LL') }}
+                                                    </td>
+                                                    <td>{{ Carbon::parse($penerbangan->waktu_kedatangan)->isoFormat('LL') }}
+                                                    </td>
                                                     <td>{{ $penerbangan->status_penerbangan }}</td>
                                                     <td>{{ $penerbangan->tipe_penerbangan }}</td>
                                                     <td>{{ $penerbangan->gate_penerbangan }}</td>
