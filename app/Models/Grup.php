@@ -25,7 +25,7 @@ class Grup extends Model
     }
     public function agen()
     {
-        return $this->belongsTo(Agen::class);
+        return $this->belongsTo(Agen::class, 'agen_id');
     }
 
     public function jemaahs()

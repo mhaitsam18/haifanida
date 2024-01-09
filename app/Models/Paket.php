@@ -48,7 +48,7 @@ class Paket extends Model
 
     public function pemesanans()
     {
-        return $this->hasMany(Pemesanan::class);
+        return $this->hasMany(Pemesanan::class, 'paket_id');
     }
 
 

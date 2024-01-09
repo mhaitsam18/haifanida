@@ -285,7 +285,7 @@
                                             @foreach ($paket->grups as $grup)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $grup->agen->nama_agen }}</td>
+                                                    <td>{{ $grup->agen->user->name ?? null }}</td>
                                                     <td>{{ $grup->nama_grup }}</td>
                                                     <td>{{ $grup->keterangan_grup }}</td>
                                                     <td>{{ $grup->kuota_grup }}</td>

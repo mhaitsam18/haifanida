@@ -15,9 +15,7 @@ class Pemesanan extends Model
         'id'
     ];
 
-    protected $with = [
-        ''
-    ];
+    protected $with = [];
 
     public function paket()
     {
