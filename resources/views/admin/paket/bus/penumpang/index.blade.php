@@ -33,7 +33,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($bus->penumpang as $penumpang)
+                                        @foreach ($penumpangs as $penumpang)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $penumpang->nomor_kursi }}</td>
