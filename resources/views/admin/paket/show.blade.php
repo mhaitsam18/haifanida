@@ -59,6 +59,9 @@
                                             <a href="/admin/paket/{{ $paket->id }}/pemesanan"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Pemesanan Paket</a>
+                                            <a class="btn btn-sm btn-secondary mb-3" href="/admin/paket">
+                                                <span class="">Kembali</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

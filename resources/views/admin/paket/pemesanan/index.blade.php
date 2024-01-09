@@ -30,6 +30,11 @@
                     <a class="btn btn-sm btn-haifa my-2"
                         href="/admin/{{ $paket ? 'paket/' . $paket->id . '/' : '' }}pemesanan/create"><i data-feather="plus"
                             class="icon-sm me-2"></i> <span class="">Tambah</span></a>
+                    @if ($paket)
+                        <a class="btn btn-sm btn-secondary my-2" href="/admin/paket/{{ $paket->id }}">
+                            <span class="">Kembali</span>
+                        </a>
+                    @endif
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
                             <thead>

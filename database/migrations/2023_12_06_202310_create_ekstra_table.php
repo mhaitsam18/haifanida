@@ -17,6 +17,7 @@ return new class extends Migration
             $table->float('harga_default', 16, 2)->nullable();
             $table->enum('jenis_ekstra', ['perlengkapan', 'jasa', 'permintaan kamar', 'tipe kamar', 'pesawat'])->nullable();
             $table->text('deskripsi')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

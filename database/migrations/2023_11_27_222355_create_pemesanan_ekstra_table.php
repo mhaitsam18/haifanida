@@ -19,6 +19,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('ekstra')->nullable();
             $table->string('jumlah')->nullable();
+            $table->float('total_harga', 16, 2)->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

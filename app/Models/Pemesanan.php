@@ -49,6 +49,10 @@ class Pemesanan extends Model
     {
         return $this->hasMany(PemesananEkstra::class);
     }
+    public function pemesananKamars()
+    {
+        return $this->hasMany(PemesananKamar::class);
+    }
 
     public function pembayarans()
     {

@@ -18,7 +18,7 @@ class EkstraTableSeeder extends Seeder
         Ekstra::create([
             'nama_ekstra' => 'Perlengkapan',
             'jenis_ekstra' => 'perlengkapan',
-            'harga_default' => 1000000,
+            'harga_default' => 1500000,
         ]);
         Ekstra::create([
             'nama_ekstra' => 'Koper',
@@ -118,32 +118,38 @@ class EkstraTableSeeder extends Seeder
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar quad gabung',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 1000000,
+            'harga_default' => 0, //diisi 1 s/d 4 orang
+            'keterangan' => 'dapat diisi 1 s/d 4 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar quad keluarga',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 1000000,
+            'harga_default' => 0, //harus diisi 4 orang
+            'keterangan' => 'harus diisi 4 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar quad keluarga isi 3 dan 1 bed kosong',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 1000000,
+            'harga_default' => 2500000, //
+            'keterangan' => 'kena cas 2 juta 5 ratus',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar double gabung',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 1000000,
+            'harga_default' => 2500000, //diisi 1 orang
+            'keterangan' => 'dapat diisi 1 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar double keluarga',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 1000000,
+            'harga_default' => 5000000, //harus diisi 2 orang
+            'keterangan' => 'harus diisi 2 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar single',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 1000000,
+            'harga_default' => 8000000,
+            'keterangan' => 'hanya dapat diisi 1 orang',
         ]);
     }
 }
