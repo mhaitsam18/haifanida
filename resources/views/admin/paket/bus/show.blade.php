@@ -22,6 +22,11 @@
                             <h4 class="mb-2 mt-2">Data Penumpang</h4>
                             <a href="/admin/bus/{{ $bus->id }}/penumpang/create" class="btn btn-sm btn-langit mb-3"><i
                                     data-feather="plus" class="icon-sm me-2"></i> Tambah Data Penumpang</a>
+                            @if ($bus)
+                                <a class="btn btn-sm btn-secondary mb-3" href="/admin/paket/{{ $bus->paket_id }}/bus">
+                                    <span class="">Kembali</span>
+                                </a>
+                            @endif
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0" id="dataTableExample">
                                     <thead>
