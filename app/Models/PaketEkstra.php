@@ -23,8 +23,8 @@ class PaketEkstra extends Model
     {
         return $this->belongsTo(Paket::class);
     }
-    public function hotel()
+    public function ekstra()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->belongsTo(Ekstra::class);
     }
 }

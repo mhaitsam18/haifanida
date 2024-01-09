@@ -72,6 +72,55 @@
                             {!! $paket->fasilitas !!}
                         </div>
                         <div class="col-md-9">
+                            <h4 class="mb-2">Ekstra Paket</h4>
+                            <a href="/admin/paket/{{ $paket->id }}/ekstra/create" class="btn btn-sm btn-langit mb-3"><i
+                                    data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                Data ekstra paket</a>
+                            <div class="table-responsive">
+                                {{-- id="dataTableExample" --}}
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Ekstra</th>
+                                            <th class="pt-0">Harga</th>
+                                            <th class="pt-0">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($paket->paketEkstras->count() > 0)
+                                            @foreach ($paket->paketEkstras as $ekstra)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $ekstra->ekstra->nama_ekstra }}</td>
+                                                    <td>{{ $ekstra->harga ?? $ekstra->ekstra->harga_default }}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center ">
+                                                            <a href="/admin/paket/ekstra/{{ $ekstra->id }}/edit"
+                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
+                                                            <form action="/admin/paket/ekstra/{{ $ekstra->id }}"
+                                                                method="post">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    Data ekstra belum Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
                             <h4 class="mb-2">Penginapan</h4>
                             <a href="/admin/paket/{{ $paket->id }}/penginapan/create"
                                 class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
