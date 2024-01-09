@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tanggal_penerbitan')->nullable();
             $table->date('tanggal_kadaluarsa')->nullable();
             $table->string('jenis_sertifikat')->nullable();
+            $table->string('sertifikat')->nullable();
             $table->timestamps();
         });
     }
