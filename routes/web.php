@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminAgenController;
 use App\Http\Controllers\AdminAuthorController;
+use App\Http\Controllers\AdminBerkasController;
 use App\Http\Controllers\AdminBusController;
 use App\Http\Controllers\AdminBusJemaahController;
 use App\Http\Controllers\AdminCabangController;
@@ -189,6 +190,9 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::resource('maskapai', AdminMaskapaiController::class)->parameters([
                     'maskapai' => 'maskapai'
+                ]);
+                Route::resource('berkas', AdminBerkasController::class)->parameters([
+                    'berkas' => 'berkas'
                 ]);
                 Route::resource('ekstra', AdminEkstraController::class)->parameters([
                     'ekstra' => 'ekstra'

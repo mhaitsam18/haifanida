@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(MenuTableSeeder::class);
         $this->call(KontenTableSeeder::class);
+        $this->call(BerkasTableSeeder::class);
         $this->call(HotelTableSeeder::class);
         $this->call(MaskapaiTableSeeder::class);
         $this->call(PaketTableSeeder::class);
