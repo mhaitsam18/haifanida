@@ -34,7 +34,17 @@ class DatabaseSeeder extends Seeder
         $this->call(PaketTableSeeder::class);
 
 
+        //Data Detail Paket
+        $this->call(PenginapanTableSeeder::class);
+        $this->call(PenerbanganTableSeeder::class);
+        $this->call(BusTableSeeder::class);
+        $this->call(GaleriTableSeeder::class);
+
+
         //Data Transaksi
+        $this->call(GrupTableSeeder::class);
         $this->call(PemesananTableSeeder::class);
+
+        $this->call(JemaahTableSeeder::class);
     }
 }

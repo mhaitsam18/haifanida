@@ -40,6 +40,24 @@ class UserTableSeeder extends Seeder
             'photo' => 'user-photo/haitsam.jpg',
             'role_id' => Role::where('role', 'member')->first()->id,
         ]);
+        User::create([
+            'name' => 'Abu Haitsam / Fakhry El-Razy / Fahruroji / Dr. Fakhrur Rozi Lc.MA',
+            'email' => 'fakhryelrazy@gmail.com',
+            'username' => 'fakhry',
+            'email_verified_at' => now(),
+            'password' => Hash::make('1234'),
+            'photo' => 'user-photo/fakhry.jpg',
+            'role_id' => Role::where('role', 'author')->first()->id,
+        ]);
+        User::create([
+            'name' => 'Asep Maulana',
+            'email' => 'sepmaulana@gmail.com',
+            'username' => 'atet',
+            'email_verified_at' => now(),
+            'password' => Hash::make('1234'),
+            'photo' => 'user-photo/atet.jpg',
+            'role_id' => Role::where('role', 'agen')->first()->id,
+        ]);
 
         $users = User::all();
         foreach ($users as $user) {

@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('bandara_tujuan')->nullable();
             $table->dateTime('waktu_keberangkatan')->nullable();
             $table->dateTime('waktu_kedatangan')->nullable();
-            $table->string('status_penerbangan')->nullable();
-            $table->enum('tipe_penerbangan', ['Langsung', 'Transit'])->nullable();
+            $table->enum('status_penerbangan', ['On Schedule', 'Delay', 'Canceled', 'Emergency Landing', 'Failed', 'Landed Safely', 'Accident', 'Crash'])->nullable();
+            $table->enum('tipe_penerbangan', ['Langsung', 'Transit'])->nullable(); // penerbangan transit (connecting), penerbangan langsung (direct)
             $table->string('gate_penerbangan')->nullable();
             $table->timestamps();
         });
