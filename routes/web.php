@@ -25,6 +25,7 @@ use App\Http\Controllers\AdminPaketController;
 use App\Http\Controllers\AdminPemesananController;
 use App\Http\Controllers\AdminPenerbanganController;
 use App\Http\Controllers\AdminPenginapanController;
+use App\Http\Controllers\AdminPenumpangController;
 use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
@@ -241,6 +242,12 @@ Route::middleware('auth')->group(function () {
                         Route::get('/create', [AdminGaleriController::class, 'create'])->name('admin.paket.galeri.create');
                     });
                 });
+                Route::prefix('bus/{bus}')->group(function () {
+                    Route::prefix('penumpang')->group(function () {
+                        Route::get('/', [AdminPenumpangController::class, 'index'])->name('admin.paket.penumpang.index');
+                        Route::get('/create', [AdminPenumpangController::class, 'create'])->name('admin.paket.penumpang.create');
+                    });
+                });
 
                 Route::resource('paket', AdminPaketController::class)->parameters([
                     'paket' => 'paket'
@@ -256,6 +263,9 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::resource('bus', AdminBusController::class)->parameters([
                     'bus' => 'bus'
+                ]);
+                Route::resource('penumpang', AdminPenumpangController::class)->parameters([
+                    'penumpang' => 'bus_jemaah'
                 ]);
 
                 Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->parameters([

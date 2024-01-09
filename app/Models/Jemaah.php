@@ -16,7 +16,7 @@ class Jemaah extends Model
     ];
 
     protected $with = [
-        'pemesanaan',
+        'pemesanan',
         'grup',
     ];
 

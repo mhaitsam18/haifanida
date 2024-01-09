@@ -57,9 +57,9 @@
                                         {{-- Data Admin --}}
                                         <td>
                                             @if ($admin->is_superadmin)
-                                                <span class="badge bg-success"><i class="fa-solid fa-x"></i></span>
+                                                <span class="badge bg-success"><i class="fa-solid fa-check"></i></span>
                                             @else
-                                                <span class="badge bg-danger"><i class="fa-solid fa-check"></i></span>
+                                                <span class="badge bg-danger"><i class="fa-solid fa-x"></i></span>
                                             @endif
                                         </td>
                                         <td>{{ $admin->kantor->nama_kantor }}</td>

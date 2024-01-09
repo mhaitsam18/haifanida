@@ -138,11 +138,8 @@
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/{{ $paket ? 'paket/' . $paket->id . '/' : '' }}pemesanan"
+                                <a href="/admin/paket/{{ $pemesanan->paket_id }}/pemesanan"
                                     class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                            <div class="col-lg-4">
-                                <img src="" alt="" class="img-thumbnail img-fluid img-preview">
                             </div>
                         </div>
                     </form>

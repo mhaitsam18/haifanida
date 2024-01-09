@@ -32,4 +32,9 @@ class Bus extends Model
     {
         return $this->hasMany(BusJemaah::class);
     }
+
+    public function penumpang()
+    {
+        return $this->hasMany(BusJemaah::class);
+    }
 }
