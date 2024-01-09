@@ -51,9 +51,9 @@
                                         <td>{{ $agen->user->email }}</td>
                                         <td>{{ $agen->user->username }}</td>
                                         <td>{{ $agen->user->phone_number }}</td>
+                                        <td>{{ $agen->kantor->nama_kantor ?? 'Belum diatur' }}</td>
                                         <td> <img src="{{ asset('storage/' . $agen->user->photo) }}" alt="Foto"
                                                 class="img-thumbnail img-fluid"></td>
-                                        <td>{{ $agen->kantor->nama_kantor }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/agen/{{ $agen->id }}/edit"

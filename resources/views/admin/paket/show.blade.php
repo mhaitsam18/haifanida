@@ -25,7 +25,7 @@
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <div class="d-flex align-items-start mb-3">
                                 <img src="{{ asset('storage/' . $paket->gambar) }}" class="wd-100 wd-sm-200 me-3"
                                     alt="Paket">
@@ -67,11 +67,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mb-3">
                             <h4 class="mb-2">Fasilitas</h4>
                             {!! $paket->fasilitas !!}
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-9 mb-3">
                             <h4 class="mb-2">Ekstra Paket</h4>
                             <a href="/admin/paket/{{ $paket->id }}/ekstra/create" class="btn btn-sm btn-langit mb-3"><i
                                     data-feather="plus" class="icon-sm me-2"></i> Tambah
@@ -93,7 +93,8 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $ekstra->ekstra->nama_ekstra }}</td>
-                                                    <td>{{ $ekstra->harga ?? $ekstra->ekstra->harga_default }}</td>
+                                                    <td>Rp.{{ number_format($ekstra->harga ?? $ekstra->ekstra->harga_default, 2, ',', '.') }}
+                                                    </td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
                                                             <a href="/admin/paket/ekstra/{{ $ekstra->id }}/edit"
@@ -120,7 +121,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <h4 class="mb-2">Penginapan</h4>
                             <a href="/admin/paket/{{ $paket->id }}/penginapan/create"
                                 class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
@@ -149,10 +150,12 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $penginapan->hotel->nama_hotel }}</td>
                                                     <td>{{ $penginapan->nomor_reservasi }}</td>
-                                                    <td>{{ $penginapan->tanggal_check_in }}</td>
-                                                    <td>{{ $penginapan->tanggal_check_out }}</td>
+                                                    <td>{{ Carbon::parse($penginapan->tanggal_check_in)->isoFormat('LL') }}
+                                                    </td>
+                                                    <td>{{ Carbon::parse($penginapan->tanggal_check_out)->isoFormat('LL') }}
+                                                    </td>
                                                     <td>{{ $penginapan->jumlah_kamar }}</td>
-                                                    <td>{{ $penginapan->total_harga }}</td>
+                                                    <td>Rp.{{ number_format($penginapan->total_harga, 2, ',', '.') }}</td>
                                                     <td>{{ $penginapan->keterangan_hotel }}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
@@ -182,7 +185,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <h4 class="mb-2">Penerbangan</h4>
                             <a href="/admin/paket/{{ $paket->id }}/penerbangan/create"
                                 class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
@@ -206,7 +209,6 @@
                                             <th class="pt-0">Waktu Keberangkatan</th>
                                             <th class="pt-0">Waktu Kedatangan</th>
                                             <th class="pt-0">Status Penerbangan</th>
-                                            <th class="pt-0">Waktu Penerbangan</th>
                                             <th class="pt-0">Tipe Penerbangan</th>
                                             <th class="pt-0">Gate Penerbangan</th>
                                             <th class="pt-0">Aksi</th>
@@ -223,7 +225,7 @@
                                                     <td>{{ $penerbangan->kelas }}</td>
                                                     <td>{{ $penerbangan->kuota }}</td>
                                                     <td>{{ $penerbangan->keterangan_penerbangan }}</td>
-                                                    <td>{{ $penerbangan->total_harga }}</td>
+                                                    <td>Rp.{{ number_format($penerbangan->total_harga, 2, ',', '.') }}</td>
                                                     <td>{{ $penerbangan->bandara_asal }}</td>
                                                     <td>{{ $penerbangan->bandara_tujuan }}</td>
                                                     <td>{{ Carbon::parse($penerbangan->waktu_keberangkatan)->isoFormat('LL') }}
@@ -261,7 +263,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <h4 class="mb-2 mt-2">Data Grup</h4>
                             <a href="/admin/paket/{{ $paket->id }}/grup/create" class="btn btn-sm btn-langit mb-3"><i
                                     data-feather="plus" class="icon-sm me-2"></i> Tambah Data
@@ -319,7 +321,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-3">
                             <h4 class="mb-2 mt-2">Data Bus</h4>
                             <a href="/admin/paket/{{ $paket->id }}/bus/create" class="btn btn-sm btn-langit mb-3"><i
                                     data-feather="plus" class="icon-sm me-2"></i> Tambah Data
@@ -376,7 +378,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <h4 class="mb-2 mt-2">Galeri</h4>
                             <a href="/admin/paket/{{ $paket->id }}/galeri/create"
                                 class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i>
