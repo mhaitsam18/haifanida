@@ -347,7 +347,7 @@
                                                     <td>{{ $bus->nomor_polisi }}</td>
                                                     <td>{{ $bus->merek }}</td>
                                                     <td>{{ $bus->kapasitas }}</td>
-                                                    <td>{{ $bus->fasilitas }}</td>
+                                                    <td>{!! $bus->fasilitas !!}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
                                                             <a href="/admin/bus/{{ $bus->id }}"

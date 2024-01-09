@@ -27,8 +27,7 @@
                                     <label for="nama_berkas" class="form-label">Nama Berkas</label>
                                     <input type="text" class="form-control  @error('nama_berkas') is-invalid @enderror"
                                         id="nama_berkas" name="nama_berkas"
-                                        value="{{ old('nama_berkas', $nama_berkas->nama_berkas) }}"
-                                        placeholder="Nama Berkas">
+                                        value="{{ old('nama_berkas', $berkas->nama_berkas) }}" placeholder="Nama Berkas">
                                     @error('nama_berkas')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
