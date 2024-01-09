@@ -68,7 +68,6 @@ class PemesananTableSeeder extends Seeder
                 'metode_pembayaran' => 'Transfer Mandiri',
                 'tanggal_pembayaran' => now(),
                 'bukti_pembayaran' => 'pembayaran-bukti/bukti-transaksi.jpg',
-                'jumlah_pengisi' => '2',
                 'status_pembayaran' => 'tertunda',
             ]
         ];

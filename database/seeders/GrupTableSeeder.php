@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Grup;
 use App\Models\IsuPerjalanan;
+use App\Models\Jadwal;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -76,7 +77,7 @@ class GrupTableSeeder extends Seeder
             ],
         ];
         foreach ($jadwals as $jadwal) {
-            IsuPerjalanan::create($jadwal);
+            Jadwal::create($jadwal);
         }
     }
 }

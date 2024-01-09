@@ -18,7 +18,7 @@ class BusTableSeeder extends Seeder
                 'paket_id' => 1,
                 'nomor_rombongan' => '1',
                 'nomor_polisi' => '5984 VJV',
-                'merk' => 'SAPTCO',
+                'merek' => 'SAPTCO',
                 'kapasitas' => '45',
                 'fasilitas' => '<ul>
                     <li>Ac</li>
@@ -30,7 +30,7 @@ class BusTableSeeder extends Seeder
                 'paket_id' => 1,
                 'nomor_rombongan' => '2',
                 'nomor_polisi' => '5985 VJV',
-                'merk' => 'SAPTCO',
+                'merek' => 'SAPTCO',
                 'kapasitas' => '45',
                 'fasilitas' => '<ul>
                     <li>Ac</li>

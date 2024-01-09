@@ -119,7 +119,7 @@ class JemaahTableSeeder extends Seeder
                 'jemaah_id' => 2,
                 'nomor_sertifikat' => '2',
                 'tanggal_penerbitan' => '2024-03-05',
-                'jenis_ sertifikat' => 'Sertifikat Umroh',
+                'jenis_sertifikat' => 'Sertifikat Umroh',
                 'sertifikat' => 'jemaah-sertifikat/sertifikat-2.jpg',
             ]
         ];
