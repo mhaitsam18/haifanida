@@ -47,11 +47,14 @@
                                                     {{ $pemesanan->is_pembayaran_lunas ? 'Lunas' : 'Belum Lunas' }}</li>
                                             </ul>
                                             <a href="/admin/jemaah?pemesanan={{ $pemesanan->id }}"
-                                                class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
+                                                class="btn btn-sm btn-haifa mb-1"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
                                             <a href="/admin/pemesanan/{{ $pemesanan->id }}/tagihan"
-                                                class="btn btn-sm btn-success mb-3"><i data-feather="file-text"
+                                                class="btn btn-sm btn-success mb-1"><i data-feather="file-text"
                                                     class="icon-sm me-2"></i>Lihat Tagihan</a>
+                                            <a href="/admin/paket/{{ $pemesanan->paket_id }}/pemesanan"
+                                                class="btn btn-sm btn-secondary mb-1"><i data-feather="arrow-left"
+                                                    class="icon-sm me-2"></i>Kembali</a>
                                         </div>
                                     </div>
                                 </div>
