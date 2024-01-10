@@ -17,128 +17,71 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    <form action="/admin/pemesanan/{{ $pemesanan->id }}" method="post" enctype="multipart/form-data">
+                    <form action="/admin/pemesanan-kamar/{{ $pemesananKamar->id }}" method="post"
+                        enctype="multipart/form-data">
                         @method('put')
                         @csrf
-                        <input type="hidden" name="id" id="id" value="{{ $pemesanan->id }}">
-                        <input type="hidden" name="paket_id" id="paket_id" value="{{ $pemesanan->paket_id }}">
-                        {{-- <input type="hidden" name="user_id" id="user_id" value="{{ $pemesanan->user_id }}"> --}}
-                        <h4 class="mb-3">{{ $paket->nama_paket ?? null }}</h4>
+                        <input type="hidden" name="id" id="id" value="{{ $pemesananKamar->id }}">
+                        <input type="hidden" name="pemesanan_id" id="pemesanan_id"
+                            value="{{ $pemesananKamar->pemesanan_id }}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label for="user_id" class="form-label">Pemesan</label>
-                                    <select class="form-select @error('user_id') is-invalid @enderror" id="user_id"
-                                        name="user_id">
-                                        <option value="">Pilih Pemesan</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" @selected($user->id == old('user_id', $pemesanan->user_id))>
-                                                {{ $user->name }}
+                                    <label for="tipe_kamar" class="form-label">Tipe Kamar</label>
+                                    <select class="form-select @error('tipe_kamar') is-invalid @enderror" id="tipe_kamar"
+                                        name="tipe_kamar">
+                                        <option value="" selected disabled>Pilih Tipe Kamar</option>
+                                        @foreach ($kamars as $kamar)
+                                            <option value="{{ $kamar->nama_ekstra }}"
+                                                data-harga="{{ $kamar->harga_default }}"
+                                                data-keterangan="{{ $kamar->keterangan }}" @selected($kamar->nama_ekstra == old('tipe_kamar', $pemesananKamar->tipe_kamar))>
+                                                {{ $kamar->nama_ekstra }} |
+                                                Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('user_id')
+                                    @error('tipe_kamar')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select class="form-select @error('status') is-invalid @enderror" id="status"
-                                        name="status">
-                                        <option value="" selected disabled>Pilih Status</option>
-                                        <option value="Tertunda" @selected('Tertunda' == old('user_id', $pemesanan->user_id))>Tertunda</option>
-                                        <option value="dikonfirmasi" @selected('dikonfirmasi' == old('user_id', $pemesanan->user_id))>dikonfirmasi</option>
-                                        <option value="diterima" @selected('diterima' == old('user_id', $pemesanan->user_id))>diterima</option>
-                                        <option value="ditolak" @selected('ditolak' == old('user_id', $pemesanan->user_id))>ditolak</option>
-                                        <option value="dibatalkan" @selected('dibatalkan' == old('user_id', $pemesanan->user_id))>dibatalkan</option>
-                                    </select>
-                                    @error('status')
+                                    <label for="jumlah_pengisi" class="form-label">Jumlah Pengisi</label>
+                                    <input type="number" class="form-control @error('jumlah_pengisi') is-invalid @enderror"
+                                        id="jumlah_pengisi" name="jumlah_pengisi"
+                                        value="{{ old('jumlah_pengisi', $pemesananKamar->jumlah_pengisi) }}"
+                                        placeholder="Jumlah Pengisi" max="4">
+                                    @error('jumlah_pengisi')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
+                                    <span id="keterangan_description" class="text-muted"></span>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="tanggal_pesan" class="form-label">Tanggal Pemesanan</label>
-                                    <input type="date" class="form-control @error('tanggal_pesan') is-invalid @enderror"
-                                        id="tanggal_pesan" name="tanggal_pesan"
-                                        value="{{ old('tanggal_pesan', $pemesanan->tanggal_pesan) }}"
-                                        placeholder="Tanggal Pemesanan">
-                                    @error('tanggal_pesan')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="jumlah_orang" class="form-label">Jumlah Jema'ah / Wisatawan</label>
-                                    <input type="number" class="form-control @error('jumlah_orang') is-invalid @enderror"
-                                        id="jumlah_orang" name="jumlah_orang"
-                                        value="{{ old('jumlah_orang', $pemesanan->jumlah_orang) }}"
-                                        placeholder="Jumlah Jema'ah / Wisatawan">
-                                    @error('jumlah_orang')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="total_harga" class="form-label">Total Harga</label>
-                                    <input type="number" class="form-control @error('total_harga') is-invalid @enderror"
-                                        id="total_harga" name="total_harga"
-                                        value="{{ old('total_harga', $pemesanan->total_harga) }}"
+                                    <label for="harga" class="form-label">Harga</label>
+                                    <input type="number" class="form-control @error('harga') is-invalid @enderror"
+                                        id="harga" name="harga" value="{{ old('harga', $pemesananKamar->harga) }}"
                                         placeholder="Total Harga">
-                                    @error('total_harga')
+                                    @error('harga')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="metode_pembayaran" class="form-label">Metode Pembayaran</label>
-                                    <input type="text"
-                                        class="form-control @error('metode_pembayaran') is-invalid @enderror"
-                                        id="metode_pembayaran" name="metode_pembayaran"
-                                        value="{{ old('metode_pembayaran', $pemesanan->metode_pembayaran, 'Cash') }}"
-                                        placeholder="Metode Pembayaran">
-                                    @error('metode_pembayaran')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('is_pembayaran_lunas') is-invalid @enderror"
-                                            type="checkbox" value="1" id="is_pembayaran_lunas"
-                                            name="is_pembayaran_lunas" @checked(old('is_pembayaran_lunas', $pemesanan->is_pembayaran_lunas))>
-                                        <label class="form-check-label" for="is_pembayaran_lunas">
-                                            Sudah Lunas?
-                                        </label>
-                                    </div>
-                                    @error('is_pembayaran_lunas')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="tanggal_pelunasan" class="form-label">Tanggal Pelunasan</label>
-                                    <input type="date"
-                                        class="form-control @error('tanggal_pelunasan') is-invalid @enderror"
-                                        id="tanggal_pelunasan" name="tanggal_pelunasan"
-                                        value="{{ old('tanggal_pelunasan', $pemesanan->tanggal_pelunasan) }}"
-                                        placeholder="Tanggal Pelunasan">
-                                    @error('tanggal_pelunasan')
+                                    <label for="keterangan" class="form-label">Keterangan</label>
+                                    <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan"
+                                        placeholder="Keterangan">{{ old('keterangan', $pemesananKamar->keterangan) }}</textarea>
+                                    @error('keterangan')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/paket/{{ $pemesanan->paket_id }}/pemesanan"
+                                <a href="/admin/{{ $pemesananKamar->pemesanan_id ? 'pemesanan/' . $pemesananKamar->pemesanan_id . '/' : '' }}pemesanan-kamar"
                                     class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
                         </div>
@@ -147,4 +90,124 @@
             </div>
         </div>
     </div> <!-- row -->
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Function to calculate and update the price based on room type and number of occupants
+            function updatePrice() {
+                var selectedRoom = $("#tipe_kamar option:selected");
+                var numberOfOccupants = $("#jumlah_pengisi").val();
+
+                // Check if both room type and number of occupants are selected
+                if (selectedRoom.val() !== "" && numberOfOccupants !== "") {
+                    var roomPrice = parseFloat(selectedRoom.data("harga"));
+                    var totalPrice = roomPrice * parseInt(numberOfOccupants);
+
+                    // Update the price input field
+                    $("#harga").val(totalPrice.toFixed(2));
+                }
+            }
+
+            // Attach the change event handlers
+            $("#tipe_kamar, #jumlah_pengisi").on('change input', function() {
+                updatePrice();
+            });
+
+            // Trigger the updatePrice function on page load
+            updatePrice();
+        });
+
+        $(document).ready(function() {
+            // Function to calculate and update the price based on room type and number of occupants
+            function updatePriceAndDescription() {
+                var selectedRoom = $("#tipe_kamar option:selected");
+                var numberOfOccupants = $("#jumlah_pengisi").val();
+                var keterangan = selectedRoom.data("keterangan");
+
+                // Check if both room type and number of occupants are selected
+                if (selectedRoom.val() !== "") {
+                    // Update the description below the jumlah_pengisi input field
+                    $("#keterangan_description").text(keterangan);
+
+                    // Update the price input field
+                    if (numberOfOccupants !== "") {
+                        var roomPrice = parseFloat(selectedRoom.data("harga"));
+                        var totalPrice = roomPrice * parseInt(numberOfOccupants);
+                        $("#harga").val(totalPrice.toFixed(2));
+                    }
+                } else {
+                    // Clear the description and price when no room type is selected
+                    $("#keterangan_description").text("");
+                    $("#harga").val("");
+                }
+            }
+
+            // Attach the change event handlers
+            $("#tipe_kamar, #jumlah_pengisi").on('change input', function() {
+                updatePriceAndDescription();
+            });
+
+            // Trigger the updatePriceAndDescription function on page load
+            updatePriceAndDescription();
+        });
+
+        $(document).ready(function() {
+            // Function to calculate and update the price based on room type and number of occupants
+            function updatePriceAndDescription() {
+                var selectedRoom = $("#tipe_kamar option:selected");
+                var numberOfOccupantsInput = $("#jumlah_pengisi");
+
+                // Check if a room type is selected
+                if (selectedRoom.val() !== "") {
+                    // Set the default number of occupants based on room type
+                    switch (selectedRoom.val()) {
+                        case "tipe kamar quad gabung":
+                            numberOfOccupantsInput.val("").prop("readonly", false);
+                            break;
+                        case "tipe kamar quad keluarga":
+                            numberOfOccupantsInput.val(4).prop("readonly", true);
+                            break;
+                        case "tipe kamar quad keluarga isi 3 dan 1 bed kosong":
+                            numberOfOccupantsInput.val(3).prop("readonly", true);
+                            break;
+                        case "tipe kamar double gabung":
+                            numberOfOccupantsInput.val(1).prop("readonly", true);
+                            break;
+                        case "tipe kamar double keluarga":
+                            numberOfOccupantsInput.val(2).prop("readonly", true);
+                            break;
+                        case "tipe kamar single":
+                            numberOfOccupantsInput.val(1).prop("readonly", true);
+                            break;
+                            // Add more cases for other room types if needed
+                    }
+
+                    // Update the description below the jumlah_pengisi input field
+                    var keterangan = selectedRoom.data("keterangan");
+                    $("#keterangan_description").text(keterangan);
+
+                    // Update the price input field
+                    if (!isNaN(numberOfOccupantsInput.val())) {
+                        var roomPrice = parseFloat(selectedRoom.data("harga"));
+                        var totalPrice = roomPrice * parseInt(numberOfOccupantsInput.val());
+                        $("#harga").val(roomPrice);
+                    }
+                } else {
+                    // Clear the description, price, and enable jumlah_pengisi when no room type is selected
+                    $("#keterangan_description").text("");
+                    $("#harga").val("");
+                    numberOfOccupantsInput.val("").prop("readonly", false);
+                }
+            }
+
+            // Attach the change event handler for tipe_kamar
+            $("#tipe_kamar").on('change', function() {
+                updatePriceAndDescription();
+            });
+
+            // Trigger the updatePriceAndDescription function on page load
+            updatePriceAndDescription();
+        });
+    </script>
 @endsection

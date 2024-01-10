@@ -119,36 +119,42 @@ class EkstraTableSeeder extends Seeder
             'nama_ekstra' => 'tipe kamar quad gabung',
             'jenis_ekstra' => 'tipe kamar',
             'harga_default' => 0, //diisi 1 s/d 4 orang
+            'deskripsi' => '1,2,3,4',
             'keterangan' => 'dapat diisi 1 s/d 4 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar quad keluarga',
             'jenis_ekstra' => 'tipe kamar',
             'harga_default' => 0, //harus diisi 4 orang
+            'deskripsi' => '4',
             'keterangan' => 'harus diisi 4 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar quad keluarga isi 3 dan 1 bed kosong',
             'jenis_ekstra' => 'tipe kamar',
             'harga_default' => 2500000, //
-            'keterangan' => 'kena cas 2 juta 5 ratus',
+            'deskripsi' => '3',
+            'keterangan' => 'harus diisi 3 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar double gabung',
             'jenis_ekstra' => 'tipe kamar',
-            'harga_default' => 2500000, //diisi 1 orang
+            'harga_default' => 2500000, //diisi 1 orang atau 2 orang
+            'deskripsi' => '1',
             'keterangan' => 'dapat diisi 1 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar double keluarga',
             'jenis_ekstra' => 'tipe kamar',
             'harga_default' => 5000000, //harus diisi 2 orang
+            'deskripsi' => '2',
             'keterangan' => 'harus diisi 2 orang',
         ]);
         Ekstra::create([
             'nama_ekstra' => 'tipe kamar single',
             'jenis_ekstra' => 'tipe kamar',
             'harga_default' => 8000000,
+            'deskripsi' => '1',
             'keterangan' => 'hanya dapat diisi 1 orang',
         ]);
     }
