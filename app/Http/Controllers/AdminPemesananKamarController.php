@@ -46,7 +46,7 @@ class AdminPemesananKamarController extends Controller
             'tipe_kamar' => 'required|string',
             'jumlah_pengisi' => 'required|integer',
             'harga' => 'required|integer',
-            'keterangan' => 'required|string',
+            'keterangan' => 'nullable|string',
         ]);
 
         PemesananKamar::create($validateData);
@@ -89,7 +89,7 @@ class AdminPemesananKamarController extends Controller
             'tipe_kamar' => 'required|string',
             'jumlah_pengisi' => 'required|integer',
             'harga' => 'required|integer',
-            'keterangan' => 'required|string',
+            'keterangan' => 'nullable|string',
         ]);
 
         $pemesananKamar->update($validateData);

@@ -14,7 +14,7 @@ class AdminPermintaanKamarController extends Controller
      */
     public function index(PemesananKamar $pemesananKamar = null)
     {
-        return view('admin.paket.pemesanan-kamar.permintaan-kamar.index', [
+        return view('admin.paket.pemesanan.pemesanan-kamar.permintaan-kamar.index', [
             'title' => 'Permintaan Kamar',
             'page' => 'permintaan-kamar',
             'pemesananKamar' => $pemesananKamar,
@@ -27,7 +27,7 @@ class AdminPermintaanKamarController extends Controller
      */
     public function create(PemesananKamar $pemesananKamar = null)
     {
-        return view('admin.paket.pemesanan-kamar.permintaan-kamar.create', [
+        return view('admin.paket.pemesanan.pemesanan-kamar.permintaan-kamar.create', [
             'title' => 'Tambah Permintaan Kamar',
             'page' => 'permintaan-kamar',
             'pemesananKamar' => $pemesananKamar,
@@ -45,8 +45,12 @@ class AdminPermintaanKamarController extends Controller
             'pemesanan_kamar_id' => 'required|integer',
             'permintaan' => 'required|string',
             'harga' => 'required|integer',
-            'keterangan' => 'required|string',
+            'keterangan' => 'nullable|string',
         ]);
+
+        if ($request->permintaan_khusus) {
+            $validateData['permintaan'] = $request->permintaan_khusus;
+        }
 
         PermintaanKamar::create($validateData);
         return back()->with('success', 'Permintaan Kamar berhasil ditambahkan');
@@ -57,7 +61,7 @@ class AdminPermintaanKamarController extends Controller
      */
     public function show(PermintaanKamar $permintaanKamar)
     {
-        return view('admin.paket.pemesanan-kamar.permintaan-kamar.show', [
+        return view('admin.paket.pemesanan.pemesanan-kamar.permintaan-kamar.show', [
             'title' => 'Detail Permintaan Kamar',
             'page' => 'permintaan-kamar',
             'permintaanKamar' => $permintaanKamar,
@@ -69,7 +73,7 @@ class AdminPermintaanKamarController extends Controller
      */
     public function edit(PermintaanKamar $permintaanKamar)
     {
-        return view('admin.paket.pemesanan-kamar.permintaan-kamar.edit', [
+        return view('admin.paket.pemesanan.pemesanan-kamar.permintaan-kamar.edit', [
             'title' => 'Edit Permintaan Kamar',
             'page' => 'permintaan-kamar',
             'permintaanKamar' => $permintaanKamar,
@@ -87,8 +91,12 @@ class AdminPermintaanKamarController extends Controller
             'pemesanan_kamar_id' => 'required|integer',
             'permintaan' => 'required|string',
             'harga' => 'required|integer',
-            'keterangan' => 'required|string',
+            'keterangan' => 'nullable|string',
         ]);
+
+        if ($request->permintaan_khusus) {
+            $validateData['permintaan'] = $request->permintaan_khusus;
+        }
 
         $permintaanKamar->update($validateData);
         return back()->with('success', 'Permintaan Kamar berhasil diperbarui');

@@ -48,7 +48,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pemesananKamar->permintaans as $permintaan)
+                                @foreach ($permintaanKamars as $permintaan)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $permintaan->permintaan }}</td>
