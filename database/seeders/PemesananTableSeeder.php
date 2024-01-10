@@ -26,7 +26,7 @@ class PemesananTableSeeder extends Seeder
                 'total_harga' => 48000000, // 2 paket 48 juta, 2 perlengkapan 3 juta, 1 kamar double 5 juta
                 'metode_pembayaran' => 'Cash',
                 'is_pembayaran_lunas' => 1,
-                'tanggal_pelunasan' => now(),
+                'tanggal_pelunasan' => now()->addMonths(3),
             ]
         ];
         foreach ($pemesanans as $pemesanan) {
