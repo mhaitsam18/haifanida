@@ -34,6 +34,7 @@ use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminSubMenuController;
+use App\Http\Controllers\AdminTagihanController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AgenController;
 use App\Http\Controllers\AgenGrupController;
@@ -269,6 +270,10 @@ Route::middleware('auth')->group(function () {
                     Route::prefix('pembayaran')->group(function () {
                         Route::get('/', [AdminPembayaranController::class, 'index'])->name('admin.pemesanan.pembayaran.index');
                         Route::get('/create', [AdminPembayaranController::class, 'create'])->name('admin.pemesanan.pembayaran.create');
+                    });
+                    Route::prefix('tagihan')->group(function () {
+                        Route::get('/', [AdminTagihanController::class, 'index'])->name('admin.pemesanan.tagihan');
+                        Route::get('/cetak', [AdminTagihanController::class, 'cetak'])->name('admin.pemesanan.cetak');
                     });
                 });
                 Route::resource('pemesanan', AdminPemesananController::class)->parameters([

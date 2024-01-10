@@ -295,8 +295,8 @@
                                                     <td>
                                                         <div class="d-flex align-items-center ">
                                                             <a href="/admin/grup/{{ $grup->id }}"
-                                                                class="badge bg-haifa d-inline-block ms-1">Lihat
-                                                                Jema'ah</a>
+                                                                class="badge bg-haifa d-inline-block ms-1">Lihat Detail
+                                                                Grup</a>
                                                             <a href="/admin/grup/{{ $grup->id }}/edit"
                                                                 class="badge bg-success d-inline-block ms-1">Edit</a>
                                                             <form action="/admin/grup/{{ $grup->id }}"

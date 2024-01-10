@@ -49,6 +49,9 @@
                                             <a href="/admin/jemaah?pemesanan={{ $pemesanan->id }}"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
+                                            <a href="/admin/pemesanan/{{ $pemesanan->id }}/tagihan"
+                                                class="btn btn-sm btn-success mb-3"><i data-feather="file-text"
+                                                    class="icon-sm me-2"></i>Lihat Tagihan</a>
                                         </div>
                                     </div>
                                 </div>
