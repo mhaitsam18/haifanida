@@ -22,10 +22,14 @@ use App\Http\Controllers\AdminMaskapaiController;
 use App\Http\Controllers\AdminMemberController;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AdminPaketController;
+use App\Http\Controllers\AdminPembayaranController;
 use App\Http\Controllers\AdminPemesananController;
+use App\Http\Controllers\AdminPemesananEkstraController;
+use App\Http\Controllers\AdminPemesananKamarController;
 use App\Http\Controllers\AdminPenerbanganController;
 use App\Http\Controllers\AdminPenginapanController;
 use App\Http\Controllers\AdminPenumpangController;
+use App\Http\Controllers\AdminPermintaanKamarController;
 use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
@@ -252,6 +256,45 @@ Route::middleware('auth')->group(function () {
                 Route::resource('paket', AdminPaketController::class)->parameters([
                     'paket' => 'paket'
                 ]);
+
+                Route::prefix('pemesanan/{pemesanan}')->group(function () {
+                    Route::prefix('pemesanan-kamar')->group(function () {
+                        Route::get('/', [AdminPemesananKamarController::class, 'index'])->name('admin.pemesanan.pemesanan-kamar.index');
+                        Route::get('/create', [AdminPemesananKamarController::class, 'create'])->name('admin.pemesanan.pemesanan-kamar.create');
+                    });
+                    Route::prefix('pemesanan-ekstra')->group(function () {
+                        Route::get('/', [AdminPemesananEkstraController::class, 'index'])->name('admin.pemesanan.pemesanan-ekstra.index');
+                        Route::get('/create', [AdminPemesananekstraController::class, 'create'])->name('admin.pemesanan.pemesanan-ekstra.create');
+                    });
+                    Route::prefix('pembayaran')->group(function () {
+                        Route::get('/', [AdminPemesananEkstraController::class, 'index'])->name('admin.pemesanan.pembayaran.index');
+                        Route::get('/create', [AdminPemesananekstraController::class, 'create'])->name('admin.pemesanan.pembayaran.create');
+                    });
+                });
+                Route::resource('pemesanan', AdminPemesananController::class)->parameters([
+                    'pemesanan' => 'pemesanan'
+                ]);
+                Route::resource('pemesanan-kamar', AdminPemesananKamarController::class)->parameters([
+                    'pemesanan-kamar' => 'pemesanan_kamar'
+                ]);
+                Route::resource('pemesanan-ekstra', AdminPemesananEkstraController::class)->parameters([
+                    'pemesanan-ekstra' => 'pemesanan_ekstra'
+                ]);
+                Route::resource('pembayaran', AdminPembayaranController::class)->parameters([
+                    'pembayaran' => 'pembayaran'
+                ]);
+
+                Route::prefix('pemesanan-kamar/{pemesanan_kamar}')->group(function () {
+                    Route::prefix('permintaan-kamar')->group(function () {
+                        Route::get('/', [AdminPermintaanKamarController::class, 'index'])->name('admin.pemesanan-kamar.permintaan-kamar.index');
+                        Route::get('/create', [AdminPermintaanKamarController::class, 'create'])->name('admin.pemesanan-kamar.permintaan-kamar.create');
+                    });
+                });
+                Route::resource('permintaan-kamar', AdminPermintaanKamarController::class)->parameters([
+                    'permintaan-kamar' => 'permintaan_kamar'
+                ]);
+
+
                 Route::resource('penerbangan', AdminPenerbanganController::class)->parameters([
                     'penerbangan' => 'paket_maskapai'
                 ]);
@@ -270,10 +313,6 @@ Route::middleware('auth')->group(function () {
 
                 Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->parameters([
                     'isu-perjalanan' => 'isu_perjalanan'
-                ]);
-
-                Route::resource('pemesanan', AdminPemesananController::class)->parameters([
-                    'pemesanan' => 'pemesanan'
                 ]);
                 Route::resource('jadwal', AdminJadwalController::class)->parameters([
                     'jadwal' => 'jadwal'
