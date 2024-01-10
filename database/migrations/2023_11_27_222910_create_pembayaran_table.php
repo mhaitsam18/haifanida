@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('tanggal_pembayaran')->nullable();
             $table->string('bukti_pembayaran')->nullable();
             $table->enum('status_pembayaran', ['tertunda', 'diterima', 'ditolak'])->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

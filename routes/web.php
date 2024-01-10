@@ -267,8 +267,8 @@ Route::middleware('auth')->group(function () {
                         Route::get('/create', [AdminPemesananekstraController::class, 'create'])->name('admin.pemesanan.pemesanan-ekstra.create');
                     });
                     Route::prefix('pembayaran')->group(function () {
-                        Route::get('/', [AdminPemesananEkstraController::class, 'index'])->name('admin.pemesanan.pembayaran.index');
-                        Route::get('/create', [AdminPemesananekstraController::class, 'create'])->name('admin.pemesanan.pembayaran.create');
+                        Route::get('/', [AdminPembayaranController::class, 'index'])->name('admin.pemesanan.pembayaran.index');
+                        Route::get('/create', [AdminPembayaranController::class, 'create'])->name('admin.pemesanan.pembayaran.create');
                     });
                 });
                 Route::resource('pemesanan', AdminPemesananController::class)->parameters([

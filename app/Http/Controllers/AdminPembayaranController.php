@@ -45,8 +45,8 @@ class AdminPembayaranController extends Controller
             'metode_pembayaran' => 'required|string',
             'tanggal_pembayaran' => 'required|date',
             'status_pembayaran' => 'required|string',
-            'bukti_pembayaran' => 'required|string',
-            'gambar' => 'nullable|mimes:jpeg,png,jpg,gif,pdf|max:3145728',
+            'bukti_pembayaran' => 'nullable|mimes:jpeg,png,jpg,gif,pdf|max:3145728',
+            'keterangan' => 'nullable|string',
         ]);
         if ($request->hasFile('bukti_pembayaran')) {
             $path = $request->file('bukti_pembayaran')->store('pembayaran-bukti');
@@ -93,8 +93,8 @@ class AdminPembayaranController extends Controller
             'metode_pembayaran' => 'required|string',
             'tanggal_pembayaran' => 'required|date',
             'status_pembayaran' => 'required|string',
-            'bukti_pembayaran' => 'required|string',
-            'gambar' => 'nullable|mimes:jpeg,png,jpg,gif,pdf|max:3145728',
+            'bukti_pembayaran' => 'nullable|mimes:jpeg,png,jpg,gif,pdf|max:3145728',
+            'keterangan' => 'nullable|string',
         ]);
         if ($request->hasFile('bukti_pembayaran')) {
             $path = $request->file('bukti_pembayaran')->store('pembayaran-bukti');

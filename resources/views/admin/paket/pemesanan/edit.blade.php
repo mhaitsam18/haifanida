@@ -102,7 +102,7 @@
                                         class="form-control @error('metode_pembayaran') is-invalid @enderror"
                                         id="metode_pembayaran" name="metode_pembayaran"
                                         value="{{ old('metode_pembayaran', $pemesanan->metode_pembayaran, 'Cash') }}"
-                                        placeholder="Metode Pembayaran">
+                                        placeholder="(Cash/Tunai/Cicilan/Tabungan/Hutang/Umroh dulu baru bayar)">
                                     @error('metode_pembayaran')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
