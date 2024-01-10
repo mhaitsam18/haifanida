@@ -18,6 +18,7 @@ class AdminTagihanController extends Controller
                 'deskripsi' => $pemesanan->paket->nama_paket,
                 'jumlah' => $pemesanan->jumlah_orang,
                 'biaya_satuan' => $pemesanan->paket->harga,
+                'satuan' => 'pax',
                 'total' => $pemesanan->paket->harga * $pemesanan->jumlah_orang,
             ],
         ];
@@ -27,6 +28,7 @@ class AdminTagihanController extends Controller
                 'deskripsi' => $pemesanan_kamar->tipe_kamar,
                 'jumlah' => 1,
                 'biaya_satuan' => $pemesanan_kamar->harga,
+                'satuan' => 'pax',
                 'total' => $pemesanan_kamar->harga,
             ];
 
@@ -35,6 +37,7 @@ class AdminTagihanController extends Controller
                     'deskripsi' => 'Tambahan : ' . $permintaan->permintaan,
                     'jumlah' => 1,
                     'biaya_satuan' => $permintaan->harga,
+                    'satuan' => '',
                     'total' => $permintaan->harga,
                 ];
             }
@@ -45,6 +48,7 @@ class AdminTagihanController extends Controller
                 'deskripsi' => $pemesanan_ekstra->ekstra,
                 'jumlah' => $pemesanan_ekstra->jumlah,
                 'biaya_satuan' => $pemesanan_ekstra->total_harga / $pemesanan_ekstra->jumlah,
+                'satuan' => '',
                 'total' => $pemesanan_ekstra->total_harga,
             ];
         }

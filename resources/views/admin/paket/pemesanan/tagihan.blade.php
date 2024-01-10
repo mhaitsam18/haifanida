@@ -61,7 +61,7 @@
                                         <tr class="text-end">
                                             <td class="text-start">{{ $loop->iteration }}</td>
                                             <td class="text-start">{{ $tagihan['deskripsi'] }}</td>
-                                            <td>{{ $tagihan['jumlah'] }}</td>
+                                            <td>{{ $tagihan['jumlah'] . ' ' . $tagihan['satuan'] }}</td>
                                             <td>Rp.{{ number_format($tagihan['biaya_satuan'], 2, ',', '.') }}</td>
                                             <td>Rp.{{ number_format($tagihan['total'], 2, ',', '.') }}</td>
                                         </tr>
@@ -123,10 +123,10 @@
                         </div>
                     </div>
                     <div class="container-fluid w-100">
-                        <a href="javascript:;" class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send"
-                                class="me-3 icon-md"></i>Send Invoice</a>
-                        <a href="javascript:;" class="btn btn-outline-primary float-end mt-4"><i data-feather="printer"
-                                class="me-2 icon-md"></i>Print</a>
+                        <a href="javascript:;" class="btn btn-haifa float-end mt-4 ms-2"><i data-feather="send"
+                                class="me-3 icon-md"></i>Kirim Tagihan</a>
+                        <a href="javascript:;" class="btn btn-outline-haifa float-end mt-4"><i data-feather="printer"
+                                class="me-2 icon-md"></i>Cetak</a>
                     </div>
                 </div>
             </div>
