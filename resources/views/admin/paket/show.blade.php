@@ -83,6 +83,7 @@
                                         <tr>
                                             <th class="pt-0">#</th>
                                             <th class="pt-0">Ekstra</th>
+                                            <th class="pt-0">Harga Bawaan</th>
                                             <th class="pt-0">Harga</th>
                                             <th class="pt-0">Aksi</th>
                                         </tr>
@@ -93,13 +94,15 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $ekstra->ekstra->nama_ekstra }}</td>
+                                                    <td>Rp.{{ number_format($ekstra->ekstra->harga_default, 2, ',', '.') }}
+                                                    </td>
                                                     <td>Rp.{{ number_format($ekstra->harga ?? $ekstra->ekstra->harga_default, 2, ',', '.') }}
                                                     </td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
-                                                            <a href="/admin/paket/ekstra/{{ $ekstra->id }}/edit"
+                                                            <a href="/admin/paket-ekstra/{{ $ekstra->id }}/edit"
                                                                 class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                            <form action="/admin/paket/ekstra/{{ $ekstra->id }}"
+                                                            <form action="/admin/paket-ekstra/{{ $ekstra->id }}"
                                                                 method="post">
                                                                 @method('delete')
                                                                 @csrf

@@ -23,6 +23,7 @@ use App\Http\Controllers\AdminMaskapaiController;
 use App\Http\Controllers\AdminMemberController;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AdminPaketController;
+use App\Http\Controllers\AdminPaketEkstraController;
 use App\Http\Controllers\AdminPembayaranController;
 use App\Http\Controllers\AdminPemesananController;
 use App\Http\Controllers\AdminPemesananEkstraController;
@@ -247,6 +248,18 @@ Route::middleware('auth')->group(function () {
                         Route::get('/', [AdminGaleriController::class, 'index'])->name('admin.paket.galeri.index');
                         Route::get('/create', [AdminGaleriController::class, 'create'])->name('admin.paket.galeri.create');
                     });
+                    Route::prefix('galeri')->group(function () {
+                        Route::get('/', [AdminGaleriController::class, 'index'])->name('admin.paket.galeri.index');
+                        Route::get('/create', [AdminGaleriController::class, 'create'])->name('admin.paket.galeri.create');
+                    });
+                    Route::prefix('paket-ekstra')->group(function () {
+                        Route::get('/', [AdminPaketEkstraController::class, 'index'])->name('admin.paket.paket-ekstra.index');
+                        Route::get('/create', [AdminPaketEkstraController::class, 'create'])->name('admin.paket.paket-ekstra.create');
+                    });
+                    Route::prefix('ekstra')->group(function () {
+                        Route::get('/', [AdminPaketEkstraController::class, 'index'])->name('admin.paket.ekstra.index');
+                        Route::get('/create', [AdminPaketEkstraController::class, 'create'])->name('admin.paket.ekstra.create');
+                    });
                 });
                 Route::prefix('bus/{bus}')->group(function () {
                     Route::prefix('penumpang')->group(function () {
@@ -319,6 +332,9 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::resource('galeri', AdminGaleriController::class)->parameters([
                     'galeri' => 'galeri'
+                ]);
+                Route::resource('paket-ekstra', AdminPaketEkstraController::class)->parameters([
+                    'paket-ekstra' => 'paket_ekstra'
                 ]);
                 Route::resource('bus', AdminBusController::class)->parameters([
                     'bus' => 'bus'
