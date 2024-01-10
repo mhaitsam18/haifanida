@@ -34,7 +34,7 @@
                             <h4 class="fw-bolder text-uppercase text-end mt-4 mb-2">Faktur</h4>
                             <h6 class="text-end mb-5 pb-4"># INV-{{ $pemesanan->id }}</h6>
                             <p class="text-end mb-1">Total Tagihan</p>
-                            <h4 class="text-end fw-normal">Rp.{{ number_format($pemesanan->total_harga, 2, ',', '.') }}</h4>
+                            <h4 class="text-end fw-normal">Rp.{{ number_format($balance, 2, ',', '.') }}</h4>
                             <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Tanggal Faktur :</span>
                                 {{ Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('LL') }}</h6>
                             <h6 class="text-end fw-normal"><span class="text-muted">Tanggal Jatuh Tempo :</span>
