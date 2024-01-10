@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="total_harga" class="form-label">Total Harga</label>
-                                    <input type="text" class="form-control  @error('total_harga') is-invalid @enderror"
+                                    <input type="number" class="form-control  @error('total_harga') is-invalid @enderror"
                                         id="total_harga" name="total_harga" value="{{ old('total_harga') }}"
                                         placeholder="Total Harga">
                                     @error('total_harga')

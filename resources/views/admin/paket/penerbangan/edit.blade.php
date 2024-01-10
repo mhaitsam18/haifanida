@@ -21,8 +21,7 @@
                         @method('put')
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ $penerbangan->id }}">
-                        <input type="hidden" name="kantor_id" id="kantor_id"
-                            value="{{ auth()->user()->admin->kantor_id }}">
+                        <input type="hidden" name="paket_id" id="paket_id" value="{{ $penerbangan->paket_id }}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
@@ -99,7 +98,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="total_harga" class="form-label">Total Harga</label>
-                                    <input type="text" class="form-control  @error('total_harga') is-invalid @enderror"
+                                    <input type="number" class="form-control  @error('total_harga') is-invalid @enderror"
                                         id="total_harga" name="total_harga"
                                         value="{{ old('total_harga', $penerbangan->total_harga) }}"
                                         placeholder="Total Harga">

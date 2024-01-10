@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminHotelController;
 use App\Http\Controllers\AdminIsuPerjalananController;
 use App\Http\Controllers\AdminJadwalController;
 use App\Http\Controllers\AdminJemaahController;
+use App\Http\Controllers\AdminKamarController;
 use App\Http\Controllers\AdminKamarJemaahController;
 use App\Http\Controllers\AdminKantorController;
 use App\Http\Controllers\AdminKontenController;
@@ -303,8 +304,18 @@ Route::middleware('auth')->group(function () {
                 Route::resource('penerbangan', AdminPenerbanganController::class)->parameters([
                     'penerbangan' => 'paket_maskapai'
                 ]);
+
+                Route::prefix('penginapan/{paket_hotel}')->group(function () {
+                    Route::prefix('kamar')->group(function () {
+                        Route::get('/', [AdminKamarController::class, 'index'])->name('admin.penginapan.kamar.index');
+                        Route::get('/create', [AdminKamarController::class, 'create'])->name('admin.penginapan.kamar.create');
+                    });
+                });
                 Route::resource('penginapan', AdminPenginapanController::class)->parameters([
                     'penginapan' => 'paket_hotel'
+                ]);
+                Route::resource('kamar', AdminKamarController::class)->parameters([
+                    'kamar' => 'kamar'
                 ]);
                 Route::resource('galeri', AdminGaleriController::class)->parameters([
                     'galeri' => 'galeri'
