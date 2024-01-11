@@ -279,6 +279,7 @@
                                             <th class="pt-0">#</th>
                                             <th class="pt-0">Nama Agen</th>
                                             <th class="pt-0">Nama Grup</th>
+                                            <th class="pt-0">Ketua Grup</th>
                                             <th class="pt-0">Keterangan</th>
                                             <th class="pt-0">Kuota</th>
                                             <th class="pt-0">Status</th>
@@ -292,6 +293,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $grup->agen->user->name ?? null }}</td>
                                                     <td>{{ $grup->nama_grup }}</td>
+                                                    <td>{{ $grup->ketua_grup }}</td>
                                                     <td>{{ $grup->keterangan_grup }}</td>
                                                     <td>{{ $grup->kuota_grup }}</td>
                                                     <td>{{ $grup->status_grup }}</td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grup;
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
 use Illuminate\Http\Request;
@@ -67,6 +68,19 @@ class AdminTagihanController extends Controller
             'pembayaran' => $pembayaran ?? 0,
             'balance' => $balance,
         ]);
+    }
+    public function tagihanGrup(Grup $grup = null)
+    {
+        return view('errors.coming-soon', [
+            'title' => 'Tagihan Grup',
+            'judul' => 'Coming Soon',
+            'pesan' => 'Fitur Ini akan segera Hadir',
+            'page' => 'tagihan-grup',
+        ]);
+        // return view('admin.paket.grup.tagihan', [
+        //     'title' => 'Tagihan Grup',
+        //     'page' => 'tagihan-grup',
+        // ]);
     }
 
     /**

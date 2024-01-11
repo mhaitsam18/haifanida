@@ -360,11 +360,17 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::prefix('bus-jemaah')->group(function () {
                 });
+                Route::prefix('grup')->group(function () {
+                });
+                Route::prefix('grup/{grup}')->group(function () {
+                    Route::prefix('tagihan')->group(function () {
+                        Route::get('/', [AdminTagihanController::class, 'tagihanGrup'])->name('admin.grup.tagihan');
+                        Route::get('/cetak', [AdminTagihanController::class, 'cetak'])->name('admin.grup.cetak');
+                    });
+                });
                 Route::resource('grup', AdminGrupController::class)->parameters([
                     'grup' => 'grup'
                 ]);
-                Route::prefix('grup')->group(function () {
-                });
                 Route::prefix('pelayanan')->group(function () {
                 });
             });

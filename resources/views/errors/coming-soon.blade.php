@@ -103,7 +103,7 @@
         <div class="d-table">
             <div class="d-table-cell">
                 <div class="error-content">
-                    <img src="/assets/img/logo-lanskap-2.png" alt="Image">
+                    <img src="/assets/img/logos/logo-lanskap-2.png" alt="Image">
                     <h3>{{ $judul }}</h3>
                     <p>{{ $pesan }}</p>
                     {{-- <a href="index.html" class="default-btn btn-bg-two">

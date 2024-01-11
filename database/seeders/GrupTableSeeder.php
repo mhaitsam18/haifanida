@@ -41,16 +41,16 @@ class GrupTableSeeder extends Seeder
                 'grup_id' => 1,
                 'masalah' => 'Uji Test Fitur :)',
                 'solusi' => 'Stay Safe Semuaa ^_^',
-                'tanggal_pelaporan' => now(),
-                'tanggal_penyelesaian' => now(),
+                'waktu_pelaporan' => now(),
+                'waktu_penyelesaian' => now(),
                 'status' => 1
             ],
             [
                 'grup_id' => 2,
                 'masalah' => 'Tidak Ada Masalah :)',
                 'solusi' => 'Stay Safe Semuaa ^_^',
-                'tanggal_pelaporan' => now(),
-                'tanggal_penyelesaian' => now(),
+                'waktu_pelaporan' => now(),
+                'waktu_penyelesaian' => now(),
                 'status' => 1
             ],
         ];

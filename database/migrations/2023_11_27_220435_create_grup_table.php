@@ -22,6 +22,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->nullOnDelete();
             $table->string('nama_grup')->nullable();
+            $table->string('ketua_grup')->nullable();
             $table->text('keterangan_grup')->nullable();
             $table->string('status_grup')->nullable();
             $table->integer('kuota_grup')->nullable();
