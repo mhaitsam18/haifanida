@@ -47,6 +47,8 @@
                                         <td>{{ $kamar->tersedia == 1 ? 'Tersedia' : 'Tidak Tersedia' }}</td>
                                         <td>
                                             <div class="d-flex align-items-center ">
+                                                <a href="/admin/kamar/{{ $kamar->id }}"
+                                                    class="badge bg-haifa d-inline-block ms-1">Lihat Tamu</a>
                                                 <a href="/admin/kamar/{{ $kamar->id }}/edit"
                                                     class="badge bg-success d-inline-block ms-1">Edit</a>
                                                 <form action="/admin/kamar/{{ $kamar->id }}" method="post">

@@ -61,7 +61,7 @@ class Jemaah extends Model
     {
         return $this->hasMany(BusJemaah::class);
     }
-    public function KamarJemaahs()
+    public function kamarJemaahs()
     {
         return $this->hasMany(KamarJemaah::class);
     }

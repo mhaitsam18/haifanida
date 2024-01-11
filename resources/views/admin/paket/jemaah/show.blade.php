@@ -290,7 +290,7 @@
                                                     <td>{{ $kamar->kamar->paketHotel->hotel->kota }}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
-                                                            <a href="/admin/kamar-jemaah/{{ $kamar->id }}"
+                                                            <a href="/admin/kamar/{{ $kamar->kamar_id }}"
                                                                 class="badge bg-haifa d-inline-block ms-1">Lihat Anggota
                                                                 Kamar</a>
                                                             <a href="/admin/kamar-jemaah/{{ $kamar->id }}/edit"

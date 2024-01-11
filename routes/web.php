@@ -334,6 +334,13 @@ Route::middleware('auth')->group(function () {
                 Route::resource('penginapan', AdminPenginapanController::class)->parameters([
                     'penginapan' => 'paket_hotel'
                 ]);
+
+                Route::prefix('kamar/{kamar}')->group(function () {
+                    Route::prefix('kamar-jemaah')->group(function () {
+                        Route::get('/', [AdminKamarJemaahController::class, 'index'])->name('admin.kamar.kamar-jemaah.index');
+                        Route::get('/create', [AdminKamarJemaahController::class, 'create'])->name('admin.kamar.kamar-jemaah.create');
+                    });
+                });
                 Route::resource('kamar', AdminKamarController::class)->parameters([
                     'kamar' => 'kamar'
                 ]);

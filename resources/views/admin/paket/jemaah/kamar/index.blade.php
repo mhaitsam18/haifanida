@@ -17,11 +17,9 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    <a href="/admin/penginapan/{{ $penginapan->id }}/kamar/create" class="btn btn-sm btn-langit mb-3"><i
-                            data-feather="plus" class="icon-sm me-2"></i> Tambah
-                        Data
-                        kamar</a>
-                    <a href="/admin/paket/{{ $penginapan->paket_id }}/penginapan/" class="btn btn-sm btn-secondary mb-3"><i
+                    <a href="/admin/jemaah/{{ $$kamarJemaahs->jemaah_id }}/kamar/create" class="btn btn-sm btn-langit mb-3"><i
+                            data-feather="plus" class="icon-sm me-2"></i> Tambah Data Penghuni</a>
+                    <a href="/admin/jemaah/{{ $$kamarJemaahs->jemaah_id }}" class="btn btn-sm btn-secondary mb-3"><i
                             data-feather="arrow-left" class="icon-sm me-2"></i> Kembali</a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
@@ -31,27 +29,26 @@
                                     <th class="pt-0">Nomor Kamar</th>
                                     <th class="pt-0">Tipe Kamar</th>
                                     <th class="pt-0">Kapasitas</th>
-                                    <th class="pt-0">Fasilitas</th>
-                                    <th class="pt-0">Ketersediaan</th>
+                                    <th class="pt-0">Kota</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kamars as $kamar)
+                                @foreach ($kamarJemaahs as $tamu)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $kamar->nomor_kamar }}</td>
-                                        <td>{{ $kamar->tipe_kamar }}</td>
-                                        <td>{{ $kamar->kapasitas }}</td>
-                                        <td>{{ $kamar->fasilitas }}</td>
-                                        <td>{{ $kamar->tersedia == 1 ? 'Tersedia' : 'Tidak Tersedia' }}</td>
+                                        <td>{{ $tamu->kamar->nomor_kamar }}</td>
+                                        <td>{{ $tamu->kamar->tipe_kamar }}</td>
+                                        <td>{{ $tamu->kamar->kapasitas }}</td>
+                                        <td>{{ $tamu->kamar->paketHotel->hotel->kota }}</td>
                                         <td>
                                             <div class="d-flex align-items-center ">
-                                                <a href="/admin/kamar/{{ $kamar->id }}"
-                                                    class="badge bg-haifa d-inline-block ms-1">Lihat Tamu</a>
-                                                <a href="/admin/kamar/{{ $kamar->id }}/edit"
+                                                <a href="/admin/kamar/{{ $tamu->kamar_id }}"
+                                                    class="badge bg-haifa d-inline-block ms-1">Lihat Anggota
+                                                    Kamar</a>
+                                                <a href="/admin/kamar-jemaah/{{ $tamu->id }}/edit"
                                                     class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                <form action="/admin/kamar/{{ $kamar->id }}" method="post">
+                                                <form action="/admin/kamar-jemaah/{{ $tamu->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
@@ -64,6 +61,7 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
