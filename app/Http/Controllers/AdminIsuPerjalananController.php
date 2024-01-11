@@ -70,7 +70,7 @@ class AdminIsuPerjalananController extends Controller
      */
     public function edit(IsuPerjalanan $isuPerjalanan)
     {
-        return view('admin.paket.grup.isu-perjalanan.show', [
+        return view('admin.paket.grup.isu-perjalanan.edit', [
             'title' => 'Edit Isu Perjalanan',
             'page' => 'isu-perjalanan',
             'isuPerjalanan' => $isuPerjalanan,

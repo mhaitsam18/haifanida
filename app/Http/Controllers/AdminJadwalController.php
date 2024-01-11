@@ -69,7 +69,7 @@ class AdminJadwalController extends Controller
      */
     public function edit(Jadwal $jadwal)
     {
-        return view('admin.paket.grup.jadwal.show', [
+        return view('admin.paket.grup.jadwal.edit', [
             'title' => 'Edit Jadwal',
             'page' => 'jadwal',
             'jadwal' => $jadwal,

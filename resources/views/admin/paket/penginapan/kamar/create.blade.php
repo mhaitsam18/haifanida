@@ -82,7 +82,7 @@
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/paket/{{ $paketHotel->id }}/penginapan"
+                                <a href="/admin/penginapan/{{ $paketHotel->id }}/kamar"
                                     class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
                         </div>
