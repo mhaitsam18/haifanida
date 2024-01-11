@@ -48,11 +48,11 @@
                                     <select class="form-select @error('status') is-invalid @enderror" id="status"
                                         name="status">
                                         <option value="" selected disabled>Pilih Status</option>
-                                        <option value="Tertunda" @selected('Tertunda' == old('user_id', $pemesanan->user_id))>Tertunda</option>
-                                        <option value="dikonfirmasi" @selected('dikonfirmasi' == old('user_id', $pemesanan->user_id))>dikonfirmasi</option>
-                                        <option value="diterima" @selected('diterima' == old('user_id', $pemesanan->user_id))>diterima</option>
-                                        <option value="ditolak" @selected('ditolak' == old('user_id', $pemesanan->user_id))>ditolak</option>
-                                        <option value="dibatalkan" @selected('dibatalkan' == old('user_id', $pemesanan->user_id))>dibatalkan</option>
+                                        <option value="Tertunda" @selected('Tertunda' == old('status', $pemesanan->status))>Tertunda</option>
+                                        <option value="dikonfirmasi" @selected('dikonfirmasi' == old('status', $pemesanan->status))>dikonfirmasi</option>
+                                        <option value="diterima" @selected('diterima' == old('status', $pemesanan->status))>diterima</option>
+                                        <option value="ditolak" @selected('ditolak' == old('status', $pemesanan->status))>ditolak</option>
+                                        <option value="dibatalkan" @selected('dibatalkan' == old('status', $pemesanan->status))>dibatalkan</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger fs-6">
