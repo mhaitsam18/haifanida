@@ -342,6 +342,25 @@ Route::middleware('auth')->group(function () {
                 Route::resource('penumpang', AdminPenumpangController::class)->parameters([
                     'penumpang' => 'bus_jemaah'
                 ]);
+                Route::prefix('grup')->group(function () {
+                });
+                Route::prefix('grup/{grup}')->group(function () {
+                    Route::prefix('tagihan')->group(function () {
+                        Route::get('/', [AdminTagihanController::class, 'tagihanGrup'])->name('admin.grup.tagihan');
+                        Route::get('/cetak', [AdminTagihanController::class, 'cetak'])->name('admin.grup.cetak');
+                    });
+                    Route::prefix('isu-perjalanan')->group(function () {
+                        Route::get('/', [AdminIsuPerjalananController::class, 'index'])->name('admin.grup.isu-perjalanan.index');
+                        Route::get('/create', [AdminIsuPerjalananController::class, 'create'])->name('admin.grup.isu-perjalanan.create');
+                    });
+                    Route::prefix('jadwal')->group(function () {
+                        Route::get('/', [AdminJadwalController::class, 'index'])->name('admin.grup.jadwal.index');
+                        Route::get('/create', [AdminJadwalController::class, 'create'])->name('admin.grup.jadwal.create');
+                    });
+                });
+                Route::resource('grup', AdminGrupController::class)->parameters([
+                    'grup' => 'grup'
+                ]);
 
                 Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->parameters([
                     'isu-perjalanan' => 'isu_perjalanan'
@@ -360,17 +379,6 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::prefix('bus-jemaah')->group(function () {
                 });
-                Route::prefix('grup')->group(function () {
-                });
-                Route::prefix('grup/{grup}')->group(function () {
-                    Route::prefix('tagihan')->group(function () {
-                        Route::get('/', [AdminTagihanController::class, 'tagihanGrup'])->name('admin.grup.tagihan');
-                        Route::get('/cetak', [AdminTagihanController::class, 'cetak'])->name('admin.grup.cetak');
-                    });
-                });
-                Route::resource('grup', AdminGrupController::class)->parameters([
-                    'grup' => 'grup'
-                ]);
                 Route::prefix('pelayanan')->group(function () {
                 });
             });
