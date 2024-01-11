@@ -72,7 +72,7 @@ class AdminKamarJemaahController extends Controller
     {
         $validateData = $request->validate([
             'kamar_id' => 'required|integer',
-            'jemaah_id' => 'required|string',
+            'jemaah_id' => 'required|integer',
         ]);
 
         KamarJemaah::create($validateData);
@@ -105,7 +105,7 @@ class AdminKamarJemaahController extends Controller
             $query->where('paket_id', $paket_id);
         })->get();
         return view('admin.paket.jemaah.kamar.edit', [
-            'title' => 'Tambah Data Penghuni / Tamu',
+            'title' => 'Edit Data Penghuni / Tamu',
             'page' => 'kamar-jemaah',
             'kamarJemaah' => $kamarJemaah,
             'kamars' => $kamars,
@@ -120,7 +120,7 @@ class AdminKamarJemaahController extends Controller
     {
         $validateData = $request->validate([
             'kamar_id' => 'required|integer',
-            'jemaah_id' => 'required|string',
+            'jemaah_id' => 'required|integer',
         ]);
 
         $kamarJemaah->update($validateData);

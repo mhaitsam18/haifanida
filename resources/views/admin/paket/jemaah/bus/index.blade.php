@@ -17,8 +17,8 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    <a href="/admin/jemaah/{{ $jemaah->id }}/kamar/create" class="btn btn-sm btn-langit mb-3"><i
-                            data-feather="plus" class="icon-sm me-2"></i> Tambah Data Penghuni</a>
+                    <a href="/admin/jemaah/{{ $jemaah->id }}/bus/create" class="btn btn-sm btn-langit mb-3"><i
+                            data-feather="plus" class="icon-sm me-2"></i> Tambah Data Penumpang</a>
                     <a href="/admin/jemaah/{{ $jemaah->id }}" class="btn btn-sm btn-secondary mb-3"><i
                             data-feather="arrow-left" class="icon-sm me-2"></i> Kembali</a>
                     <div class="table-responsive">
@@ -26,29 +26,26 @@
                             <thead>
                                 <tr>
                                     <th class="pt-0">#</th>
-                                    <th class="pt-0">Nomor Kamar</th>
-                                    <th class="pt-0">Tipe Kamar</th>
-                                    <th class="pt-0">Kapasitas</th>
-                                    <th class="pt-0">Kota</th>
+                                    <th class="pt-0">Nama Penumpang</th>
+                                    <th class="pt-0">Nomor Kursi</th>
+                                    <th class="pt-0">Nomor Rombongan</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kamarJemaahs as $tamu)
+                                @foreach ($busJemaahs as $penumpang)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $tamu->kamar->nomor_kamar }}</td>
-                                        <td>{{ $tamu->kamar->tipe_kamar }}</td>
-                                        <td>{{ $tamu->kamar->kapasitas }}</td>
-                                        <td>{{ $tamu->kamar->paketHotel->hotel->kota }}</td>
+                                        <td>{{ $penumpang->jemaah->nama_lengkap }}</td>
+                                        <td>{{ $penumpang->nomor_kursi }}</td>
+                                        <td>{{ $penumpang->bus->nomor_rombongan }}</td>
                                         <td>
                                             <div class="d-flex align-items-center ">
-                                                <a href="/admin/kamar/{{ $tamu->kamar_id }}"
-                                                    class="badge bg-haifa d-inline-block ms-1">Lihat Anggota
-                                                    Kamar</a>
-                                                <a href="/admin/kamar-jemaah/{{ $tamu->id }}/edit"
+                                                <a href="/admin/bus/{{ $penumpang->bus_id }}"
+                                                    class="badge bg-haifa d-inline-block ms-1">List Penumpang</a>
+                                                <a href="/admin/bus-jemaah/{{ $penumpang->id }}/edit"
                                                     class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                <form action="/admin/kamar-jemaah/{{ $tamu->id }}" method="post">
+                                                <form action="/admin/bus-jemaah/{{ $penumpang->id }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit"
