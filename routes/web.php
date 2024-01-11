@@ -36,6 +36,7 @@ use App\Http\Controllers\AdminPermintaanKamarController;
 use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\AdminSertifikatJemaahController;
 use App\Http\Controllers\AdminSubMenuController;
 use App\Http\Controllers\AdminTagihanController;
 use App\Http\Controllers\AdminUserController;
@@ -383,6 +384,10 @@ Route::middleware('auth')->group(function () {
                     'jadwal' => 'jadwal'
                 ]);
                 Route::prefix('jemaah/{jemaah}')->group(function () {
+                    Route::prefix('sertifikat')->group(function () {
+                        Route::get('/', [AdminSertifikatJemaahController::class, 'index'])->name('admin.jemaah.sertifikat.index');
+                        Route::get('/create', [AdminSertifikatJemaahController::class, 'create'])->name('admin.jemaah.sertifikat.create');
+                    });
                     Route::prefix('berkas')->group(function () {
                         Route::get('/', [AdminBerkasJemaahController::class, 'index'])->name('admin.jemaah.berkas.index');
                         Route::get('/create', [AdminBerkasJemaahController::class, 'create'])->name('admin.jemaah.berkas.create');
@@ -407,6 +412,9 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::resource('bus-jemaah', AdminBusJemaahController::class)->parameters([
                     'bus-jemaah' => 'bus_jemaah'
+                ]);
+                Route::resource('sertifikat-jemaah', AdminSertifikatJemaahController::class)->parameters([
+                    'sertifikat-jemaah' => 'sertifikat_jemaah'
                 ]);
                 Route::prefix('bus-jemaah')->group(function () {
                 });

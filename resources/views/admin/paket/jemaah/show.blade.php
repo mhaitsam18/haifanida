@@ -157,10 +157,74 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <h4 class="mb-2">Testimoni</h4>
+                            <textarea class="form-control" readonly>{{ $jemaah->testimoni->isi_testimoni ?? 'Testimoni Tidak Tersedia' }}</textarea>
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="mb-2">Sertifikat</h4>
+                            <a href="/admin/jemaah/{{ $jemaah->id }}/sertifikat/create"
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                Sertifikat</a>
+                            <div class="table-responsive">
+                                {{-- id="dataTableExample" --}}
+                                <table class="table table-hover mb-3">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Nomor Sertifikat</th>
+                                            <th class="pt-0">Tanggal Penerbitan</th>
+                                            <th class="pt-0">Tanggal Kadaluarsa</th>
+                                            <th class="pt-0">Jenis Sertifikat</th>
+                                            <th class="pt-0">Sertifikat</th>
+                                            <th class="pt-0">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($jemaah->sertifikatJemaahs->count() > 0)
+                                            @foreach ($jemaah->sertifikatJemaahs as $sertifikat)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $sertifikat->nomor_sertifikat }}</td>
+                                                    <td>{{ Carbon::parse($sertifikat->tanggal_penerbitan)->isoFormat('LL') }}
+                                                    </td>
+                                                    <td>{{ Carbon::parse($sertifikat->tanggal_kadaluarsa)->isoFormat('LL') }}
+                                                    </td>
+                                                    <td>{{ $sertifikat->jenis_sertifikat }}</td>
+                                                    <td><img src="{{ asset('storage/' . $sertifikat->sertifikat) }}"
+                                                            alt=""
+                                                            style="border-radius: 0%; width: 120px; height: 80px;"></td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center ">
+                                                            <a href="/admin/sertifikat-jemaah/{{ $sertifikat->id }}/edit"
+                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
+                                                            <form action="/admin/sertifikat-jemaah/{{ $sertifikat->id }}"
+                                                                method="post">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    sertifikat Jema'ah belum Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <h4 class="mb-2">Berkas Jema'ah</h4>
                             <a href="/admin/jemaah/{{ $jemaah->id }}/berkas/create" class="btn btn-sm btn-langit mb-3"><i
-                                    data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                    data-feather="plus" class="icon-sm me-2"></i>
+                                Tambah
                                 Berkas Jema'ah</a>
                             <div class="table-responsive">
                                 {{-- id="dataTableExample" --}}

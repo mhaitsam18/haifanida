@@ -51,6 +51,10 @@ class Jemaah extends Model
     {
         return $this->hasOne(SertifikatJemaah::class);
     }
+    public function sertifikatJemaahs()
+    {
+        return $this->hasMany(SertifikatJemaah::class);
+    }
 
 
     public function berkasJemaahs()
