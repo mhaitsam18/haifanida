@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminAgenController;
 use App\Http\Controllers\AdminAuthorController;
 use App\Http\Controllers\AdminBerkasController;
+use App\Http\Controllers\AdminBerkasJemaahController;
 use App\Http\Controllers\AdminBusController;
 use App\Http\Controllers\AdminBusJemaahController;
 use App\Http\Controllers\AdminCabangController;
@@ -260,6 +261,12 @@ Route::middleware('auth')->group(function () {
                         Route::get('/', [AdminPaketEkstraController::class, 'index'])->name('admin.paket.ekstra.index');
                         Route::get('/create', [AdminPaketEkstraController::class, 'create'])->name('admin.paket.ekstra.create');
                     });
+                    Route::prefix('jemaah')->group(function () {
+                        Route::get('/', [AdminJemaahController::class, 'index'])->name('admin.paket.jemaah.index');
+                        Route::get('/create', [AdminJemaahController::class, 'create'])->name('admin.paket.jemaah.create');
+                        Route::get('/{jemaah}', [AdminJemaahController::class, 'show'])->name('admin.paket.jemaah.show');
+                        Route::get('/{jemaah}/edit', [AdminJemaahController::class, 'edit'])->name('admin.paket.jemaah.edit');
+                    });
                 });
                 Route::prefix('bus/{bus}')->group(function () {
                     Route::prefix('penumpang')->group(function () {
@@ -368,8 +375,25 @@ Route::middleware('auth')->group(function () {
                 Route::resource('jadwal', AdminJadwalController::class)->parameters([
                     'jadwal' => 'jadwal'
                 ]);
+                Route::prefix('jemaah/{jemaah}')->group(function () {
+                    Route::prefix('berkas')->group(function () {
+                        Route::get('/', [AdminBerkasJemaahController::class, 'index'])->name('admin.jemaah.berkas.index');
+                        Route::get('/create', [AdminBerkasJemaahController::class, 'create'])->name('admin.jemaah.berkas.create');
+                    });
+                    Route::prefix('kamar')->group(function () {
+                        Route::get('/', [AdminKamarJemaahController::class, 'index'])->name('admin.jemaah.kamar.index');
+                        Route::get('/create', [AdminKamarJemaahController::class, 'create'])->name('admin.jemaah.kamar.create');
+                    });
+                    Route::prefix('bus')->group(function () {
+                        Route::get('/', [AdminBusJemaahController::class, 'index'])->name('admin.jemaah.bus.index');
+                        Route::get('/create', [AdminBusJemaahController::class, 'create'])->name('admin.jemaah.bus.create');
+                    });
+                });
                 Route::resource('jemaah', AdminJemaahController::class)->parameters([
                     'jemaah' => 'jemaah'
+                ]);
+                Route::resource('berkas-jemaah', AdminBerkasJemaahController::class)->parameters([
+                    'berkas-jemaah' => 'berkas_jemaah'
                 ]);
                 Route::resource('kamar-jemaah', AdminKamarJemaahController::class)->parameters([
                     'kamar-jemaah' => 'kamar_jemaah'

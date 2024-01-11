@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kabupaten;
 use App\Models\Member;
 use App\Models\Provinsi;
 use App\Models\User;
@@ -30,6 +31,8 @@ class AdminMemberController extends Controller
         return view('admin.member.create', [
             'title' => 'Tambah member',
             'page' => 'member',
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => (old('provinsi')) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi'))->first()->id)->get() : Kabupaten::all(),
         ]);
     }
 
@@ -72,7 +75,7 @@ class AdminMemberController extends Controller
             'tanggal_kadaluarsa' => 'nullable|date',
             'pernah_umroh' => 'nullable|boolean',
             'pernah_haji' => 'nullable|boolean',
-            'hubungan_mahram' => 'nullable|string',
+            // 'hubungan_mahram' => 'nullable|string',
             'golongan_darah' => 'nullable|string',
             // 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
             'nama_keluarga_terdekat' => 'nullable|string',
@@ -131,7 +134,8 @@ class AdminMemberController extends Controller
             'title' => 'Edit member',
             'page' => 'member',
             'member' => $member,
-            'provinsis' => Provinsi::all()
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => (old('provinsi', $member->provinsi)) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi', $member->provinsi))->first()->id)->get() : Kabupaten::all(),
         ]);
     }
 
@@ -171,7 +175,7 @@ class AdminMemberController extends Controller
             'tanggal_kadaluarsa' => 'nullable|date',
             'pernah_umroh' => 'nullable|boolean',
             'pernah_haji' => 'nullable|boolean',
-            'hubungan_mahram' => 'nullable|string',
+            // 'hubungan_mahram' => 'nullable|string',
             'golongan_darah' => 'nullable|string',
             'nama_keluarga_terdekat' => 'nullable|string',
             'kontak_keluarga_terdekat' => 'nullable|string',

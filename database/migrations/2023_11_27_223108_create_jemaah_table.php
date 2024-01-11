@@ -48,7 +48,7 @@ return new class extends Migration
             $table->date('tanggal_kadaluarsa')->nullable();
             $table->boolean('pernah_umroh')->nullable();
             $table->boolean('pernah_haji')->nullable();
-            $table->enum('hubungan_mahram', ['Orang Tua', 'Anak', 'Suami', 'Saudara Kandung', 'Kakek', 'Cucu', 'Paman', 'Keponakan'])->nullable();
+            $table->enum('hubungan_mahram', ['Ayah', 'Anak', 'Suami', 'Saudara Kandung', 'Kakek', 'Cucu', 'Paman', 'Keponakan'])->nullable();
             $table->enum('golongan_darah', ['A', 'B', 'AB', 'O'])->nullable();
             $table->string('foto')->nullable();
             $table->string('nama_keluarga_terdekat')->nullable();

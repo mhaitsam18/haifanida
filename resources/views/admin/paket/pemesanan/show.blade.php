@@ -16,6 +16,30 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
+                        <div class="dropdown mb-2">
+                            <button class="btn p-0" type="button" id="lihat" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="lihat">
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $pemesanan->paket_id }}/jemaah?pemesanan_id={{ $pemesanan->id }}"><i
+                                        data-feather="eye" class="icon-sm me-2"></i> <span class="">Lihat
+                                        Jema'ah</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-kamar"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat
+                                        Pemesanan Kamar</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-ekstra"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat
+                                        Pemesanan Ekstra</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/pemesanan/{{ $pemesanan->id }}/pembayaran"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat
+                                        Pembayaran</span></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -46,7 +70,7 @@
                                                 <li>Status Pelunasan:
                                                     {{ $pemesanan->is_pembayaran_lunas ? 'Lunas' : 'Belum Lunas' }}</li>
                                             </ul>
-                                            <a href="/admin/jemaah?pemesanan={{ $pemesanan->id }}"
+                                            <a href="/admin/paket/{{ $pemesanan->paket_id }}/jemaah?pemesanan_id={{ $pemesanan->id }}"
                                                 class="btn btn-sm btn-haifa mb-1"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
                                             <a href="/admin/pemesanan/{{ $pemesanan->id }}/tagihan"
@@ -172,7 +196,8 @@
                         <div class="col-md-12">
                             <h4 class="mb-2">pembayaran</h4>
                             <a href="/admin/pemesanan/{{ $pemesanan->id }}/pembayaran/create"
-                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i>
+                                Tambah
                                 Riwayat
                                 pembayaran</a>
                             <div class="table-responsive">

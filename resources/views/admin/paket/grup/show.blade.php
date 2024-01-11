@@ -16,6 +16,24 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
+                        <div class="dropdown mb-2">
+                            <button class="btn p-0" type="button" id="lihat" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="lihat">
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $grup->paket_id }}/jemaah?grup_id={{ $grup->id }}"><i
+                                        data-feather="eye" class="icon-sm me-2"></i> <span class="">Lihat
+                                        Jema'ah</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/grup/{{ $grup->id }}/isu-perjalanan"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Isu Perjalanan</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/grup/{{ $grup->id }}/jadwal"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Jadwal</span></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -39,7 +57,7 @@
                                                 <li>Status Grup : {{ $grup->status_grup }}</li>
                                                 <li>Keterangan Grup : {{ $grup->keterangan_grup }}</li>
                                             </ul>
-                                            <a href="/admin/jemaah?grup={{ $grup->id }}"
+                                            <a href="/admin/paket/{{ $grup->paket_id }}/jemaah?grup_id={{ $grup->id }}"
                                                 class="btn btn-sm btn-haifa mb-1"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
                                             <a href="/admin/grup/{{ $grup->id }}/tagihan"

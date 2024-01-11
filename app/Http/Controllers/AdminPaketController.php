@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jemaah;
 use App\Models\Kantor;
 use App\Models\Paket;
 use Illuminate\Http\Request;
@@ -67,10 +68,25 @@ class AdminPaketController extends Controller
      */
     public function show(Paket $paket)
     {
+
+        $jemaahs = Jemaah::query();
+
+
+
+        if ($paket) {
+            $jemaahs->whereHas('pemesanan', function ($query) use ($paket) {
+                $query->where('paket_id', $paket->id);
+            })->orWhereHas('grup', function ($query) use ($paket) {
+                $query->where('paket_id', $paket->id);
+            });
+        }
+        $jemaahs = $jemaahs->get();
+
         return view('admin.paket.show', [
             'title' => 'Detail Paket',
             'page' => 'paket',
             'paket' => $paket,
+            'jemaahs' => $jemaahs,
             'kantors' => Kantor::all(),
         ]);
     }

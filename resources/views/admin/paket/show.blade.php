@@ -23,6 +23,35 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
+                        <div class="dropdown mb-2">
+                            <button class="btn p-0" type="button" id="lihat" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="lihat">
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/jemaah"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Jema'ah</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/ekstra"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Paket Ekstra</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/penginapan"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Penginapan</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/penerbangan"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Penerbangan</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/grup"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Grup</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/bus"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Bus</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $paket->id }}/galeri"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat Galeri</span></a>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 mb-3">
@@ -59,6 +88,9 @@
                                             <a href="/admin/paket/{{ $paket->id }}/pemesanan"
                                                 class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
                                                     class="icon-sm me-2"></i>Lihat Pemesanan Paket</a>
+                                            <a href="/admin/paket/{{ $paket->id }}/jemaah"
+                                                class="btn btn-sm btn-haifa mb-3"><i data-feather="eye"
+                                                    class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
                                             <a class="btn btn-sm btn-secondary mb-3" href="/admin/paket">
                                                 <span class="">Kembali</span>
                                             </a>
@@ -127,7 +159,8 @@
                         <div class="col-md-12 mb-3">
                             <h4 class="mb-2">Penginapan</h4>
                             <a href="/admin/paket/{{ $paket->id }}/penginapan/create"
-                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i>
+                                Tambah
                                 Data
                                 penginapan</a>
                             <div class="table-responsive">
@@ -191,7 +224,8 @@
                         <div class="col-md-12 mb-3">
                             <h4 class="mb-2">Penerbangan</h4>
                             <a href="/admin/paket/{{ $paket->id }}/penerbangan/create"
-                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i>
+                                Tambah
                                 Data
                                 Penerbangan</a>
                             <div class="table-responsive">
@@ -379,6 +413,51 @@
                                                 </td>
                                             </tr>
                                         @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <h4 class="mb-2 mt-2">Data Jemaah</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0" id="dataTableExample">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Nama Grup</th>
+                                            <th class="pt-0">Nama Lengkap</th>
+                                            <th class="pt-0">Email</th>
+                                            <th class="pt-0">Nomor Ponsel</th>
+                                            <th class="pt-0">Foto</th>
+                                            <th class="pt-0">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($jemaahs as $jemaah)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $jemaah->grup->nama_grup }}</td>
+                                                <td>{{ $jemaah->nama_lengkap }}</td>
+                                                <td>{{ $jemaah->email }}</td>
+                                                <td>{{ $jemaah->nomor_telepon }}</td>
+                                                <td> <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
+                                                        class="img-thumbnail img-fluid"></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}"
+                                                            class="badge bg-haifa d-inline-block m-1">Detail</a>
+                                                        <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}/edit"
+                                                            class="badge bg-success d-inline-block m-1">Edit</a>
+                                                        <form action="/admin/jemaah/{{ $jemaah->id }}" method="post">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
