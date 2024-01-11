@@ -21,7 +21,7 @@
                             data-feather="plus" class="icon-sm me-2"></i> Tambah
                         Data
                         jadwal</a>
-                    <a href="/admin/paket/{{ $grup->paket_id }}/grup/" class="btn btn-sm btn-secondary mb-3"><i
+                    <a href="/admin/grup/{{ $grup->paket_id }}" class="btn btn-sm btn-secondary mb-3"><i
                             data-feather="arrow-left" class="icon-sm me-2"></i> Kembali</a>
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="dataTableExample">
