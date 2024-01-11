@@ -88,7 +88,7 @@
                                                     </ul>
                                                 @endif
                                             @elseif ($jemaah->jenis_kelamin == 'Laki-laki')
-                                                <h4 class="mb-2">Data Mahram</h4>
+                                                <h4 class="mb-2">Data Mahram / Pasangan</h4>
                                                 <table class="table table-hover mb-3">
                                                     <thead>
                                                         <tr>
@@ -149,7 +149,7 @@
                                             <a href="/admin/grup/{{ $jemaah->grup_id }}"
                                                 class="btn btn-sm btn-success mb-1"><i data-feather="file-text"
                                                     class="icon-sm me-2"></i>Lihat Grup</a>
-                                            <a href="/admin/paket/{{ $jemaah->paket_id }}"
+                                            <a href="/admin/paket/{{ $paket->id }}/jemaah"
                                                 class="btn btn-sm btn-secondary mb-1"><i data-feather="arrow-left"
                                                     class="icon-sm me-2"></i>Kembali</a>
                                         </div>
@@ -275,6 +275,7 @@
                                             <th class="pt-0">Nomor Kamar</th>
                                             <th class="pt-0">Tipe Kamar</th>
                                             <th class="pt-0">Kapasitas</th>
+                                            <th class="pt-0">Kota</th>
                                             <th class="pt-0">Aksi</th>
                                         </tr>
                                     </thead>
@@ -286,6 +287,7 @@
                                                     <td>{{ $kamar->kamar->nomor_kamar }}</td>
                                                     <td>{{ $kamar->kamar->tipe_kamar }}</td>
                                                     <td>{{ $kamar->kamar->kapasitas }}</td>
+                                                    <td>{{ $kamar->kamar->paketHotel->hotel->kota }}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
                                                             <a href="/admin/kamar-jemaah/{{ $kamar->id }}"
