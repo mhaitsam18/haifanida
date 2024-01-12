@@ -69,18 +69,18 @@ class MenuTableSeeder extends Seeder
                 'parent_id' => 3,
                 'icon' => 'fa-solid fa-box-open',
             ],
-            "Manajemen Jema'ah" => [
-                'parent_id' => 3,
-                'icon' => 'fa-solid fa-person-praying',
-            ],
-            "Manajemen Grup" => [
-                'parent_id' => 3,
-                'icon' => 'fa-solid fa-people-group',
-            ],
-            "Pelayanan" => [
-                'parent_id' => 3,
-                'icon' => 'fa-solid fa-handshake-angle',
-            ]
+            // "Manajemen Jema'ah" => [
+            //     'parent_id' => 3,
+            //     'icon' => 'fa-solid fa-person-praying',
+            // ],
+            // "Manajemen Grup" => [
+            //     'parent_id' => 3,
+            //     'icon' => 'fa-solid fa-people-group',
+            // ],
+            // "Pelayanan" => [
+            //     'parent_id' => 3,
+            //     'icon' => 'fa-solid fa-handshake-angle',
+            // ]
         ];
         $index = 1;
         $old_parent = 1;
@@ -274,7 +274,7 @@ class MenuTableSeeder extends Seeder
             'menu' => "Galeri",
             'parent_id' => '13',
             'has_dropdown' => 0,
-            'is_active' => 1,
+            'is_active' => 0,
             'url' => '/admin/galeri',
             'icon' => '',
             'order' => 3102
@@ -283,7 +283,7 @@ class MenuTableSeeder extends Seeder
             'menu' => "Isu Perjalanan",
             'parent_id' => '13',
             'has_dropdown' => 0,
-            'is_active' => 1,
+            'is_active' => 0,
             'url' => '/admin/isu-perjalanan',
             'icon' => '',
             'order' => 3103
@@ -292,20 +292,20 @@ class MenuTableSeeder extends Seeder
             'menu' => "Jadwal",
             'parent_id' => '13',
             'has_dropdown' => 0,
-            'is_active' => 1,
+            'is_active' => 0,
             'url' => '/admin/jadwal',
             'icon' => '',
             'order' => 3104
         ]);
-        Menu::create([
-            'menu' => "Data Jema'ah",
-            'parent_id' => '14',
-            'has_dropdown' => 0,
-            'is_active' => 1,
-            'url' => '/admin/jemaah',
-            'icon' => '',
-            'order' => 3201
-        ]);
+        // Menu::create([
+        //     'menu' => "Data Jema'ah",
+        //     'parent_id' => '14',
+        //     'has_dropdown' => 0,
+        //     'is_active' => 1,
+        //     'url' => '/admin/jemaah',
+        //     'icon' => '',
+        //     'order' => 3201
+        // ]);
 
 
         MenuRole::create([
