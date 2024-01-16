@@ -115,7 +115,7 @@
             });
 
             // Trigger the updatePrice function on page load
-            updatePrice();
+            // updatePrice();
         });
 
         $(document).ready(function() {
@@ -149,7 +149,7 @@
             });
 
             // Trigger the updatePriceAndDescription function on page load
-            updatePriceAndDescription();
+            // updatePriceAndDescription();
         });
 
         $(document).ready(function() {
@@ -207,7 +207,7 @@
             });
 
             // Trigger the updatePriceAndDescription function on page load
-            updatePriceAndDescription();
+            // updatePriceAndDescription();
         });
     </script>
 @endsection

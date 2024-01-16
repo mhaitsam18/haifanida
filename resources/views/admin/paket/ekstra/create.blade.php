@@ -28,7 +28,8 @@
                                         name="ekstra_id">
                                         <option value="" selected disabled>Pilih Ekstra</option>
                                         @foreach ($ekstras as $ekstra)
-                                            <option value="{{ $ekstra->id }}" @selected($ekstra->id == old('ekstra_id'))>
+                                            <option value="{{ $ekstra->id }}" data-harga="{{ $ekstra->harga_default }}"
+                                                @selected($ekstra->id == old('ekstra_id'))>
                                                 {{ $ekstra->nama_ekstra }}</option>
                                         @endforeach
                                     </select>
@@ -59,4 +60,27 @@
         </div>
 
     </div> <!-- row -->
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Function to calculate and update the price based on room type and number of occupants
+            function updatePrice() {
+                var selectedRoom = $("#ekstra_id option:selected");
+
+                // Check if both room type and number of occupants are selected
+                if (selectedRoom.val() !== "") {
+                    var price = parseFloat(selectedRoom.data("harga"));
+
+                    // Update the price input field
+                    $("#harga").val(price);
+                }
+            }
+
+            // Attach the change event handlers
+            $("#ekstra_id").on('change input', function() {
+                updatePrice();
+            });
+        });
+    </script>
 @endsection
