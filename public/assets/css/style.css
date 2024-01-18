@@ -17,3 +17,15 @@
     cursor: pointer;
     text-decoration: none;
 }
+.ikon {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 70px;
+    /* background: url('../img/icons/haji-umroh.png') no-repeat center center; */
+}

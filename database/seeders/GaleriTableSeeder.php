@@ -29,7 +29,7 @@ class GaleriTableSeeder extends Seeder
             Galeri::create([
                 'paket_id' => 1,
                 'nama' => 'Dokumentasi',
-                'deskripsi' => 'Umroh 2014',
+                'deskripsi' => 'Umroh 2018',
                 'file_path' => "paket-galeri/galeri-$i.jpg",
                 'jenis' => 'gambar',
             ]);

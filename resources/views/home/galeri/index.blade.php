@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('style')
+    <link rel="stylesheet" href="/assets/css/style.css">
+@endsection
 
 @section('content')
     @php
@@ -28,82 +31,27 @@
     <section class="services-widget-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <span class="sp-color2">Our Services</span>
-                <h2>We Provide a Wide Variety of It Services</h2>
+                <span class="sp-color2">Our Galeries</span>
+                <h2>Umroh dan Haji bersama PT. Haifa Nida Wisata</h2>
             </div>
             <div class="row pt-45">
-                <div class="col-lg-4 col-md-6">
-                    <div class="services-item">
-                        <a href="service-details.html">
-                            <img src="/assets-techex-demo/images/services/services-img1.jpg" alt="Images" loading="lazy">
-                        </a>
-                        <div class="content">
-                            <i class="flaticon-consultant"></i>
-                            <span><a href="service-details.html">IT Solution</a></span>
-                            <h3><a href="service-details.html">IT Consulting</a></h3>
+                @foreach ($galeries as $galeri)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="services-item">
+                            <a href="#">
+                                <img src="{{ asset('storage/' . $galeri->file_path) }}" alt="Images" loading="lazy">
+                            </a>
+                            <div class="content">
+                                <i>
+                                    <img src="/assets/img/icons/haji-umroh.png" class="ikon" alt="">
+                                </i>
+                                <span><a href="#">{{ $galeri->nama }}</a></span>
+                                <h3><a href="#">{{ $galeri->deskripsi }}</a></h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="services-item">
-                        <a href="service-details.html">
-                            <img src="/assets-techex-demo/images/services/services-img2.jpg" alt="Images" loading="lazy">
-                        </a>
-                        <div class="content">
-                            <i class="flaticon-consulting"></i>
-                            <span><a href="service-details.html">Cloud Services</a></span>
-                            <h3><a href="service-details.html">Cloud Computing</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="services-item">
-                        <a href="service-details.html">
-                            <img src="/assets-techex-demo/images/services/services-img3.jpg" alt="Images" loading="lazy">
-                        </a>
-                        <div class="content">
-                            <i class="flaticon-web-development"></i>
-                            <span><a href="service-details.html">Web Services</a></span>
-                            <h3><a href="service-details.html">Web Development</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="services-item">
-                        <a href="service-details.html">
-                            <img src="/assets-techex-demo/images/services/services-img4.jpg" alt="Images" loading="lazy">
-                        </a>
-                        <div class="content">
-                            <i class="flaticon-stats"></i>
-                            <span><a href="service-details.html">Business</a></span>
-                            <h3><a href="service-details.html">Business Reform</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="services-item">
-                        <a href="service-details.html">
-                            <img src="/assets-techex-demo/images/services/services-img5.jpg" alt="Images" loading="lazy">
-                        </a>
-                        <div class="content">
-                            <i class="flaticon-structure"></i>
-                            <span><a href="service-details.html">Planing</a></span>
-                            <h3><a href="service-details.html">Infrastructure</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="services-item">
-                        <a href="service-details.html">
-                            <img src="/assets-techex-demo/images/services/services-img6.jpg" alt="Images" loading="lazy">
-                        </a>
-                        <div class="content">
-                            <i class="flaticon-data-analytics"></i>
-                            <span><a href="service-details.html">Analysis</a></span>
-                            <h3><a href="service-details.html">Data Analysis</a></h3>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
                 <div class="col-lg-12 col-md-12 text-center">
                     <div class="pagination-area">
                         <a href="services-1.html" class="prev page-numbers">
