@@ -185,15 +185,18 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="col-md-12 mt-4">
+                            <h4>Masukkan Jema'ah</h4>
+                        </div>
                         <div class="col-md-5 mt-4">
-                            <h4 class="mb-2">Data Jema'ah</h4>
+                            <h6 class="mb-2">Data Jema'ah</h6>
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
                                     <thead>
                                         <tr>
                                             <th class="pt-0">#</th>
                                             <th class="pt-0">Nama Lengkap</th>
-                                            <th class="pt-0">Aksi</th>
+                                            <th class="pt-0">Pilih</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -219,7 +222,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-2 mt-4 text-center">
+                        <div class="col-md-1 mt-4 text-center">
                             <div class="mt-5 row">
                                 <div class="mb-3">
                                     <button type="button" id="pindah-ke-grup" class="btn btn-sm btn-info">
@@ -233,15 +236,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 mt-4">
-                            <h4 class="mb-2">Data Anggota Grup</h4>
+                        <div class="col-md-6 mt-4">
+                            <h6 class="mb-2">Data Anggota Grup</h6>
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
                                     <thead>
                                         <tr>
                                             <th class="pt-0">#</th>
                                             <th class="pt-0">Nama Lengkap</th>
-                                            <th class="pt-0">Aksi</th>
+                                            <th class="pt-0">Pilih</th>
                                         </tr>
                                     </thead>
                                     <tbody>
