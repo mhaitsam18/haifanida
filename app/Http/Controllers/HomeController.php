@@ -60,7 +60,7 @@ class HomeController extends Controller
         return view('home.visi-misi', [
             'title' => 'Visi Misi',
             'page' => 'visi-misi',
-            'kontens' => Konten::all()
+            'konten' => Konten::find(6)
         ]);
     }
 
