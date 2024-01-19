@@ -292,14 +292,17 @@
                     _token: token,
                     grup_id: {{ $grup->id }}
                 }, function(response) {
+                    location.reload();
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil',
                         text: response.message,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
+                    });
+                }).fail(function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Terjadi kesalahan saat memindahkan data ke grup.',
                     });
                 });
             });
@@ -316,14 +319,17 @@
                     anggota_ids: selectedAnggotas,
                     _token: token
                 }, function(response) {
+                    location.reload();
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil',
                         text: response.message,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
+                    });
+                }).fail(function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Terjadi kesalahan saat mengembalikan data ke jemaah.',
                     });
                 });
             });
