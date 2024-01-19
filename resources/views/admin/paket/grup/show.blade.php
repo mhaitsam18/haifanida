@@ -291,11 +291,16 @@
                     jemaah_ids: selectedJemaahs,
                     _token: token,
                     grup_id: {{ $grup->id }}
-                }, function() {
-                    // Update tampilan atau lakukan sesuatu setelah berhasil
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+                }, function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
             });
 
@@ -310,11 +315,16 @@
                 $.post('/admin/grup/kembali-ke-jemaah', {
                     anggota_ids: selectedAnggotas,
                     _token: token
-                }, function() {
-                    // Update tampilan atau lakukan sesuatu setelah berhasil
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+                }, function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                 });
             });
         });
