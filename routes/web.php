@@ -357,7 +357,9 @@ Route::middleware('auth')->group(function () {
                 Route::resource('penumpang', AdminPenumpangController::class)->parameters([
                     'penumpang' => 'bus_jemaah'
                 ]);
-                Route::prefix('grup')->group(function () {
+                Route::prefix('grup')->group(function () { // routes/web.php
+                    Route::post('/pindah-ke-grup', [AdminGrupController::class, 'pindahKeGrup'])->name('admin.grup.pindah-ke-grup');
+                    Route::post('/kembali-ke-jemaah', [AdminGrupController::class, 'kembaliKeJemaah'])->name('admin.grup.kembali-ke-jemaah');
                 });
                 Route::prefix('grup/{grup}')->group(function () {
                     Route::prefix('tagihan')->group(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agen;
 use App\Models\Grup;
+use App\Models\Jemaah;
 use App\Models\Paket;
 use Illuminate\Http\Request;
 
@@ -60,10 +61,15 @@ class AdminGrupController extends Controller
      */
     public function show(Grup $grup)
     {
+        $jemaahs = Jemaah::whereHas('pemesanan', function ($query) use ($grup) {
+            $query->where('paket_id', $grup->paket_id);
+        })->whereNull('grup_id')->get();
         return view('admin.paket.grup.show', [
             'title' => 'Detail grup',
             'page' => 'grup',
             'grup' => $grup,
+            'jemaahs' => $jemaahs,
+            'anggotas' => Jemaah::where('grup_id', $grup->id)->get(),
         ]);
     }
 
@@ -77,7 +83,6 @@ class AdminGrupController extends Controller
             'page' => 'grup',
             'grup' => $grup,
             'pakets' => Paket::all(),
-            'agens' => Agen::all(),
         ]);
     }
 
@@ -107,5 +112,25 @@ class AdminGrupController extends Controller
     {
         $grup->delete();
         return back()->with('success', 'Data Grup berhasil dihapus');
+    }
+
+
+
+    public function pindahKeGrup(Request $request)
+    {
+        $jemaahIds = $request->input('jemaah_ids');
+        if ($jemaahIds) {
+            Jemaah::whereIn('id', $jemaahIds)->update(['grup_id' => $request->grup_id]);
+        }
+        return response()->json(['message' => 'Data berhasil dipindahkan ke grup.']);
+    }
+
+    public function kembaliKeJemaah(Request $request)
+    {
+        $anggotaIds = $request->input('anggota_ids');
+        if ($anggotaIds) {
+            Jemaah::whereIn('id', $anggotaIds)->update(['grup_id' => null]);
+        }
+        return response()->json(['message' => 'Data berhasil dikembalikan ke jemaah.']);
     }
 }

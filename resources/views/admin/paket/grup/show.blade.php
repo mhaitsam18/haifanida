@@ -1,4 +1,7 @@
 @extends('admin.layouts.main')
+@section('style')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
     @php
         use Carbon\Carbon;
@@ -182,9 +185,135 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="col-md-5 mt-4">
+                            <h4 class="mb-2">Data Jema'ah</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Nama Lengkap</th>
+                                            <th class="pt-0">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($jemaahs->count() > 0)
+                                            @foreach ($jemaahs as $jemaah)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $jemaah->nama_lengkap }}</td>
+                                                    <td>
+                                                        <input type="checkbox" value="{{ $jemaah->id }}"
+                                                            name="jemaah_ids[]">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    jemaah Tidak Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mt-4 text-center">
+                            <div class="mt-5 row">
+                                <div class="mb-3">
+                                    <button type="button" id="pindah-ke-grup" class="btn btn-sm btn-info">
+                                        <i data-feather="arrow-right" class="icon-sm"></i>
+                                    </button>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="button" id="kembali-ke-jemaah" class="btn btn-sm btn-info">
+                                        <i data-feather="arrow-left" class="icon-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 mt-4">
+                            <h4 class="mb-2">Data Anggota Grup</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Nama Lengkap</th>
+                                            <th class="pt-0">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($anggotas->count() > 0)
+                                            @foreach ($anggotas as $anggota)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $anggota->nama_lengkap }}</td>
+                                                    <td>
+                                                        <input type="checkbox" value="{{ $anggota->id }}"
+                                                            name="anggota_ids[]">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    Anggota Tidak Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div> <!-- row -->
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Jika tombol panah ke kanan diklik
+            $('#pindah-ke-grup').click(function() {
+                var selectedJemaahs = $('input[name="jemaah_ids[]"]:checked').map(function() {
+                    return this.value;
+                }).get();
+                var token = $('meta[name="csrf-token"]').attr('content');
+
+                // Kirim data ke server
+                $.post('/admin/grup/pindah-ke-grup', {
+                    jemaah_ids: selectedJemaahs,
+                    _token: token,
+                    grup_id: {{ $grup->id }}
+                }, function() {
+                    // Update tampilan atau lakukan sesuatu setelah berhasil
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                });
+            });
+
+            // Jika tombol panah ke kiri diklik
+            $('#kembali-ke-jemaah').click(function() {
+                var selectedAnggotas = $('input[name="anggota_ids[]"]:checked').map(function() {
+                    return this.value;
+                }).get();
+                var token = $('meta[name="csrf-token"]').attr('content');
+
+                // Kirim data ke server
+                $.post('/admin/grup/kembali-ke-jemaah', {
+                    anggota_ids: selectedAnggotas,
+                    _token: token
+                }, function() {
+                    // Update tampilan atau lakukan sesuatu setelah berhasil
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                });
+            });
+        });
+    </script>
 @endsection
