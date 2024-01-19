@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jemaah;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,9 +15,51 @@ class AdminController extends Controller
 {
     public function index()
     {
+        //Preparation Month dan Year
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        //Daftar Jemaah Bulan ini
+
+        $jemaah_daftar_bulan_ini = Jemaah::whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->count();
+
+        //menghitung jemaah per bulannya
+
+        $jemaah_per_bulan = DB::table(DB::raw("(SELECT 1 as month UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) as months"))
+            ->leftJoin(DB::raw('(SELECT MONTH(created_at) as month, COUNT(*) as jumlah_jemaah FROM jemaah WHERE YEAR(created_at) = :year GROUP BY MONTH(created_at)) as jemaah_per_month'), function ($join) {
+                $join->on('months.month', '=', 'jemaah_per_month.month');
+            })
+            ->setBindings(['year' => $currentYear])
+            ->select('months.month', DB::raw('COALESCE(jemaah_per_month.jumlah_jemaah, 0) as jumlah_jemaah'))
+            ->get();
+
+        //menghitung persentase peningkatan jemaah
+        // Jumlah jemaah bulan kemarin
+        $previousMonth = ($currentMonth - 1 <= 0) ? 12 : $currentMonth - 1;
+        $previousYear = ($currentMonth - 1 <= 0) ? $currentYear - 1 : $currentYear;
+
+        $jemaah_daftar_bulan_kemarin = Jemaah::whereMonth('created_at', $previousMonth)
+            ->whereYear('created_at', $previousYear)
+            ->count();
+
+        // Persentase peningkatan atau penurunan
+        $persentase_peningkatan = 0;
+
+        if ($jemaah_daftar_bulan_kemarin != 0) {
+            $persentase_peningkatan = (($jemaah_daftar_bulan_ini - $jemaah_daftar_bulan_kemarin) / $jemaah_daftar_bulan_kemarin) * 100;
+        } else {
+            // Kasus khusus jika bulan kemarin tidak ada yang mendaftar
+            $persentase_peningkatan = ($jemaah_daftar_bulan_ini > 0) ? 100 : 0; // Misalnya, jika bulan ini ada yang mendaftar, maka persentase peningkatannya 100%, jika tidak, maka 0%.
+        }
+
         return view('admin.index', [
             'title' => 'Dashboard',
             'page' => 'index',
+            'jemaah_daftar_bulan_ini' => $jemaah_daftar_bulan_ini,
+            'jemaah_per_bulan' => $jemaah_per_bulan,
+            'persentase_peningkatan' => $persentase_peningkatan,
         ]);
     }
     public function profile()

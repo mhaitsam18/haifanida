@@ -4,6 +4,7 @@ $(function() {
 
 
   var colors = {
+    haifa        : "#282461",
     primary        : "#6571ff",
     secondary      : "#7987a1",
     success        : "#05a34a",
@@ -180,7 +181,7 @@ $(function() {
     "Apr 01 2021", "Apr 02 2021", "Apr 03 2021", "Apr 04 2021", "Apr 05 2021", "Apr 06 2021", "Apr 07 2021", "Apr 08 2021", "Apr 09 2021", "Apr 10 2021", "Apr 11 2021", "Apr 12 2021", "Apr 13 2021", "Apr 14 2021", "Apr 15 2021", "Apr 16 2021", "Apr 17 2021", "Apr 18 2021", "Apr 19 2021", "Apr 20 2021","Apr 21 2021", "Apr 22 2021", "Apr 23 2021", "Apr 24 2021", "Apr 25 2021", "Apr 26 2021", "Apr 27 2021", "Apr 28 2021", "Apr 29 2021", "Apr 30 2021",
     "May 01 2021", "May 02 2021", "May 03 2021", "May 04 2021", "May 05 2021", "May 06 2021", "May 07 2021", "May 08 2021", "May 09 2021", "May 10 2021", "May 11 2021", "May 12 2021", "May 13 2021", "May 14 2021", "May 15 2021", "May 16 2021", "May 17 2021", "May 18 2021", "May 19 2021", "May 20 2021","May 21 2021", "May 22 2021", "May 23 2021", "May 24 2021", "May 25 2021", "May 26 2021", "May 27 2021", "May 28 2021", "May 29 2021", "May 30 2021",
   ]
-  
+
 
 
 
@@ -227,7 +228,7 @@ $(function() {
       markers: {
         size: 0
       },
-      colors: [colors.primary],
+      colors: [colors.haifa],
     };
     new ApexCharts(document.querySelector("#customersChart"),options1).render();
   }
@@ -252,7 +253,7 @@ $(function() {
           columnWidth: "60%"
         }
       },
-      colors: [colors.primary],
+      colors: [colors.haifa],
       series: [{
         name: '',
         data: [36, 77, 52, 90, 74, 35, 55, 23, 47, 10, 63]
@@ -294,7 +295,7 @@ $(function() {
       markers: {
         size: 0
       },
-      colors: [colors.primary],
+      colors: [colors.haifa],
     };
     new ApexCharts(document.querySelector("#growthChart"),options3).render();
   }
@@ -323,7 +324,7 @@ $(function() {
       tooltip: {
         theme: 'light'
       },
-      colors: [colors.primary, colors.danger, colors.warning],
+      colors: [colors.haifa, colors.danger, colors.warning],
       grid: {
         padding: {
           bottom: -4,
@@ -413,7 +414,7 @@ $(function() {
       tooltip: {
         theme: 'light'
       },
-      colors: [colors.primary, colors.danger, colors.warning],
+      colors: [colors.haifa, colors.danger, colors.warning],
       grid: {
         padding: {
           bottom: -4,
@@ -509,10 +510,10 @@ $(function() {
       tooltip: {
         theme: 'light'
       },
-      colors: [colors.primary],  
+      colors: [colors.haifa],
       fill: {
         opacity: .9
-      } , 
+      } ,
       grid: {
         padding: {
           bottom: -4
@@ -579,7 +580,7 @@ $(function() {
         },
       },
     }
-    
+
     var apexBarChart = new ApexCharts(document.querySelector("#monthlySalesChart"), options);
     apexBarChart.render();
   }
@@ -607,10 +608,10 @@ $(function() {
       tooltip: {
         theme: 'light'
       },
-      colors: [colors.primary],  
+      colors: [colors.haifa],
       fill: {
         opacity: .9
-      } , 
+      } ,
       grid: {
         padding: {
           bottom: -4
@@ -683,7 +684,7 @@ $(function() {
         },
       },
     }
-    
+
     var apexBarChart = new ApexCharts(document.querySelector("#monthlySalesChartRTL"), options);
     apexBarChart.render();
   }
@@ -701,7 +702,7 @@ $(function() {
         type: "radialBar"
       },
       series: [67],
-      colors: [colors.primary],
+      colors: [colors.haifa],
       plotOptions: {
         radialBar: {
           hollow: {
@@ -713,7 +714,7 @@ $(function() {
             background: colors.light,
             strokeWidth: '100%',
             opacity: 1,
-            margin: 5, 
+            margin: 5,
           },
           dataLabels: {
             showOn: "always",
@@ -739,9 +740,9 @@ $(function() {
       },
       labels: ["Storage Used"]
     };
-    
+
     var chart = new ApexCharts(document.querySelector("#storageChart"), options);
-    chart.render();    
+    chart.render();
   }
   // Cloud Storage Chart - END
 
