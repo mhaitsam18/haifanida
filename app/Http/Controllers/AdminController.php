@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jemaah;
 use App\Models\Paket;
+use App\Models\Pembayaran;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -85,6 +86,41 @@ class AdminController extends Controller
             $selisih_keberangkatan = $jumlah_keberangkatan_bulan_ini - $jumlah_keberangkatan_per_bulan[$previousMonth - 1]->jumlah_keberangkatan;
         }
 
+
+
+        $jumlah_transaksi_bulan_ini = Pembayaran::whereMonth('tanggal_pembayaran', $currentMonth)
+            ->whereYear('tanggal_pembayaran', $currentYear)
+            ->sum('jumlah_pembayaran');
+        // Ambil jumlah pemasukan bulan ini
+        $jumlah_pemasukan_bulan_ini = Pembayaran::whereMonth('tanggal_pembayaran', $currentMonth)
+            ->whereYear('tanggal_pembayaran', $currentYear)
+            ->sum('jumlah_pembayaran');
+
+        // Ambil jumlah pemasukan bulan sebelumnya
+        $bulan_sebelumnya = ($currentMonth == 1) ? 12 : $currentMonth - 1;
+        $tahun_sebelumnya = ($currentMonth == 1) ? $currentYear - 1 : $currentYear;
+
+        $jumlah_pemasukan_bulan_sebelumnya = Pembayaran::whereMonth('tanggal_pembayaran', $bulan_sebelumnya)
+            ->whereYear('tanggal_pembayaran', $tahun_sebelumnya)
+            ->sum('jumlah_pembayaran');
+
+        // Hitung persentase kenaikan atau penurunan
+        if ($jumlah_pemasukan_bulan_sebelumnya > 0) {
+            $kenaikan_persentase = (($jumlah_pemasukan_bulan_ini - $jumlah_pemasukan_bulan_sebelumnya) / abs($jumlah_pemasukan_bulan_sebelumnya)) * 100;
+        } else {
+            // Handle jika bulan sebelumnya tidak ada pemasukan
+            $kenaikan_persentase = $jumlah_pemasukan_bulan_ini >= 0 ? 100 : -100;
+        }
+
+        // Jumlah transaksi per bulan
+        $jumlah_transaksi_per_bulan = DB::table(DB::raw("(SELECT 1 as month UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) as months"))
+            ->leftJoin(DB::raw('(SELECT MONTH(tanggal_pembayaran) as month, SUM(jumlah_pembayaran) as jumlah_transaksi FROM pembayaran WHERE YEAR(tanggal_pembayaran) = :year GROUP BY MONTH(tanggal_pembayaran)) as transaksi_per_month'), function ($join) {
+                $join->on('months.month', '=', 'transaksi_per_month.month');
+            })
+            ->setBindings(['year' => $currentYear])
+            ->select('months.month', DB::raw('COALESCE(transaksi_per_month.jumlah_transaksi, 0) as jumlah_transaksi'))
+            ->get();
+
         return view('admin.index', [
             'title' => 'Dashboard',
             'page' => 'index',
@@ -95,6 +131,9 @@ class AdminController extends Controller
             'jumlah_keberangkatan_per_bulan' => $jumlah_keberangkatan_per_bulan,
             'hasil_keberangkatan_per_bulan' => $hasil_keberangkatan_per_bulan,
             'selisih_keberangkatan' => $selisih_keberangkatan,
+            'jumlah_transaksi_bulan_ini' => $jumlah_transaksi_bulan_ini,
+            'kenaikan_persentase' => $kenaikan_persentase,
+            'jumlah_transaksi_per_bulan' => $jumlah_transaksi_per_bulan,
         ]);
     }
     public function profile()
