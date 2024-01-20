@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jemaah;
+use App\Models\Paket;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -54,12 +55,46 @@ class AdminController extends Controller
             $persentase_peningkatan = ($jemaah_daftar_bulan_ini > 0) ? 100 : 0; // Misalnya, jika bulan ini ada yang mendaftar, maka persentase peningkatannya 100%, jika tidak, maka 0%.
         }
 
+        $jumlah_keberangkatan_bulan_ini = Paket::whereMonth('tanggal_mulai', $currentMonth)
+            ->whereYear('tanggal_mulai', $currentYear)
+            ->count();
+
+        // Jumlah keberangkatan per bulan
+        $jumlah_keberangkatan_per_bulan = DB::table(DB::raw("(SELECT 1 as month UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) as months"))
+            ->leftJoin(DB::raw('(SELECT MONTH(tanggal_mulai) as month, COUNT(*) as jumlah_keberangkatan FROM paket WHERE YEAR(tanggal_mulai) = :year GROUP BY MONTH(tanggal_mulai)) as keberangkatan_per_month'), function ($join) {
+                $join->on('months.month', '=', 'keberangkatan_per_month.month');
+            })
+            ->setBindings(['year' => $currentYear])
+            ->select('months.month', DB::raw('COALESCE(keberangkatan_per_month.jumlah_keberangkatan, 0) as jumlah_keberangkatan'))
+            ->get();
+
+        // Inisialisasi nilai 0 untuk setiap bulan jika tidak ada data
+        $hasil_keberangkatan_per_bulan = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $hasil_keberangkatan_per_bulan[$i] = 0;
+        }
+
+        // Memasukkan hasil query ke dalam array
+        foreach ($jumlah_keberangkatan_per_bulan as $item) {
+            $hasil_keberangkatan_per_bulan[$item->month] = $item->jumlah_keberangkatan;
+        }
+
+        // Selisih keberangkatan bulan ini dengan bulan kemarin
+        $selisih_keberangkatan = 0;
+        if (isset($jumlah_keberangkatan_per_bulan[$previousMonth - 1])) {
+            $selisih_keberangkatan = $jumlah_keberangkatan_bulan_ini - $jumlah_keberangkatan_per_bulan[$previousMonth - 1]->jumlah_keberangkatan;
+        }
+
         return view('admin.index', [
             'title' => 'Dashboard',
             'page' => 'index',
             'jemaah_daftar_bulan_ini' => $jemaah_daftar_bulan_ini,
             'jemaah_per_bulan' => $jemaah_per_bulan,
             'persentase_peningkatan' => $persentase_peningkatan,
+            'jumlah_keberangkatan_bulan_ini' => $jumlah_keberangkatan_bulan_ini,
+            'jumlah_keberangkatan_per_bulan' => $jumlah_keberangkatan_per_bulan,
+            'hasil_keberangkatan_per_bulan' => $hasil_keberangkatan_per_bulan,
+            'selisih_keberangkatan' => $selisih_keberangkatan,
         ]);
     }
     public function profile()

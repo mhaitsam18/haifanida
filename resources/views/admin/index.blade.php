@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">Jema'ah yang mendaftar Bulan Ini</h6>
-                                <div class="dropdown mb-2">
+                                {{-- <div class="dropdown mb-2">
                                     <button class="btn p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -54,7 +54,7 @@
                                                 data-feather="download" class="icon-sm me-2"></i> <span
                                                 class="">Download</span></a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
@@ -89,8 +89,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">New Orders</h6>
-                                <div class="dropdown mb-2">
+                                <h6 class="card-title mb-0">Jumlah Keberangkatan Bulan ini</h6>
+                                {{-- <div class="dropdown mb-2">
                                     <button class="btn p-0" type="button" id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -112,20 +112,32 @@
                                                 data-feather="download" class="icon-sm me-2"></i> <span
                                                 class="">Download</span></a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
-                                    <h3 class="mb-2">35,084</h3>
+                                    <h3 class="mb-2">{{ $jumlah_keberangkatan_bulan_ini }}</h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-danger">
-                                            <span>-2.8%</span>
-                                            <i data-feather="arrow-down" class="icon-sm mb-1"></i>
-                                        </p>
+                                        @if ($selisih_keberangkatan > 0)
+                                            <p class="text-success">
+                                                <span>{{ $selisih_keberangkatan }}</span>
+                                                <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                                            </p>
+                                        @elseif($selisih_keberangkatan == 0)
+                                            <p class="text-haifa">
+                                                <span>{{ $selisih_keberangkatan }}</span>
+                                                <i data-feather="arrow-right" class="icon-sm mb-1"></i>
+                                            </p>
+                                        @elseif($selisih_keberangkatan < 0)
+                                            <p class="text-danger">
+                                                <span>{{ $selisih_keberangkatan }}</span>
+                                                <i data-feather="arrow-down" class="icon-sm mb-1"></i>
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-12 col-xl-7">
-                                    <div id="ordersChart" class="mt-md-3 mt-xl-0"></div>
+                                    <div id="keberangkatanChart" class="mt-md-3 mt-xl-0"></div>
                                 </div>
                             </div>
                         </div>
@@ -591,6 +603,47 @@
                         colors: [colors.haifa],
                     };
                     new ApexCharts(document.querySelector("#jemaahsChart"), options1).render();
+                }
+            @endif
+            @if (isset($jumlah_keberangkatan_per_bulan))
+                // Orders Chart
+                var keberangkatanData = {!! json_encode($jumlah_keberangkatan_per_bulan) !!};
+                if ($('#keberangkatanChart').length) {
+                    var options2 = {
+                        chart: {
+                            type: "bar",
+                            height: 60,
+                            sparkline: {
+                                enabled: !0
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                borderRadius: 2,
+                                columnWidth: "60%"
+                            }
+                        },
+                        colors: [colors.haifa],
+                        series: [{
+                            name: 'Jumlah Keberangkatan',
+                            data: keberangkatanData.map(item => item.jumlah_keberangkatan)
+                        }],
+                        xaxis: {
+                            type: 'category',
+                            categories: keberangkatanData.map(item => {
+                                // Format tanggal sesuai kebutuhan, misalnya "Jan 2021"
+                                return moment().month(item.month - 1).format('MMM YYYY');
+                            }),
+                        },
+                        yaxis: {
+                            labels: {
+                                formatter: function(value) {
+                                    return parseInt(value).toLocaleString('id-ID');
+                                }
+                            }
+                        }
+                    };
+                    new ApexCharts(document.querySelector("#keberangkatanChart"), options2).render();
                 }
             @endif
 
