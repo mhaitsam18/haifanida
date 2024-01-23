@@ -345,7 +345,7 @@
         </div>
     </div> <!-- row -->
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -544,7 +544,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
 @endsection
 @section('script')
     <script src="/assets-nobleui/vendors/moment/moment.min.js"></script>
