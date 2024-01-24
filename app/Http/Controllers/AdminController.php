@@ -121,6 +121,15 @@ class AdminController extends Controller
             ->select('months.month', DB::raw('COALESCE(transaksi_per_month.jumlah_transaksi, 0) as jumlah_transaksi'))
             ->get();
 
+        $paket_tahun_ini = Paket::whereYear('tanggal_mulai', $currentYear)->get();
+        $total_jemaah_per_paket_tahun_ini = Jemaah::select('pemesanan.paket_id', DB::raw('count(*) as total_jemaah'))
+            ->join('pemesanan', 'jemaah.pemesanan_id', '=', 'pemesanan.id')
+            ->join('paket', 'pemesanan.paket_id', '=', 'paket.id')
+            ->whereYear('paket.tanggal_mulai', $currentYear)
+            ->groupBy('pemesanan.paket_id')
+            ->get();
+
+        // dd($total_jemaah_per_paket_tahun_ini);
         return view('admin.index', [
             'title' => 'Dashboard',
             'page' => 'index',
@@ -134,6 +143,8 @@ class AdminController extends Controller
             'jumlah_transaksi_bulan_ini' => $jumlah_transaksi_bulan_ini,
             'kenaikan_persentase' => $kenaikan_persentase,
             'jumlah_transaksi_per_bulan' => $jumlah_transaksi_per_bulan,
+            'paket_tahun_ini' => $paket_tahun_ini,
+            'total_jemaah_per_paket_tahun_ini' => $total_jemaah_per_paket_tahun_ini,
         ]);
     }
     public function profile()

@@ -210,8 +210,8 @@
             <div class="card overflow-hidden">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-                        <h6 class="card-title mb-0">Revenue</h6>
-                        <div class="dropdown">
+                        <h6 class="card-title mb-0">Jema'ah Per Keberangkatan</h6>
+                        {{-- <div class="dropdown">
                             <button class="btn p-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
@@ -232,30 +232,30 @@
                                         data-feather="download" class="icon-sm me-2"></i> <span
                                         class="">Download</span></a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row align-items-start">
-                        <div class="col-md-7">
+                        {{-- <div class="col-md-7">
                             <p class="text-muted tx-13 mb-3 mb-md-0">Revenue is the income that a business
                                 has from its normal business activities, usually from the sale of goods and
                                 services to customers.</p>
-                        </div>
-                        <div class="col-md-5 d-flex justify-content-md-end">
+                        </div> --}}
+                        {{-- <div class="col-md-5 d-flex justify-content-md-end">
                             <div class="btn-group mb-3 mb-md-0" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-outline-haifa">Today</button>
                                 <button type="button" class="btn btn-outline-haifa d-none d-md-block">Week</button>
                                 <button type="button" class="btn btn-haifa">Month</button>
                                 <button type="button" class="btn btn-outline-haifa">Year</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
-                    <div id="revenueChart"></div>
+                    <div id="jemaahChart"></div>
                 </div>
             </div>
         </div>
     </div> <!-- row -->
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -343,7 +343,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
 
     {{-- <div class="row">
         <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-0 stretch-card">
@@ -550,6 +550,8 @@
     <script src="/assets-nobleui/vendors/moment/moment.min.js"></script>
     <script>
         $(function() {
+
+            moment.locale('id');
             'use strict'
             var colors = {
                 haifa: "#282461",
@@ -691,6 +693,100 @@
                         colors: [colors.haifa],
                     };
                     new ApexCharts(document.querySelector("#transaksiChart"), options3).render();
+                }
+            @endif
+            @if (isset($total_jemaah_per_paket_tahun_ini))
+                if ($('#jemaahChart').length) {
+                    var jemaahData = {!! json_encode($total_jemaah_per_paket_tahun_ini) !!};
+                    var paketData = {!! json_encode($paket_tahun_ini) !!};
+                    var lineChartOptions = {
+                        chart: {
+                            type: "line",
+                            height: '400',
+                            parentHeightOffset: 0,
+                            foreColor: colors.bodyColor,
+                            background: colors.cardBg,
+                            toolbar: {
+                                show: false
+                            },
+                        },
+                        theme: {
+                            mode: 'light'
+                        },
+                        tooltip: {
+                            theme: 'light'
+                        },
+                        colors: [colors.haifa, colors.danger, colors.warning],
+                        grid: {
+                            padding: {
+                                bottom: -4,
+                            },
+                            borderColor: colors.gridBorder,
+                            xaxis: {
+                                lines: {
+                                    show: true
+                                }
+                            }
+                        },
+                        series: [{
+                            name: "Total Jemaah",
+                            data: jemaahData.map(item => item.total_jemaah)
+                        }, ],
+                        xaxis: {
+                            type: "datetime",
+                            categories: paketData.map(item => {
+                                return moment(item.tanggal_mulai).format('DD MMM YYYY');
+                            }),
+                            lines: {
+                                show: true
+                            },
+                            axisBorder: {
+                                color: colors.gridBorder,
+                            },
+                            axisTicks: {
+                                color: colors.gridBorder,
+                            },
+                            crosshairs: {
+                                stroke: {
+                                    color: colors.secondary,
+                                },
+                            },
+                        },
+                        yaxis: {
+                            title: {
+                                text: "Jumlah jema'ah",
+                                style: {
+                                    size: 9,
+                                    color: colors.muted
+                                }
+                            },
+                            min: 0,
+                            max: Math.max.apply(null, jemaahData.map(item => item.total_jemaah + 10)),
+                            // tickAmount: 4,
+                            labels: {
+                                formatter: function(val) {
+                                    return val.toFixed(0); // Format tanpa desimal
+                                },
+                            },
+                            tooltip: {
+                                enabled: true,
+                            },
+                            crosshairs: {
+                                stroke: {
+                                    color: colors.secondary,
+                                },
+                            },
+                        },
+                        markers: {
+                            size: 0,
+                        },
+                        stroke: {
+                            width: 2,
+                            curve: "straight",
+                        },
+                    };
+                    var apexLineChart = new ApexCharts(document.querySelector("#jemaahChart"), lineChartOptions);
+                    apexLineChart.render();
                 }
             @endif
 
