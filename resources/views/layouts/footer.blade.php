@@ -89,7 +89,7 @@
                                 <div class="content">
                                     <i class='bx bx-phone-call'></i>
                                     <h3>Nomor WhatsApp </h3>
-                                    <a href="https://wa.me/6282117503125" target="_blank">+62 (821) 1750-3125</a>
+                                    <a href="https://wa.me/6282299198002" target="_blank">+62 (822) 9919-8002</a>
                                 </div>
                             </li>
                             <li>

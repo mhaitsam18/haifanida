@@ -26,7 +26,7 @@
     <div class="terms-conditions-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>Techex Terms & Conditions</h2>
+                <h2>{{ $title }}</h2>
             </div>
             <div class="row pt-45">
                 <div class="col-lg-12">

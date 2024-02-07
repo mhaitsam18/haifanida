@@ -31,7 +31,7 @@
     <section class="services-widget-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <span class="sp-color2">Our Galeries</span>
+                <span class="sp-color2">Galeri Kami</span>
                 <h2>Umroh dan Haji bersama PT. Haifa Nida Wisata</h2>
             </div>
             <div class="row pt-45">
@@ -52,7 +52,7 @@
                     </div>
                 @endforeach
 
-                <div class="col-lg-12 col-md-12 text-center">
+                {{-- <div class="col-lg-12 col-md-12 text-center">
                     <div class="pagination-area">
                         <a href="services-1.html" class="prev page-numbers">
                             <i class='bx bx-left-arrow-alt'></i>
@@ -64,7 +64,7 @@
                             <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

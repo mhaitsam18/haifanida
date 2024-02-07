@@ -31,7 +31,7 @@
             <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
         </div>
     </div>
-    <div class="contact-form-area pt-100 pb-70">
+    <div class="contact-form-area pt-100">
         <div class="container">
             <div class="section-title text-center">
                 <h2>Konsultasikan Rencana Perjalanan Anda</h2>
@@ -46,8 +46,8 @@
                             <li>
                                 <div class="content">
                                     <i class='bx bx-phone-call'></i>
-                                    <h3>Nomor Telepon</h3>
-                                    <a href="tel:+62(821)-1750-3125">+62 821-1750-3125</a>
+                                    <h3>Nomor Telepon CS</h3>
+                                    <a href="tel:+62(822)9919-8002">+62 (822) 9919-8002</a>
                                 </div>
                             </li>
                             <li>
@@ -155,6 +155,38 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contact-form-area pt-100">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Informasi Kontak</h2>
+            </div>
+            <div class="row pt-45">
+                <div class="col-lg-12">
+                    <h5 class="card-title">Customer Service</h5>
+                    <a href="https://wa.me/6282299198002" target="_blank" class="card-text">WA: +62 (822) 9919-8002</a>
+                    <hr>
+                    <h5 class="card-title">Staf Administrasi: Rini Apriyani</h5>
+                    <a href="https://wa.me/628111720494" target="_blank" class="card-text">WA: +62 (811) 1720-494</a>
+                    <hr>
+                    <h5 class="card-title">Direktur Keuangan: Dini Wahyuni</h5>
+                    <a href="https://wa.me/6282299198102" target="_blank" class="card-text">WA: +62 (822) 9919-8102</a>
+                    <hr>
+                    <h5 class="card-title">Direktur Pemasaran: Irma Muji R</h5>
+                    <a href="https://wa.me/6285221406683" target="_blank" class="card-text">WA: +62 (852) 2140-6683</a>
+                    <hr>
+                    <h5 class="card-title">Direktur Operasional: Hj. Ria Marlianasari, SE.</h5>
+                    <a href="https://wa.me/6281387501171" target="_blank" class="card-text">WA: +62 (813) 8750-1171</a>
+                    <hr>
+                    <h5 class="card-title">Direktur Utama: H. Muhammad Haitsam, S.Kom.</h5>
+                    <a href="https://wa.me/6282117503125" target="_blank" class="card-text">WA: +62 (821) 1750-3125</a>
+                    <hr>
+                    <h5 class="card-title">Komisaris Utama: Dr.H. Fakhrurrozi, Lc.,MA</h5>
+                    <a href="https://wa.me/6281220747000" target="_blank" class="card-text">WA: +62 (812) 2074-7000</a>
+                    <hr>
                 </div>
             </div>
         </div>

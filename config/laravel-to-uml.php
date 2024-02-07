@@ -15,7 +15,7 @@ return [
     'channels'      => false,
     'commands'      => false,
     'components'    => false,
-    'controllers'   => true,
+    'controllers'   => false,
     'events'        => false,
     'exceptions'    => false,
     'jobs'          => false,
@@ -27,7 +27,7 @@ return [
     'observers'     => false,
     'policies'      => false,
     'providers'     => false,
-    'requests'      => true,
+    'requests'      => false,
     'resources'     => false,
     'rules'         => false,
 
