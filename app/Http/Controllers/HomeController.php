@@ -55,6 +55,15 @@ class HomeController extends Controller
         ]);
     }
 
+    public function sejarah()
+    {
+        return view('home.sejarah', [
+            'title' => 'Sejarah Perusahaan',
+            'page' => 'sejarah',
+            'kontens' => Konten::all()
+        ]);
+    }
+
     public function visiMisi()
     {
         return view('home.visi-misi', [

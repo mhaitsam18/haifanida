@@ -1,10 +1,15 @@
 <!doctype html>
-<html lang="zxx">
+<html lang="id">
 
 <head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="{{ $titlemeta ?? 'Haifa Nida Wisata | Umroh dan Haji' }}">
+    <meta property="og:description"
+        content="{{ $descriptionmeta ?? 'Haifa Nida Wisata adalah travel haji dan umroh terpercaya, berlandaskan Al-Qur\'an dan As-Sunnah. Komitmen kami adalah memberikan pelayanan terbaik yang aman, nyaman, dan penuh keberkahan bagi tamu-tamu Allah.' }}">
+    <meta name="description"
+        content="Haifa Nida Wisata adalah travel haji dan umroh terpercaya, berlandaskan Al-Qur'an dan As-Sunnah. Komitmen kami adalah memberikan pelayanan terbaik yang aman, nyaman, dan penuh keberkahan bagi tamu-tamu Allah.">
 
     <link rel="stylesheet" href="/assets-techex-demo/css/bootstrap.min.css">
 

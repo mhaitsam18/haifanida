@@ -107,6 +107,7 @@
                             {{-- <h2>Sejarah PT. Haifa Nida Wisata Karawang</h2> --}}
                             <h2>{{ $beranda4->judul }}</h2>
                             {!! $beranda4->isi_konten !!}
+                            <a href="/sejarah">Baca Selengkapnya</a>
                             {{-- <p>
                                 PT. Haifa Nida Wisata Karawang, didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA,
                                 seorang alumni Universitas Islam Madinah yang memiliki pengalaman mendalam dan wawasan yang

@@ -101,6 +101,7 @@ Route::get('/artikel', [HomeArtikelController::class, 'index'])->name('home.arti
 Route::get('/kajian', [HomeKajianController::class, 'index'])->name('home.kajian');
 
 Route::get('/profil', [HomeController::class, 'profil'])->name('home.profil');
+Route::get('/sejarah', [HomeController::class, 'sejarah'])->name('home.profil');
 Route::get('/visi-misi', [HomeController::class, 'visiMisi'])->name('home.visi-misi');
 Route::get('/kantor-kami', [HomeController::class, 'kantorKami'])->name('home.kantor-kami');
 
@@ -418,10 +419,8 @@ Route::middleware('auth')->group(function () {
                 Route::resource('sertifikat-jemaah', AdminSertifikatJemaahController::class)->parameters([
                     'sertifikat-jemaah' => 'sertifikat_jemaah'
                 ]);
-                Route::prefix('bus-jemaah')->group(function () {
-                });
-                Route::prefix('pelayanan')->group(function () {
-                });
+                Route::prefix('bus-jemaah')->group(function () {});
+                Route::prefix('pelayanan')->group(function () {});
             });
         });
     });

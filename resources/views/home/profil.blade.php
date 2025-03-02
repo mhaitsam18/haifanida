@@ -32,38 +32,40 @@
                 <div class="col-lg-6">
                     <h3>PT. Haifa NIda Wisata Karawang</h3>
                     <p>
-                        PT. Haifa Nida Wisata Karawang merupakan perusahaan yang berdedikasi tinggi dalam menyediakan
-                        layanan perjalanan Haji, Umroh, dan wisata halal yang berkualitas. Sejak berdiri pada tahun 2007,
-                        perusahaan telah menempuh perjalanan panjang selama {{ now()->year - 2007 }}
-                        tahun, membangun reputasi solid sebagai
-                        penyedia jasa perjalanan ibadah yang terpercaya dan berkualitas.
+                        PT. Haifa Nida Wisata Karawang didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA, alumni
+                        Universitas Islam Madinah yang memiliki pengalaman luas dalam industri perhotelan dan perjalanan
+                        ibadah.
+                        Berawal dari bisnis perhotelan dan catering di Madinah, beliau mendirikan Haifa Nida Wisata untuk
+                        memberikan layanan perjalanan haji dan umroh yang aman, nyaman, dan terpercaya.
                     </p>
                     <p>
-                        Perusahaan ini didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA,
-                        seorang alumni Universitas Islam Madinah yang memiliki pengalaman mendalam dan wawasan yang
-                        tak ternilai tentang Mekkah dan Madinah. Kombinasi pengetahuannya yang mendalam tentang
-                        destinasi suci bersama keahliannya dalam ilmu agama, menjadikan kami pilihan utama untuk
-                        perjalanan Haji, Umroh, dan wisata halal Anda
+                        Dengan izin resmi PPIU, Haifa Nida Wisata menjadi travel pertama di Karawang yang mendapatkan
+                        legalitas
+                        penuh untuk memberangkatkan jamaah umroh. Kami memiliki 10 Tour Leader tersertifikasi BNSP, tour
+                        guide
+                        profesional, serta tim pembimbing dan Muthowif/Muthowifah yang ahli di bidangnya.
                     </p>
                     <p>
-                        Pendiri bukan hanya seorang alumni Universitas Islam Madinah yang berpengalaman dalam bidang
-                        perjalanan ibadah, tetapi juga merupakan otak di balik Catering Al-Haidari di Madinah.
-                        Pengalamannya yang luas dalam bisnis perhotelan dan sarana transportasi di Kota Mekkah dan
-                        Madinah membuatnya menjadi sumber pengetahuan yang tak ternilai dalam menyediakan pelayanan
-                        berkualitas tinggi kepada para jamaah Haji dan Umroh.
+                        Haifa Nida Wisata telah melayani lebih dari 100.000 jamaah umroh dari Indonesia dan terus
+                        berkomitmen
+                        meningkatkan pelayanan. Saat ini, kami sedang dalam proses akreditasi untuk memastikan standar
+                        kualitas
+                        terbaik bagi para tamu Allah. Kami juga tengah mengajukan izin PIHK dan IATA guna memperluas layanan
+                        kami.
                     </p>
                     <p>
-                        Tak hanya itu, Dr. Fakhrurrozi juga merupakan pemilik Bakso Si Adoel yang terkenal di
-                        Madinah dan selalu buka selama musim Haji. Kombinasi pengalaman dan dedikasi dalam
-                        memberikan pengalaman terbaik kepada para tamu Allah menjadikannya alasan yang sangat kuat
-                        untuk memilih PT. Haifa Nida Wisata sebagai mitra perjalanan Haji dan Umroh Anda.
-                        Keberadaannya yang berpengalaman adalah jaminan kualitas dalam setiap perjalanan ibadah
-                        Anda.
+                        Dr. Fakhrurrozi juga dikenal sebagai pendiri Catering Al-Haidari dan pemilik Bakso Si Adoel di
+                        Madinah,
+                        yang semakin menambah kredibilitas dan kualitas pelayanan kami. Dengan pengalaman luas di industri
+                        perjalanan ibadah, kami siap memberikan pelayanan terbaik bagi setiap jamaah.
+                    </p>
+                    <p>
+                        InsyaAllah, Aman, Nyaman, Amanah, menambah ibadah Anda menjadi berkah, berkah, berkah.
                     </p>
                     <!-- Tambahkan elemen lain sesuai dengan struktur profil perusahaan yang diinginkan -->
                 </div>
             </div>
-            <div class="row mt-4">
+            {{-- <div class="row mt-4">
                 <div class="col-lg-12">
                     <h3>Dewan Direksi</h3>
                     <ul>
@@ -72,6 +74,78 @@
                         <li>Hj. Ria Marliana Sari, S.E - Direktur</li>
                         <!-- Tambahkan anggota tim manajemen lainnya sesuai kebutuhan -->
                     </ul>
+                </div>
+            </div> --}}
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="about-content ml-25">
+                        <section class="container py-5">
+                            <h2 class="text-center mb-4">Keunggulan Haifa Nida Wisata</h2>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-certificate fa-3x text-primary mb-3"></i>
+                                            <h5 class="card-title">Legal & Terakreditasi</h5>
+                                            <p class="card-text">Memiliki izin resmi PPIU dan sedang dalam proses akreditasi
+                                                terbaru untuk menjamin layanan berkualitas.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-user-shield fa-3x text-success mb-3"></i>
+                                            <h5 class="card-title">Keamanan & Kenyamanan</h5>
+                                            <p class="card-text">Menjamin perjalanan haji dan umroh yang aman, nyaman, dan
+                                                penuh keberkahan bagi setiap jamaah.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-utensils fa-3x text-warning mb-3"></i>
+                                            <h5 class="card-title">Catering Terbaik</h5>
+                                            <p class="card-text">Didukung oleh Catering Al-Haidari, penyedia makanan nomor
+                                                satu di Madinah untuk jamaah haji dan umroh.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-hotel fa-3x text-danger mb-3"></i>
+                                            <h5 class="card-title">Akomodasi Berkualitas</h5>
+                                            <p class="card-text">Menyediakan hotel berbintang dengan lokasi strategis di
+                                                Mekkah dan Madinah.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-plane fa-3x text-info mb-3"></i>
+                                            <h5 class="card-title">Transportasi Nyaman</h5>
+                                            <p class="card-text">Menggunakan armada transportasi yang modern dan nyaman
+                                                untuk perjalanan ibadah.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm h-100">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-users fa-3x text-secondary mb-3"></i>
+                                            <h5 class="card-title">Bimbingan Ibadah</h5>
+                                            <p class="card-text">Dibimbing oleh Muthowif dan pembimbing ibadah yang
+                                                berpengalaman dan tersertifikasi.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
                 </div>
             </div>
             <div class="row align-items-center">
@@ -219,9 +293,9 @@
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Struktur Organisasi</span>
-                <h2>Anggota Kami</h2>
+                <h2>Staff Kami</h2>
             </div>
-            <div class="row pt-45">
+            {{-- <div class="row pt-45">
                 <div class="col-lg-4 col-md-6">
                     <div class="team-card">
                         <img src="/assets-techex-demo/images/team/team-img1.jpg" alt="Team Images" loading="lazy">
@@ -421,7 +495,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

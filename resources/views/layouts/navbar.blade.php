@@ -189,6 +189,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="/sejarah" class="nav-link">
+                                        Sejarah
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/visi-misi" class="nav-link">
                                         Visi dan Misi
                                     </a>
