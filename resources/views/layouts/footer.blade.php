@@ -45,10 +45,16 @@
                                 <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
                                     src="/assets/img/logos/logo-himpuh.png" alt="Images" loading="lazy">
                             </a>
-                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
-                                src="/assets/img/logos/logo-kan.png" alt="Images" loading="lazy">
-                            <img class="p-1 m-1 rounded bg-light" style="height: 50px;" src="/assets/img/logos/TIMS.png"
-                                alt="Images" loading="lazy">
+                            <a href="https://validation.timsertifikasi.org/search?certnumber=TiMS%2FPPIU2234126"
+                                target="_blank">
+                                <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                    src="/assets/img/logos/logo-kan.png" alt="Images" loading="lazy">
+                            </a>
+                            <a href="https://validation.timsertifikasi.org/search?certnumber=TiMS%2FPPIU2234126"
+                                target="_blank">
+                                <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
+                                    src="/assets/img/logos/TIMS.png" alt="Images" loading="lazy">
+                            </a>
                             <img class="p-1 m-1 rounded bg-light" style="height: 50px;"
                                 src="/assets/img/logos/logo-pastiumrah.png" alt="Images" loading="lazy">
                         </div>

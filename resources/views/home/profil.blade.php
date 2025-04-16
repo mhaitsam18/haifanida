@@ -30,39 +30,36 @@
                     <img src="/assets/img/logos/logo-full.png" alt="Company Logo" class="img-fluid mb-4">
                 </div>
                 <div class="col-lg-6">
-                    <h3>PT. Haifa NIda Wisata Karawang</h3>
+                    <h3>PT. Haifa Nida Wisata Karawang</h3>
                     <p>
-                        PT. Haifa Nida Wisata Karawang didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA, alumni
+                        PT. Haifa Nida Wisata Karawang didirikan pada tahun 2007 oleh Dr. Fakhrurrozi, Lc., MA, alumnus
                         Universitas Islam Madinah yang memiliki pengalaman luas dalam industri perhotelan dan perjalanan
-                        ibadah.
-                        Berawal dari bisnis perhotelan dan catering di Madinah, beliau mendirikan Haifa Nida Wisata untuk
-                        memberikan layanan perjalanan haji dan umroh yang aman, nyaman, dan terpercaya.
+                        ibadah. Berawal dari bisnis perhotelan dan catering di Madinah, beliau mendirikan Haifa Nida Wisata
+                        untuk memberikan layanan perjalanan Haji dan Umrah yang aman, nyaman, dan terpercaya.
                     </p>
                     <p>
-                        Dengan izin resmi PPIU, Haifa Nida Wisata menjadi travel pertama di Karawang yang mendapatkan
-                        legalitas
-                        penuh untuk memberangkatkan jamaah umroh. Kami memiliki 10 Tour Leader tersertifikasi BNSP, tour
-                        guide
-                        profesional, serta tim pembimbing dan Muthowif/Muthowifah yang ahli di bidangnya.
+                        Dengan izin resmi sebagai Penyelenggara Perjalanan Ibadah Umrah (PPIU), Haifa Nida Wisata menjadi
+                        travel pertama di Karawang yang memperoleh legalitas penuh untuk memberangkatkan jamaah Umrah. Kami
+                        memiliki 10 Tour Leader tersertifikasi BNSP, Tour Guide profesional, serta tim pembimbing dan
+                        Muthowif/Muthowifah yang ahli di bidangnya.
                     </p>
                     <p>
-                        Haifa Nida Wisata telah melayani lebih dari 100.000 jamaah umroh dari Indonesia dan terus
-                        berkomitmen
-                        meningkatkan pelayanan. Saat ini, kami sedang dalam proses akreditasi untuk memastikan standar
-                        kualitas
-                        terbaik bagi para tamu Allah. Kami juga tengah mengajukan izin PIHK dan IATA guna memperluas layanan
-                        kami.
+                        Haifa Nida Wisata telah melayani lebih dari 100.000 jamaah Umrah dari seluruh Indonesia dan terus
+                        berkomitmen untuk meningkatkan kualitas pelayanan. Saat ini, kami telah resmi mendapatkan
+                        <strong>Akreditasi A</strong> dari Kementerian Agama Republik Indonesia sebagai bentuk pengakuan
+                        atas standar mutu dan profesionalitas kami. Selain itu, kami juga tengah dalam proses pengajuan izin
+                        sebagai <strong>Penyelenggara Ibadah Haji Khusus (PIHK)</strong> dan <strong>anggota IATA</strong>
+                        guna memperluas cakupan layanan dan memberikan kemudahan bagi para tamu Allah.
                     </p>
                     <p>
-                        Dr. Fakhrurrozi juga dikenal sebagai pendiri Catering Al-Haidari dan pemilik Bakso Si Adoel di
-                        Madinah,
-                        yang semakin menambah kredibilitas dan kualitas pelayanan kami. Dengan pengalaman luas di industri
-                        perjalanan ibadah, kami siap memberikan pelayanan terbaik bagi setiap jamaah.
+                        Dr. Fakhrurrozi juga dikenal sebagai pendiri Catering Al-Haidari dan pemilik restoran Bakso Si Adoel
+                        di Madinah, yang turut memperkuat kredibilitas dan kualitas pelayanan kami. Dengan pengalaman luas
+                        di industri perjalanan ibadah, kami siap memberikan pelayanan terbaik bagi setiap jamaah.
                     </p>
                     <p>
-                        InsyaAllah, Aman, Nyaman, Amanah, menambah ibadah Anda menjadi berkah, berkah, berkah.
+                        <em>Percayakan perjalanan ibadah Anda bersama Haifa Nida Wisata — Aman, Nyaman, Amanah.</em><br>
+                        Hubungi kami sekarang untuk informasi paket Umrah dan Haji terbaru.
                     </p>
-                    <!-- Tambahkan elemen lain sesuai dengan struktur profil perusahaan yang diinginkan -->
                 </div>
             </div>
             {{-- <div class="row mt-4">
@@ -76,6 +73,34 @@
                     </ul>
                 </div>
             </div> --}}
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="about-content ml-25">
+                        <section class="container py-5">
+                            <h2 class="text-center mb-4">Sertifikat Akreditasi PPIU</h2>
+                            <style>
+                                .pdf-wrapper iframe {
+                                    width: 100%;
+                                    height: 100vh;
+                                    border: none;
+                                }
+
+                                @media (max-width: 768px) {
+                                    .pdf-wrapper iframe {
+                                        height: 60vh;
+                                    }
+                                }
+                            </style>
+
+                            <div class="pdf-wrapper">
+                                <iframe src="https://drive.google.com/file/d/1SsSRT8vEdf5vJTc69NoRWqsZ-5d0OgN_/preview">
+                                </iframe>
+                            </div>
+                        </section>
+                        <img class="img-thumbnail" src="/assets/img/haifa/akreditasi-2.jpg" alt="Images" loading="lazy">
+                    </div>
+                </div>
+            </div>
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <div class="about-content ml-25">
@@ -292,8 +317,9 @@
     <div class="team-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <span class="sp-color2">Struktur Organisasi</span>
-                <h2>Staff Kami</h2>
+                {{-- <span class="sp-color2">Struktur Organisasi</span> --}}
+                {{-- <h2>Staff Kami</h2> --}}
+                <img class="img-thumbnail" src="/assets/img/haifa/staff-kami.jpg" alt="Images" loading="lazy">
             </div>
             {{-- <div class="row pt-45">
                 <div class="col-lg-4 col-md-6">
