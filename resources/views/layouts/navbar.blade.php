@@ -217,6 +217,16 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="/kuesioner" class="nav-link">
+                                        Kuesioner Kepuasan Jema'ah
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/keluhan" class="nav-link">
+                                        Pengaduan & Keluhan
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/faq" class="nav-link">
                                         FAQ
                                     </a>

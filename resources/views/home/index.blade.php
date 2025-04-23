@@ -37,13 +37,14 @@
                                     2 Agustus 2022
                                 </p> --}}
                                 <div class="banner-btn">
-                                    <a href="/tentang-kami" class="default-btn btn-bg-two border-radius-50">Tentang Kami<i
+                                    <a href="/profil" class="default-btn btn-bg-two border-radius-50">Tentang Kami<i
                                             class='bx bx-chevron-right'></i></a>
-                                    <a href="/layanan-kami" class="default-btn btn-bg-one border-radius-50 ml-20">Paket Kami
-                                        <i class='bx bx-chevron-right'></i></a>
+                                    {{-- <a href="/layanan-kami" class="default-btn btn-bg-one border-radius-50 ml-20">Paket Kami
+                                        <i class='bx bx-chevron-right'></i></a> --}}
                                 </div>
                             </div>
                         </div>
+                        <h1>Berizin Resmi & Terakreditasi</h1>
                     </div>
                 </div>
             </div>

@@ -26,89 +26,67 @@
 
     <!-- SEJARAH PERUSAHAAN -->
     <div class="container pb-100">
-        <h2 class="text-center mb-5">Sejarah Perusahaan</h2>
-        <p><strong>Sejarah dan Profil PT. Haifa Nida Wisata Karawang</strong></p>
+        <h1 class="text-center mb-5">Sejarah dan Profil PT. Haifa Nida Wisata Karawang</h1>
 
-        <p><strong>Awal Perjalanan Sang Pendiri</strong></p>
+        <h2>1. Awal Perjalanan Sang Pendiri</h2>
+        <p>PT. Haifa Nida Wisata Karawang didirikan oleh Dr. Fakhrurrozi, Lc., MA, alumni Universitas Islam Madinah yang
+            memiliki visi besar dalam pelayanan jamaah dan bisnis perjalanan ibadah.</p>
+        <p>Perjalanan beliau dimulai sejak menjejakkan kaki di Madinah untuk menempuh pendidikan tinggi. Sambil menunggu
+            diterima di universitas, beliau bekerja di sebuah toko emas milik pengusaha Arab. Berkat keahliannya dalam
+            manajemen, usaha tersebut berkembang hingga membuka beberapa cabang.</p>
+        <p>Setelah resmi menjadi mahasiswa, beliau tetap menjaga semangat kemandirian ekonomi dengan bekerja sebagai tour
+            guide bagi jamaah Umroh dan Haji. Usahanya berkembang hingga ke sektor perhotelan, menyewa satu lantai hotel,
+            dan kemudian seluruh gedung. Hotel yang dikelolanya menjadi tempat menginap bagi tokoh nasional seperti Aburizal
+            Bakrie, Megawati Soekarnoputri, dan Gus Dur.</p>
+        <p>Sikap amanah beliau tercermin dalam pelunasan utang modal kepada mantan majikan, meskipun telah diikhlaskan.
+            Setelah sukses di bidang perhotelan, beliau melebarkan sayap ke sektor agribisnis, properti, dan kuliner.</p>
 
-        <p>Pendiri PT. Haifa Nida Wisata Karawang, Dr. Fakhrurrozi, Lc., MA, pertama kali menginjakkan kaki di Madinah
-            Al-Munawwarah untuk menempuh pendidikan di Universitas Islam Madinah. Setelah mendaftar, beliau harus menunggu
-            satu tahun untuk pengumuman penerimaan mahasiswa. Selama masa penantian tersebut, beliau bekerja di toko emas
-            milik orang Arab. Berkat manajemen yang baik, beliau sukses mengembangkan bisnis tersebut hingga membuka
-            beberapa cabang. Setelah dinyatakan diterima di Universitas Islam Madinah, beliau pun memutuskan untuk berhenti
-            mengelola toko emas.</p>
+        <h2>2. Kelahiran Catering Al-Haidari dan Bisnis Kuliner</h2>
+        <p>Keberhasilan beliau dalam dunia bisnis diperkuat dengan mendirikan <strong>Catering Al-Haidari</strong>, yang
+            menjadi salah satu penyedia makanan terkemuka di Kota Madinah. Catering ini melayani hotel bintang 3 hingga 5
+            serta berbagai travel haji dan umrah, termasuk First Travel.</p>
+        <p>Selain jamaah Indonesia, Catering Al-Haidari juga melayani jamaah asal Turki, Thailand, dan India. Beliau
+            kemudian membuka <strong>Restoran Indonesia Pesanggrahan</strong> dan <strong>Bakso Si Adoel</strong> di Hotel
+            Royal Andalus, Madinah—yang viral saat musim haji. Nama 'Si Adoel' terinspirasi dari Si Doel Anak Betawi dan
+            merepresentasikan semangat Karawang.</p>
 
-        <p>Sembari berkuliah, beliau mulai menyadari bahwa selepas lulus, ia akan kembali ke Indonesia tanpa memiliki modal
-            atau relasi bisnis yang kuat. Dengan pemikiran visioner, beliau mulai bekerja sebagai tour guide untuk jamaah
-            Umroh dan Haji. Tidak berhenti di sana, beliau juga mencoba peruntungan di bidang perhotelan, dengan menyewa
-            satu lantai hotel. Bisnisnya berkembang pesat hingga akhirnya ia berhasil menyewa satu gedung penuh. Hotel yang
-            dikelolanya bahkan pernah menjadi pilihan Aburizal Bakrie, Megawati Soekarnoputri, dan Gus Dur selama di
-            Madinah.</p>
+        <h2>3. Berdirinya PT. Haifa Nida Wisata Karawang</h2>
+        <p>Berbekal pengalaman di sektor perhotelan dan catering, pada tahun 2007 beliau mendirikan PT. Haifa Nida Wisata.
+            Setelah menyelesaikan studi S3 pada 2008, beliau pulang ke Indonesia dan mengembangkan bisnis travel lebih
+            serius. Pada 2010, perusahaan mengajukan izin sebagai Penyelenggara Perjalanan Ibadah Umrah (PPIU).</p>
+        <p>Karena kendala administratif, nama perusahaan diubah menjadi <strong>PT. Haifa Nida Wisata Karawang</strong> pada
+            24 Agustus 2011. Izin resmi PPIU diperoleh pada tahun 2012. Dalam perpanjangan izin tahun 2017, Haifa Nida
+            mendapatkan <strong>akreditasi B</strong> dan pada 2025 berhasil meraih <strong>akreditasi A</strong>.</p>
 
-        <p>Seiring dengan meningkatnya kondisi ekonomi, beliau memutuskan untuk melunasi hutang modal kepada mantan
-            majikannya di toko emas, meskipun sang majikan telah mengikhlaskan hutang tersebut. Setelah sukses di dunia
-            perhotelan, beliau mulai berinvestasi dengan membeli aset seperti sawah, membangun rumah, dan mendirikan bisnis
-            kuliner.</p>
+        <h2>4. Keunggulan dan Legalitas</h2>
+        <p>Haifa Nida Wisata merupakan biro perjalanan haji dan umrah pertama di Karawang yang berizin resmi dan
+            terakreditasi. Perusahaan juga tengah memproses izin <strong>Penyelenggara Ibadah Haji Khusus (PIHK)</strong>
+            serta <strong>keanggotaan IATA</strong>.</p>
+        <p>Perusahaan memiliki 10 Tour Leader bersertifikasi BNSP, Tour Guide profesional, serta pembimbing dan
+            Muthowif/Muthowifah yang berpengalaman.</p>
 
-        <p><strong>Kelahiran Catering Al-Haidari dan Bisnis Kuliner</strong></p>
+        <h2>5. Jaringan Usaha dan Lokasi Kantor</h2>
+        <p>Sejak berdiri, lebih dari <strong>100.000 jamaah</strong> telah diberangkatkan ke tanah suci oleh PT. Haifa Nida
+            Wisata Karawang. Kantor pusat kami berlokasi di samping Islamic Center Al Jihad, Jl. R.A. Kartini No. 1,
+            Kelurahan Karangpawitan, Karawang.</p>
+        <p>Nama “Haifa Nida” merupakan singkatan dari nama anak-anak pendiri: <strong>Haitsam, Iyad, Aufa, Nidzom, dan
+                Dafiq</strong>. Filosofi ini mencerminkan nilai keluarga, keberkahan, dan tanggung jawab dalam pelayanan.
+        </p>
+        <p>Selain menjalankan perusahaan, Dr. Fakhrurrozi juga aktif sebagai Ketua Komunitas Pengusaha Muslim Indonesia
+            (KPMI) Karawang, untuk membina pengusaha muslim berbasis nilai-nilai Islam.</p>
 
-        <p>Kesuksesan di dunia bisnis berlanjut dengan didirikannya Catering Al-Haidari, yang kemudian menjadi catering
-            nomor satu di Kota Madinah. Catering ini mensuplai makanan ke berbagai hotel bintang 3, 4, dan 5, serta melayani
-            berbagai travel besar, salah satunya First Travel. Tidak hanya untuk jamaah Indonesia, Catering Al-Haidari juga
-            menyediakan makanan untuk jamaah dari Turki, Thailand, India, dan negara lainnya.</p>
-
-        <p>Dari kesuksesan bisnis catering, beliau kemudian mendirikan Restoran Indonesia Pesanggrahan di Madinah serta
-            Bakso Si Doel, restoran bakso viral yang dibuka saat musim Haji di Hotel Royal Andalus, Madinah. Nama Bakso Si
-            Doel terinspirasi dari karakter Si Doel Anak Betawi, karena kedekatan beliau dengan Rano Karno. Namun, konsepnya
-            bukan tentang anak Betawi, melainkan anak Karawang, karena beliau adalah putra asli Karawang.</p>
-
-        <p><strong>Lahirnya PT. Haifa Nida Wisata Karawang</strong></p>
-
-        <p>Melihat perkembangan bisnisnya, sang pendiri menyadari bahwa ia telah memiliki dua elemen penting dalam industri
-            perjalanan Haji dan Umroh, yaitu perhotelan dan catering. Dengan pemikiran strategis, beliau berinisiatif untuk
-            mendirikan perusahaan travel sendiri agar dapat mengoptimalkan bisnis yang telah ada. Maka, pada tahun 2007,
-            berdirilah PT. Haifa Nida Wisata yang mendapatkan izin sebagai Biro Perjalanan Wisata.</p>
-
-        <p>Pada tahun 2008, beliau menyelesaikan program S3 dan meraih gelar doktor sebelum akhirnya kembali ke Indonesia.
-            Kemudian, pada tahun 2010, PT. Haifa Nida Wisata mengajukan izin PPIU (Penyelenggara Perjalanan Ibadah Umrah)
-            untuk pertama kalinya. Namun, akibat ulah petugas yang tidak amanah, perusahaan mengalami kendala administratif.
-            Hingga akhirnya, pada 24 Agustus 2011, perusahaan harus mengganti nama menjadi PT. Haifa Nida Wisata Karawang.
-            Izin PPIU pertama berhasil diperoleh pada tahun 2012, setelah menunggu selama 5 tahun.</p>
-
-        <p>Pada perpanjangan izin PPIU tahun 2017, Haifa Nida Wisata mendapatkan akreditasi B, yang kemudian diperbarui
-            kembali pada tahun 2022. Saat ini, karena adanya perubahan direksi, proses akreditasi terbaru sedang dalam tahap
-            penyelesaian, dan diperkirakan akan selesai dalam bulan ini, InsyaAllah.</p>
-
-        <p><strong>Keunggulan dan Legalitas</strong></p>
-
-        <p>Sebagai travel pertama di Karawang yang memiliki izin resmi PPIU, Haifa Nida Wisata Karawang legal dan terpercaya
-            dalam memberangkatkan jamaah Umroh dan Haji. Perusahaan juga sedang dalam proses pengajuan izin PIHK
-            (Penyelenggara Ibadah Haji Khusus) dan IATA (International Air Transport Association) untuk semakin meningkatkan
-            kualitas layanan.</p>
-
-        <p>Untuk memastikan pelayanan terbaik, perusahaan memiliki 10 Tour Leader tersertifikasi BNSP, serta didukung oleh
-            Tour Guide, Pembimbing, dan Muthowif/Muthowifah yang berpengalaman.</p>
-
-        <p><strong>Jaringan Usaha dan Lokasi Kantor</strong></p>
-
-        <p>Sejak berdiri, Haifa Nida Wisata telah melayani lebih dari 100.000 jamaah Umroh dari Indonesia. Kantor pusat
-            perusahaan berlokasi di samping Islamic Center Al Jihad, Bypass Jalan R.A. Kartini No. 1, Kelurahan
-            Karangpawitan, Karawang.</p>
-
-        <p>Nama Haifa Nida Wisata sendiri merupakan singkatan dari nama anak-anak pendiri, yaitu Haitsam, Iyad, Aufa,
-            Nidzom, dan Dafiq. Filosofi ini mencerminkan nilai keluarga, keberkahan, dan tanggung jawab yang menjadi prinsip
-            utama dalam setiap layanan yang diberikan.</p>
-
-        <p>Selain menjadi CEO PT. Haifa Nida Wisata Karawang, Dr. Fakhrurrozi juga aktif sebagai Ketua Komunitas Pengusaha
-            Muslim Indonesia (KPMI) Karawang, yang membimbing para pengusaha muslim dalam mengembangkan bisnis yang
-            berlandaskan nilai-nilai Islam.</p>
-
-        <p><strong>Komitmen Kami</strong></p>
-
-        <p>PT. Haifa Nida Wisata Karawang berkomitmen untuk selalu memberikan pelayanan terbaik dengan prinsip Aman, Nyaman,
-            dan Amanah. Kami hadir untuk memastikan perjalanan ibadah Anda semakin berkesan dan penuh berkah.</p>
-
+        <h2>6. Komitmen Kami</h2>
+        <p>PT. Haifa Nida Wisata Karawang berkomitmen memberikan layanan terbaik dengan prinsip:</p>
+        <ul>
+            <li><strong>Aman</strong> – Legalitas dan kepercayaan jamaah adalah prioritas utama.</li>
+            <li><strong>Nyaman</strong> – Layanan terbaik dengan fasilitas berkualitas.</li>
+            <li><strong>Amanah</strong> – Dijalankan dengan integritas dan tanggung jawab.</li>
+            <li><strong>Profesional</strong> – Tim bersertifikasi dan berpengalaman.</li>
+            <li><strong>Berkah</strong> – Menjadikan perjalanan ibadah penuh nilai spiritual.</li>
+        </ul>
+        <p>Kami hadir untuk memastikan perjalanan ibadah Anda lebih khusyu’, nyaman, dan bermakna.</p>
     </div>
+
 
     <!-- KEUNGGULAN PERUSAHAAN -->
     <div class="container pb-100">

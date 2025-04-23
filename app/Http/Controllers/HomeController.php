@@ -137,4 +137,19 @@ class HomeController extends Controller
             'kontens' => Konten::all()
         ]);
     }
+
+    public function keluhan()
+    {
+        return view('home.keluhan', [
+            'title' => "Form Pengaduan & Keluhan Jema'ah",
+            'page' => 'keluhan'
+        ]);
+    }
+    public function kuesioner()
+    {
+        return view('home.kuesioner', [
+            'title' => "Form Kuesioner Kepuasan Jema'ah",
+            'page' => 'kuesioner'
+        ]);
+    }
 }
