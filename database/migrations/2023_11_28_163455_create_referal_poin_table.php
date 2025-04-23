@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('referal_poin', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('referal_id')->nullable()
+                ->constrained('referal')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->integer('jumlah_poin')->default(0);
+            $table->string('keterangan')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('referal_poin');
+    }
+};
