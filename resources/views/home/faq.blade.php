@@ -30,6 +30,7 @@
                 <p class="margin-auto">We are the agency who always gives you a priority on the free of question and you can
                     easily make a question on the bunch.</p>
             </div>
+            {{-- ada bagian dimana poin ke 3 malah terbuka pertama, lalu tombol di poin 1 menjadi minus tanpa terbuka dan stuck di tanda minus --}}
             <div class="row pt-45">
                 <div class="col-lg-6">
                     <div class="faq-content">
