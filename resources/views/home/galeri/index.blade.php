@@ -28,7 +28,7 @@
     </div>
 
 
-    <section class="services-widget-area pt-100 pb-70">
+    <section class="content-area pt-30 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Galeri Kami</span>

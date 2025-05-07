@@ -22,9 +22,9 @@
         <div class="inner-shape">
             <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
         </div>
-    </div>
+    </div>  
 
-    <div class="blog-area pt-100 pb-70">
+    <div class="content-area pt-30 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Paket Pilihan</span>
