@@ -28,7 +28,7 @@
             <div class="section-title text-center">
                 <h2>Techex Terms & Conditions</h2>
             </div>
-            <div class="row pt-45">
+            {{-- <div class="row pt-45">
                 <div class="col-lg-12">
                     <div class="terms-conditions-img">
                         <img src="/assets-techex-demo/images/terms-condition-img.jpg" alt="Images" loading="lazy">
@@ -168,5 +168,67 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    <div class="row pt-45">
+        <div class="col-lg-12">
+            <div class="terms-conditions-img">
+                <img src="/assets-techex-demo/images/terms-condition-img.jpg" alt="Images" loading="lazy">
+            </div>
+            <div class="single-content">
+                <h3>Pernyataan Hukum</h3>
+                <p>
+                    Syarat dan ketentuan ini mengatur penggunaan layanan perjalanan umroh yang disediakan oleh kami. Dengan mendaftar atau menggunakan layanan kami, Anda setuju untuk mematuhi semua ketentuan yang tercantum di sini. Kami berhak memperbarui syarat ini tanpa pemberitahuan sebelumnya, dan Anda disarankan untuk memeriksanya secara berkala.
+                </p>
+                <p>
+                    Informasi yang diberikan dalam situs web atau materi promosi kami tidak bersifat mengikat secara hukum dan dapat berubah sewaktu-waktu. Kami tidak bertanggung jawab atas ketidaksesuaian informasi akibat perubahan peraturan atau keadaan di luar kendali kami.
+                </p>
+            </div>
+            <div class="single-content">
+                <h3>01. Ketentuan Pendaftaran dan Pembayaran</h3>
+                <p>
+                    Pendaftaran umroh mengharuskan Anda melengkapi dokumen seperti paspor (berlaku minimal 6 bulan), kartu identitas, dan bukti vaksin meningitis. Pembayaran harus dilakukan sesuai jadwal yang ditentukan, dan kegagalan memenuhi tenggat waktu dapat mengakibatkan pembatalan pendaftaran tanpa pengembalian dana.
+                </p>
+                <p>
+                    Semua biaya yang dibayarkan tidak dapat dikembalikan kecuali diatur lain dalam kebijakan pembatalan kami. Pastikan Anda memahami rincian paket sebelum melakukan pembayaran.
+                </p>
+            </div>
+            <div class="single-content">
+                <h3>02. Kepemilikan dan Penggunaan Situs</h3>
+                <p>
+                    Konten pada situs web kami, termasuk teks, gambar, dan logo, adalah milik kami atau mitra kami dan dilindungi oleh hukum hak cipta. Anda dilarang menyalin, mendistribusikan, atau menggunakan konten tersebut tanpa izin tertulis dari kami.
+                </p>
+                <p>
+                    Dengan mengakses situs kami, Anda setuju untuk tidak menggunakan situs ini untuk tujuan yang melanggar hukum atau merusak reputasi kami. Kami berhak membatasi akses Anda jika ditemukan pelanggaran.
+                </p>
+            </div>
+            <div class="single-content">
+                <h3>03. Penyediaan Layanan</h3>
+                <p>
+                    Kami berkomitmen untuk menyediakan layanan perjalanan umroh yang mencakup transportasi, akomodasi, dan pendampingan ibadah sesuai dengan paket yang dipilih. Namun, layanan dapat berubah karena faktor seperti perubahan jadwal maskapai, regulasi pemerintah, atau keadaan force majeure.
+                </p>
+                <p>
+                    Kami akan berupaya memberikan pemberitahuan secepat mungkin atas setiap perubahan. Anda setuju untuk mematuhi instruksi dari pembimbing atau petugas kami selama perjalanan.
+                </p>
+            </div>
+            <div class="single-content">
+                <h3>04. Batasan Tanggung Jawab</h3>
+                <p>
+                    Kami tidak bertanggung jawab atas kerugian, cedera, atau kerusakan yang disebabkan oleh faktor di luar kendali kami, termasuk bencana alam, gangguan penerbangan, atau tindakan pihak ketiga. Anda disarankan untuk memiliki asuransi perjalanan untuk perlindungan tambahan.
+                </p>
+                <p>
+                    Tanggung jawab kami terbatas pada penyediaan layanan sesuai dengan kesepakatan. Segala sengketa akan diselesaikan berdasarkan hukum yang berlaku di Indonesia.
+                </p>
+            </div>
+            <div class="single-content">
+                <h3>05. Akun, Kata Sandi, dan Keamanan</h3>
+                <p>
+                    Anda bertanggung jawab untuk menjaga kerahasiaan akun dan kata sandi yang digunakan untuk mengakses layanan online kami. Jangan bagikan informasi login Anda dengan pihak lain untuk mencegah penyalahgunaan.
+                </p>
+                <p>
+                    Kami menggunakan langkah-langkah keamanan untuk melindungi data Anda, tetapi Anda juga harus memastikan perangkat Anda aman. Segera laporkan kepada kami jika Anda mencurigai adanya aktivitas tidak sah pada akun Anda.
+                </p>
+            </div>
+        </div>
     </div>
+</div>
 @endsection
