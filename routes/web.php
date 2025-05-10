@@ -62,6 +62,8 @@ use App\Http\Controllers\MenuRoleController;
 use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\UmrohController;
+use App\Http\Controllers\PemesananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -97,6 +99,8 @@ Route::get('/keluhan', [HomeController::class, 'keluhan'])->name('home.keluhan')
 Route::get('/kuesioner', [HomeController::class, 'kuesioner'])->name('home.kuesioner');
 
 Route::get('/umroh', [HomeController::class, 'umroh'])->name('home.umroh');
+Route::get('/umroh', [UmrohController::class, 'index'])->name('home.umroh'); // Tambahan
+Route::get('/paket/{id}', [UmrohController::class, 'show'])->name('home.detail-paket'); // Tambahan
 Route::get('/haji', [HomeController::class, 'haji'])->name('home.haji');
 Route::get('/wisata-halal', [HomeController::class, 'wisataHalal'])->name('home.wisata-halal');
 
