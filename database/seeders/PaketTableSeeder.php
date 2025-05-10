@@ -46,6 +46,7 @@ class PaketTableSeeder extends Seeder
                 'tanggal_mulai' => '2024-02-24',
                 'tanggal_selesai' => '2024-03-04',
                 'gambar' => 'paket-gambar/umroh-24.jpg',
+                'published_at' => null,
             ]
         ];
 
