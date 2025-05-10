@@ -14,11 +14,20 @@ class Paket extends Model
     protected $guarded = [
         'id'
     ];
-
+    //MODIFIED =
     protected $with = [
         'kantor'
     ];
+    
+    protected $dates = [
+        'published_at', 'tanggal_mulai', 'tanggal_selesai', 'deleted_at'
+    ];
 
+    public function scopePublish($query)
+    {
+        return $query->whereNotNull('published_at');
+    }
+    //= MODIFIED
     public function kantor()
     {
         return $this->belongsTo(Kantor::class);
