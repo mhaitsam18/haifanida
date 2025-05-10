@@ -24,3 +24,8 @@ DATABASE
 - buka db haifanidanya, trus klik kanan, pilih execute SQLfile, browse ke haifanida-main/database/export/haifanida pilih, trus start, nanti DB nya jadi tuh
 
 -balik ke vscode, terminal udh di haifanida-main/php arisan serve, trus buka http://127.0.0.1:8000 di chrome, atau launch project di laragon langsung
+
+
+# Meisya
+- Update file create.blade.php, web.php, umroh.blade.php, AdminPaketController.php, PaketTableSeeder.php, dan Paket.php.
+- Create file detail-paket.blade.php dan UmrohController.php
