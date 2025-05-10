@@ -23,7 +23,7 @@
             <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
         </div>
     </div>
-    <div class="faq-area pt-100 pb-70">
+    <div class="content-area pt-30 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <h2>Frequently Asked Questions</h2>
@@ -39,7 +39,7 @@
                             <ul class="accordion">
                                 <li class="accordion-item">
                                     <a class="accordion-title" href="javascript:void(0)">
-                                        <i class='bx bx-minus'></i>
+                                        <i class='bx bx-plus'></i>
                                         What is a Managed Security Services?
                                     </a>
                                     <div class="accordion-content">
@@ -77,11 +77,11 @@
                                     </div>
                                 </li>
                                 <li class="accordion-item">
-                                    <a class="accordion-title active" href="javascript:void(0)">
+                                    <a class="accordion-title" href="javascript:void(0)">
                                         <i class='bx bx-plus'></i>
                                         What is a Infrastructure?
                                     </a>
-                                    <div class="accordion-content show">
+                                    <div class="accordion-content">
                                         <p>
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at diam leo.
                                             Mauris a ante placerat,
@@ -137,11 +137,11 @@
                                     </div>
                                 </li>
                                 <li class="accordion-item">
-                                    <a class="accordion-title active" href="javascript:void(0)">
+                                    <a class="accordion-title" href="javascript:void(0)">
                                         <i class='bx bx-plus'></i>
                                         Product Engineering & Services?
                                     </a>
-                                    <div class="accordion-content show">
+                                    <div class="accordion-content">
                                         <p>
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at diam leo.
                                             Mauris a ante placerat,

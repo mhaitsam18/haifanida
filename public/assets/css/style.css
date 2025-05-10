@@ -29,3 +29,136 @@
     height: 70px;
     /* background: url('../img/icons/haji-umroh.png') no-repeat center center; */
 }
+
+/* Gaya baru untuk inner-banner */
+.inner-banner {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.inner-shape {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.inner-shape img {
+    width: 100%;
+    height: auto;
+}
+
+/* Gaya tambahan untuk inner-title agar teks terlihat bagus */
+.inner-title {
+    color: #fff; /* Teks putih sesuai screenshot */
+    text-align: center;
+}
+
+.inner-title h3 {
+    margin-bottom: 10px;
+}
+
+.inner-title ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.inner-title ul li {
+    color: #fff;
+}
+
+.inner-title ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.inner-title ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Pastikan navbar bisa diklik */
+.navbar-area {
+    position: relative;
+    z-index: 1000; /* Beri z-index tinggi agar navbar selalu di atas */
+}
+
+.main-nav {
+    z-index: 1000;
+}
+
+.navbar-nav {
+    z-index: 1000;
+}
+
+.dropdown-menu {
+    z-index: 1001; 
+}
+
+.content-area {
+    padding-top: 30px; /* Ubah sesuai kebutuhan, misalnya 30px, 50px, dll. */
+    padding-bottom: 50px;
+}
+
+/* FORM  KEPUASAN*/
+.form-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+.form-iframe {
+    width: 100%;
+    min-height: 800px; 
+    max-height: 1200px; 
+    border-radius: 4px;
+}
+
+/*FORM KELUHAN */
+.section-title {
+    margin-bottom: 40px;
+}
+.section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+.section-title p {
+    font-size: 16px;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.form-button-wrapper {
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Memastikan tombol di tengah horizontal */
+}
+.btn-custom {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff; /* Warna biru modern */
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn-custom:hover {
+    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+    transform: translateY(-2px);
+}
+.btn-custom i {
+    margin-right: 10px;
+    font-size: 22px;
+}

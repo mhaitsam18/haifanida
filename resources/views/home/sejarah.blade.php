@@ -25,7 +25,7 @@
     </div>
 
     <!-- SEJARAH PERUSAHAAN -->
-    <div class="container pb-100">
+    <div class="container pt-50 pb-50">
         <h1 class="text-center mb-5">Sejarah dan Profil PT. Haifa Nida Wisata Karawang</h1>
 
         <h2>1. Awal Perjalanan Sang Pendiri</h2>
@@ -89,7 +89,7 @@
 
 
     <!-- KEUNGGULAN PERUSAHAAN -->
-    <div class="container pb-100">
+    <div class="container pt-50 pb-70">
         <h2 class="text-center mb-5">Keunggulan Kami</h2>
         <div class="row">
             <div class="col-lg-4">
@@ -131,7 +131,7 @@
             <div class="col-lg-4 mt-4">
                 <div class="card text-center shadow-sm">
                     <div class="card-body">
-                        <i class="bx bx-plane bx-lg text-primary"></i>
+                        <i class="bx bxs-plane bx-lg text-primary"></i>
                         <h5 class="card-title mt-3">Penerbangan Langsung</h5>
                         <p class="card-text">Penerbangan langsung dari Jakarta ke Jeddah atau Madinah.</p>
                     </div>

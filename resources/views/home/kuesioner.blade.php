@@ -24,11 +24,11 @@
         </div>
     </div>
 
-    <div class="about-area ptb-100">
+    {{-- <div class="about-area ptb-100">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    {{-- Embed Google Form --}}
+                    
                     <div class="" style="min-height: 1000px;">
                         <iframe
                             src="https://docs.google.com/forms/d/e/1FAIpQLSdhyNI6HqR7KCJZrfZ4pSDYisUMrnNJ7uj4cPlgghP00YR33A/viewform?embedded=true"
@@ -38,5 +38,26 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+        <div class="about-area ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Embed Google Form -->
+                    <div class="form-wrapper">
+                        <iframe
+                            src="https://docs.google.com/forms/d/e/1FAIpQLSdhyNI6HqR7KCJZrfZ4pSDYisUMrnNJ7uj4cPlgghP00YR33A/viewform?embedded=true"
+                            style="width: 100%; min-height: 800px; border: none;" 
+                            frameborder="0" 
+                            marginheight="0" 
+                            marginwidth="0"
+                            class="form-iframe"
+                        >Memuat…</iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
 @endsection
