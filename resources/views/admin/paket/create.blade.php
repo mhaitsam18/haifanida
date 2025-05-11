@@ -70,7 +70,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="fasilitas" class="form-label">Fasilitas</label>
                                     <textarea class="form-control  @error('fasilitas') is-invalid @enderror" id="fasilitas" name="fasilitas"
                                         placeholder="Fasilitas">{{ old('fasilitas') }}</textarea>
@@ -79,7 +79,20 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
+                                </div> --}}
+
+                                <!-- Fasilitas (pakai CKEditor) -->
+                                <div class="form-group">
+                                    <label for="fasilitas">Fasilitas</label>
+                                    <textarea name="fasilitas" id="editor" class="form-control" rows="8">{{ old('fasilitas', $paket->fasilitas ?? '') }}</textarea>
                                 </div>
+
+                                <!-- CKEditor Script -->
+                                <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+                                <script>
+                                    CKEDITOR.replace('editor');
+                                </script>
+
                             </div>
                             <div class="col-lg-4">
                                 <div class="mb-3">
@@ -172,9 +185,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-check form-check-inline">
+                                        <input type="hidden" name="published_at" value="">
                                         <input class="form-check-input @error('published_at') is-invalid @enderror"
                                             type="checkbox" value="{{ now() }}" id="published_at"
-                                            name="published_at" @checked(old('published_at'))>
+                                            name="published_at" 
+                                            @checked(old('published_at', isset($paket) && $paket->published_at))>
                                         <label class="form-check-label" for="published_at">
                                             Terbitkan?
                                         </label>
@@ -184,7 +199,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
+                                </div>                                
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
                                 <a href="/admin/paket" class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
