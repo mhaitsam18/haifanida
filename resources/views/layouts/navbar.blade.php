@@ -267,6 +267,9 @@
                                         <a href="/logout" class="default-btn btn-bg-two border-radius-50">Logout
                                             <i class='bx bx-chevron-right'></i></a>
                                     </div>
+                                    <div>
+                                        <a href="/member/profile" class="default-btn btn-bg-two border-radius-50">Profile</a>
+                                    </div>
                                 @endauth
                             </div>
                         </div>

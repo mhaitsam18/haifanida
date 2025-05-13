@@ -13,4 +13,8 @@ class MemberController extends Controller
             'page' => 'beranda',
         ]);
     }
+
+    public function profile(){
+        return view('home.profile');
+    }
 }

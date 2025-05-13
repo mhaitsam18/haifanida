@@ -451,6 +451,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('member')->group(function () {
             Route::get('/', [HomeController::class, 'index'])->name('member');
             Route::get('/index', [MemberController::class, 'index'])->name('member.index');
+            Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
         });
         Route::prefix('jemaah')->group(function () {
             Route::middleware('jemaah')->group(function () {
