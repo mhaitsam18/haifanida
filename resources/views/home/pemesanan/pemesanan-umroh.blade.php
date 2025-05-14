@@ -607,10 +607,6 @@
                                     <label for="pekerjaan_${newIndex}" class="form-label">Pekerjaan <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="pekerjaan_${newIndex}" name="jamaah[${newIndex}][pekerjaan]" required>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="foto_${newIndex}" class="form-label">Foto <small>(jpg, jpeg, png, max: 2MB)</small></label>
-                                    <input type="file" class="form-control" id="foto_${newIndex}" name="jamaah[${newIndex}][foto]" accept="image/jpeg,image/png">
-                                </div>
                             </div>
                             <div class="d-flex justify-content-between mt-3">
                                 <button type="button" class="btn btn-secondary" disabled>Sebelumnya</button>
