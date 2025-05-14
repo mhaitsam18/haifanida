@@ -102,7 +102,7 @@
                                 </h2>
                                 <span>per orang</span>
                             </div>
-                            <a href="/pemesanan/create?paket_id={{ $paket->id }}" class="default-btn btn-bg-two border-radius-5 w-100 mt-3">
+                            <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="default-btn btn-bg-two border-radius-5 w-100 mt-3">
                                 Pesan Sekarang
                             </a>
                         </div>

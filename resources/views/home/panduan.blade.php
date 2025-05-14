@@ -19,9 +19,9 @@
                 </ul>
             </div>
         </div>
-        <div class="inner-shape">
+        {{-- <div class="inner-shape">
             <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
-        </div>
+        </div> --}}
     </div>
     <div class="terms-conditions-area pt-100 pb-70">
         <div class="container">
@@ -171,9 +171,9 @@
     </div> --}}
     <div class="row pt-45">
         <div class="col-lg-12">
-            <div class="terms-conditions-img">
+            {{-- <div class="terms-conditions-img">
                 <img src="/assets-techex-demo/images/umroh-guide-img.jpg" alt="Images">
-            </div>
+            </div> --}}
             <div class="single-content">
                 <h3>Panduan Umroh</h3>
                 <p>

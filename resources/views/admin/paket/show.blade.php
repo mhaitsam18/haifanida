@@ -69,7 +69,8 @@
                                                 <li>Jenis Paket : {{ $paket->jenis_paket }}</li>
                                                 <li>Durasi : {{ $paket->durasi }} Hari</li>
                                                 <li>Harga : Rp.{{ number_format($paket->harga, 2, ',', '.') }}</li>
-                                                <li>Kantor : {{ $paket->kantor->nama_kantor }}</li>
+                                                {{-- MODIFY 
+                                                {{-- <li>Kantor : {{ $paket->kantor->nama_kantor }}</li> --}}
                                             </ul>
                                         </div>
                                         <div class="col">

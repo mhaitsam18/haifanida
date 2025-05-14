@@ -475,3 +475,18 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+// UNTUK PEMESANAN
+Route::get('/pemesanan/umroh', [UmrohController::class, 'formPemesanan'])->name('umroh.formPemesanan');
+
+Route::get('/umroh', [UmrohController::class, 'index'])->name('umroh.index');
+Route::get('/umroh/{id}', [UmrohController::class, 'show'])->name('umroh.show');
+Route::post('/umroh/form-pemesanan', [UmrohController::class, 'formPemesanan'])->name('umroh.form-pemesanan');
+Route::post('/umroh/store', [UmrohController::class, 'store'])->name('pemesanan.store');
+
+// Route untuk halaman pembayaran (sesuaikan dengan implementasi kamu)
+Route::get('/pemesanan/{id}/payment', function ($id) {
+    // Ganti dengan controller atau view untuk halaman pembayaran
+    return view('home.pemesanan.payment', ['pemesanan_id' => $id]);
+})->name('pemesanan.payment');
+
