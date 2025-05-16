@@ -167,8 +167,11 @@
             <div class="row pt-45">
                 <div class="col-lg-12">
                     <h5 class="card-title">Customer Service</h5>
-                    <a href="https://wa.me/6282299198002" target="_blank" class="card-text">WA: +62 (822) 9919-8002</a>
+                    <a href="https://wa.me/6282299198002" target="_blank" class="card-text">
+                        <img src="/assets/img/logos/logo-wa.png" alt="WhatsApp Logo" style="width: 24px; height: 24px; vertical-align: middle;"> +62 (822) 9919-8002
+                    </a>
                     <hr>
+                    {{--
                     <h5 class="card-title">Staf Administrasi: Rini Apriyani</h5>
                     <a href="https://wa.me/628111720494" target="_blank" class="card-text">WA: +62 (811) 1720-494</a>
                     <hr>
@@ -186,7 +189,7 @@
                     <hr>
                     <h5 class="card-title">Komisaris Utama: Dr.H. Fakhrurrozi, Lc.,MA</h5>
                     <a href="https://wa.me/6281220747000" target="_blank" class="card-text">WA: +62 (812) 2074-7000</a>
-                    <hr>
+                    <hr> --}}
                 </div>
             </div>
         </div>
