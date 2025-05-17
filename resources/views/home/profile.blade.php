@@ -6,6 +6,7 @@
     <div>
         <div class="section-title text-center">
             Profile User
+            Ibnu bau
         </div>
     </div>
 
