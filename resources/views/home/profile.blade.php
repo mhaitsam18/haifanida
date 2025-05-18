@@ -10,7 +10,7 @@
             <h2>Profile</h2>
         @endif
     </div>
-   <div class="container">
+   <div class="container pb-70">
     <div class="row">
         @if ($mode == 'edit')
 

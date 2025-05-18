@@ -263,13 +263,39 @@
                                     </div>
                                 @endguest
                                 @auth
-                                    <div class="get-btn">
+                                    <!-- MODIFIED-- -->
+                                    <!-- <div class="get-btn">
                                         <a href="/logout" class="default-btn btn-bg-two border-radius-50">Logout
                                             <i class='bx bx-chevron-right'></i></a>
-                                    </div>
-                                    <div>
-                                        <a href="/member/profile" class="default-btn btn-bg-two border-radius-50">Profile</a>
-                                    </div>
+                                    </div> -->
+                                    <li class="nav-item">
+                                        <a href="" class="btn p-0 border-0 bg-transparent">
+                                            <img src="{{ Auth::user()->profile_picture
+                                            ? asset('storage/user-photo/' . Auth::user()->profile_picture)
+                                            : asset('storage/image-not-found-scaled.png') }}"
+                                            alt="Profile"
+                                            class="rounded-circle"
+                                            style="width: 40px; height: 40px; object-fit: cover;">
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a href="/member/profile" class="nav-link">
+                                                    Profile
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="">
+                                                    Perjalanan Saya
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/logout">
+                                                    Logout
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- --MODIFIED -->    
                                 @endauth
                             </div>
                         </div>
