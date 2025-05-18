@@ -451,7 +451,10 @@ Route::middleware('auth')->group(function () {
         Route::prefix('member')->group(function () {
             Route::get('/', [HomeController::class, 'index'])->name('member');
             Route::get('/index', [MemberController::class, 'index'])->name('member.index');
+            // MODIFIED--
             Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
+            Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+            // --MODIFIED
         });
         Route::prefix('jemaah')->group(function () {
             Route::middleware('jemaah')->group(function () {

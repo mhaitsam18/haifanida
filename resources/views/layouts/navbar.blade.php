@@ -284,7 +284,7 @@
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="">
+                                                <a href="/member/perjalanan-saya">
                                                     Perjalanan Saya
                                                 </a>
                                             </li>

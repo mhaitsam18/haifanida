@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-    <!-- {{ $title = '' }} -->
 
     <div class="section-title text-center">
         @if ($mode == 'edit')
