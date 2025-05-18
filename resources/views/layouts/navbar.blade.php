@@ -268,7 +268,7 @@
                                         <a href="/logout" class="default-btn btn-bg-two border-radius-50">Logout
                                             <i class='bx bx-chevron-right'></i></a>
                                     </div> -->
-                                    <li class="nav-item">
+                                    <li class="nav-item" style="padding-bottom: -10px">
                                         <a href="" class="btn p-0 border-0 bg-transparent">
                                             <img src="{{ Auth::user()->profile_picture
                                             ? asset('storage/user-photo/' . Auth::user()->profile_picture)
