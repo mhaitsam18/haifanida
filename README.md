@@ -12,8 +12,20 @@
 
 ```
 # Klo ada kodingan lama yang diubah
-jangan diapus, tapikodingan lamanya di jadiin komentar aja
+jangan diapus, tapi kodingan lamanya di jadiin komentar aja
+```
+    // MODIFIED--
+        //Codingannya lama
+    (Codingannya)
+    // --MODIFIED
 
+    OR
+
+    {{-- MODIFIED-- --}}
+    (Codingannya)
+    {{-- --MODIFIED --}}
+
+```
 # SOP commit
 Commit file 1 per 1, biar klo ada konflik gampang diurusnya
 ---
@@ -48,3 +60,18 @@ DATABASE
 # Meisya
 - Update file create.blade.php, web.php, umroh.blade.php, AdminPaketController.php, PaketTableSeeder.php, dan Paket.php.
 - Create file detail-paket.blade.php dan UmrohController.php
+
+
+# el problemo
+## dalam scope UPI
+- bagian Tambah Jemaah bagian 1(jamaah pertama) drop down untuk provinsi ada, namun dropdown kabupaten tidak muncul, sedangkan ketika tambah 1 lagi dibawahnya itu normal normal 
+## luar scope UPI
+- autentikasi
+```
+- login pakai google
+- autentikasi
+- jika belum ada di database -> masukin datanya ke database -> muncul terjadi kesalahan(pdhl keregister)
+- wah ada di database -> masuk ke beranda dengan status member
+```
+- ketika mengisi registrasi, lalu register manual, muncul error http://blablabla/bla/bla/-getverivicationlink does not exist
+- lalu Connection could not be established with host "ssl://mail.haifanida.com:465": stream_socket_client(): Unable to connect to ssl://mail.haifanida.com:465 (A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond)
