@@ -264,6 +264,10 @@
                                 @endguest
                                 @auth
                                     <!-- MODIFIED-- -->
+                                    <!-- <div class="get-btn">
+                                        <a href="/logout" class="default-btn btn-bg-two border-radius-50">Logout
+                                            <i class='bx bx-chevron-right'></i></a>
+                                    </div> -->
                                     <li class="nav-item">
                                         <a href="" class="btn p-0 border-0 bg-transparent">
                                             <img src="{{ Auth::user()->profile_picture
@@ -271,7 +275,7 @@
                                             : asset('storage/image-not-found-scaled.png') }}"
                                             alt="Profile"
                                             class="rounded-circle"
-                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                            style="width: 40px; height: 40px; object-fit: cover;">
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li class="nav-item">
@@ -291,7 +295,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <!-- --MODIFIED -->
+                                    <!-- --MODIFIED -->    
                                 @endauth
                             </div>
                         </div>
