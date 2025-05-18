@@ -13,6 +13,9 @@
 ```
 # Klo ada kodingan lama yang diubah
 jangan diapus, tapikodingan lamanya di jadiin komentar aja
+
+# SOP commit
+Commit file 1 per 1, biar klo ada konflik gampang diurusnya
 ---
 - pull
 - taro di laragon/www
