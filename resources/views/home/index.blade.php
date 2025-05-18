@@ -44,7 +44,9 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <h1>Berizin Resmi & Terakreditasi</h1> malah muncul di kiri bawahnya euy "MODIFIED" --}} 
+                        {{-- MODIFIED-- --}}
+                        {{-- <h1>Berizin Resmi & Terakreditasi</h1> malah muncul di kiri bawahnya euy --}} 
+                        {{-- --MODIFIED --}}
                     </div>
                 </div>
             </div>
