@@ -6,7 +6,6 @@
         <h2>Perjalanan Saya</h2>
     </div>
     
-    <!-- TODO: load history perjalanan -->
     <div class="container">
         <div class="row justify-content-center my-5">
             <div class="card col-md-6" style="width: 50rem">
@@ -21,16 +20,17 @@
                             <p>Jumlah Orang: 2 Orang</p>
                             <p>Tanggal Keberangkatan: 31 Mei 2025</p>
                             <p>Tanggal Kepulangan: 7 Juni 2025</p>
-
                         </div>
-
                     </div>
+                    <!-- MODIFIED-- -->
                     <div class="d-flex bd-highlight justify-content-end align-items-center mt-3">
                         <!-- Notifikasi status apabila terdapat berkas yang belum diverifikasi dan/atau tagihan yang belum lunas -->
-                        <p class="me-auto bd-highlight text-muted">Terdapat Berkas yang belum terverifikasi</p> 
+                        <p class="me-auto bd-highlight text-muted">Terdapat Berkas yang belum terverifikasi</p>
+
                         <a href="#" class="bd-highlight btn btn-primary">Verifikasi Berkas</a>
                         <a href="#" class="bd-highlight btn btn-primary ms-2 disabled"">Tagihan Lunas</a>
                     </div>
+                    <!-- --MODIFIED -->
                 </div>
             </div>
 
@@ -46,16 +46,17 @@
                             <p>Jumlah Orang: 2 Orang</p>
                             <p>Tanggal Keberangkatan: 31 Mei 2025</p>
                             <p>Tanggal Kepulangan: 7 Juni 2025</p>
-
                         </div>
-
                     </div>
+                    <!-- MODIFIED-- -->
                     <div class="d-flex bd-highlight justify-content-end align-items-center mt-3">
                         <!-- Notifikasi status apabila terdapat berkas yang belum diverifikasi dan/atau tagihan yang belum lunas -->
-                        <p class="me-auto bd-highlight text-muted">Terdapat Berkas yang belum terverifikasi</p> 
-                        <a href="#" class="bd-highlight btn btn-primary">Verifikasi Berkas</a>
-                        <a href="#" class="bd-highlight btn btn-primary ms-2 disabled"">Tagihan Lunas</a>
+                        <p class="me-auto bd-highlight text-muted">Terdapat Tagihan yang belum dilunasi</p>
+
+                        <a href="#" class="bd-highlight btn btn-primary disabled">Berkas terverifikasi</a>
+                        <a href="#" class="bd-highlight btn btn-primary ms-2"">Tagihan belum lunas</a>
                     </div>
+                    <!-- --MODIFIED -->
                 </div>
             </div>
         </div>
