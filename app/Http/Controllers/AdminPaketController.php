@@ -56,15 +56,15 @@ class AdminPaketController extends Controller
         ]);
 
         $validateData['published_at'] = $request->published_at ? now() : null;
-        /* MODIFIED
+        
+        // --MODIFIED
+        /*
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('paket-gambar', 'public'); //metode penyimpanan file gambar ini terlalu strict/ketat untuk penjagaan keamanan, dan munkin hanya dipakai untuk upload file/berkas berkas jamaah saja
             $paket->gambar = str_replace('public/', '', $path); //
             $validateData['gambar'] = $path;
         }
         */
-
-        // --MODIFIED
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $filename = time() . '_' . $file->getClientOriginalName();

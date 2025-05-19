@@ -1,4 +1,4 @@
-# Format Updatean
+# Format tambahan
 ```
     // MODIFIED--
     (Codingannya)
@@ -10,21 +10,24 @@
     (Codingannya)
     {{-- --MODIFIED --}}
 
+    OR ETC. tergantung bahasa pemrogramannya
 ```
-# Klo ada kodingan lama yang diubah
+# Format Updatean klo ada kodingan lama yang diubah
 jangan diapus, tapi kodingan lamanya di jadiin komentar aja
 ```
     // MODIFIED--
-        //Codingannya lama
+    //Codingan lama
     (Codingannya)
     // --MODIFIED
 
     OR
 
     {{-- MODIFIED-- --}}
+    {{-- codingan lama --}}
     (Codingannya)
     {{-- --MODIFIED --}}
 
+    OR ETC. tergantung bahasa pemrogramannya
 ```
 # SOP commit
 Commit file 1 per 1, biar klo ada konflik gampang diurusnya
@@ -63,9 +66,10 @@ DATABASE
 
 
 # el problemo
-## dalam scope UPI
+---
+## dalam scope
 - bagian Tambah Jemaah bagian 1(jamaah pertama) drop down untuk provinsi ada, namun dropdown kabupaten tidak muncul, sedangkan ketika tambah 1 lagi dibawahnya itu normal normal 
-## luar scope UPI
+## luar scope=
 - autentikasi
 ```
 - login pakai google
@@ -76,4 +80,5 @@ DATABASE
 - ketika mengisi registrasi, lalu register manual, muncul error http://blablabla/bla/bla/-getverivicationlink does not exist
 - lalu Connection could not be established with host "ssl://mail.haifanida.com:465": stream_socket_client(): Unable to connect to ssl://mail.haifanida.com:465 (A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond)
 ![WhatsApp Image 2025-05-19 at 00 11 26_a4305686](https://github.com/user-attachments/assets/c78726d8-261d-46dc-b3af-03462bb552ab)
+sepertinya karena localhost
 - 
