@@ -98,9 +98,10 @@ Route::redirect('/form-kuesioner', 'https://docs.google.com/forms/d/e/1FAIpQLSdh
 Route::get('/keluhan', [HomeController::class, 'keluhan'])->name('home.keluhan');
 Route::get('/kuesioner', [HomeController::class, 'kuesioner'])->name('home.kuesioner');
 
-Route::get('/umroh', [HomeController::class, 'umroh'])->name('home.umroh');
+// Route::get('/umroh', [HomeController::class, 'umroh'])->name('home.umroh');
 Route::get('/umroh', [UmrohController::class, 'index'])->name('home.umroh'); // Tambahan
 Route::get('/paket/{id}', [UmrohController::class, 'show'])->name('home.detail-paket'); // Tambahan
+
 Route::get('/haji', [HomeController::class, 'haji'])->name('home.haji');
 Route::get('/wisata-halal', [HomeController::class, 'wisataHalal'])->name('home.wisata-halal');
 
