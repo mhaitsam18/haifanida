@@ -33,7 +33,10 @@ class MemberController extends Controller
     public function perjalananSaya(Request $request){
         $user = Auth::user();
         $title = 'Perjalanan Saya | Haifa Nida Wisata';
-        return view('home.perjalanan-saya', compact('user', 'title'));
+        // MODIFIED--
+        $pemesanan = $user->pemesanans()->with('paket')->get();
+        // --MODIFIED
+        return view('home.perjalanan-saya', compact('user', 'title', 'pemesanan'));
     }
     // --MODIFIED
 
