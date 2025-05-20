@@ -54,7 +54,12 @@
                         <p class="me-auto bd-highlight text-muted">Terdapat Tagihan yang belum dilunasi</p>
 
                         <a href="#" class="bd-highlight btn btn-primary disabled">Berkas terverifikasi</a>
-                        <a href="#" class="bd-highlight btn btn-primary ms-2"">Tagihan belum lunas</a>
+                        <!-- MODIFIED-- -->
+
+                        <!-- <a href="#" class="bd-highlight btn btn-primary ms-2"">Tagihan belum lunas</a> -->
+                        <a href="/member/tagihan" class="bd-highlight btn btn-primary ms-2"">Tagihan belum lunas</a>
+
+                        <!-- --MODIFIED -->
                     </div>
                     <!-- --MODIFIED -->
                 </div>
