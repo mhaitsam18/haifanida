@@ -7,17 +7,124 @@ use App\Models\Provinsi;
 use App\Models\Ekstra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class UmrohController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     return view('home.umroh', [
+    //         'title' => 'Paket Umroh',
+    //         'pakets' => Paket::where('jenis_paket', 'umroh')
+    //             ->whereNotNull('published_at')
+    //             ->latest()
+    //             ->get()
+    //     ]);
+    // }
+
+    // public function show($id)
+    // {
+    //     $paket = Paket::findOrFail($id);
+    //     return view('home.detail-paket', [
+    //         'title' => $paket->nama_paket,
+    //         'paket' => $paket
+    //     ]);
+    // }
+    // MODIFY
+
+    public function index(Request $request)
     {
+        // Base query
+        $query = Paket::where('jenis_paket', 'umroh')
+            ->whereNotNull('published_at');
+        
+        // Price range filter
+        if ($request->has('harga_min') && $request->harga_min) {
+            $query->where('harga', '>=', $request->harga_min);
+        }
+        
+        if ($request->has('harga_max') && $request->harga_max) {
+            $query->where('harga', '<=', $request->harga_max);
+        }
+        
+        // Departure date filter
+        if ($request->has('tanggal_mulai') && $request->tanggal_mulai) {
+            $query->where('tanggal_mulai', '>=', $request->tanggal_mulai);
+        }
+        
+        if ($request->has('tanggal_akhir') && $request->tanggal_akhir) {
+            $query->where('tanggal_mulai', '<=', $request->tanggal_akhir);
+        }
+        
+        // Duration filter
+        if ($request->has('durasi') && !empty($request->durasi)) {
+            $query->whereIn('durasi', $request->durasi);
+        }
+        
+        // Sort options
+        if ($request->has('urutkan')) {
+            switch ($request->urutkan) {
+                case 'harga_terendah':
+                    $query->orderBy('harga', 'asc');
+                    break;
+                case 'harga_tertinggi':
+                    $query->orderBy('harga', 'desc');
+                    break;
+                case 'tanggal_terdekat':
+                    $query->orderBy('tanggal_mulai', 'asc');
+                    break;
+                case 'durasi_terpendek':
+                    $query->orderBy('durasi', 'asc');
+                    break;
+                case 'durasi_terpanjang':
+                    $query->orderBy('durasi', 'desc');
+                    break;
+                default:
+                    $query->latest();
+                    break;
+            }
+        } else {
+            $query->latest(); // Default sorting
+        }
+        
+        // Execute query
+        $pakets = $query->get();
+        
+        // Get unique durations for filter options
+        $durasiOptions = Paket::where('jenis_paket', 'umroh')
+            ->whereNotNull('published_at')
+            ->distinct()
+            ->pluck('durasi')
+            ->sort()
+            ->toArray();
+            
+        // Price range for filter options
+        $hargaMin = Paket::where('jenis_paket', 'umroh')
+            ->whereNotNull('published_at')
+            ->min('harga');
+            
+        $hargaMax = Paket::where('jenis_paket', 'umroh')
+            ->whereNotNull('published_at')
+            ->max('harga');
+            
+        // Get earliest and latest departure dates
+        $tanggalMin = Paket::where('jenis_paket', 'umroh')
+            ->whereNotNull('published_at')
+            ->min('tanggal_mulai');
+            
+        $tanggalMax = Paket::where('jenis_paket', 'umroh')
+            ->whereNotNull('published_at')
+            ->max('tanggal_mulai');
+            
         return view('home.umroh', [
             'title' => 'Paket Umroh',
-            'pakets' => Paket::where('jenis_paket', 'umroh')
-                ->whereNotNull('published_at')
-                ->latest()
-                ->get()
+            'pakets' => $pakets,
+            'durasiOptions' => $durasiOptions,
+            'hargaMin' => $hargaMin,
+            'hargaMax' => $hargaMax,
+            'tanggalMin' => $tanggalMin ? Carbon::parse($tanggalMin)->format('Y-m-d') : null,
+            'tanggalMax' => $tanggalMax ? Carbon::parse($tanggalMax)->format('Y-m-d') : null,
+            'filters' => $request->all()
         ]);
     }
 

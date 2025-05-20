@@ -105,6 +105,14 @@
                             <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="default-btn btn-bg-two border-radius-5 w-100 mt-3">
                                 Pesan Sekarang
                             </a>
+                            
+                            <!-- WhatsApp Share Button -->
+                            <div class="mt-3 text-center">
+                                <a href="#" id="shareWhatsAppBtn" class="btn btn-success w-100 d-flex justify-content-center align-items-center" 
+                                        style="background-color: #25D366; border: none;">
+                                    <i class='bx bxl-whatsapp me-2' style="font-size: 22px;"></i> Bagikan via WhatsApp
+                                </a>
+                            </div>
                         </div>
 
                         <div class="services-bar">
@@ -132,4 +140,90 @@
             </div>
         </div>
     </div>
+
+    <!-- WhatsApp Share Modal -->
+    <div class="modal fade" id="whatsappShareModal" tabindex="-1" aria-labelledby="whatsappShareModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="whatsappShareModalLabel">Bagikan via WhatsApp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="whatsappNumber" class="form-label">Nomor WhatsApp (opsional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">+62</span>
+                            <input type="tel" class="form-control" id="whatsappNumber" placeholder="81234567890 (tanpa awalan 0)">
+                        </div>
+                        <div class="form-text">Jika dibiarkan kosong, Anda bisa memilih kontak di WhatsApp</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Pesan yang akan dibagikan:</label>
+                        <div class="p-3" style="background: #f8f9fa; border-radius: 8px; max-height: 300px; overflow-y: auto;">
+                            <pre id="messagePreview" style="white-space: pre-wrap; font-family: inherit; margin-bottom: 0;">@php
+                            $message = "🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang!
+                            Berikut detail paket yang aku pilih:
+
+                            ✈ " . $paket->nama_paket . "
+                            📆 Keberangkatan: " . Carbon::parse($paket->tanggal_mulai)->format('d M Y') . "
+                            ⏱ Durasi: " . $paket->durasi . " Hari
+                            🌐 Destinasi: " . $paket->destinasi . "
+                            💰 Harga: Rp " . number_format($paket->harga, 0, ',', '.') . "/orang
+
+                            Deskripsi " . Str::limit(strip_tags($paket->deskripsi), 200) . "
+                            " . Str::limit(strip_tags($paket->fasilitas), 200) . "
+
+                            🙋‍♂ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
+                            📱 WhatsApp: https://wa.me/6282299198002
+                            📍 Kantor: Jl. Raya Karawang No. 88";
+                            echo e($message);
+                            @endphp</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" id="sendWhatsAppBtn">
+                        <i class='bx bxl-whatsapp me-1'></i> Kirim via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const shareWhatsAppBtn = document.getElementById('shareWhatsAppBtn');
+        
+        shareWhatsAppBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Generate the message with proper emojis
+            const message = `🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang!
+            Berikut detail paket yang aku pilih:
+
+            ✈️ {{ $paket->nama_paket }}
+            📆 Keberangkatan: {{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}
+            ⏱️ Durasi: {{ $paket->durasi }} Hari
+            🌐 Destinasi: {{ $paket->destinasi }}
+            💰 Harga: Rp {{ number_format($paket->harga, 0, ',', '.') }}/orang
+
+            {{ Str::limit(strip_tags($paket->deskripsi), 200) }}
+            {{ Str::limit(strip_tags($paket->fasilitas), 200) }}
+
+            🙋‍♂️ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
+            📱 WhatsApp: https://wa.me/6282299198002
+            📍 Kantor: Jl. Raya Karawang No. 88`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Direct to WhatsApp's share interface
+            const whatsappLink = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+            window.open(whatsappLink, '_blank');
+        });
+    });
+    </script>
 @endsection
