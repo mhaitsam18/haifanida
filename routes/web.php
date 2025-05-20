@@ -454,6 +454,7 @@ Route::middleware('auth')->group(function () {
             // MODIFIED--
             Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
             Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+            Route::get('/tagihan', [MemberController::class, 'tagihan'])->name('member.tagihan');
             // --MODIFIED
         });
         Route::prefix('jemaah')->group(function () {
