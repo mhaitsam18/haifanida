@@ -9,8 +9,10 @@
             <h2>Profile</h2>
         @endif
     </div>
-   <div class="container pb-70">
-    <div class="row">
+    <!-- MODIFIED-- -->
+   <div class="container pb-70 mb-5 bg-light">
+       <div class="row ms-3">
+    <!-- --MODIFIED -->
         @if ($mode == 'edit')
 
             <!-- Left column: Photo -->
@@ -83,6 +85,10 @@
                 </div>
 
                 <a href="{{ route('member.profile', ['mode' => 'edit']) }}" class="default-btn btn-bg-two border-radius-50">Edit Profile</a>
+                <!-- MODIFIED-- -->
+                 <!-- TODO: Implementasi page untuk mengelola identitas dan berkas member -->
+                <a href="#" class="default-btn btn-bg-two border-radius-50">Kelola identitas dan berkas</a>
+                <!-- --MODIFIED -->
             </div>
         @endif
     </div>
