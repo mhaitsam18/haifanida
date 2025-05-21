@@ -9,7 +9,7 @@
     <div class="container">
         @foreach($pemesanan as $item)
         <div class="row justify-content-center my-5">
-            <div class="card col-md-6" style="width: 50rem">
+            <div class="card col-md-6" style="width: 54rem">
                 <div class="card-body">
                     <div class="card-header">
                         <!-- MODIFIED-- -->
@@ -21,10 +21,27 @@
                         style="width: 250px; height: auto; border-radius: 8px;">
                         <div class="container">
                             <!-- MODIFIED-- -->
+                            <!-- MODIFIED-- -->
+                            @php
+                                $departure = \Carbon\Carbon::parse($item->paket->tanggal_mulai);
+                                $sisa_hari = \Carbon\Carbon::now()->diffInDays($departure, false);
+                            @endphp
+                            @if ($sisa_hari > 0)
+                                <h3 class="mb-1">Berangkat {{ $sisa_hari }} hari lagi</h3>
+                            @elseif($sisa_hari === 0)
+                                <h3 class="mb-1">Berangkat hari ini</h3>
+                            @elseif($sisa_hari < 0)
+                                <h3 class="mb-1">Sudah berangkat {{ abs($sisa_hari) }} hari yang lalu</h3>
+                            @endif
+                            <!-- MODIFIED-- -->
+                            <!-- <p>Tanggal Keberangkatan: {{ \Carbon\Carbon::parse($item->paket->tanggal_mulai)->format('d M Y') }}</p>
+                            <p>Tanggal Kepulangan: {{ \Carbon\Carbon::parse($item->paket->tanggal_selesai)->format('d M Y') }}</p> -->
+                            <h5 class="mb-1">Tanggal Perjalanan: {{ \Carbon\Carbon::parse($item->paket->tanggal_mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($item->paket->tanggal_selesai)->format('d M Y') }}</h5>
+                            <h5 class="mb-3">Tagihan yang belum dibayar: Rp{{ number_format($item->total_harga, 0, ',', '.') }}</h5>
+                            <!-- --MODIFIED -->
                             <p>Jumlah Orang: {{ $item->jumlah_orang }} Orang</p>
                             <p>Jenis Perjalanan: {{ ucfirst($item->paket->jenis_paket) }}</p>
-                            <p>Tanggal Keberangkatan: {{ \Carbon\Carbon::parse($item->paket->tanggal_mulai)->format('d M Y') }}</p>
-                            <p>Tanggal Kepulangan: {{ \Carbon\Carbon::parse($item->paket->tanggal_selesai)->format('d M Y') }}</p>
+                            <!-- --MODIFIED -->
                             <p>Tempat Keberangkatan: {{ ucfirst($item->paket->tempat_keberangkatan) }}</p>
                             <p>Tempat Kepulangan: {{ ucfirst($item->paket->tempat_kepulangan) }}</p>
                             <!-- --MODIFIED -->
@@ -35,13 +52,13 @@
                         <!-- Notifikasi status apabila terdapat berkas yang belum diverifikasi dan/atau tagihan yang belum lunas -->
                         <!-- MODIFIED-- -->
                         @if($item->is_pembayaran_lunas == 0)
-                        <p class="me-auto bd-highlight text-muted">Terdapat tagihan yang belum dilunasi</p>
-                        <a href="#" class="bd-highlight btn btn-primary disabled">Berkas Lengkap</a>
-                        <a href="/member/tagihan" class="bd-highlight btn btn-primary ms-2"">Tagihan belum lunas</a>
+                            <p class="me-auto bd-highlight text-muted">Terdapat tagihan yang belum dilunasi</p>
+                            <a href="#" class="bd-highlight btn btn-primary disabled">Berkas Lengkap</a>
+                            <a href="/member/tagihan" class="bd-highlight btn btn-primary ms-2"">Lunasi tagihan</a>
                         @else
-                        <p class="me-auto bd-highlight text-muted">Terdapat Berkas yang belum diupload</p>
-                        <a href="#" class="bd-highlight btn btn-primary">Lengkapi berkas</a>
-                        <a href="#" class="bd-highlight btn btn-primary ms-2 disabled"">Tagihan Lunas</a>
+                            <p class="me-auto bd-highlight text-muted">Terdapat Berkas yang belum diupload</p>
+                            <a href="#" class="bd-highlight btn btn-primary">Lengkapi berkas</a>
+                            <a href="#" class="bd-highlight btn btn-primary ms-2 disabled"">Tagihan Lunas</a>
                         @endif
                         <!-- --MODIFIED -->
                     </div>
