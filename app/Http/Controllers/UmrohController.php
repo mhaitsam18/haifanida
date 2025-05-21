@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Paket;
+use App\Models\Pemesanan;
 use App\Models\Provinsi;
 use App\Models\Ekstra;
-use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -139,7 +139,8 @@ class UmrohController extends Controller
     }
 
     public function formPemesanan(Request $request)
-    {
+    {   
+        $user = Auth::user();
         $paket = Paket::findOrFail($request->paket_id);
         $provinsis = Provinsi::all(); // Ambil semua data provinsi
         $ekstras = Ekstra::all(); // Ambil semua data layanan ekstra
@@ -147,6 +148,7 @@ class UmrohController extends Controller
         return view('home.pemesanan.pemesanan-umroh', [
             'title' => 'Form Pemesanan Umroh',
             'paket' => $paket,
+            'user' => $user,
             'provinsis' => $provinsis,
             'ekstras' => $ekstras
         ]);
@@ -156,10 +158,20 @@ class UmrohController extends Controller
     {
         // Validasi input
         $validator = Validator::make($request->all(), [
-            'paket_id' => 'required|exists:pakets,id',
-            'nama_pemesan' => 'required|string',
-            'metode_pembayaran' => 'required|string',
-            'catatan' => 'nullable|string',
+            'paket_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            // 'is_umroh' => 'nullable|integer',
+            // 'is_haji' => 'nullable|integer',
+            // 'is_wisata_halal' => 'nullable|integer',
+            'status' => 'nullable|string',
+            'tanggal_pesan' => 'nullable|date',
+            // 'tanggal_berangkat' => 'nullable|date',
+            'jumlah_orang' => 'nullable|integer',
+            'total_harga' => 'nullable|integer',
+            'metode_pembayaran' => 'nullable|string',
+            'is_pembayaran_lunas' => 'nullable|integer',
+            'tanggal_pelunasan' => 'nullable|date',
+            // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
         ]);
 
         if ($validator->fails()) {
@@ -168,25 +180,25 @@ class UmrohController extends Controller
 
         // Ambil data paket
         $paket = Paket::findOrFail($request->paket_id);
-
         // Simpan pemesanan
         $pemesanan = new Pemesanan();
         $pemesanan->paket_id = $request->paket_id;
-        $pemesanan->nama_pemesan = $request->nama_pemesan;
+        $pemesanan->user_id = $request->user_id;
+        $pemesanan->status = "pending";
+        $pemesanan->tanggal_pesan = $request->tanggal_pesan;
+        $pemesanan->jumlah_orang = $request->jumlah_orang;
+        $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_orang; // Contoh perhitungan
         $pemesanan->metode_pembayaran = $request->metode_pembayaran;
-        $pemesanan->catatan = $request->catatan;
-        $pemesanan->jumlah_pengisi = 2; // Sesuaikan dengan logika Anda
-        $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_pengisi; // Contoh perhitungan
-        $pemesanan->status_pembayaran = 'Belum Lunas';
+        $pemesanan->is_pembayaran_lunas = 0;
+        $pemesanan->tanggal_pelunasan = $request->tanggal_pelunasan;
         $pemesanan->save();
-
         // Redirect ke halaman detail pemesanan
         return redirect()->route('pemesanan.detail', $pemesanan->id)->with('success', 'Pemesanan berhasil disimpan!');
     }
 
     public function detailPemesanan($id)
     {
-        $pemesanan = Pemesanan::with('paket', 'kamar', 'ekstra', 'pembayaran')->findOrFail($id);
+        $pemesanan = Pemesanan::findOrFail($id);
 
         return view('home.pemesanan.detail-pemesanan', [
             'title' => 'Detail Pemesanan',
