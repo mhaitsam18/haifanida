@@ -42,50 +42,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="align-middle">
-                            <td class="px-3 py-3">1</td>
-                            <td class="px-3 py-3">Budi</td>
-                            <td class="px-3 py-3">budi3@gmail.com</td>
-                            <td class="px-3 py-3">+6282117</td>
-                            <td class="px-3 py-3">
-                                <img src="https://via.placeholder.com/40" alt="Foto" class="rounded-circle" width="40" height="40">
-                            </td>
-                            <td class="px-3 py-3">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-info btn-sm">
-                                        <i class="fas fa-eye me-1"></i> Detail
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-sm mx-1">
-                                        <i class="fas fa-edit me-1"></i> Edit
-                                    </a>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash me-1"></i> Hapus
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="align-middle">
-                            <td class="px-3 py-3">2</td>
-                            <td class="px-3 py-3">Ratu</td>
-                            <td class="px-3 py-3">ratu@gmail.com</td>
-                            <td class="px-3 py-3">+628138373</td>
-                            <td class="px-3 py-3">
-                                <span class="badge bg-secondary p-2">Foto</span>
-                            </td>
-                            <td class="px-3 py-3">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-info btn-sm">
-                                        <i class="fas fa-eye me-1"></i> Detail
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-sm mx-1">
-                                        <i class="fas fa-edit me-1"></i> Edit
-                                    </a>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash me-1"></i> Hapus
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($jemaahs as $jemaah)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $jemaah->nama_lengkap }}</td>
+                                        <td>{{ $jemaah->email }}</td>
+                                        <td>{{ $jemaah->nomor_telepon }}</td>
+                                        <td> <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
+                                                class="img-thumbnail img-fluid"></td>
+                                        <td class="print-hilang">
+                                            <div class="d-flex align-items-center">
+                                                <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}"
+                                                    class="badge bg-haifa d-inline-block m-1">Detail</a>
+                                                <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}/edit"
+                                                    class="badge bg-success d-inline-block m-1">Edit</a>
+                                                <form action="/admin/jemaah/{{ $jemaah->id }}" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                     </tbody>
                 </table>
             </div>
