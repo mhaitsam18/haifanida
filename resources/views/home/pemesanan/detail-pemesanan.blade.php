@@ -93,7 +93,7 @@
                                     </ul>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="/admin/paket/{{ $pemesanan->paket_id }}/jemaah?pemesanan_id={{ $pemesanan->id }}" 
+                                    <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" 
                                         class="btn btn-primary btn-sm me-2 mb-2">
                                         <i data-feather="users" class="icon-sm me-1"></i>
                                         Data Jema'ah
@@ -103,7 +103,7 @@
                                         <i data-feather="file-text" class="icon-sm me-1"></i>
                                         Lihat Tagihan
                                     </a>
-                                    <a href="/admin/paket/{{ $pemesanan->paket_id }}/pemesanan" 
+                                    <a href="{{ route('pemesanan.detail', $pemesanan->id)}}" 
                                         class="btn btn-secondary btn-sm mb-2">
                                         <i data-feather="arrow-left" class="icon-sm me-1"></i>
                                         Kembali
