@@ -496,3 +496,8 @@ Route::get('/pemesanan/{id}/payment', function ($id) {
     return view('home.pemesanan.payment', ['pemesanan_id' => $id]);
 })->name('pemesanan.payment');
 
+
+Route::post('/pemesanan/store', [UmrohController::class, 'storePemesanan'])->name('pemesanan.store');
+Route::get('/pemesanan/detail/{id}', [UmrohController::class, 'detailPemesanan'])->name('pemesanan.detail');
+Route::get('/pemesanan/jamaah/{id}', [UmrohController::class, 'detailJamaah'])->name('pemesanan.detail.jamaah'); // Untuk tombol "Lihat Data Jamaah"
+Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
