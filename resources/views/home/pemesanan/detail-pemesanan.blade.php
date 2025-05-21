@@ -1,201 +1,264 @@
 @extends('layouts.main')
 
 @section('content')
-@php
-    use Carbon\Carbon;
-@endphp
-
-<div class="inner-banner">
-    <div class="container">
-        <div class="inner-title text-center">
-            <h3>Detail Pemesanan</h3>
-            <ul class="list-inline breadcrumb-items">
-                <li class="list-inline-item"><a href="/home">Beranda</a></li>
-                <li class="list-inline-item"><i class='bx bx-chevron-right'></i></li>
-                <li class="list-inline-item"><a href="/umroh">Paket Umroh</a></li>
-                <li class="list-inline-item"><i class='bx bx-chevron-right'></i></li>
-                <li class="list-inline-item">Detail Pemesanan</li>
-            </ul>
+    @php
+        use Carbon\Carbon;
+    @endphp
+    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+        <div>
+            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
+        </div>
+        <div class="d-flex align-items-center flex-wrap text-nowrap">
         </div>
     </div>
-    <div class="inner-shape">
-        <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Gambar">
-    </div>
-</div>
-
-<div class="booking-area pt-100 pb-70">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Detail Pemesanan -->
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-light py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="m-0 fw-bold"><i class='bx bx-file me-2'></i>Detail Pemesanan</h5>
-                        <div>
-                            <a href="{{ route('pemesanan.detail.jamaah', $pemesanan->id) }}" class="btn btn-primary btn-sm me-2"><i class='bx bx-user me-1'></i>Lihat Data Jamaah</a>
-                            <a href="{{ route('pemesanan.tagihan', $pemesanan->id) }}" class="btn btn-success btn-sm"><i class='bx bx-receipt me-1'></i>Lihat Tagihan</a>
-                        </div>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <img src="{{ asset('storage/' . $pemesanan->paket->gambar) }}" alt="{{ $pemesanan->paket->nama_paket }}" class="img-fluid rounded" style="width: 100%; height: auto;">
-                            </div>
-                            <div class="col-md-8">
-                                <ul class="list-unstyled">
-                                    <li class="mb-2"><strong>Nama Paket:</strong> {{ $pemesanan->paket->nama_paket }}</li>
-                                    <li class="mb-2"><strong>Tanggal Pemesanan:</strong> {{ Carbon::parse($pemesanan->created_at)->format('d M Y') }}</li>
-                                    <li class="mb-2"><strong>Tanggal Pelunasan:</strong> {{ Carbon::parse($pemesanan->paket->tanggal_mulai)->format('d M Y') }}</li>
-                                    <li class="mb-2"><strong>Pembayaran:</strong> {{ $pemesanan->metode_pembayaran }}</li>
-                                    <li class="mb-2"><strong>Jumlah Pesanan:</strong> {{ $pemesanan->jumlah_pengisi }} pax</li>
-                                    <li class="mb-2"><strong>Status Pelunasan:</strong> {{ $pemesanan->status_pembayaran ?? 'Belum Lunas' }}</li>
-                                    <li class="mb-2"><strong>Total Harga:</strong> Rp {{ number_format($pemesanan->total_harga, 0, ',', '.') }}</li>
-                                </ul>
+    <div class="row">
+        <div class="col-lg-12 col-xl-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline mb-2">
+                        <h6 class="card-title mb-2">{{ $title }}</h6>
+                        <div class="dropdown mb-2">
+                            <button class="btn p-0" type="button" id="lihat" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="lihat">
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/paket/{{ $pemesanan->paket_id }}/jemaah?pemesanan_id={{ $pemesanan->id }}"><i
+                                        data-feather="eye" class="icon-sm me-2"></i> <span class="">Lihat
+                                        Jema'ah</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-kamar"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat
+                                        Pemesanan Kamar</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-ekstra"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat
+                                        Pemesanan Ekstra</span></a>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="/admin/pemesanan/{{ $pemesanan->id }}/pembayaran"><i data-feather="eye"
+                                        class="icon-sm me-2"></i> <span class="">Lihat
+                                        Pembayaran</span></a>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Pemesanan Kamar -->
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-light py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="m-0 fw-bold"><i class='bx bx-hotel me-2'></i>Pemesanan Kamar</h5>
-                        <a href="#" class="btn btn-primary btn-sm"><i class='bx bx-plus me-1'></i>Tambah Pemesanan Kamar</a>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tipe Kamar</th>
-                                        <th>Jumlah Pengisi</th>
-                                        <th>Harga</th>
-                                        <th>Keterangan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($pemesanan->kamar as $index => $kamar)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="d-flex align-items-start mb-3">
+                                <img src="{{ asset('storage/' . $pemesanan->paket->gambar) }}" class="wd-100 wd-sm-200 me-3"
+                                    alt="pemesanan">
+                                <div class="mb-2">
+                                    <h5 class="mb-2">Detail Pemesanan</h5>
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul>
+                                                <li>Nama Paket : {{ $pemesanan->paket->nama_paket }}</li>
+                                                <li>
+                                                    Tanggal Pemesanan :
+                                                    {{ Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('LL') }}
+                                                </li>
+                                                <li>Jumlah Pesanan : {{ $pemesanan->jumlah_orang }} pax </li>
+                                                <li>Total Harga : {{ number_format($pemesanan->harga, 2, ',', '.') }}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col">
+                                            <ul>
+                                                <li>
+                                                    Tanggal Pelunasan :
+                                                    {{ Carbon::parse($pemesanan->tanggal_pelunasan)->isoFormat('LL') }}
+                                                </li>
+                                                <li>Pembayaran : {{ $pemesanan->metode_pembayaran }}</li>
+                                                <li>Status Pelunasan:
+                                                    {{ $pemesanan->is_pembayaran_lunas ? 'Lunas' : 'Belum Lunas' }}</li>
+                                            </ul>
+                                            <a href="/admin/paket/{{ $pemesanan->paket_id }}/jemaah?pemesanan_id={{ $pemesanan->id }}"
+                                                class="btn btn-sm btn-haifa mb-1"><i data-feather="eye"
+                                                    class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
+                                            <a href="/admin/pemesanan/{{ $pemesanan->id }}/tagihan"
+                                                class="btn btn-sm btn-success mb-1"><i data-feather="file-text"
+                                                    class="icon-sm me-2"></i>Lihat Tagihan</a>
+                                            <a href="/admin/paket/{{ $pemesanan->paket_id }}/pemesanan"
+                                                class="btn btn-sm btn-secondary mb-1"><i data-feather="arrow-left"
+                                                    class="icon-sm me-2"></i>Kembali</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 class="mb-2">Pemesanan Kamar</h4>
+                            <a href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-kamar/create"
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                Pemesanan Kamar</a>
+                            <div class="table-responsive">
+                                {{-- id="dataTableExample" --}}
+                                <table class="table table-hover mb-0">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $kamar->tipe_kamar }}</td>
-                                            <td>{{ $kamar->jumlah_pengisi }}</td>
-                                            <td>Rp {{ number_format($kamar->harga, 0, ',', '.') }}</td>
-                                            <td>{{ $kamar->keterangan ?? '-' }}</td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary btn-sm me-1"><i class='bx bx-show'></i> Lihat Permintaan</a>
-                                                <a href="#" class="btn btn-warning btn-sm me-1"><i class='bx bx-edit'></i> Edit</a>
-                                                <a href="#" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i> Hapus</a>
-                                            </td>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Tipe Kamar</th>
+                                            <th class="pt-0">Jumlah Pengisi</th>
+                                            <th class="pt-0">Harga</th>
+                                            <th class="pt-0">Keterangan</th>
+                                            <th class="pt-0">Aksi</th>
                                         </tr>
-                                    @empty
+                                    </thead>
+                                    <tbody>
+                                        @if ($pemesanan->pemesananKamars->count() > 0)
+                                            @foreach ($pemesanan->pemesananKamars as $kamar)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $kamar->tipe_kamar }}</td>
+                                                    <td>{{ $kamar->jumlah_pengisi }}</td>
+                                                    <td>Rp.{{ number_format($kamar->harga, 2, ',', '.') }}</td>
+                                                    <td>{{ $kamar->keterangan }}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center ">
+                                                            <a href="/admin/pemesanan-kamar/{{ $kamar->id }}"
+                                                                class="badge bg-haifa d-inline-block ms-1">Lihat
+                                                                Permintaan</a>
+                                                            <a href="/admin/pemesanan-kamar/{{ $kamar->id }}/edit"
+                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
+                                                            <form action="/admin/pemesanan-kamar/{{ $kamar->id }}"
+                                                                method="post">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    Pemesanan kamar belum Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 class="mb-2">Pemesanan Ekstra</h4>
+                            <a href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-ekstra/create"
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Tambah
+                                Pemesanan Ekstra</a>
+                            <div class="table-responsive">
+                                {{-- id="dataTableExample" --}}
+                                <table class="table table-hover mb-0">
+                                    <thead>
                                         <tr>
-                                            <td colspan="6" class="text-center">Belum ada pemesanan kamar.</td>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Ekstra / Tambahan</th>
+                                            <th class="pt-0">Jumlah</th>
+                                            <th class="pt-0">Total Harga</th>
+                                            <th class="pt-0">Keterangan</th>
+                                            <th class="pt-0">Aksi</th>
                                         </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @if ($pemesanan->pemesananEkstras->count() > 0)
+                                            @foreach ($pemesanan->pemesananEkstras as $ekstra)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $ekstra->ekstra }}</td>
+                                                    <td>{{ $ekstra->jumlah }}</td>
+                                                    <td>Rp.{{ number_format($ekstra->total_harga, 2, ',', '.') }}</td>
+                                                    <td>{{ $ekstra->keterangan }}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center ">
+                                                            <a href="/admin/pemesanan-ekstra/{{ $ekstra->id }}/edit"
+                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
+                                                            <form action="/admin/pemesanan-ekstra/{{ $ekstra->id }}"
+                                                                method="post">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    Pemesanan Ekstra belum Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 class="mb-2">pembayaran</h4>
+                            <a href="/admin/pemesanan/{{ $pemesanan->id }}/pembayaran/create"
+                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i>
+                                Tambah
+                                Riwayat
+                                pembayaran</a>
+                            <div class="table-responsive">
+                                {{-- id="dataTableExample" --}}
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Jumlah Pembayaran</th>
+                                            <th class="pt-0">Metode Pembayaran</th>
+                                            <th class="pt-0">Tanggal Pembayaran</th>
+                                            <th class="pt-0">Bukti Pembayaran</th>
+                                            <th class="pt-0">Status Pembayran</th>
+                                            <th class="pt-0">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($pemesanan->pembayarans->count() > 0)
+                                            @foreach ($pemesanan->pembayarans as $pembayaran)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>Rp.{{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}
+                                                    </td>
+                                                    <td>{{ $pembayaran->metode_pembayaran }}</td>
+                                                    <td>{{ Carbon::parse($pembayaran->tanggal_pembayaran)->isoFormat('LL') }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}"
+                                                            class="btn btn-sm btn-link">Lihat Bukti</a>
+                                                    </td>
+                                                    <td>{{ $pembayaran->status_pembayaran }}</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center ">
+                                                            <a href="/admin/pembayaran/{{ $pembayaran->id }}/edit"
+                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
+                                                            <form action="/admin/pembayaran/{{ $pembayaran->id }}"
+                                                                method="post">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="17">
+                                                    Riwayat pembayaran belum Tersedia
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Pemesanan Ekstra -->
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-light py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="m-0 fw-bold"><i class='bx bx-plus-circle me-2'></i>Pemesanan Ekstra</h5>
-                        <a href="#" class="btn btn-primary btn-sm"><i class='bx bx-plus me-1'></i>Tambah Pemesanan Ekstra</a>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Ekstra / Tambahan</th>
-                                        <th>Jumlah</th>
-                                        <th>Total Harga</th>
-                                        <th>Keterangan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($pemesanan->ekstra as $index => $ekstra)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $ekstra->nama_ekstra }}</td>
-                                            <td>{{ $ekstra->jumlah }}</td>
-                                            <td>Rp {{ number_format($ekstra->total_harga, 0, ',', '.') }}</td>
-                                            <td>{{ $ekstra->keterangan ?? '-' }}</td>
-                                            <td>
-                                                <a href="#" class="btn btn-warning btn-sm me-1"><i class='bx bx-edit'></i> Edit</a>
-                                                <a href="#" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i> Hapus</a>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center">Belum ada pemesanan ekstra.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Riwayat Pembayaran -->
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-light py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="m-0 fw-bold"><i class='bx bx-money me-2'></i>Riwayat Pembayaran</h5>
-                        <a href="#" class="btn btn-primary btn-sm"><i class='bx bx-plus me-1'></i>Tambah Riwayat Pembayaran</a>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Jumlah Pembayaran</th>
-                                        <th>Metode Pembayaran</th>
-                                        <th>Tanggal Pembayaran</th>
-                                        <th>Bukti Pembayaran</th>
-                                        <th>Status Pembayaran</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($pemesanan->pembayaran as $index => $pembayaran)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>Rp {{ number_format($pembayaran->jumlah_pembayaran, 0, ',', '.') }}</td>
-                                            <td>{{ $pembayaran->metode_pembayaran }}</td>
-                                            <td>{{ Carbon::parse($pembayaran->tanggal_pembayaran)->format('d M Y') }}</td>
-                                            <td><a href="#">Lihat Bukti</a></td>
-                                            <td>{{ $pembayaran->status_pembayaran }}</td>
-                                            <td>
-                                                <a href="#" class="btn btn-warning btn-sm me-1"><i class='bx bx-edit'></i> Edit</a>
-                                                <a href="#" class="btn btn-danger btn-sm"><i class='bx bx-trash'></i> Hapus</a>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center">Belum ada riwayat pembayaran.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tombol Kembali -->
-                <div class="text-start">
-                    <a href="{{ route('pemesanan.form') }}" class="btn btn-secondary btn-bg-two border-radius-5 px-4 py-3">
-                        <i class='bx bx-arrow-back me-2'></i>Kembali
-                    </a>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> <!-- row -->
 @endsection
