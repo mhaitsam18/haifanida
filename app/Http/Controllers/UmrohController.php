@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Paket;
 use App\Models\Pemesanan;
+use App\Models\Jemaah;
 use App\Models\Provinsi;
 use App\Models\Ekstra;
 use Illuminate\Http\Request;
@@ -142,15 +143,11 @@ class UmrohController extends Controller
     {   
         $user = Auth::user();
         $paket = Paket::findOrFail($request->paket_id);
-        $provinsis = Provinsi::all(); // Ambil semua data provinsi
-        $ekstras = Ekstra::all(); // Ambil semua data layanan ekstra
 
         return view('home.pemesanan.pemesanan-umroh', [
             'title' => 'Form Pemesanan Umroh',
             'paket' => $paket,
-            'user' => $user,
-            'provinsis' => $provinsis,
-            'ekstras' => $ekstras
+            'user' => $user
         ]);
     }
 
@@ -199,13 +196,28 @@ class UmrohController extends Controller
     public function detailPemesanan($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
-
+        // where('id', $id)
+        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
+        // ->firstOrFail();
         return view('home.pemesanan.detail-pemesanan', [
             'title' => 'Detail Pemesanan',
             'pemesanan' => $pemesanan
         ]);
     }
 
+    public function listJemaah($id)
+    {   
+        $jemaahs = Jemaah::where('pemesanan_id', $id);
+        $pemesanan = Pemesanan::findOrFail($id);
+        // where('id', $id)
+        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
+        // ->firstOrFail();
+        return view('home.pemesanan.jemaah', [
+            'title' => 'Detail Pemesanan',
+            'pemesanan' => $pemesanan,
+            'jemaahs' => $jemaahs
+        ]);
+    }
 //     public function store(Request $request)
 //     {
 //         $validator = Validator::make($request->all(), [
