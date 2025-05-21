@@ -86,15 +86,18 @@
 }
 
 .dropdown-menu {
+    position: absolute !important;
     z-index: 10000 !important;
-    position: absolute;
-    display: none;
+    display: block !important;
+    opacity: 1 !important;
     min-width: 12rem;
     padding: 0.5rem 0;
     background-color: #fff;
     border: 1px solid rgba(0,0,0,0.15);
     border-radius: 0.25rem;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.175);
+    user-select: auto;
+    
 }
 
 .nav-item.dropdown:hover .dropdown-menu,
