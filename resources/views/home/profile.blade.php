@@ -16,9 +16,11 @@
         @if ($mode == 'edit')
 
             <!-- Left column: Photo -->
-            <div class="col-lg-4">
+            <!-- MODIFIED-- -->
+            <div class="col-lg-4 mt-3">
                 @if ($user->photo)
-                    <img src="{{ asset('storage/user-photo/ . $user->photo') }}" class="img-fluid rounded" alt="Profile Photo">
+                    <img src="/storage/{{ $user->photo }}" class="img-fluid rounded" alt="Profile Photo">
+            <!-- --MODIFIED -->
                 @endif
             </div>
             <!-- Right column: Form -->
@@ -56,9 +58,11 @@
         @else
 
             <!-- Left Column: Photo -->
-            <div class="col-lg-4">
+            <!-- MODIFIED-- -->
+            <div class="col-lg-4 mt-3">
                 @if($user->photo)
-                    <img src="{{ asset('storage/user-photo/ . $user->photo') }}" class="img-fluid rounded" alt="Profile Photo">
+                    <img src="/storage/{{ $user->photo }}" class="img-fluid rounded" alt="Profile Photo show">
+            <!-- --MODIFIED -->
                 @endif
             </div>
 
