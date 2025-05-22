@@ -497,3 +497,24 @@ Route::get('/pemesanan/{id}/payment', function ($id) {
     return view('home.pemesanan.payment', ['pemesanan_id' => $id]);
 })->name('pemesanan.payment');
 
+
+Route::post('/pemesanan/store', [UmrohController::class, 'storePemesanan'])->name('pemesanan.store');
+Route::get('/pemesanan/detail/{id}', [UmrohController::class, 'detailPemesanan'])->name('pemesanan.detail');
+Route::get('/pemesanan/jemaah/{id}', [UmrohController::class, 'listJemaah'])->name('pemesanan.jemaah.list'); // Untuk tombol "Lihat Data Jamaah"
+// Route::get('/pemesanan/jamaah/{id}', [UmrohController::class, 'detailJamaah'])->name('pemesanan.detail.jamaah'); // Untuk tombol "Lihat detail Jamaah"
+Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
+
+Route::get('/jemaah', function () {
+    return view('home.pemesanan.jemaah', ['title' => 'Data Jemaah']);
+});
+Route::get('/tambah-jemaah', function () {
+    return view('home.pemesanan.add-jemaah', ['title' => 'Tambah Data Jemaah']);
+});
+Route::get('/detail-jemaah', function () {
+    return view('home.pemesanan.detail-jemaah', ['title' => 'Detail Data Jemaah']);
+});
+Route::get('/tambah-berkas', function () {
+    return view('home.pemesanan.add-berkas', ['title' => 'Tambah Berkas']);
+});
+
+

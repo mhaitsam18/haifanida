@@ -69,6 +69,7 @@ DATABASE
 ---
 ## dalam scope
 - bagian Tambah Jemaah bagian 1(jamaah pertama) drop down untuk provinsi ada, namun dropdown kabupaten tidak muncul, sedangkan ketika tambah 1 lagi dibawahnya itu normal normal 
+- ada kesalahan pada UmrahController, tidak mengambil data kabupaten, sudah di fix
 ## luar scope=
 - autentikasi
 ```

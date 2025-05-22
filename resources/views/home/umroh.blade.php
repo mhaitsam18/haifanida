@@ -160,9 +160,9 @@
                                 <div class="blog-img">
                                     <a href="/paket/{{ $paket->id }}">
                                         @if($paket->gambar)
-                                            <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Gambar Paket" loading="lazy">
+                                            <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Gambar Paket" loading="lazy" class="img-fixed">
                                         @else
-                                            <img src="/assets-techex-demo/images/blog/blog-img1.jpg" alt="{{ $paket->nama_paket }}" loading="lazy">
+                                            <img src="/assets-techex-demo/images/blog/blog-img1.jpg" alt="{{ $paket->nama_paket }}" loading="lazy" class="img-fixed">
                                         @endif
                                     </a>
                                     <div class="blog-tag">
