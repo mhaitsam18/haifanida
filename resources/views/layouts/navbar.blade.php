@@ -198,11 +198,11 @@
                                         Visi dan Misi
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="/kantor-kami" class="nav-link">
                                         Kantor Perwakilan, Cabang dan Agen
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
                         <li class="nav-item">

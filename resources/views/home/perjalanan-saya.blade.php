@@ -53,12 +53,12 @@
                         <!-- MODIFIED-- -->
                         @if($item->is_pembayaran_lunas == 0)
                             <p class="me-auto bd-highlight text-muted">Terdapat tagihan yang belum dilunasi</p>
-                            <a href="#" class="bd-highlight btn btn-primary disabled">Berkas Lengkap</a>
-                            <a href="/member/tagihan" class="bd-highlight btn btn-primary ms-2"">Lunasi tagihan</a>
+                            <a href="{{ route('pemesanan.detail', $item->id) }}" class="bd-highlight btn btn-primary">Detail</a>
+                            {{-- <a href="/member/tagihan" class="bd-highlight btn btn-primary ms-2"">Lunasi tagihan</a> --}}
                         @else
                             <p class="me-auto bd-highlight text-muted">Terdapat Berkas yang belum diupload</p>
-                            <a href="#" class="bd-highlight btn btn-primary">Lengkapi berkas</a>
-                            <a href="#" class="bd-highlight btn btn-primary ms-2 disabled"">Tagihan Lunas</a>
+                            {{-- <a href="#" class="bd-highlight btn btn-primary">Lengkapi berkas</a>
+                            <a href="#" class="bd-highlight btn btn-primary ms-2 disabled"">Tagihan Lunas</a> --}}
                         @endif
                         <!-- --MODIFIED -->
                     </div>

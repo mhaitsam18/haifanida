@@ -120,7 +120,7 @@
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0"><i data-feather="home" class="icon-sm me-2"></i>Pemesanan Kamar</h5>
-                        <a href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-kamar/create" 
+                        <a href="/pemesanan-kamar" 
                             class="btn btn-primary btn-sm">
                             <i data-feather="plus" class="icon-sm me-1"></i>
                             Tambah Kamar
@@ -187,7 +187,7 @@
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0"><i data-feather="plus-circle" class="icon-sm me-2"></i>Pemesanan Ekstra</h5>
-                        <a href="/admin/pemesanan/{{ $pemesanan->id }}/pemesanan-ekstra/create" 
+                        <a href="/tambah-ekstra" 
                             class="btn btn-primary btn-sm">
                             <i data-feather="plus" class="icon-sm me-1"></i>
                             Tambah Ekstra
@@ -250,7 +250,7 @@
                 <div class="mb-2">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0"><i data-feather="credit-card" class="icon-sm me-2"></i>Pembayaran</h5>
-                        <a href="/admin/pemesanan/{{ $pemesanan->id }}/pembayaran/create" 
+                        <a href="/tambah-pembayaran" 
                             class="btn btn-primary btn-sm">
                             <i data-feather="plus" class="icon-sm me-1"></i>
                             Tambah Pembayaran
