@@ -207,7 +207,7 @@ class UmrohController extends Controller
 
     public function listJemaah($id)
     {   
-        $jemaahs = Jemaah::where('pemesanan_id', $id);
+        $jemaahs = Jemaah::where('pemesanan_id', $id)->get();
         $pemesanan = Pemesanan::findOrFail($id);
         // where('id', $id)
         // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
