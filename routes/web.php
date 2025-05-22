@@ -516,5 +516,20 @@ Route::get('/detail-jemaah', function () {
 Route::get('/tambah-berkas', function () {
     return view('home.pemesanan.add-berkas', ['title' => 'Tambah Berkas']);
 });
+Route::get('/pemesanan-kamar', function () {
+    return view('home.pemesanan.kamar.pemesanan-kamar', ['title' => 'Pesan Kamar']);
+});
+Route::get('/detail-permintaan', function () {
+    return view('home.pemesanan.kamar.permintaan.detail-permintaan', ['title' => 'Data Detail Permintaan Kamar']);
+});
+Route::get('/tambah-permintaan', function () {
+    return view('home.pemesanan.kamar.permintaan.add-permintaan', ['title' => 'Tambah Permintaan Kamar']);
+});
+Route::get('/tambah-ekstra', function () {
+    return view('home.pemesanan.ekstra.add-ekstra', ['title' => 'Tambah Pesanan Ekstra']);
+});
+Route::get('/tambah-pembayaran', function () {
+    return view('home.pemesanan.pembayaran.add-pembayaran', ['title' => 'Tambah Pembayaran']);
+});
 
-
+Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
