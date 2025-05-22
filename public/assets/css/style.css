@@ -1,18 +1,22 @@
-/* Background */
-#background-haifa {
+/* #background-haifa{
     background-image: url('../img/app/latar.png');
     background-size: cover;
+} */
+
+.button-a{
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0px;
 }
 
-/* Button Styles */
-.button-a, .badge-a {
+.badge-a{
     background: none;
     border: none;
     cursor: pointer;
     text-decoration: none;
 }
-
-/* Icon Styles */
 .ikon {
     font-family: flaticon !important;
     font-style: normal;
@@ -26,7 +30,7 @@
     /* background: url('../img/icons/haji-umroh.png') no-repeat center center; */
 }
 
-/* Inner Banner */
+/* Gaya baru untuk inner-banner */
 .inner-banner {
     height: 200px;
     display: flex;
@@ -46,9 +50,9 @@
     height: auto;
 }
 
-/* Inner Title */
+/* Gaya tambahan untuk inner-title agar teks terlihat bagus */
 .inner-title {
-    color: #fff;
+    color: #fff; /* Teks putih sesuai screenshot */
     text-align: center;
 }
 
@@ -65,7 +69,10 @@
     gap: 10px;
 }
 
-.inner-title ul li, 
+.inner-title ul li {
+    color: #fff;
+}
+
 .inner-title ul li a {
     color: #fff;
     text-decoration: none;
@@ -75,45 +82,125 @@
     text-decoration: underline;
 }
 
-/* Navbar & Dropdown */
-.navbar-area, .main-nav, .navbar-nav {
+/* Pastikan navbar bisa diklik */
+.navbar-area {
     position: relative;
-    z-index: 9999;
+    z-index: 1000; /* Beri z-index tinggi agar navbar selalu di atas */
 }
 
-.nav-item.dropdown {
-    position: relative;
+.main-nav {
+    z-index: 1000;
+}
+
+.navbar-nav {
+    z-index: 1000;
 }
 
 .dropdown-menu {
-    position: absolute !important;
-    z-index: 10000 !important;
-    display: block !important;
-    opacity: 1 !important;
-    min-width: 12rem;
-    padding: 0.5rem 0;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 0.25rem;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.175);
-    user-select: auto;
-    
+    z-index: 1001; 
 }
 
-.nav-item.dropdown:hover .dropdown-menu,
-.nav-item.dropdown.show .dropdown-menu {
+.content-area {
+    padding-top: 30px; /* Ubah sesuai kebutuhan, misalnya 30px, 50px, dll. */
+    padding-bottom: 50px;
+}
+
+/* FORM  KEPUASAN*/
+.form-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+.form-iframe {
+    width: 100%;
+    min-height: 800px; 
+    max-height: 1200px; 
+    border-radius: 4px;
+}
+
+/*FORM KELUHAN */
+/* .section-title {
+    margin-bottom: 40px;
+}
+.section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+.section-title p {
+    font-size: 16px;
+    color: #ffffff;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.form-button-wrapper {
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Memastikan tombol di tengah horizontal *
+} */
+ 
+/* MODIFIED */
+.keluhan-section h1,
+.keluhan-section h2,
+.keluhan-section h3,
+.keluhan-section h4,
+.keluhan-section h5,
+.keluhan-section h6,
+.keluhan-section p,
+.keluhan-section li,
+.keluhan-section strong,
+.keluhan-section a,
+.keluhan-section span {
+    color: #000000;
+}
+
+.btn-custom {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff; /* Warna biru modern */
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn-custom:hover {
+    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+    transform: translateY(-2px);
+}
+.btn-custom i {
+    margin-right: 10px;
+    font-size: 22px;
+}
+
+/* Fixed Ukuran Gambar */
+.blog-img {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; 
+    overflow: visible; 
+    border-radius: 8px;
+}
+
+.img-fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
-/* Content Area */
-.content-area {
-    padding: 30px 0 50px;
-}
-
-/* Blog Tag */
 .blog-tag {
     position: absolute;
-    top: 50px;
+    top: 50 px; 
     right: 15px;
     height: 80px;
     width: 50px;
@@ -123,8 +210,18 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.blog-tag h3, .blog-tag span {
+.blog-tag h3 {
+    margin: 0;
     font-size: 18px;
     font-weight: bold;
-    text-align: center;
+    color: #000;
+        text-align: center;
+
+}
+
+.blog-tag span {
+    font-size: 14px;
+    color: #000;
+        text-align: center;
+
 }
