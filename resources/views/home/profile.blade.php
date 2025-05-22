@@ -90,8 +90,7 @@
 
                 <a href="{{ route('member.profile', ['mode' => 'edit']) }}" class="default-btn btn-bg-two border-radius-50">Edit Profile</a>
                 <!-- MODIFIED-- -->
-                 <!-- TODO: Implementasi page untuk mengelola identitas dan berkas member -->
-                <a href="#" class="default-btn btn-bg-two border-radius-50">Kelola identitas dan berkas</a>
+                <a href="/member/identitas" class="default-btn btn-bg-two border-radius-50">Kelola identitas dan berkas</a>
                 <!-- --MODIFIED -->
             </div>
         @endif
