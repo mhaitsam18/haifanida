@@ -50,7 +50,7 @@
                                         <td>{{ $jemaah->nomor_telepon }}</td>
                                         <td> <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
                                                 class="img-thumbnail img-fluid"></td>
-                                        <td class="print-hilang">
+                                        {{-- <td class="print-hilang">
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}"
                                                     class="badge bg-haifa d-inline-block m-1">Detail</a>
@@ -63,7 +63,7 @@
                                                         class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
                                                 </form>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                     </tbody>
