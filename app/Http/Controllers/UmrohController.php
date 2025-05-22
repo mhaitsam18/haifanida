@@ -209,6 +209,7 @@ class UmrohController extends Controller
     {   
         $jemaahs = Jemaah::where('pemesanan_id', $id)->get();
         $pemesanan = Pemesanan::findOrFail($id);
+        // BYPASS DEV
         // where('id', $id)
         // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
         // ->firstOrFail();
@@ -221,6 +222,7 @@ class UmrohController extends Controller
     public function createJemaah($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
+        // BYPASS DEV
         // where('id', $id)
         // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
         // ->firstOrFail();
