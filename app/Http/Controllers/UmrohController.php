@@ -218,6 +218,77 @@ class UmrohController extends Controller
             'jemaahs' => $jemaahs
         ]);
     }
+    public function createJemaah($id)
+    {
+        $pemesanan = Pemesanan::findOrFail($id);
+        // where('id', $id)
+        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
+        // ->firstOrFail();
+        return view('home.pemesanan.add-jemaah', [
+            'title' => 'Tambah Jemaah',
+            'pemesanan' => $pemesanan
+        ]);
+    }
+
+    public function storeJemaah(Request $request, $id)
+    {
+        $validateData = $request->validate([
+            'pemesanan_id' => 'required|string',
+            'grup_id' => 'nullable|string',
+            'mahram_id' => 'nullable|string',
+            'nomor_ktp' => 'nullable|string',
+            'nama_lengkap' => 'nullable|string',
+            'nama_sesuai_paspor' => 'nullable|string',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'kewarganegaraan' => 'nullable|string',
+            'alamat' => 'nullable|string',
+            'kelurahan' => 'nullable|string',
+            'kecamatan' => 'nullable|string',
+            'kabupaten' => 'nullable|string',
+            'provinsi' => 'nullable|string',
+            'kode_pos' => 'nullable|string',
+            'nomor_telepon' => 'nullable|string',
+            'email' => 'nullable|string',
+            'tingkat_pendidikan' => 'nullable|string',
+            'pekerjaan' => 'nullable|string',
+            'nomor_paspor' => 'nullable|string',
+            'tempat_dikeluarkan' => 'nullable|string',
+            'tanggal_dikeluarkan' => 'nullable|date',
+            'tanggal_kadaluarsa' => 'nullable|date',
+            'pernah_umroh' => 'nullable|boolean',
+            'pernah_haji' => 'nullable|boolean',
+            'hubungan_mahram' => 'nullable|string',
+            'golongan_darah' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'nama_keluarga_terdekat' => 'nullable|string',
+            'kontak_keluarga_terdekat' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        try {
+            // Simpan foto
+            if ($request->hasFile('foto')) {
+                $validateData['foto'] = $request->file('foto')->store('jemaah-foto');
+            }
+
+            // Tambahkan data wajib
+            $validateData['pemesanan_id'] = $id;
+            // $validateData['is_active'] = true;
+
+            Jemaah::create($validateData);
+
+            return redirect()->route('pemesanan.jemaah.list', $id)
+                ->with('success', 'Data jemaah berhasil ditambahkan');
+
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Gagal menambahkan jemaah: '.$e->getMessage());
+        }
+    }
+
+
 //     public function store(Request $request)
 //     {
 //         $validator = Validator::make($request->all(), [
