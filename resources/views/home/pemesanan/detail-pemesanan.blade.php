@@ -103,7 +103,7 @@
                                         <i data-feather="file-text" class="icon-sm me-1"></i>
                                         Lihat Tagihan
                                     </a>
-                                    <a href="{{ route('pemesanan.detail', $pemesanan->id)}}" 
+                                    <a href="{{ route('member.perjalanan-saya', $pemesanan->id)}}" 
                                         class="btn btn-secondary btn-sm mb-2">
                                         <i data-feather="arrow-left" class="icon-sm me-1"></i>
                                         Kembali
