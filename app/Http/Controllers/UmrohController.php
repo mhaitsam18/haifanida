@@ -290,7 +290,11 @@ class UmrohController extends Controller
         }
     }
 
-
+    public function destroy(Jemaah $jemaah)
+    {
+        $jemaah->delete();
+        return back()->with('success', 'Data jemaah berhasil dihapus');
+    }
 //     public function store(Request $request)
 //     {
 //         $validator = Validator::make($request->all(), [
