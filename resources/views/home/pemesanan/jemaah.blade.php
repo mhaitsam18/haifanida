@@ -16,7 +16,7 @@
             <a href="{{ route('pemesanan.jemaah.create', $pemesanan->id) }}" class="btn btn-primary me-2">
                 <i class="fas fa-plus-circle me-1"></i> Tambah
             </a>
-            <a href="#" class="btn btn-secondary">
+            <a href="{{ route('pemesanan.detail',  $pemesanan->id) }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
@@ -50,20 +50,19 @@
                                         <td>{{ $jemaah->nomor_telepon }}</td>
                                         <td> <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
                                                 class="img-thumbnail img-fluid"></td>
-                                        {{-- <td class="print-hilang">
+                                        <td class="print-hilang">
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}"
-                                                    class="badge bg-haifa d-inline-block m-1">Detail</a>
-                                                <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}/edit"
+                                                <a href="#"
+                                                    class="badge btn-primary d-inline-block m-1">Detail</a>
+                                                <a href="#"
                                                     class="badge bg-success d-inline-block m-1">Edit</a>
-                                                <form action="/admin/jemaah/{{ $jemaah->id }}" method="post">
-                                                    @method('delete')
+                                                <form action="{{ route('jemaah.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
                                                     @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                 </form>
                                             </div>
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                 @endforeach
                     </tbody>
