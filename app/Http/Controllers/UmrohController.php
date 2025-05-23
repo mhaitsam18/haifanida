@@ -194,14 +194,16 @@ class UmrohController extends Controller
     }
 
     public function detailPemesanan($id)
-    {
+    {   
+        $user = Auth::user();
         $pemesanan = Pemesanan::findOrFail($id);
         // where('id', $id)
         // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
         // ->firstOrFail();
         return view('home.pemesanan.detail-pemesanan', [
             'title' => 'Detail Pemesanan',
-            'pemesanan' => $pemesanan
+            'pemesanan' => $pemesanan,
+            'user' => $user
         ]);
     }
 
