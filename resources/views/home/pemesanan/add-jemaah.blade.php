@@ -16,9 +16,9 @@
     </div>
 
     <!-- Main Form -->
-    <form action="{{ route('jemaah.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('pemesanan.jemaah.store', $pemesanan->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        
+        <input type="hidden" name="pemesanan_id" value="{{ $pemesanan->id }}">
         <!-- Modern Card-Based Form Layout -->
         <div class="row g-4">
             <!-- Personal Data Card -->
@@ -208,7 +208,7 @@
             </div>
             
             <!-- Address Card -->
-            <div class="col-lg-6">
+            {{-- <div class="col-lg-6">
                 <div class="card shadow-sm border-0 rounded-3">
                     <div class="card-header bg-gradient-success text-white py-3">
                         <h5 class="mb-0">
@@ -257,7 +257,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             
             <!-- Passport Information Card -->
             <div class="col-lg-6">
