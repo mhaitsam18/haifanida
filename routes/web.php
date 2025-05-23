@@ -501,6 +501,9 @@ Route::get('/pemesanan/{id}/payment', function ($id) {
 Route::post('/pemesanan/store', [UmrohController::class, 'storePemesanan'])->name('pemesanan.store');
 Route::get('/pemesanan/detail/{id}', [UmrohController::class, 'detailPemesanan'])->name('pemesanan.detail');
 Route::get('/pemesanan/jemaah/{id}', [UmrohController::class, 'listJemaah'])->name('pemesanan.jemaah.list'); // Untuk tombol "Lihat Data Jamaah"
+Route::get('/pemesanan/add-jemaah/{id}', [UmrohController::class, 'createJemaah'])->name('pemesanan.jemaah.create');
+// Route untuk menyimpan data jemaah
+Route::post('/pemesanan/jemaah/store/{id}', [UmrohController::class, 'storeJemaah'])->name('pemesanan.jemaah.store');
 // Route::get('/pemesanan/jamaah/{id}', [UmrohController::class, 'detailJamaah'])->name('pemesanan.detail.jamaah'); // Untuk tombol "Lihat detail Jamaah"
 Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
 
