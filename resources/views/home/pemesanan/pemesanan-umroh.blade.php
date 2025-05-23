@@ -30,6 +30,7 @@
                     @csrf
                     <input type="hidden" name="paket_id" value="{{ $paket->id }}">
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <input type="hidden" name="jumlah_jemaah" value="0">
                     <!-- Form Jemaah -->
                     <div class="card mb-4">
                         <div class="card-header bg-light">
