@@ -56,7 +56,7 @@
                                                     class="badge btn-primary d-inline-block m-1">Detail</a>
                                                 <a href="#"
                                                     class="badge bg-success d-inline-block m-1">Edit</a>
-                                                <form action="{{ route('jemaah.destroy', $ijemaah->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
+                                                <form action="{{ route('jemaah.destroy', $jemaah->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
