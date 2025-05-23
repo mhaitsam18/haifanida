@@ -13,7 +13,7 @@
             <h2 class="fw-bold text-primary">DATA JEMAAH</h2>
         </div>
         <div class="col-md-6 text-end">
-            <a href="/tambah-jemaah" class="btn btn-primary me-2">
+            <a href="{{ route('pemesanan.jemaah.create', $pemesanan->id) }}" class="btn btn-primary me-2">
                 <i class="fas fa-plus-circle me-1"></i> Tambah
             </a>
             <a href="#" class="btn btn-secondary">
