@@ -508,6 +508,7 @@ Route::post('/pemesanan/jemaah/store/{id}', [UmrohController::class, 'storeJemaa
 Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
 Route::delete('/jemaah/{jemaah}', [UmrohController::class, 'destroy'])->name('jemaah.destroy');
 
+
 Route::get('/jemaah', function () {
     return view('home.pemesanan.jemaah', ['title' => 'Data Jemaah']);
 });

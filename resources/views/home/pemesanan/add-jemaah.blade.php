@@ -208,7 +208,7 @@
             </div>
             
             <!-- Address Card -->
-            {{-- <div class="col-lg-6">
+            <div class="col-lg-6">
                 <div class="card shadow-sm border-0 rounded-3">
                     <div class="card-header bg-gradient-success text-white py-3">
                         <h5 class="mb-0">
@@ -218,15 +218,21 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="mb-3">
-                            <label for="provinsi" class="form-label fw-semibold">Provinsi <span class="text-danger">*</span></label>
-                            <select class="form-select" id="provinsi" name="provinsi" required>
-                                <option selected disabled value="">Pilih Provinsi</option>
-                                <option value="Aceh">Aceh</option>
-                                <option value="Sumatera Utara">Sumatera Utara</option>
-                                <option value="Sumatera Barat">Sumatera Barat</option>
-                                <!-- Add more provinces as needed -->
-                            </select>
-                        </div>
+                                    <label for="provinsi" class="form-label">Provinsi</label>
+                                    <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi"
+                                        name="provinsi">
+                                        <option value="" selected disabled>Pilih Provinsi</option>
+                                        @foreach ($provinsis as $provinsi)
+                                            <option value="{{ $provinsi->provinsi }}" @selected($provinsi->provinsi == old('provinsi'))>
+                                                {{ $provinsi->provinsi }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('provinsi')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                         
                         <div class="mb-3">
                             <label for="kabupaten" class="form-label fw-semibold">Kabupaten/Kota <span class="text-danger">*</span></label>
@@ -257,7 +263,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             
             <!-- Passport Information Card -->
             <div class="col-lg-6">
@@ -424,57 +430,56 @@
 </style>
 @endsection
 
-@section('scripts')
-<script>
-    // Preview image before upload
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function(e) {
-                document.getElementById('preview-image').src = e.target.result;
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    
-    // Dynamic dropdown for provinces and cities
-    document.addEventListener('DOMContentLoaded', function() {
-        const provinsi = document.getElementById('provinsi');
-        const kabupaten = document.getElementById('kabupaten');
-        
-        provinsi.addEventListener('change', function() {
-            // This would typically make an AJAX call to get cities based on the province
-            // For demonstration, we'll just clear and add some example cities
-            kabupaten.innerHTML = '<option selected disabled value="">Pilih Kabupaten/Kota</option>';
-            
-            if (provinsi.value === 'Aceh') {
-                addOption(kabupaten, 'Banda Aceh', 'Banda Aceh');
-                addOption(kabupaten, 'Aceh Besar', 'Aceh Besar');
-            } else if (provinsi.value === 'Sumatera Utara') {
-                addOption(kabupaten, 'Medan', 'Medan');
-                addOption(kabupaten, 'Deli Serdang', 'Deli Serdang');
-            }
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#foto').on('change', function() {
+                const file = $(this).prop('files')[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.img-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            });
         });
-        
-        function addOption(selectElement, value, text) {
-            const option = document.createElement('option');
-            option.value = value;
-            option.textContent = text;
-            selectElement.appendChild(option);
-        }
-    });
-    
-    // Form validation (simplified example)
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var isValid = true;
-        
-        // Add your validation logic here
-        
-        if (!isValid) {
-            event.preventDefault();
-        }
-    });
-</script>
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Ketika elemen provinsi berubah
+            $('#provinsi').change(function() {
+                // Ambil nilai provinsi yang dipilih
+                var selectedProvinsi = $(this).val();
+
+                // Lakukan request AJAX untuk mendapatkan data kabupaten berdasarkan provinsi
+                $.ajax({
+                    url: '/get-kabupaten', // Ganti URL dengan endpoint yang sesuai di controller
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token, sesuaikan dengan Laravel
+                        provinsi: selectedProvinsi // Ganti dengan nama field yang sesuai di database
+                    },
+                    success: function(data) {
+                        // Hapus opsi lama pada dropdown kabupaten
+                        $('#kabupaten').empty();
+
+                        // Tambahkan opsi default pada dropdown kabupaten
+                        $('#kabupaten').append(
+                            '<option value="" selected disabled>Pilih Kabupaten</option>');
+
+                        // Tambahkan opsi kabupaten berdasarkan data yang diterima dari server
+                        $.each(data, function(key, value) {
+                            $('#kabupaten').append('<option value="' + value.kabupaten +
+                                '">' +
+                                value.kabupaten + '</option>');
+                        });
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error: ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
