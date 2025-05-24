@@ -43,39 +43,36 @@ class UmrohController extends Controller
             ->whereNotNull('published_at');
         
         // Price range filter
-        if ($request->has('harga_min') && $request->harga_min) {
+        if ($request->filled('harga_min')) {
             $query->where('harga', '>=', $request->harga_min);
         }
         
-        if ($request->has('harga_max') && $request->harga_max) {
+        if ($request->filled('harga_max')) {
             $query->where('harga', '<=', $request->harga_max);
         }
         
         // Departure date filter
-        if ($request->has('tanggal_mulai') && $request->tanggal_mulai) {
+        if ($request->filled('tanggal_mulai')) {
             $query->where('tanggal_mulai', '>=', $request->tanggal_mulai);
         }
         
-        if ($request->has('tanggal_akhir') && $request->tanggal_akhir) {
+        if ($request->filled('tanggal_akhir')) {
             $query->where('tanggal_mulai', '<=', $request->tanggal_akhir);
         }
         
-        // Duration filter
-        if ($request->has('durasi') && !empty($request->durasi)) {
-            $query->whereIn('durasi', $request->durasi);
+        // Duration filter - Modified
+        if ($request->filled('durasi')) {
+            $query->where('durasi', $request->durasi);
         }
         
         // Sort options
-        if ($request->has('urutkan')) {
+        if ($request->filled('urutkan')) {
             switch ($request->urutkan) {
                 case 'harga_terendah':
                     $query->orderBy('harga', 'asc');
                     break;
                 case 'harga_tertinggi':
                     $query->orderBy('harga', 'desc');
-                    break;
-                case 'tanggal_terdekat':
-                    $query->orderBy('tanggal_mulai', 'asc');
                     break;
                 case 'durasi_terpendek':
                     $query->orderBy('durasi', 'asc');
@@ -88,7 +85,7 @@ class UmrohController extends Controller
                     break;
             }
         } else {
-            $query->latest(); // Default sorting
+            $query->latest();
         }
         
         // Execute query
@@ -100,34 +97,13 @@ class UmrohController extends Controller
             ->distinct()
             ->pluck('durasi')
             ->sort()
+            ->values()
             ->toArray();
-            
-        // Price range for filter options
-        $hargaMin = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->min('harga');
-            
-        $hargaMax = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->max('harga');
-            
-        // Get earliest and latest departure dates
-        $tanggalMin = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->min('tanggal_mulai');
-            
-        $tanggalMax = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->max('tanggal_mulai');
             
         return view('home.umroh', [
             'title' => 'Paket Umroh',
             'pakets' => $pakets,
             'durasiOptions' => $durasiOptions,
-            'hargaMin' => $hargaMin,
-            'hargaMax' => $hargaMax,
-            'tanggalMin' => $tanggalMin ? Carbon::parse($tanggalMin)->format('Y-m-d') : null,
-            'tanggalMax' => $tanggalMax ? Carbon::parse($tanggalMax)->format('Y-m-d') : null,
             'filters' => $request->all()
         ]);
     }
