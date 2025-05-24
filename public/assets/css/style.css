@@ -159,25 +159,318 @@
 }
 
 .btn-custom {
-    display: inline-flex;
-    align-items: center;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: 600;
+    position: relative;
+    background-color: #0071dc;
     color: #fff;
-    background-color: #007bff; /* Warna biru modern */
+    padding: 12px 25px;
     border-radius: 8px;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+.btn-custom:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); 
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
 .btn-custom:hover {
-    background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+    color: #fff;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
 }
-.btn-custom i {
-    margin-right: 10px;
-    font-size: 22px;
+
+.btn-custom:hover:before {
+    left: 0;
 }
+
+/* Filter Section Styles */
+.filter-section {
+    margin-bottom: 2rem;
+}
+
+.filter-section .card {
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.filter-section .card-body {
+    padding: 0;
+}
+
+.filter-section .d-flex {
+    min-height: 80px;
+}
+
+/* Filter Items */
+.filter-section .filter-item {
+    position: relative;
+    padding: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filter-section .filter-item:last-of-type {
+    border-right: none;
+}
+
+.filter-section .filter-item:hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    transform: translateY(-1px);
+}
+
+.filter-section .filter-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.filter-section .filter-item:hover::before {
+    opacity: 1;
+}
+
+/* Labels */
+.filter-section label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-section label i {
+    color: #007bff;
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+/* Form Controls */
+.filter-section .form-control,
+.filter-section .form-select {
+    border: 2px solid transparent;
+    background-color: #f8f9fa;
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+    padding: 10px 12px;
+    transition: all 0.3s ease;
+    height: auto;
+}
+
+.filter-section .form-control:focus,
+.filter-section .form-select:focus {
+    border-color: #007bff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+}
+
+.filter-section .form-control::placeholder {
+    color: #adb5bd;
+    font-weight: 400;
+}
+
+/* Input Groups */
+.filter-section .input-group {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.filter-section .input-group:focus-within {
+    border-color: #007bff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.filter-section .input-group .form-control {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.filter-section .input-group .form-control:focus {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.filter-section .input-group-text {
+    background-color: transparent;
+    border: none;
+    color: #6c757d;
+    font-weight: 600;
+    padding: 10px 8px;
+}
+
+/* Select Dropdown */
+.filter-section .form-select {
+    border-radius: 10px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23007bff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+}
+
+.filter-section .form-select:hover {
+    background-color: #ffffff;
+    border-color: #007bff;
+}
+
+/* Buttons */
+.filter-section .btn {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-section .btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.filter-section .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+}
+
+.filter-section .btn-outline-secondary {
+    border: 2px solid #e9ecef;
+    color: #6c757d;
+    background-color: transparent;
+}
+
+.filter-section .btn-outline-secondary:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    color: #495057;
+    transform: translateY(-1px);
+}
+
+/* Button Container */
+.filter-section .d-flex:last-child {
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .filter-section .d-flex {
+        flex-direction: column;
+    }
+    
+    .filter-section .filter-item {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        min-height: auto;
+        padding: 16px 20px;
+    }
+    
+    .filter-section .filter-item:last-of-type {
+        border-bottom: none;
+    }
+    
+    .filter-section .d-flex:last-child {
+        border-left: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        justify-content: center;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter-section .filter-item {
+        padding: 12px 16px;
+    }
+    
+    .filter-section .d-flex:last-child {
+        padding: 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .filter-section .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .filter-section label {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+    
+    .filter-section .form-control,
+    .filter-section .form-select {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+}
+
+/* Animation for form submission */
+.filter-section.loading .btn-primary {
+    position: relative;
+    color: transparent;
+}
+
+.filter-section.loading .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Focus states for accessibility */
+.filter-section .form-control:focus,
+.filter-section .form-select:focus,
+.filter-section .btn:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
 
 /* Fixed Ukuran Gambar */
 .blog-img {

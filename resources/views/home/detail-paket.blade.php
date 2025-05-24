@@ -69,13 +69,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bx-plane-take-off'></i> Keberangkatan dari</h5>
+                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bxs-plane-take-off'></i> Keberangkatan dari</h5>
                                         <p style="margin: 0;">{{ $paket->tempat_keberangkatan }}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bx-plane-land'></i> Kepulangan ke</h5>
+                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bxs-plane-land'></i> Kepulangan ke</h5>
                                         <p style="margin: 0;">{{ $paket->tempat_kepulangan }}</p>
                                     </div>
                                 </div>
@@ -163,21 +163,21 @@
                         <label class="form-label">Pesan yang akan dibagikan:</label>
                         <div class="p-3" style="background: #f8f9fa; border-radius: 8px; max-height: 300px; overflow-y: auto;">
                             <pre id="messagePreview" style="white-space: pre-wrap; font-family: inherit; margin-bottom: 0;">@php
-                            $message = "🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang!
-                            Berikut detail paket yang aku pilih:
+                            $message = "🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang! 
+Berikut detail paket yang aku pilih:
 
-                            ✈ " . $paket->nama_paket . "
-                            📆 Keberangkatan: " . Carbon::parse($paket->tanggal_mulai)->format('d M Y') . "
-                            ⏱ Durasi: " . $paket->durasi . " Hari
-                            🌐 Destinasi: " . $paket->destinasi . "
-                            💰 Harga: Rp " . number_format($paket->harga, 0, ',', '.') . "/orang
+✈ " . $paket->nama_paket . "
+📆 Keberangkatan: " . Carbon::parse($paket->tanggal_mulai)->format('d M Y') . "
+⏱ Durasi: " . $paket->durasi . " Hari
+🌐 Destinasi: " . $paket->destinasi . "
+💰 Harga: Rp " . number_format($paket->harga, 0, ',', '.') . "/orang
 
-                            Deskripsi " . Str::limit(strip_tags($paket->deskripsi), 200) . "
-                            " . Str::limit(strip_tags($paket->fasilitas), 200) . "
+Deskripsi " . Str::limit(strip_tags($paket->deskripsi), 200) . "
+" . Str::limit(strip_tags($paket->fasilitas), 200) . "
 
-                            🙋‍♂ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
-                            📱 WhatsApp: https://wa.me/6282299198002
-                            📍 Kantor: Jl. Raya Karawang No. 88";
+🙋‍♂ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
+📱 WhatsApp: https://wa.me/6282299198002
+📍 Kantor: Jl. Raya Karawang No. 88";
                             echo e($message);
                             @endphp</pre>
                         </div>
@@ -202,20 +202,20 @@
             
             // Generate the message with proper emojis
             const message = `🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang!
-            Berikut detail paket yang aku pilih:
+Berikut detail paket yang aku pilih:
 
-            ✈️ {{ $paket->nama_paket }}
-            📆 Keberangkatan: {{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}
-            ⏱️ Durasi: {{ $paket->durasi }} Hari
-            🌐 Destinasi: {{ $paket->destinasi }}
-            💰 Harga: Rp {{ number_format($paket->harga, 0, ',', '.') }}/orang
+✈️ {{ $paket->nama_paket }}
+📆 Keberangkatan: {{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}
+⏱️ Durasi: {{ $paket->durasi }} Hari
+🌐 Destinasi: {{ $paket->destinasi }}
+💰 Harga: Rp {{ number_format($paket->harga, 0, ',', '.') }}/orang
 
-            {{ Str::limit(strip_tags($paket->deskripsi), 200) }}
-            {{ Str::limit(strip_tags($paket->fasilitas), 200) }}
+{{ Str::limit(strip_tags($paket->deskripsi), 200) }}
+{{ Str::limit(strip_tags($paket->fasilitas), 200) }}
 
-            🙋‍♂️ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
-            📱 WhatsApp: https://wa.me/6282299198002
-            📍 Kantor: Jl. Raya Karawang No. 88`;
+🙋‍♂️ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
+📱 WhatsApp: https://wa.me/6282299198002
+📍 Kantor: Jl. Raya Karawang No. 88`;
             
             // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
