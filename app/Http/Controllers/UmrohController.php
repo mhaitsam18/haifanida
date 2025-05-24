@@ -6,6 +6,7 @@ use App\Models\Paket;
 use App\Models\Ekstra;
 use App\Models\Jemaah;
 use App\Models\Provinsi;
+use App\Models\Kabupaten;
 use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -207,7 +208,7 @@ class UmrohController extends Controller
             'user' => $user
         ]);
     }
-
+    
     public function listJemaah($id)
     {   
         $jemaahs = Jemaah::where('pemesanan_id', $id)->get();
@@ -231,7 +232,9 @@ class UmrohController extends Controller
         // ->firstOrFail();
         return view('home.pemesanan.add-jemaah', [
             'title' => 'Tambah Jemaah',
-            'pemesanan' => $pemesanan
+            'pemesanan' => $pemesanan,
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => (old('provinsi')) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi'))->first()->id)->get() : Kabupaten::all()
         ]);
     }
 
