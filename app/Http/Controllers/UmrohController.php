@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Models\Paket;
-use App\Models\Pemesanan;
+use App\Models\Ekstra;
 use App\Models\Jemaah;
 use App\Models\Provinsi;
-use App\Models\Ekstra;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+
 
 class UmrohController extends Controller
 {
@@ -282,7 +283,7 @@ class UmrohController extends Controller
             // $validateData['is_active'] = true;
 
             Jemaah::create($validateData);
-
+            $this->updateJumlahOrangPemesanan($id);
             return redirect()->route('pemesanan.jemaah.list', $id)
                 ->with('success', 'Data jemaah berhasil ditambahkan');
 
@@ -293,9 +294,43 @@ class UmrohController extends Controller
     }
 
     public function destroy(Jemaah $jemaah)
-    {
-        $jemaah->delete();
+    {   
+        $pemesananId = $jemaah->pemesanan_id;
+            $fotoPath = $jemaah->foto;
+
+            $jemaah->delete();
+
+            // // Hapus file foto jika ada
+            // if ($fotoPath && Storage::exists($fotoPath)) {
+            //     Storage::delete($fotoPath);
+            // }
+
+            // Panggil fungsi untuk update jumlah orang di pemesanan
+            $this->updateJumlahOrangPemesanan($pemesananId);
         return back()->with('success', 'Data jemaah berhasil dihapus');
+    }
+
+      protected function updateJumlahOrangPemesanan($pemesananId)
+    {
+        try {
+            $pemesanan = Pemesanan::findOrFail($pemesananId);
+            $jumlahJemaahAktual = Jemaah::where('pemesanan_id', $pemesananId)->count();
+
+            $pemesanan->jumlah_orang = $jumlahJemaahAktual;
+            // Anda mungkin juga ingin mengkalkulasi ulang total_harga di sini
+            // $paket = Paket::find($pemesanan->paket_id);
+            // if ($paket) {
+            //     $pemesanan->total_harga = $paket->harga * $jumlahJemaahAktual;
+            // }
+            $pemesanan->save();
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Handle jika pemesanan tidak ditemukan, mungkin log error
+            // Log::error("Pemesanan dengan ID: {$pemesananId} tidak ditemukan saat update jumlah orang.");
+        } catch (\Exception $e) {
+            // Handle error lainnya
+            // Log::error("Gagal update jumlah orang untuk pemesanan ID: {$pemesananId}. Error: " . $e->getMessage());
+        }
     }
 //     public function store(Request $request)
 //     {
