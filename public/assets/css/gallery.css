@@ -1,0 +1,17 @@
+/* Gallery Image Styles */
+.services-item {
+    margin-bottom: 70px;
+}
+
+.services-item > a {
+    display: block;
+    height: 250px;
+    overflow: hidden;
+    margin-bottom: 20px;  /* Tambah margin bawah */
+}
+
+.services-item > a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
