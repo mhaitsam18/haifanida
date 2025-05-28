@@ -91,29 +91,49 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             'phone_number' => 'nullable',
             'password' => 'required|confirmed',
+            'google_id' => 'nullable',
+            'google_token' => 'nullable',
+            'avatar' => 'nullable',
         ]);
-        // if ($request->file('foto')) {
-        //     $validatedData['foto'] = $request->file('foto')->store('foto-profil');
-        // };
-        $user = User::create([
+
+        $userData = [
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'username' => $validatedData['username'],
             'phone_number' => $validatedData['phone_number'],
             'password' => Hash::make($validatedData['password']),
             'role_id' => 3,
-            // 'foto' => $validatedData['foto'],
-        ]);
+        ];
+
+        // MODIFIED: Tambahkan data Google jika ada
+        if ($request->has('google_id')) {
+            $userData['google_id'] = $validatedData['google_id'];
+            $userData['google_token'] = $validatedData['google_token'];
+            $userData['avatar'] = $validatedData['avatar'];
+            $userData['email_verified_at'] = now();
+        }
+
+        $user = User::create($userData);
+
         Member::create([
             'user_id' => $user->id,
             'nama_lengkap' => $validatedData['name'],
             'email' => $validatedData['email'],
             'nomor_telepon' => $validatedData['phone_number'],
-            // 'foto' => $validatedData['foto'],
         ]);
-        $verificationLink = $this->generateVerificationLink($user);
-        Mail::to($user->email)->send(new VerificationEmail($verificationLink));
-        return redirect('/login')->with('success', 'Email verifikasi telah dikirim. Silakan cek email Anda!');
+
+        if (!$request->has('google_id')) {
+            $verificationLink = $this->generateVerificationLink($user);
+            Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+            return redirect('/login')->with('success', 'Email verifikasi telah dikirim. Silakan cek email Anda!');
+        }
+
+        // MODIFIED: Login dan redirect ke home controller untuk mendapatkan data yang diperlukan
+        Auth::login($user);
+        session()->put('member', Member::where('user_id', $user->id)->first());
+        session()->put('member_id', $user->id);
+        
+        return redirect()->route('index')->with('success', 'Registrasi berhasil!');
     }
 
     public function authenticate(Request $request): RedirectResponse
@@ -122,52 +142,48 @@ class AuthController extends Controller
             'email_or_username' => ['required'],
             'password' => ['required'],
         ]);
+
         $isEmail = filter_var($credentials['email_or_username'], FILTER_VALIDATE_EMAIL);
         $user = $isEmail
             ? User::where('email', $credentials['email_or_username'])->first()
             : User::where('username', $credentials['email_or_username'])->first();
+
+        // MODIFIED: Jika user belum terdaftar, arahkan ke halaman registrasi
         if (!$user) {
-            return back()->with('loginError', 'Email atau Username atau Password Salah');
+            return redirect('/register')->with('loginError', 'Akun belum terdaftar. Silakan registrasi terlebih dahulu.');
         }
+
         if (!$user->hasVerifiedEmail()) {
             $user->sendEmailVerificationNotification();
             return back()->with('loginError', 'Email Anda belum diverifikasi, Silahkan cek Email Anda');
         }
-        $credential['password'] = $request->input('password');
-        if ($user->email) {
-            $credential['email'] = $user->email;
-        } elseif ($user->username) {
-            $credential['username'] = $user->username;
+
+        $loginCredentials = [
+            'password' => $request->input('password')
+        ];
+        
+        if ($isEmail) {
+            $loginCredentials['email'] = $credentials['email_or_username'];
         } else {
-            return back()->with('loginError', 'Email atau Username atau Password Salah');
+            $loginCredentials['username'] = $credentials['email_or_username'];
         }
+
         $remember = $request->has('remember');
-        if (Auth::attempt($credential, $remember)) {
+
+        if (Auth::attempt($loginCredentials, $remember)) {
             $request->session()->regenerate();
-            switch (auth()->user()->role_id) {
-                case 1:
-                    return redirect()->intended('/admin/index');
-                    break;
-                case 2:
-                    return redirect()->intended('/author/index');
-                    break;
-                case 4:
-                    return redirect()->intended('/agen/index');
-                    break;
-                case 3:
-                    $member = Member::where('user_id', auth()->user()->id)->first();
-                    $request->session()->put('member', $member);
-                    $request->session()->put('member_id', $member->id);
-                    return redirect()->intended('/member/index');
-                    break;
-                default:
-                    Auth::logout();
-                    $request->session()->invalidate();
-                    $request->session()->regenerateToken();
-                    return back()->with('loginError', 'Akun Anda tidak memiliki otoritas apapun, Hubungi Admin terkait');
-                    break;
+            
+            // MODIFIED: Simpan data member ke session jika role member
+            if (auth()->user()->role_id === 3) {
+                $member = Member::where('user_id', auth()->user()->id)->first();
+                $request->session()->put('member', $member);
+                $request->session()->put('member_id', $member->id);
             }
+
+            // MODIFIED: Redirect ke home controller untuk mendapatkan data yang diperlukan
+            return redirect()->route('index')->with('success', 'Login berhasil!');
         }
+
         return back()->with('loginError', 'Email atau Username atau Password Salah');
     }
 

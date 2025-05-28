@@ -152,8 +152,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password/{user}', [ForgotPasswordController::class, 'updatePassword'])->name('password.update');
 
 
-    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    // MODIFIED: Memisahkan route untuk login dan register dengan Google
+    Route::get('auth/google/login', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'login')
+        ->name('auth.google.login');
+    Route::get('auth/google/register', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'register')
+        ->name('auth.google.register');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])
+        ->name('auth.google.callback');
 });
 
 

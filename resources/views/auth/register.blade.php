@@ -22,6 +22,7 @@
 @section('content')
     @php
         use Carbon\Carbon;
+        $googleData = session('google_data');
     @endphp
 
 
@@ -52,14 +53,25 @@
                                     {{ session('status') }}
                                 </div>
                             @endif
+                            @if (session()->has('info'))
+                                <div class="alert alert-info mb-3 mx-auto" role="alert">
+                                    {{ session('info') }}
+                                </div>
+                            @endif
                             <form action="/register" method="post">
                                 @csrf
+                                @if($googleData)
+                                    <input type="hidden" name="google_id" value="{{ $googleData['google_id'] }}">
+                                    <input type="hidden" name="google_token" value="{{ $googleData['google_token'] }}">
+                                    <input type="hidden" name="avatar" value="{{ $googleData['avatar'] }}">
+                                @endif
                                 <div class="row">
                                     <div class="col-lg-12 ">
                                         <div class="form-group">
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"
                                                 name="name" id="name" required data-error="Masukkan Nama Lengkap"
-                                                placeholder="Nama Lengkap" value="{{ old('name') }}">
+                                                placeholder="Nama Lengkap" value="{{ $googleData['name'] ?? old('name') }}" 
+                                                {{ $googleData ? 'readonly' : '' }}>
                                             @error('name')
                                                 <div class="text-danger fs-6">
                                                     {{ $message }}
@@ -87,13 +99,13 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                                 name="email" id="email" required data-error="Masukkan Email"
-                                                placeholder="Email" value="{{ old('email') }}">
+                                                placeholder="Email" value="{{ $googleData['email'] ?? old('email') }}"
+                                                {{ $googleData ? 'readonly' : '' }}>
                                             @error('email')
                                                 <div class="text-danger fs-6">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            <!-- Tambahkan elemen span untuk menampilkan pesan ketersediaan -->
                                             <span id="email-availability"></span>
                                         </div>
                                     </div>
@@ -141,7 +153,8 @@
                                         </button>
                                     </div>
                                     <div class="col-lg-12 mt-3">
-                                        <a href="{{ url('/auth/google') }}" class="btn btn-google">
+                                        <!-- MODIFIED: Update route register Google -->
+                                        <a href="{{ route('auth.google.register') }}" class="btn btn-google">
                                             <i class="fa-brands fa-google"></i> Daftar dengan Google
                                         </a>
                                     </div>
