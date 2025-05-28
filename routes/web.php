@@ -538,3 +538,5 @@ Route::get('/tambah-pembayaran', function () {
 });
 
 Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
+Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');

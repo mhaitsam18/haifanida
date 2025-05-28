@@ -16,20 +16,30 @@
         @if ($mode == 'edit')
 
             <!-- Left column: Photo -->
-            <!-- MODIFIED-- -->
             <div class="col-lg-4 mt-3">
-                @if ($user->photo)
-                    <img src="/storage/{{ $user->photo }}" class="img-fluid rounded" alt="Profile Photo">
-            <!-- --MODIFIED -->
-                @endif
+                <div class="text-center">
+                    <img src="{{ $user->photo ? asset('assets/storage/user-photo/' . $user->photo) : asset('assets/storage/user-photo/not-found.jpg') }}" 
+                         class="rounded mb-3" 
+                         alt="Profile Photo" 
+                         style="width: 200px; height: 200px; object-fit: cover;">
+                    
+                    <form action="{{ route('member.profile.update-photo') }}" method="POST" enctype="multipart/form-data" class="mt-3">
+                        @csrf
+                        <div class="mb-3">
+                            <input type="file" name="photo" class="form-control" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Photo</button>
+                    </form>
+                </div>
             </div>
             <!-- Right column: Form -->
             <div class="col-lg-8 p-3">
-                <form action="{{ route('member.profile') }}" method="POST">
+                <form action="{{ route('member.profile.update') }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}">
+                        <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="email">Email</label>
@@ -49,21 +59,23 @@
                             <input type="password" name="password" class="form-control" value="{{ old('password', $user->password) }}">
                         </div>
                     @endif
-                    <a href="{{ route('member.profile', ['mode' => 'show']) }}" class="default-btn btn-bg-two border-radius-50" type="submit">Save</a>
-                    <a href="{{ route('member.profile', ['mode' => 'show']) }}" class="default-btn btn-bg-one border-radius-50">Cancel</a>
-
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="default-btn btn-bg-two border-radius-50">Save Changes</button>
+                        <a href="{{ route('member.profile', ['mode' => 'show']) }}" class="default-btn btn-bg-one border-radius-50">Cancel</a>
+                    </div>
                 </form>
             </div>
 
         @else
 
             <!-- Left Column: Photo -->
-            <!-- MODIFIED-- -->
             <div class="col-lg-4 mt-3">
-                @if($user->photo)
-                    <img src="/storage/{{ $user->photo }}" class="img-fluid rounded" alt="Profile Photo show">
-            <!-- --MODIFIED -->
-                @endif
+                <div class="text-center">
+                    <img src="{{ $user->photo ? asset('assets/storage/user-photo/' . $user->photo) : asset('assets/storage/user-photo/not-found.jpg') }}" 
+                         class="rounded" 
+                         alt="Profile Photo" 
+                         style="width: 200px; height: 200px; object-fit: cover;">
+                </div>
             </div>
 
             <!-- Right Column: Data -->

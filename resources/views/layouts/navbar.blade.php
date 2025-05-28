@@ -271,11 +271,11 @@
                                         </a>
                                     </li>
                                     <!-- Profile Dropdown -->
-                                    <li class="nav-item profile-dropdown" style="position: relative;">
+                                    <li class="nav-item profile-dropdown">
                                         <a href="#" class="btn p-0 border-0 bg-transparent">
-                                            <img src="{{ Auth::user()->profile_picture
-                                                ? asset('storage/user-photo/' . Auth::user()->profile_picture)
-                                                : asset('storage/user-photo/not-found.jpg') }}"
+                                            <img src="{{ Auth::user()->photo 
+                                                ? asset('assets/storage/user-photo/' . Auth::user()->photo) 
+                                                : asset('assets/storage/user-photo/not-found.jpg') }}"
                                                 alt="Profile"
                                                 class="rounded-circle"
                                                 style="width: 40px; height: 40px; object-fit: cover;">
