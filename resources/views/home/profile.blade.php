@@ -21,7 +21,7 @@
                             <div class="col-lg-4">
                                 <div class="text-center position-relative">
                                     <div class="profile-photo-container mb-4">
-                                        <img src="{{ $user->photo ? asset('assets/storage/user-photo/' . $user->photo) : asset('assets/storage/user-photo/not-found.jpg') }}"
+                                        <img src="{{ $user->photo ? asset('storage/user-photo/' . $user->photo) : asset('storage/user-photo/not-found.jpg') }}"
                                             class="rounded-circle border shadow-sm"
                                             alt="Profile Photo"
                                             style="width: 200px; height: 200px; object-fit: cover;">
@@ -82,7 +82,7 @@
                             <div class="col-lg-4">
                                 <div class="text-center">
                                     <div class="profile-photo-container mb-4">
-                                        <img src="{{ $user->photo ? asset('assets/storage/user-photo/' . $user->photo) : asset('assets/storage/user-photo/not-found.jpg') }}"
+                                        <img src="{{ $user->photo ? asset('storage/user-photo/' . $user->photo) : asset('storage/user-photo/not-found.jpg') }}"
                                             class="rounded-circle border shadow-sm"
                                             alt="Profile Photo"
                                             style="width: 200px; height: 200px; object-fit: cover;">

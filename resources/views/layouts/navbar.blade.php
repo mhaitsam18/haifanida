@@ -274,8 +274,8 @@
                                     <li class="nav-item profile-dropdown">
                                         <a href="#" class="btn p-0 border-0 bg-transparent">
                                             <img src="{{ Auth::user()->photo 
-                                                ? asset('assets/storage/user-photo/' . Auth::user()->photo) 
-                                                : asset('assets/storage/user-photo/not-found.jpg') }}"
+                                                ? asset('storage/user-photo/' . Auth::user()->photo) 
+                                                : asset('storage/user-photo/not-found.jpg') }}"
                                                 alt="Profile"
                                                 class="rounded-circle"
                                                 style="width: 40px; height: 40px; object-fit: cover;">

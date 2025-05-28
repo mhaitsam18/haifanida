@@ -214,7 +214,7 @@ class MemberController extends Controller
         if ($request->hasFile('photo')) {
             // Delete old photo if exists
             if ($user->photo) {
-                $oldPhotoPath = public_path('assets/storage/user-photo/' . $user->photo);
+                $oldPhotoPath = public_path('storage/user-photo/' . $user->photo);
                 if (file_exists($oldPhotoPath)) {
                     unlink($oldPhotoPath);
                 }
@@ -224,8 +224,8 @@ class MemberController extends Controller
             $file = $request->file('photo');
             $filename = time() . '_' . $user->id . '.' . $file->getClientOriginalExtension();
             
-            // Move file to public/assets/storage/user-photo directory
-            $file->move(public_path('assets/storage/user-photo'), $filename);
+            // Move file to public/storage/user-photo directory
+            $file->move(public_path('storage/user-photo'), $filename);
 
             // Update user profile with just the filename
             $user->photo = $filename;
