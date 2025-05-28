@@ -266,7 +266,7 @@
                                 <div class="nav-side-item d-flex align-items-center">
                                     <!-- Daftar Keberangkatan Link -->
                                     <li class="nav-item">
-                                        <a href="/" class="nav-link">
+                                        <a href="{{ route('member.daftar-keberangkatan') }}" class="nav-link">
                                             Daftar Keberangkatan
                                         </a>
                                     </li>
@@ -287,7 +287,7 @@
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="/member/perjalanan-saya" class="nav-link">
+                                                <a href="{{ route('member.riwayat-perjalanan') }}" class="nav-link">
                                                     Riwayat Perjalanan
                                                 </a>
                                             </li>

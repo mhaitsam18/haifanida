@@ -3,7 +3,8 @@
 @section('content')
 
     <div class="section-title text-center">
-        <h2>Perjalanan Saya</h2>
+        <h2>Riwayat Perjalanan</h2>
+        <p>Daftar perjalanan yang telah selesai</p>
     </div>
     @if($pemesanan)
     <div class="container">

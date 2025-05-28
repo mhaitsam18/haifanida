@@ -11,8 +11,9 @@ use App\Models\Member;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;    
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 // --MODIFIED
 
 class MemberController extends Controller
@@ -75,17 +76,41 @@ class MemberController extends Controller
         return redirect()->route('member.profile', ['mode' => 'show'])->with('success', 'Profile updated successfully!');
     }
 
-    // MODIFIED--
-    // fungsi untuk view perjalanan saya
-    public function perjalananSaya(Request $request){
+    // Daftar keberangkatan - menampilkan perjalanan yang akan datang
+    public function daftarKeberangkatan(Request $request)
+    {
         $user = Auth::user();
-        $title = 'Perjalanan Saya | Haifa Nida Wisata';
-        // MODIFIED--
-        $pemesanan = $user->pemesanans()->with('paket')->get();
-        // --MODIFIED
+        $title = 'Daftar Keberangkatan | Haifa Nida Wisata';
+        
+        // Get upcoming trips where end date is in the future
+        $pemesanan = $user->pemesanans()
+            ->with('paket')
+            ->whereHas('paket', function($query) {
+                $query->where('tanggal_selesai', '>=', Carbon::now());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('home.daftar-keberangkatan', compact('user', 'title', 'pemesanan'));
+    }
+
+    // Riwayat perjalanan - menampilkan perjalanan yang sudah selesai
+    public function riwayatPerjalanan(Request $request)
+    {
+        $user = Auth::user();
+        $title = 'Riwayat Perjalanan | Haifa Nida Wisata';
+        
+        // Get completed trips where end date is in the past
+        $pemesanan = $user->pemesanans()
+            ->with('paket')
+            ->whereHas('paket', function($query) {
+                $query->where('tanggal_selesai', '<', Carbon::now());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('home.perjalanan-saya', compact('user', 'title', 'pemesanan'));
     }
-    // --MODIFIED
 
     // MODIFIED--
     public function tagihan(Request $request){

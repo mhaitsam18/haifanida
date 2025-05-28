@@ -540,3 +540,11 @@ Route::get('/tambah-pembayaran', function () {
 Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
 Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
 Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');
+
+// Rute untuk daftar keberangkatan (upcoming trips)
+Route::get('/member/daftar-keberangkatan', [MemberController::class, 'daftarKeberangkatan'])
+    ->name('member.daftar-keberangkatan');
+
+// Rute untuk riwayat perjalanan (trip history)
+Route::get('/member/riwayat-perjalanan', [MemberController::class, 'riwayatPerjalanan'])
+    ->name('member.riwayat-perjalanan');
