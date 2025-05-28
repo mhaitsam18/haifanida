@@ -1,4 +1,3 @@
-<!-- resources/views/home/pemesanan/jemaah.blade.php -->
 @extends('layouts.main')
 
 @section('content')
@@ -48,14 +47,18 @@
                                         <td>{{ $jemaah->nama_lengkap }}</td>
                                         <td>{{ $jemaah->email }}</td>
                                         <td>{{ $jemaah->nomor_telepon }}</td>
-                                        <td> <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
-                                                class="img-thumbnail img-fluid"></td>
+                                        <td> 
+                                            @if($jemaah->foto)
+                                                <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
+                                                     class="img-thumbnail img-fluid">
+                                            @else
+                                                <span class="text-muted">Tidak ada foto</span>
+                                            @endif
+                                        </td>
                                         <td class="print-hilang">
                                             <div class="d-flex align-items-center">
-                                                <a href="#"
-                                                    class="badge btn-primary d-inline-block m-1">Detail</a>
-                                                <a href="#"
-                                                    class="badge bg-success d-inline-block m-1">Edit</a>
+                                                <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" class="badge btn-primary d-inline-block m-1">Berkas</a>
+                                                <a href="#" class="badge bg-success d-inline-block m-1">Edit</a>
                                                 <form action="{{ route('jemaah.destroy', $jemaah->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
                                                     @csrf
                                                     @method('DELETE')
