@@ -250,11 +250,11 @@
                         </li>
 
                         <div class="nav-side d-display">
-                            <div class="nav-side-item">
+                            {{-- <div class="nav-side-item">
                                 <div class="search-box">
                                     <i class='bx bx-search'></i>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="nav-side-item">
                                 @guest
                                     <div class="get-btn">
@@ -263,40 +263,43 @@
                                     </div>
                                 @endguest
                                 @auth
-                                    <!-- MODIFIED-- -->
-                                    <!-- <div class="get-btn">
-                                        <a href="/logout" class="default-btn btn-bg-two border-radius-50">Logout
-                                            <i class='bx bx-chevron-right'></i></a>
-                                    </div> -->
-                                    <li class="nav-item" style="padding-bottom: -10px">
-                                        <a href="" class="btn p-0 border-0 bg-transparent">
-                                            <img src="{{ Auth::user()->profile_picture
-                                            ? asset('storage/user-photo/' . Auth::user()->profile_picture)
-                                            : asset('storage/image-not-found-scaled.png') }}"
-                                            alt="Profile"
-                                            class="rounded-circle"
-                                            style="width: 40px; height: 40px; object-fit: cover;">
+                                <div class="nav-side-item d-flex align-items-center">
+                                    <!-- Daftar Keberangkatan Link -->
+                                    <li class="nav-item">
+                                        <a href="/" class="nav-link">
+                                            Daftar Keberangkatan
                                         </a>
-                                        <ul class="dropdown-menu">
+                                    </li>
+                                    <!-- Profile Dropdown -->
+                                    <li class="nav-item profile-dropdown" style="position: relative;">
+                                        <a href="#" class="btn p-0 border-0 bg-transparent">
+                                            <img src="{{ Auth::user()->profile_picture
+                                                ? asset('storage/user-photo/' . Auth::user()->profile_picture)
+                                                : asset('storage/user-photo/not-found.jpg') }}"
+                                                alt="Profile"
+                                                class="rounded-circle"
+                                                style="width: 40px; height: 40px; object-fit: cover;">
+                                        </a>
+                                        <ul class="dropdown-menu profile-menu">
                                             <li class="nav-item">
                                                 <a href="/member/profile" class="nav-link">
                                                     Profile
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="/member/perjalanan-saya">
-                                                    Perjalanan Saya
+                                                <a href="/member/perjalanan-saya" class="nav-link">
+                                                    Riwayat Perjalanan
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="/logout">
+                                                <a href="/logout" class="nav-link">
                                                     Logout
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
-                                    <!-- --MODIFIED -->    
-                                @endauth
+                                </div>
+                            @endauth
                             </div>
                         </div>
                 </div>
@@ -316,9 +319,10 @@
                 <div class="side-nav-inner">
                     <div class="side-nav justify-content-center align-items-center">
                         <div class="side-nav-item nav-side">
-                            <div class="search-box">
+                            {{-- modified --}}
+                            {{-- <div class="search-box">
                                 <i class='bx bx-search'></i>
-                            </div>
+                            </div> --}}
                             <div class="get-btn">
                                 <a href="/login" class="default-btn btn-bg-two border-radius-50">Login
                                     <i class='bx bx-chevron-right'></i></a>
@@ -351,3 +355,154 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Profile Dropdown Styling */
+.profile-dropdown {
+    min-width: 65px; /* Sesuaikan dengan ukuran gambar */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-dropdown .dropdown-menu.profile-menu {
+    /* position: absolute; */
+    top: 100%;
+    right: 0;
+    left: auto;
+    transform: none;
+    min-width: 180px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.profile-dropdown .dropdown-menu.profile-menu .nav-item {
+    padding: 0;
+}
+
+.profile-dropdown .dropdown-menu.profile-menu .nav-link {
+    color: #333;
+    font-size: 14px;
+    padding: 8px 20px;
+    transition: background-color 0.2s ease;
+}
+
+.profile-dropdown .dropdown-menu.profile-menu .nav-link:hover {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+/* Dropdown arrow positioning fix */
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.navbar-nav .nav-link i.bx-caret-down {
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Main Navigation Layout Fixes */
+.main-nav .navbar .navbar-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent items from wrapping to next line */
+    margin: 0;
+}
+
+.main-nav .navbar-nav .nav-link {
+    padding: 8px 12px; /* Add consistent padding */
+}
+
+/* Ensure no text breaks in navigation */
+.main-nav .navbar {
+    flex-wrap: nowrap;
+}
+
+.nav-side {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* Search box styling
+.search-box {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* .search-box i {
+    font-size: 20px;
+} */
+
+/* Search overlay z-index fix */
+/* .search-overlay {
+    z-index: 99999;
+} */ 
+
+/* Keep regular dropdowns working */
+.navbar-nav .dropdown-menu:not(.profile-menu) {
+    left: 0;
+    transform: none;
+}
+
+/* Button styling consistency */
+.nav-side-item .default-btn {
+    font-size: 14px;
+    padding: 8px 15px;
+    margin-left: 15px;
+}
+</style>
+
+<!-- Fix search functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchBox = document.querySelector('.search-box');
+    const searchOverlay = document.querySelector('.search-overlay');
+    const searchInput = document.querySelector('.search-overlay input');
+    const searchClose = document.querySelector('.search-close');
+
+    if (searchBox && searchOverlay) {
+        searchBox.addEventListener('click', function() {
+            searchOverlay.classList.add('search-overlay-active');
+            searchInput?.focus();
+        });
+
+        searchClose?.addEventListener('click', function() {
+            searchOverlay.classList.remove('search-overlay-active');
+        });
+    }
+
+    // Profile dropdown without arrow indicator
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    const profileMenu = document.querySelector('.profile-menu');
+
+    if (profileDropdown && profileMenu) {
+        profileDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!profileDropdown.contains(e.target)) {
+                profileMenu.classList.remove('show');
+            }
+        });
+    }
+});
+</script>

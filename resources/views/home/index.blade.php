@@ -169,7 +169,44 @@
         </div>
     </div>
 
-
+   <section class="travel-options-area pt-70 pb-70">
+    <div class="container">
+        <div class="section-title text-center">
+            <span class="sp-color2">Pilihan Perjalanan Anda</span>
+            <h2>Jelajahi Umroh, Haji, dan Wisata Halal</h2>
+            <p class="margin-auto">Wujudkan perjalanan ibadah dan wisata halal Anda dengan pelayanan terbaik dari Haifa Nida Wisata.</p>
+        </div>
+        <div class="row pt-45">
+            <div class="col-lg-4 col-md-6">
+                <div class="travel-image">
+                    <img src="{{ asset('storage/paket-galeri/umroh.jpg') }}" alt="Umroh">
+                    <div class="travel-image-overlay">
+                        <h3 class="travel-image-title">Ingin Umroh? Pesan Sekarang</h3>
+                        <a href="/umroh" class="default-btn btn-bg-two border-radius-50">Lihat Paket <i class='bx bx-chevron-right'></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="travel-image">
+                    <img src="{{ asset('storage/paket-galeri/haji.jpg') }}" alt="Haji">
+                    <div class="travel-image-overlay">
+                        <h3 class="travel-image-title">Ingin Haji? Pesan Sekarang</h3>
+                        <a href="/haji" class="default-btn btn-bg-two border-radius-50">Lihat Paket <i class='bx bx-chevron-right'></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="travel-image">
+                    <img src="{{ asset('storage/paket-galeri/wisata-halal.jpg') }}" alt="Wisata Halal">
+                    <div class="travel-image-overlay">
+                        <h3 class="travel-image-title">Wisata Halal? Jelajahi Sekarang</h3>
+                        <a href="/wisata-halal" class="default-btn btn-bg-two border-radius-50">Lihat Paket <i class='bx bx-chevron-right'></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     {{-- <section class="services-area pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">

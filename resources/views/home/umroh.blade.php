@@ -149,7 +149,7 @@
                                     </h5>
 
                                     <!-- Price -->
-                                    <div class="price mb-3" style="font-size: 20px; font-weight: 650; color: #007bff;">
+                                    <div class="price mb-3" style="font-size: 20px; font-weight: 650; color: #0056b3;">
                                         <span>Rp {{ number_format($paket->harga, 0, ',', '.') }} /orang</span>
                                     </div>
 
@@ -158,28 +158,28 @@
                                     <div class="row g-2">
                                         <div class="col-12">
                                             <div class="d-flex align-items-center mb-2">
-                                                <i class='bx bx-purchase-tag-alt' style="color: #007bff; margin-right: 6px; font-size: 16px;"></i>
+                                                <i class='bx bx-purchase-tag-alt' style="color: #0056b3; margin-right: 6px; font-size: 16px;"></i>
                                                 <span style="min-width: 165px;">Jenis</span>
                                                 <span style="font-weight: 600;">{{ ucfirst($paket->jenis_paket) }}</span>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="d-flex align-items-center mb-2">
-                                                <i class='bx bx-time' style="color: #007bff; margin-right: 6px; font-size: 16px;"></i>
+                                                <i class='bx bx-time' style="color: #0056b3; margin-right: 6px; font-size: 16px;"></i>
                                                 <span style="min-width: 165px;">Durasi Perjalanan</span>
                                                 <span style="font-weight: 600;">{{ $paket->durasi }} Hari</span>
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
                                             <div class="d-flex align-items-center mb-2">
-                                                <i class='bx bx-time' style="color: #007bff; margin-right: 6px; font-size: 16px;"></i>
+                                                <i class='bx bx-time' style="color: #0056b3; margin-right: 6px; font-size: 16px;"></i>
                                                 <span style="min-width: 165px;">Tanggal Keberangkatan</span>
                                                 <span style="font-weight: 600;">{{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}</span>
                                             </div>
                                         </div> --}}
                                         <div class="col-12">
                                             <div class="d-flex align-items-center mb-2">
-                                                <i class='bx bx-calendar' style="color: #007bff; margin-right: 6px; font-size: 16px;"></i>
+                                                <i class='bx bx-calendar' style="color: #0056b3; margin-right: 6px; font-size: 16px;"></i>
                                                 <span style="min-width: 165px;">Tanggal Kepulangan</span>
                                                 <span style="font-weight: 600;">{{  Carbon::parse($paket->tanggal_selesai)->format('d M Y') }}</span>
                                             </div>
@@ -187,14 +187,14 @@
                                         
                                         {{-- <div class="col-12">
                                             <div class="d-flex align-items-center mb-2">
-                                                <i class='bx bx-map' style="color: #007bff; margin-right: 6px; font-size: 16px;"></i>
+                                                <i class='bx bx-map' style="color: #0056b3; margin-right: 6px; font-size: 16px;"></i>
                                                 <span style="min-width: 165px;">Destinasi</span>
                                                 <span style="font-weight: 600;">{{ $paket->destinasi }}</span>
                                             </div>
                                         </div> --}}
                                         <div class="col-12">
                                             <div class="d-flex align-items-center mb-2">
-                                                <i class='bx bxs-plane-take-off' style="color: #007bff; margin-right: 6px; font-size: 16px;"></i>
+                                                <i class='bx bxs-plane-take-off' style="color: #0056b3; margin-right: 6px; font-size: 16px;"></i>
                                                 <span style="min-width: 165px;">Berangkat dari</span>
                                                 <span style="font-weight: 600;">{{ $paket->tempat_keberangkatan }}</span>
                                             </div>
