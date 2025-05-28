@@ -63,7 +63,7 @@ use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UmrohController;
-use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -538,3 +538,50 @@ Route::get('/tambah-pembayaran', function () {
 });
 
 Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Routes untuk berkas jemaah
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'berkasJemaah'])->name('pemesanan.jemaah.berkas');
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/create', [BerkasController::class, 'create'])->name('pemesanan.jemaah.add-berkas');
+Route::post('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'store'])->name('pemesanan.jemaah.berkas.store');
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/edit', [BerkasController::class, 'editBerkasJemaah'])->name('pemesanan.jemaah.berkas.edit');
+Route::put('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'updateBerkasJemaah'])->name('pemesanan.jemaah.berkas.update');
+Route::delete('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'destroyBerkasJemaah'])->name('pemesanan.jemaah.berkas.destroy');
+Route::get('/pemesanan/{id}/jemaah', [BerkasController::class, 'someMethod'])->name('pemesanan.jemaah');
