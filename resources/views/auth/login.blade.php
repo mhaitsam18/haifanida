@@ -95,7 +95,8 @@
                                         </button>
                                     </div>
                                     <div class="col-lg-12 mt-3">
-                                        <a href="{{ url('/auth/google') }}" class="btn btn-google">
+                                        <!-- MODIFIED: Update route login Google -->
+                                        <a href="{{ route('auth.google.login') }}" class="btn btn-google">
                                             <i class="fa-brands fa-google"></i> Log In dengan Google
                                         </a>
                                     </div>
