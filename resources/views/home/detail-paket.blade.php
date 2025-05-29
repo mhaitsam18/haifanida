@@ -6,6 +6,10 @@
     @php
         use Carbon\Carbon;
     @endphp
+    
+    <!-- Link ke CSS file yang baru -->
+    <link rel="stylesheet" href="{{ asset('assets/css/umroh-package.css') }}">
+    
     <div class="inner-banner">
         <div class="container">
             <div class="inner-title text-center">
@@ -31,62 +35,83 @@
                     <div class="service-article">
                         <div class="service-article-img">
                             @if($paket->gambar)
-                            <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Gambar Paket" style="max-height: 400px; width: 100%; object-fit: contain; border-radius: 10px; background: #f8f8f8;">
+                                <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Gambar Paket">
                             @else
-                                <img src="/assets-techex-demo/images/services/service-details.jpg" alt="{{ $paket->nama_paket }}" style="max-height: 400px; width: 100%; object-fit: cover; border-radius: 10px;">
+                                <img src="/assets-techex-demo/images/services/service-details.jpg" alt="{{ $paket->nama_paket }}">
                             @endif
                         </div>
 
-                        <div class="service-article-title">
+                        <div class="service-article-title mt-4">
                             <h2>{{ $paket->nama_paket }}</h2>
                         </div>
 
                         <div class="service-article-content">
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bx-map'></i> Destinasi</h5>
-                                        <p style="margin: 0;">{{ $paket->destinasi }}</p>
+                            <div class="package-info-grid mt-5">
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class='bx bx-map info-card-icon'></i>
+                                        <h5 class="info-card-title">Destinasi</h5>
                                     </div>
+                                    <p class="info-card-content">{{ $paket->destinasi }}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bx-time'></i> Durasi</h5>
-                                        <p style="margin: 0;">{{ $paket->durasi }} Hari</p>
+                                
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class='bx bx-time info-card-icon'></i>
+                                        <h5 class="info-card-title">Durasi</h5>
                                     </div>
+                                    <p class="info-card-content">{{ $paket->durasi }} Hari</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bx-calendar'></i> Tanggal Keberangkatan</h5>
-                                        <p style="margin: 0;">{{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}</p>
+                                
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class='bx bx-calendar info-card-icon'></i>
+                                        <h5 class="info-card-title">Tanggal Keberangkatan</h5>
                                     </div>
+                                    <p class="info-card-content">{{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bx-calendar'></i> Tanggal Kepulangan</h5>
-                                        <p style="margin: 0;">{{ Carbon::parse($paket->tanggal_selesai)->format('d M Y') }}</p>
+                                
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class='bx bx-calendar info-card-icon'></i>
+                                        <h5 class="info-card-title">Tanggal Kepulangan</h5>
                                     </div>
+                                    <p class="info-card-content">{{ Carbon::parse($paket->tanggal_selesai)->format('d M Y') }}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bxs-plane-take-off'></i> Keberangkatan dari</h5>
-                                        <p style="margin: 0;">{{ $paket->tempat_keberangkatan }}</p>
+                                
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class='bx bxs-plane-take-off info-card-icon'></i>
+                                        <h5 class="info-card-title">Keberangkatan dari</h5>
                                     </div>
+                                    <p class="info-card-content">{{ $paket->tempat_keberangkatan }}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                                        <h5 style="font-size: 16px; margin-bottom: 8px;"><i class='bx bxs-plane-land'></i> Kepulangan ke</h5>
-                                        <p style="margin: 0;">{{ $paket->tempat_kepulangan }}</p>
+                                
+                                <div class="info-card">
+                                    <div class="info-card-header">
+                                        <i class='bx bxs-plane-land info-card-icon'></i>
+                                        <h5 class="info-card-title">Kepulangan ke</h5>
                                     </div>
+                                    <p class="info-card-content">{{ $paket->tempat_kepulangan }}</p>
                                 </div>
                             </div>
 
-                            <h3>Deskripsi Paket</h3>
-                            <p>{!! nl2br(e($paket->deskripsi)) !!}</p>
+                            <div class="content-section">
+                                <h3 class="content-section-title">
+                                    <i class='bx bx-detail'></i>Deskripsi Paket
+                                </h3>
+                                <div class="content-section-body">
+                                    {!! nl2br(e($paket->deskripsi)) !!}
+                                </div>
+                            </div>
 
-                            <h3>Fasilitas</h3>
-                            <div class="facilities-content">
-                                {!! $paket->fasilitas !!}
+                            <div class="content-section">
+                                <h3 class="content-section-title">
+                                    <i class='bx bx-check-shield'></i>Fasilitas
+                                </h3>
+                                <div class="content-section-body">
+                                    {!! $paket->fasilitas !!}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,100 +119,73 @@
 
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
-                        <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; margin-bottom: 30px; text-align: center;">
+                        <div class="price-card">
                             <h3>Harga Paket</h3>
-                            <div style="margin: 15px 0;">
-                                <h2 style="font-size: 32px; color: #ff5d22; margin-bottom: 0;">
+                            <div class="price-display">
+                                <div class="price-amount">
                                     Rp {{ number_format($paket->harga, 0, ',', '.') }}
-                                </h2>
-                                <span>per orang</span>
+                                </div>
+                                <div class="price-unit">per orang</div>
                             </div>
-                            <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="default-btn btn-bg-two border-radius-5 w-100 mt-3">
-                                Pesan Sekarang
+                            <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="btn btn-order">
+                                <i class='bx bx-cart' style="margin-right: 8px;"></i>Pesan Sekarang
                             </a>
                             
                             <!-- WhatsApp Share Button -->
-                            <div class="mt-3 text-center">
-                                <a href="#" id="shareWhatsAppBtn" class="btn btn-success w-100 d-flex justify-content-center align-items-center" 
-                                        style="background-color: #25D366; border: none;">
+                            <div class="text-center">
+                                <a href="#" id="shareWhatsAppBtn" class="btn btn-whatsapp d-flex justify-content-center align-items-center">
                                     <i class='bx bxl-whatsapp me-2' style="font-size: 22px;"></i> Bagikan via WhatsApp
                                 </a>
                             </div>
                         </div>
 
-                        <div class="services-bar">
-                            <h3 class="title">Paket Lainnya</h3>
+                        <div class="sidebar-section">
+                            <h3 class="sidebar-title">
+                                <i class='bx bx-package'></i>Paket Lainnya
+                            </h3>
                             <div class="services-bar-widget">
-                                <ul>
-                                    @foreach(App\Models\Paket::where('jenis_paket', $paket->jenis_paket)
-                                            ->where('id', '!=', $paket->id)
-                                            ->where('published_at', '!=', null)
-                                            ->latest()
-                                            ->take(5)
-                                            ->get() as $otherPaket)
-                                        <li>
-                                            <a href="/paket/{{ $otherPaket->id }}">
-                                                {{ $otherPaket->nama_paket }}
+                                @foreach(App\Models\Paket::where('jenis_paket', $paket->jenis_paket)
+                                        ->where('id', '!=', $paket->id)
+                                        ->where('published_at', '!=', null)
+                                        ->latest()
+                                        ->take(5)
+                                        ->get() as $otherPaket)
+                                    <div class="package-item">
+                                        <div class="package-item-content">
+                                            <div class="package-item-image">
+                                                @if($otherPaket->gambar)
+                                                    <img src="{{ asset('storage/' . $otherPaket->gambar) }}" alt="{{ $otherPaket->nama_paket }}">
+                                                @else
+                                                    <div class="package-item-placeholder">
+                                                        <i class='bx bx-image'></i>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="package-item-details">
+                                                <a href="/paket/{{ $otherPaket->id }}" style="text-decoration: none; color: inherit;">
+                                                    <h6 class="package-item-title">{{ Str::limit($otherPaket->nama_paket, 45) }}</h6>
+                                                    <div class="package-item-meta">
+                                                        <i class='bx bx-calendar'></i>
+                                                        {{ Carbon::parse($otherPaket->tanggal_mulai)->format('d M Y') }}
+                                                    </div>
+                                                    <div class="package-item-meta">
+                                                        <i class='bx bx-time'></i>
+                                                        {{ $otherPaket->durasi }} Hari
+                                                    </div>
+                                                    <div class="package-item-price">
+                                                        Rp {{ number_format($otherPaket->harga, 0, ',', '.') }}
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="package-item-arrow">
                                                 <i class='bx bx-chevron-right'></i>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- WhatsApp Share Modal -->
-    <div class="modal fade" id="whatsappShareModal" tabindex="-1" aria-labelledby="whatsappShareModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="whatsappShareModalLabel">Bagikan via WhatsApp</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="whatsappNumber" class="form-label">Nomor WhatsApp (opsional)</label>
-                        <div class="input-group">
-                            <span class="input-group-text">+62</span>
-                            <input type="tel" class="form-control" id="whatsappNumber" placeholder="81234567890 (tanpa awalan 0)">
-                        </div>
-                        <div class="form-text">Jika dibiarkan kosong, Anda bisa memilih kontak di WhatsApp</div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Pesan yang akan dibagikan:</label>
-                        <div class="p-3" style="background: #f8f9fa; border-radius: 8px; max-height: 300px; overflow-y: auto;">
-                            <pre id="messagePreview" style="white-space: pre-wrap; font-family: inherit; margin-bottom: 0;">@php
-                            $message = "🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang! 
-Berikut detail paket yang aku pilih:
-
-✈ " . $paket->nama_paket . "
-📆 Keberangkatan: " . Carbon::parse($paket->tanggal_mulai)->format('d M Y') . "
-⏱ Durasi: " . $paket->durasi . " Hari
-🌐 Destinasi: " . $paket->destinasi . "
-💰 Harga: Rp " . number_format($paket->harga, 0, ',', '.') . "/orang
-
-Deskripsi " . Str::limit(strip_tags($paket->deskripsi), 200) . "
-" . Str::limit(strip_tags($paket->fasilitas), 200) . "
-
-🙋‍♂ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
-📱 WhatsApp: https://wa.me/6282299198002
-📍 Kantor: Jl. Raya Karawang No. 88";
-                            echo e($message);
-                            @endphp</pre>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success" id="sendWhatsAppBtn">
-                        <i class='bx bxl-whatsapp me-1'></i> Kirim via WhatsApp
-                    </button>
                 </div>
             </div>
         </div>
@@ -200,8 +198,21 @@ Deskripsi " . Str::limit(strip_tags($paket->deskripsi), 200) . "
         shareWhatsAppBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Generate the message with proper emojis
-            const message = `🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang!
+            // Helper function untuk decode HTML entities
+            function decodeHtmlEntities(text) {
+                const textarea = document.createElement('textarea');
+                textarea.innerHTML = text;
+                return textarea.value;
+            }
+            
+            // Decode deskripsi dan fasilitas
+            const deskripsi = {!! json_encode(strip_tags($paket->deskripsi)) !!};
+            const fasilitas = {!! json_encode(strip_tags($paket->fasilitas)) !!};
+            
+            const decodedDeskripsi = decodeHtmlEntities(deskripsi);
+            const decodedFasilitas = decodeHtmlEntities(fasilitas);
+            
+            const message = `🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang! 
 Berikut detail paket yang aku pilih:
 
 ✈️ {{ $paket->nama_paket }}
@@ -210,18 +221,22 @@ Berikut detail paket yang aku pilih:
 🌐 Destinasi: {{ $paket->destinasi }}
 💰 Harga: Rp {{ number_format($paket->harga, 0, ',', '.') }}/orang
 
-{{ Str::limit(strip_tags($paket->deskripsi), 200) }}
-{{ Str::limit(strip_tags($paket->fasilitas), 200) }}
+${decodedDeskripsi}
+
+Fasilitas:
+${decodedFasilitas}
 
 🙋‍♂️ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
 📱 WhatsApp: https://wa.me/6282299198002
 📍 Kantor: Jl. Raya Karawang No. 88`;
-            
-            // Encode message for URL
+
+            // Encode message untuk URL
             const encodedMessage = encodeURIComponent(message);
             
-            // Direct to WhatsApp's share interface
+            // Buat WhatsApp link
             const whatsappLink = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+            
+            // Buka WhatsApp di tab baru
             window.open(whatsappLink, '_blank');
         });
     });
