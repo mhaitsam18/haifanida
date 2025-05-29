@@ -152,8 +152,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password/{user}', [ForgotPasswordController::class, 'updatePassword'])->name('password.update');
 
 
-    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    // MODIFIED: Memisahkan route untuk login dan register dengan Google
+    Route::get('auth/google/login', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'login')
+        ->name('auth.google.login');
+    Route::get('auth/google/register', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'register')
+        ->name('auth.google.register');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])
+        ->name('auth.google.callback');
 });
 
 
@@ -538,44 +545,16 @@ Route::get('/tambah-pembayaran', function () {
 });
 
 Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
+Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');
 
+// Rute untuk daftar keberangkatan (upcoming trips)
+Route::get('/member/daftar-keberangkatan', [MemberController::class, 'daftarKeberangkatan'])
+    ->name('member.daftar-keberangkatan');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Rute untuk riwayat perjalanan (trip history)
+Route::get('/member/riwayat-perjalanan', [MemberController::class, 'riwayatPerjalanan'])
+    ->name('member.riwayat-perjalanan');
 
 // Routes untuk berkas jemaah
 Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'berkasJemaah'])->name('pemesanan.jemaah.berkas');
