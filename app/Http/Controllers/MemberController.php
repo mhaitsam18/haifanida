@@ -10,6 +10,10 @@ use App\Models\Pembayaran;
 use App\Models\Member;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;    
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 // --MODIFIED
 
 class MemberController extends Controller
@@ -22,26 +26,91 @@ class MemberController extends Controller
         ]);
     }
 
-    public function profile(Request $request){
+    public function profile(Request $request)
+    {
         $user = Auth::user();
+        $member = Member::where('user_id', $user->id)->first();
         $mode = $request->query('mode', 'show');
-        // MODIFIED--
         $title = 'Profile | Haifa Nida Wisata';
-        return view('home.profile', compact('user', 'mode', 'title'));
-        // --MODIFIED
+        return view('home.profile', compact('user', 'member', 'mode', 'title'));
     }
 
-    // MODIFIED--
-    // fungsi untuk view perjalanan saya
-    public function perjalananSaya(Request $request){
+    public function updateProfile(Request $request)
+    {
         $user = Auth::user();
-        $title = 'Perjalanan Saya | Haifa Nida Wisata';
-        // MODIFIED--
-        $pemesanan = $user->pemesanans()->with('paket')->get();
-        // --MODIFIED
+        
+        $validateUser = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'required|string|unique:users,username,' . $user->id,
+            'phone_number' => 'nullable|string|unique:users,phone_number,' . $user->id,
+            'password' => 'nullable|string'
+        ]);
+
+        // Handle password
+        if (!empty($validateUser['password'])) {
+            $validateUser['password'] = Hash::make($validateUser['password']);
+        } else {
+            unset($validateUser['password']);
+        }
+
+        // Update user data
+        $user->name = $validateUser['name'];
+        $user->email = $validateUser['email'];
+        $user->username = $validateUser['username'];
+        $user->phone_number = $validateUser['phone_number'];
+        if (isset($validateUser['password'])) {
+            $user->password = $validateUser['password'];
+        }
+        $user->save();
+
+        // Update member data if exists
+        if ($member = Member::where('user_id', $user->id)->first()) {
+            $member->update([
+                'nama_lengkap' => $validateUser['name'],
+                'email' => $validateUser['email'],
+                'nomor_telepon' => $validateUser['phone_number']
+            ]);
+        }
+
+        return redirect()->route('member.profile', ['mode' => 'show'])->with('success', 'Profile updated successfully!');
+    }
+
+    // Daftar keberangkatan - menampilkan perjalanan yang akan datang
+    public function daftarKeberangkatan(Request $request)
+    {
+        $user = Auth::user();
+        $title = 'Daftar Keberangkatan | Haifa Nida Wisata';
+        
+        // Get upcoming trips where end date is in the future
+        $pemesanan = $user->pemesanans()
+            ->with('paket')
+            ->whereHas('paket', function($query) {
+                $query->where('tanggal_selesai', '>=', Carbon::now());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('home.daftar-keberangkatan', compact('user', 'title', 'pemesanan'));
+    }
+
+    // Riwayat perjalanan - menampilkan perjalanan yang sudah selesai
+    public function riwayatPerjalanan(Request $request)
+    {
+        $user = Auth::user();
+        $title = 'Riwayat Perjalanan | Haifa Nida Wisata';
+        
+        // Get completed trips where end date is in the past
+        $pemesanan = $user->pemesanans()
+            ->with('paket')
+            ->whereHas('paket', function($query) {
+                $query->where('tanggal_selesai', '<', Carbon::now());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('home.perjalanan-saya', compact('user', 'title', 'pemesanan'));
     }
-    // --MODIFIED
 
     // MODIFIED--
     public function tagihan(Request $request){
@@ -134,5 +203,37 @@ class MemberController extends Controller
         return back()->with('success', 'Data Member berhasil diperbarui');
     }
 
-    // --MODIFIED
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($user->photo) {
+                $oldPhotoPath = public_path('storage/user-photo/' . $user->photo);
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath);
+                }
+            }
+
+            // Store new photo
+            $file = $request->file('photo');
+            $filename = time() . '_' . $user->id . '.' . $file->getClientOriginalExtension();
+            
+            // Move file to public/storage/user-photo directory
+            $file->move(public_path('storage/user-photo'), $filename);
+
+            // Update user profile with just the filename
+            $user->photo = $filename;
+            $user->save();
+
+            return redirect()->back()->with('success', 'Profile picture updated successfully!');
+        }
+
+        return redirect()->back()->with('error', 'No image file uploaded.');
+    }
 }
