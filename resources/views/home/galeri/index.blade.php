@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('style')
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/gallery.css">
 @endsection
 
 @section('content')
