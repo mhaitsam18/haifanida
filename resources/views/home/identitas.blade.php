@@ -72,7 +72,7 @@
                                     <div class="col-sm-10">
                                         <div class="row">
                                             <div class="col-sm-3">
-                                                <img src="{{ asset('storage/' . $member->user->photo) }}"
+                                                <img src="{{ asset('storage/' . $member->user->photo) }}" 
                                                     class="img-thumbnail img-preview">
                                             </div>
                                             <div class="col-sm-9">
