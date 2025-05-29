@@ -31,6 +31,9 @@ jangan diapus, tapi kodingan lamanya di jadiin komentar aja
 ```
 # SOP commit
 Commit file 1 per 1, biar klo ada konflik gampang diurusnya
+
+# SOP GITTO PULLO MERGECONFLICTO
+kalau sudah menyelesaikan merge conflict harap double check kerjaan rekan yang berconflict dengan kalian
 ---
 - pull
 - taro di laragon/www
