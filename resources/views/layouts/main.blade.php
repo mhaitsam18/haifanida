@@ -25,7 +25,7 @@
 
     <link rel="stylesheet" href="/assets-techex-demo/css/magnific-popup.css">
 
-    <link rel="stylesheet" href="/assets-techex-demo/css/nice-select.min.css">
+    {{-- <link rel="stylesheet" href="/assets-techex-demo/css/nice-select.min.css"> --}}
 
     <link rel="stylesheet" href="/assets-techex-demo/css/meanmenu.css">
 
@@ -41,8 +41,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-
+    {{-- MODIFIED-- --}}
     <link rel="stylesheet" href="/assets/css/style.css">
+    {{-- --MODIFIED --}}
 
     <link rel="icon" type="image/png" href="/assets/img/logos/logo.png">
     <title>{{ $title }} | Haifa Nida Wisata</title>
@@ -86,7 +87,7 @@
 
     <script src="/assets-techex-demo/js/jquery.magnific-popup.min.js"></script>
 
-    <script src="/assets-techex-demo/js/jquery.nice-select.min.js"></script>
+    {{-- <script src="/assets-techex-demo/js/jquery.nice-select.min.js"></script> --}}
 
     <script src="/assets-techex-demo/js/wow.min.js"></script>
 
@@ -108,7 +109,9 @@
     <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
     <!-- Misalnya, jika Anda menggunakan adapter untuk tampilan pratinjau -->
     <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+    {{-- MODIFIED-- --}}
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    {{-- --MODIFIED --}}
 
 
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>

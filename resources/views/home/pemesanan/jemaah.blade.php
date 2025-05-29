@@ -1,4 +1,3 @@
-<!-- resources/views/home/pemesanan/jemaah.blade.php -->
 @extends('layouts.main')
 
 @section('content')
@@ -13,10 +12,10 @@
             <h2 class="fw-bold text-primary">DATA JEMAAH</h2>
         </div>
         <div class="col-md-6 text-end">
-            <a href="/tambah-jemaah" class="btn btn-primary me-2">
+            <a href="{{ route('pemesanan.jemaah.create', $pemesanan->id) }}" class="btn btn-primary me-2">
                 <i class="fas fa-plus-circle me-1"></i> Tambah
             </a>
-            <a href="#" class="btn btn-secondary">
+            <a href="{{ route('pemesanan.detail',  $pemesanan->id) }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
@@ -48,22 +47,25 @@
                                         <td>{{ $jemaah->nama_lengkap }}</td>
                                         <td>{{ $jemaah->email }}</td>
                                         <td>{{ $jemaah->nomor_telepon }}</td>
-                                        <td> <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
-                                                class="img-thumbnail img-fluid"></td>
-                                        {{-- <td class="print-hilang">
+                                        <td> 
+                                            @if($jemaah->foto)
+                                                <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
+                                                     class="img-thumbnail img-fluid">
+                                            @else
+                                                <span class="text-muted">Tidak ada foto</span>
+                                            @endif
+                                        </td>
+                                        <td class="print-hilang">
                                             <div class="d-flex align-items-center">
-                                                <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}"
-                                                    class="badge bg-haifa d-inline-block m-1">Detail</a>
-                                                <a href="/admin/paket/{{ $paket->id }}/jemaah/{{ $jemaah->id }}/edit"
-                                                    class="badge bg-success d-inline-block m-1">Edit</a>
-                                                <form action="/admin/jemaah/{{ $jemaah->id }}" method="post">
-                                                    @method('delete')
+                                                <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" class="badge btn-primary d-inline-block m-1">Berkas</a>
+                                                <a href="#" class="badge bg-success d-inline-block m-1">Edit</a>
+                                                <form action="{{ route('jemaah.destroy', $jemaah->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
                                                     @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
+                                                    @method('DELETE')
+                                                    <button type="submit" class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
                                                 </form>
                                             </div>
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                 @endforeach
                     </tbody>

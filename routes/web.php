@@ -63,7 +63,7 @@ use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UmrohController;
-use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -152,8 +152,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password/{user}', [ForgotPasswordController::class, 'updatePassword'])->name('password.update');
 
 
-    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    // MODIFIED: Memisahkan route untuk login dan register dengan Google
+    Route::get('auth/google/login', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'login')
+        ->name('auth.google.login');
+    Route::get('auth/google/register', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'register')
+        ->name('auth.google.register');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])
+        ->name('auth.google.callback');
 });
 
 
@@ -501,8 +508,13 @@ Route::get('/pemesanan/{id}/payment', function ($id) {
 Route::post('/pemesanan/store', [UmrohController::class, 'storePemesanan'])->name('pemesanan.store');
 Route::get('/pemesanan/detail/{id}', [UmrohController::class, 'detailPemesanan'])->name('pemesanan.detail');
 Route::get('/pemesanan/jemaah/{id}', [UmrohController::class, 'listJemaah'])->name('pemesanan.jemaah.list'); // Untuk tombol "Lihat Data Jamaah"
+Route::get('/pemesanan/add-jemaah/{id}', [UmrohController::class, 'createJemaah'])->name('pemesanan.jemaah.create');
+// Route untuk menyimpan data jemaah
+Route::post('/pemesanan/jemaah/store/{id}', [UmrohController::class, 'storeJemaah'])->name('pemesanan.jemaah.store');
 // Route::get('/pemesanan/jamaah/{id}', [UmrohController::class, 'detailJamaah'])->name('pemesanan.detail.jamaah'); // Untuk tombol "Lihat detail Jamaah"
 Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
+Route::delete('/jemaah/{jemaah}', [UmrohController::class, 'destroy'])->name('jemaah.destroy');
+
 
 Route::get('/jemaah', function () {
     return view('home.pemesanan.jemaah', ['title' => 'Data Jemaah']);
@@ -533,3 +545,22 @@ Route::get('/tambah-pembayaran', function () {
 });
 
 Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
+Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');
+
+// Rute untuk daftar keberangkatan (upcoming trips)
+Route::get('/member/daftar-keberangkatan', [MemberController::class, 'daftarKeberangkatan'])
+    ->name('member.daftar-keberangkatan');
+
+// Rute untuk riwayat perjalanan (trip history)
+Route::get('/member/riwayat-perjalanan', [MemberController::class, 'riwayatPerjalanan'])
+    ->name('member.riwayat-perjalanan');
+
+// Routes untuk berkas jemaah
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'berkasJemaah'])->name('pemesanan.jemaah.berkas');
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/create', [BerkasController::class, 'create'])->name('pemesanan.jemaah.add-berkas');
+Route::post('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'store'])->name('pemesanan.jemaah.berkas.store');
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/edit', [BerkasController::class, 'editBerkasJemaah'])->name('pemesanan.jemaah.berkas.edit');
+Route::put('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'updateBerkasJemaah'])->name('pemesanan.jemaah.berkas.update');
+Route::delete('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'destroyBerkasJemaah'])->name('pemesanan.jemaah.berkas.destroy');
+Route::get('/pemesanan/{id}/jemaah', [BerkasController::class, 'someMethod'])->name('pemesanan.jemaah');

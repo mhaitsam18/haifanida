@@ -45,7 +45,8 @@
                                         <div class="col">
                                             <ul>
                                                 <li>Nomor KTP : {{ $jemaah->nomor_ktp }}</li>
-                                                <li>Nama Lengkap : {{ $jemaah->nama_paket }}</li>
+                                                <li>Nama Lengkap : {{ $jemaah->nama_lengkap }}</li>
+                                                {{-- <li>Nama Lengkap : {{ $jemaah->nama_paket }}</li> --}}
                                                 <li>Nomor Sesuai Paspor : {{ $jemaah->nama_sesuai_paspor }}</li>
                                                 <li>Tempat, Tanggal Lahir : {{ $jemaah->tempat_lahir }},
                                                     {{ Carbon::parse($jemaah->tanggal_lahir)->isoFormat('LL') }}</li>

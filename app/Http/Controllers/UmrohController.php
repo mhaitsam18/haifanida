@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Models\Paket;
-use App\Models\Pemesanan;
+use App\Models\Ekstra;
 use App\Models\Jemaah;
 use App\Models\Provinsi;
-use App\Models\Ekstra;
+use App\Models\Kabupaten;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+
 
 class UmrohController extends Controller
 {
@@ -41,39 +43,36 @@ class UmrohController extends Controller
             ->whereNotNull('published_at');
         
         // Price range filter
-        if ($request->has('harga_min') && $request->harga_min) {
+        if ($request->filled('harga_min')) {
             $query->where('harga', '>=', $request->harga_min);
         }
         
-        if ($request->has('harga_max') && $request->harga_max) {
+        if ($request->filled('harga_max')) {
             $query->where('harga', '<=', $request->harga_max);
         }
         
         // Departure date filter
-        if ($request->has('tanggal_mulai') && $request->tanggal_mulai) {
+        if ($request->filled('tanggal_mulai')) {
             $query->where('tanggal_mulai', '>=', $request->tanggal_mulai);
         }
         
-        if ($request->has('tanggal_akhir') && $request->tanggal_akhir) {
+        if ($request->filled('tanggal_akhir')) {
             $query->where('tanggal_mulai', '<=', $request->tanggal_akhir);
         }
         
-        // Duration filter
-        if ($request->has('durasi') && !empty($request->durasi)) {
-            $query->whereIn('durasi', $request->durasi);
+        // Duration filter - Modified
+        if ($request->filled('durasi')) {
+            $query->where('durasi', $request->durasi);
         }
         
         // Sort options
-        if ($request->has('urutkan')) {
+        if ($request->filled('urutkan')) {
             switch ($request->urutkan) {
                 case 'harga_terendah':
                     $query->orderBy('harga', 'asc');
                     break;
                 case 'harga_tertinggi':
                     $query->orderBy('harga', 'desc');
-                    break;
-                case 'tanggal_terdekat':
-                    $query->orderBy('tanggal_mulai', 'asc');
                     break;
                 case 'durasi_terpendek':
                     $query->orderBy('durasi', 'asc');
@@ -86,7 +85,7 @@ class UmrohController extends Controller
                     break;
             }
         } else {
-            $query->latest(); // Default sorting
+            $query->latest();
         }
         
         // Execute query
@@ -98,34 +97,13 @@ class UmrohController extends Controller
             ->distinct()
             ->pluck('durasi')
             ->sort()
+            ->values()
             ->toArray();
-            
-        // Price range for filter options
-        $hargaMin = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->min('harga');
-            
-        $hargaMax = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->max('harga');
-            
-        // Get earliest and latest departure dates
-        $tanggalMin = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->min('tanggal_mulai');
-            
-        $tanggalMax = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->max('tanggal_mulai');
             
         return view('home.umroh', [
             'title' => 'Paket Umroh',
             'pakets' => $pakets,
             'durasiOptions' => $durasiOptions,
-            'hargaMin' => $hargaMin,
-            'hargaMax' => $hargaMax,
-            'tanggalMin' => $tanggalMin ? Carbon::parse($tanggalMin)->format('Y-m-d') : null,
-            'tanggalMax' => $tanggalMax ? Carbon::parse($tanggalMax)->format('Y-m-d') : null,
             'filters' => $request->all()
         ]);
     }
@@ -194,21 +172,24 @@ class UmrohController extends Controller
     }
 
     public function detailPemesanan($id)
-    {
+    {   
+        $user = Auth::user();
         $pemesanan = Pemesanan::findOrFail($id);
         // where('id', $id)
         // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
         // ->firstOrFail();
         return view('home.pemesanan.detail-pemesanan', [
             'title' => 'Detail Pemesanan',
-            'pemesanan' => $pemesanan
+            'pemesanan' => $pemesanan,
+            'user' => $user
         ]);
     }
-
+    
     public function listJemaah($id)
     {   
         $jemaahs = Jemaah::where('pemesanan_id', $id)->get();
         $pemesanan = Pemesanan::findOrFail($id);
+        // BYPASS DEV
         // where('id', $id)
         // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
         // ->firstOrFail();
@@ -217,6 +198,118 @@ class UmrohController extends Controller
             'pemesanan' => $pemesanan,
             'jemaahs' => $jemaahs
         ]);
+    }
+    public function createJemaah($id)
+    {
+        $pemesanan = Pemesanan::findOrFail($id);
+        // BYPASS DEV
+        // where('id', $id)
+        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
+        // ->firstOrFail();
+        return view('home.pemesanan.add-jemaah', [
+            'title' => 'Tambah Jemaah',
+            'pemesanan' => $pemesanan,
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => (old('provinsi')) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi'))->first()->id)->get() : Kabupaten::all()
+        ]);
+    }
+
+    public function storeJemaah(Request $request, $id)
+    {
+        $validateData = $request->validate([
+            'pemesanan_id' => 'required|string',
+            'grup_id' => 'nullable|string',
+            'mahram_id' => 'nullable|string',
+            'nomor_ktp' => 'nullable|string',
+            'nama_lengkap' => 'nullable|string',
+            'nama_sesuai_paspor' => 'nullable|string',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'kewarganegaraan' => 'nullable|string',
+            'alamat' => 'nullable|string',
+            'kelurahan' => 'nullable|string',
+            'kecamatan' => 'nullable|string',
+            'kabupaten' => 'nullable|string',
+            'provinsi' => 'nullable|string',
+            'kode_pos' => 'nullable|string',
+            'nomor_telepon' => 'nullable|string',
+            'email' => 'nullable|string',
+            'tingkat_pendidikan' => 'nullable|string',
+            'pekerjaan' => 'nullable|string',
+            'nomor_paspor' => 'nullable|string',
+            'tempat_dikeluarkan' => 'nullable|string',
+            'tanggal_dikeluarkan' => 'nullable|date',
+            'tanggal_kadaluarsa' => 'nullable|date',
+            'pernah_umroh' => 'nullable|boolean',
+            'pernah_haji' => 'nullable|boolean',
+            'hubungan_mahram' => 'nullable|string',
+            'golongan_darah' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'nama_keluarga_terdekat' => 'nullable|string',
+            'kontak_keluarga_terdekat' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        try {
+            // Simpan foto
+            if ($request->hasFile('foto')) {
+                $validateData['foto'] = $request->file('foto')->store('jemaah-foto');
+            }
+
+            // Tambahkan data wajib
+            $validateData['pemesanan_id'] = $id;
+            // $validateData['is_active'] = true;
+
+            Jemaah::create($validateData);
+            $this->updateJumlahOrangPemesanan($id);
+            return redirect()->route('pemesanan.jemaah.list', $id)
+                ->with('success', 'Data jemaah berhasil ditambahkan');
+
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Gagal menambahkan jemaah: '.$e->getMessage());
+        }
+    }
+
+    public function destroy(Jemaah $jemaah)
+    {   
+        $pemesananId = $jemaah->pemesanan_id;
+            $fotoPath = $jemaah->foto;
+
+            $jemaah->delete();
+
+            // // Hapus file foto jika ada
+            // if ($fotoPath && Storage::exists($fotoPath)) {
+            //     Storage::delete($fotoPath);
+            // }
+
+            // Panggil fungsi untuk update jumlah orang di pemesanan
+            $this->updateJumlahOrangPemesanan($pemesananId);
+        return back()->with('success', 'Data jemaah berhasil dihapus');
+    }
+
+      protected function updateJumlahOrangPemesanan($pemesananId)
+    {
+        try {
+            $pemesanan = Pemesanan::findOrFail($pemesananId);
+            $jumlahJemaahAktual = Jemaah::where('pemesanan_id', $pemesananId)->count();
+
+            $pemesanan->jumlah_orang = $jumlahJemaahAktual;
+            // Anda mungkin juga ingin mengkalkulasi ulang total_harga di sini
+            // $paket = Paket::find($pemesanan->paket_id);
+            // if ($paket) {
+            //     $pemesanan->total_harga = $paket->harga * $jumlahJemaahAktual;
+            // }
+            $pemesanan->save();
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Handle jika pemesanan tidak ditemukan, mungkin log error
+            // Log::error("Pemesanan dengan ID: {$pemesananId} tidak ditemukan saat update jumlah orang.");
+        } catch (\Exception $e) {
+            // Handle error lainnya
+            // Log::error("Gagal update jumlah orang untuk pemesanan ID: {$pemesananId}. Error: " . $e->getMessage());
+        }
     }
 //     public function store(Request $request)
 //     {

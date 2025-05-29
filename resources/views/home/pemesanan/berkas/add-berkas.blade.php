@@ -1,4 +1,3 @@
-<!-- resources/views/home/pemesanan/tambah-berkas-jemaah.blade.php -->
 @extends('layouts.main')
 
 @section('content')
@@ -8,11 +7,12 @@
         <div class="col-md-8 text-center">
             <h2 class="fw-bold mb-0 text-primary">Tambah Berkas Jemaah</h2>
             <p class="text-muted">Silakan unggah dokumen persyaratan untuk jemaah</p>
+            <p class="text-info"><strong>{{ $jemaah->nama_lengkap }}</strong></p>
         </div>
     </div>
 
     <!-- Main Form -->
-    <form action="{{ route('berkas-jemaah.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('pemesanan.jemaah.berkas.store', [$pemesanan->id, $jemaah->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         
         <!-- Modern Card-Based Form Layout -->
@@ -28,46 +28,38 @@
                     <div class="card-body p-4">
                         <!-- Document Type Selection -->
                         <div class="mb-3">
-                            <label for="document_type" class="form-label fw-semibold">Nama Berkas <span class="text-danger">*</span></label>
-                            <select class="form-select" id="document_type" name="document_type" required>
+                            <label for="berkas_id" class="form-label fw-semibold">Nama Berkas <span class="text-danger">*</span></label>
+                            <select class="form-select @error('berkas_id') is-invalid @enderror" id="berkas_id" name="berkas_id" required>
                                 <option value="" selected disabled>-- Pilih Jenis Berkas --</option>
-                                <option value="ktp">KTP</option>
-                                <option value="kk">Kartu Keluarga</option>
-                                <option value="paspor">Paspor</option>
-                                <option value="pas_foto">Pas Foto Background Putih</option>
-                                <option value="buku_nikah">Buku Nikah</option>
-                                <option value="akta_lahir">Akta Kelahiran</option>
-                                <option value="vaksin_covid">Sertifikat Vaksin COVID-19</option>
-                                <option value="vaksin_meningitis">Sertifikat Vaksin Meningitis</option>
-                                <option value="izin_keluarga">Surat Izin Keluarga</option>
-                                <option value="bukti_pembayaran">Bukti Pembayaran</option>
-                                <option value="lainnya">Dokumen Lainnya</option>
+                                @foreach ($berkass as $item_berkas)
+                                    <option value="{{ $item_berkas->id }}" @selected($item_berkas->id == old('berkas_id'))>
+                                        {{ $item_berkas->nama_berkas }}
+                                        @if($item_berkas->keterangan)
+                                            - {{ $item_berkas->keterangan }}
+                                        @endif
+                                    </option>
+                                @endforeach
                             </select>
-                        </div>
-                        
-                        <!-- Additional field for "Lainnya" that will be shown only when "Lainnya" is selected -->
-                        <div class="mb-3 d-none" id="other_document_div">
-                            <label for="other_document_name" class="form-label fw-semibold">Nama Berkas Lainnya <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                <input type="text" class="form-control" id="other_document_name" name="other_document_name" placeholder="Masukkan nama berkas">
-                            </div>
+                            @error('berkas_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         
                         <!-- File Upload -->
                         <div class="mb-3">
-                            <label for="document_file" class="form-label fw-semibold">Unggah File <span class="text-danger">*</span></label>
+                            <label for="file_path" class="form-label fw-semibold">Unggah File <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-upload"></i></span>
-                                <input type="file" class="form-control" id="document_file" name="document_file" required>
+                                <input type="file" class="form-control @error('file_path') is-invalid @enderror" id="file_path" name="file_path" required accept=".pdf,.jpg,.jpeg,.png">
                             </div>
                             <small class="text-muted">Format file yang didukung: PDF, JPG, PNG. Ukuran maksimal: 2MB</small>
-                        </div>
-
-                        <!-- Additional Note Field -->
-                        <div class="mb-3">
-                            <label for="keterangan" class="form-label fw-semibold">Keterangan / Catatan</label>
-                            <textarea class="form-control" id="keterangan" name="keterangan" rows="3" placeholder="Masukkan keterangan atau catatan tambahan (opsional)"></textarea>
+                            @error('file_path')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -77,9 +69,9 @@
         <!-- Form Actions -->
         <div class="row justify-content-center mt-3">
             <div class="col-md-8 d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary" onclick="window.history.back()">
+                <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-1"></i>Kembali
-                </button>
+                </a>
                 <div>
                     <button type="reset" class="btn btn-light me-2">
                         <i class="fas fa-redo me-1"></i>Reset
@@ -94,7 +86,7 @@
 </div>
 @endsection
 
-{{-- @section('styles')
+@section('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 <style>
     body {
@@ -175,26 +167,11 @@
         background-color: #e0e0e0;
     }
 </style>
-@endsection --}}
+@endsection
 
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Toggle "Other Document Name" field when "Lainnya" is selected
-        const documentTypeSelect = document.getElementById('document_type');
-        const otherDocumentDiv = document.getElementById('other_document_div');
-        const otherDocumentInput = document.getElementById('other_document_name');
-        
-        documentTypeSelect.addEventListener('change', function() {
-            if (this.value === 'lainnya') {
-                otherDocumentDiv.classList.remove('d-none');
-                otherDocumentInput.setAttribute('required', 'required');
-            } else {
-                otherDocumentDiv.classList.add('d-none');
-                otherDocumentInput.removeAttribute('required');
-            }
-        });
-        
         // Add subtle animation when focusing form fields
         const formElements = document.querySelectorAll('.form-control, .form-select');
         formElements.forEach(element => {
@@ -210,35 +187,35 @@
         
         // Form validation before submit
         document.querySelector('form').addEventListener('submit', function(event) {
-            const documentTypeSelect = document.getElementById('document_type');
-            const documentFileInput = document.getElementById('document_file');
+            const berkasSelect = document.getElementById('berkas_id');
+            const fileInput = document.getElementById('file_path');
             
-            if (documentTypeSelect.selectedIndex === 0) {
+            if (berkasSelect.selectedIndex === 0) {
                 event.preventDefault();
-                documentTypeSelect.classList.add('is-invalid');
-                setTimeout(() => documentTypeSelect.classList.remove('is-invalid'), 3000);
+                berkasSelect.classList.add('is-invalid');
+                setTimeout(() => berkasSelect.classList.remove('is-invalid'), 3000);
             }
             
-            if (!documentFileInput.files.length) {
+            if (!fileInput.files.length) {
                 event.preventDefault();
-                documentFileInput.classList.add('is-invalid');
-                setTimeout(() => documentFileInput.classList.remove('is-invalid'), 3000);
+                fileInput.classList.add('is-invalid');
+                setTimeout(() => fileInput.classList.remove('is-invalid'), 3000);
             } else {
                 // File size validation (max 2MB)
-                const fileSize = documentFileInput.files[0].size;
+                const fileSize = fileInput.files[0].size;
                 const maxSize = 2 * 1024 * 1024; // 2MB in bytes
                 
                 if (fileSize > maxSize) {
                     event.preventDefault();
-                    documentFileInput.classList.add('is-invalid');
+                    fileInput.classList.add('is-invalid');
                     alert('Ukuran file terlalu besar! Maksimal 2MB.');
-                    setTimeout(() => documentFileInput.classList.remove('is-invalid'), 3000);
+                    setTimeout(() => fileInput.classList.remove('is-invalid'), 3000);
                 }
             }
         });
         
         // Preview file name after selection
-        document.getElementById('document_file').addEventListener('change', function() {
+        document.getElementById('file_path').addEventListener('change', function() {
             const fileName = this.files[0] ? this.files[0].name : 'Tidak ada file dipilih';
             const fileInfo = document.createElement('div');
             fileInfo.className = 'mt-2 text-muted small';

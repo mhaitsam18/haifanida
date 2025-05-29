@@ -3,6 +3,7 @@
 @section('content')
 @php
     use Carbon\Carbon;
+    $tanggalPemesanan = Carbon::now()->toDateString();
 @endphp
 <div class="inner-banner">
     <div class="container">
@@ -30,6 +31,8 @@
                     @csrf
                     <input type="hidden" name="paket_id" value="{{ $paket->id }}">
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <input type="hidden" name="jumlah_orang" value="0">
+                    <input type="hidden" name="tanggal_pesan" value="<?php echo htmlspecialchars($tanggalPemesanan); ?>">
                     <!-- Form Jemaah -->
                     <div class="card mb-4">
                         <div class="card-header bg-light">

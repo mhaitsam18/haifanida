@@ -16,9 +16,9 @@
     </div>
 
     <!-- Main Form -->
-    <form action="{{ route('jemaah.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('pemesanan.jemaah.store', $pemesanan->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        
+        <input type="hidden" name="pemesanan_id" value="{{ $pemesanan->id }}">
         <!-- Modern Card-Based Form Layout -->
         <div class="row g-4">
             <!-- Personal Data Card -->
@@ -45,10 +45,10 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label for="nomor_ponsel" class="form-label fw-semibold">Nomor Ponsel <span class="text-danger">*</span></label>
+                            <label for="nomor_telepon" class="form-label fw-semibold">Nomor Ponsel <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id="nomor_ponsel" name="nomor_ponsel" placeholder="Contoh: 08123456789" required>
+                                <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon" placeholder="Contoh: 08123456789" required>
                             </div>
                         </div>
                         
@@ -56,7 +56,7 @@
                             <label for="foto" class="form-label fw-semibold">Foto <span class="text-info">(3x4 background putih)</span></label>
                             <div class="card bg-light p-3 text-center position-relative">
                                 <div id="preview-container" class="mb-2 d-flex justify-content-center">
-                                    <img id="preview-image" src="{{ asset('images/avatar-placeholder.png') }}" alt="Preview" class="img-thumbnail" style="height: 150px; width: auto;">
+                                    <img id="preview-image" src="{{ asset('storage/user-photo/crtnC5JGyJ05AGNYE5sN8oD3mDFt6CwYgzRMSzo3.png') }}" alt="Preview" class="img-thumbnail" style="height: 150px; width: auto;">
                                 </div>
                                 <div class="position-relative">
                                     <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="previewImage(this)">
@@ -89,8 +89,8 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="mb-4">
-                            <label for="kota_tempat_lahir" class="form-label fw-semibold">Kota Tempat Lahir <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kota_tempat_lahir" name="kota_tempat_lahir" placeholder="Masukkan kota tempat lahir" required>
+                            <label for="tempat_lahir" class="form-label fw-semibold">Kota Tempat Lahir <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" placeholder="Masukkan kota tempat lahir" required>
                         </div>
                         
                         <div class="mb-4">
@@ -162,42 +162,43 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Tingkat Pendidikan</label>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="sd" value="SD/MI/Sederajat">
-                                        <label class="form-check-label" for="sd">SD/MI/Sederajat</label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="smp" value="SMP/MTs/Sederajat">
-                                        <label class="form-check-label" for="smp">SMP/MTs/Sederajat</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="sma" value="SMA/SMK/MA/Sederajat">
-                                        <label class="form-check-label" for="sma">SMA/SMK/MA/Sederajat</label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="s1" value="D1/D2/D3">
-                                        <label class="form-check-label" for="s1">D1/D2/D3</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="s2" value="D4/S1">
-                                        <label class="form-check-label" for="s2">D4/S1</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="s3" value="S2">
-                                        <label class="form-check-label" for="s3">S2</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <label class="form-label fw-semibold">Tingkat Pendidikan</label>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="sd" value="SD">
+                <label class="form-check-label" for="sd">SD/MI/Sederajat</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="smp" value="SLTP">
+                <label class="form-check-label" for="smp">SMP/MTs/Sederajat</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="sma" value="SLTA">
+                <label class="form-check-label" for="sma">SMA/SMK/MA/Sederajat</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="d3" value="D1/D2/D3">
+                <label class="form-check-label" for="d3">D1/D2/D3</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="d4" value="D4/S1">
+                <label class="form-check-label" for="d4">D4/S1</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="s2" value="S2">
+                <label class="form-check-label" for="s2">S2</label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="s3" value="S3">
+                <label class="form-check-label" for="s3">S3</label>
+            </div>
+        </div>
+    </div>
+</div>
+
                         
                         <div class="mb-3">
                             <label for="pekerjaan" class="form-label fw-semibold">Pekerjaan</label>
@@ -218,15 +219,21 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="mb-3">
-                            <label for="provinsi" class="form-label fw-semibold">Provinsi <span class="text-danger">*</span></label>
-                            <select class="form-select" id="provinsi" name="provinsi" required>
-                                <option selected disabled value="">Pilih Provinsi</option>
-                                <option value="Aceh">Aceh</option>
-                                <option value="Sumatera Utara">Sumatera Utara</option>
-                                <option value="Sumatera Barat">Sumatera Barat</option>
-                                <!-- Add more provinces as needed -->
-                            </select>
-                        </div>
+                                    <label for="provinsi" class="form-label">Provinsi</label>
+                                    <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi"
+                                        name="provinsi">
+                                        <option value="" selected disabled>Pilih Provinsi</option>
+                                        @foreach ($provinsis as $provinsi)
+                                            <option value="{{ $provinsi->provinsi }}" @selected($provinsi->provinsi == old('provinsi'))>
+                                                {{ $provinsi->provinsi }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('provinsi')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                         
                         <div class="mb-3">
                             <label for="kabupaten" class="form-label fw-semibold">Kabupaten/Kota <span class="text-danger">*</span></label>
@@ -242,8 +249,8 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label for="desa_kelurahan" class="form-label fw-semibold">Desa/Kelurahan <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="desa_kelurahan" name="desa_kelurahan" placeholder="Masukkan desa/kelurahan" required>
+                            <label for="kelurahan" class="form-label fw-semibold">Desa/Kelurahan <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" placeholder="Masukkan desa/kelurahan" required>
                         </div>
                         
                         <div class="mb-3">
@@ -252,8 +259,8 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label for="detail_alamat" class="form-label fw-semibold">Detail Alamat <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="detail_alamat" name="detail_alamat" rows="3" placeholder="Contoh: Jl. Raya Bogor No. 123, RT 01/RW 02" required></textarea>
+                            <label for="alamat" class="form-label fw-semibold">Detail Alamat <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Contoh: Jl. Raya Bogor No. 123, RT 01/RW 02" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -278,8 +285,8 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label for="nama_paspor" class="form-label fw-semibold">Nama Sesuai Paspor</label>
-                            <input type="text" class="form-control" id="nama_paspor" name="nama_paspor" placeholder="Nama lengkap sesuai paspor">
+                            <label for="nama_sesuai_paspor" class="form-label fw-semibold">Nama Sesuai Paspor</label>
+                            <input type="text" class="form-control" id="nama_sesuai_paspor" name="nama_sesuai_paspor" placeholder="Nama lengkap sesuai paspor">
                         </div>
                         
                         <div class="mb-3">
@@ -424,57 +431,56 @@
 </style>
 @endsection
 
-@section('scripts')
-<script>
-    // Preview image before upload
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function(e) {
-                document.getElementById('preview-image').src = e.target.result;
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    
-    // Dynamic dropdown for provinces and cities
-    document.addEventListener('DOMContentLoaded', function() {
-        const provinsi = document.getElementById('provinsi');
-        const kabupaten = document.getElementById('kabupaten');
-        
-        provinsi.addEventListener('change', function() {
-            // This would typically make an AJAX call to get cities based on the province
-            // For demonstration, we'll just clear and add some example cities
-            kabupaten.innerHTML = '<option selected disabled value="">Pilih Kabupaten/Kota</option>';
-            
-            if (provinsi.value === 'Aceh') {
-                addOption(kabupaten, 'Banda Aceh', 'Banda Aceh');
-                addOption(kabupaten, 'Aceh Besar', 'Aceh Besar');
-            } else if (provinsi.value === 'Sumatera Utara') {
-                addOption(kabupaten, 'Medan', 'Medan');
-                addOption(kabupaten, 'Deli Serdang', 'Deli Serdang');
-            }
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#foto').on('change', function() {
+                const file = $(this).prop('files')[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.img-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            });
         });
-        
-        function addOption(selectElement, value, text) {
-            const option = document.createElement('option');
-            option.value = value;
-            option.textContent = text;
-            selectElement.appendChild(option);
-        }
-    });
-    
-    // Form validation (simplified example)
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var isValid = true;
-        
-        // Add your validation logic here
-        
-        if (!isValid) {
-            event.preventDefault();
-        }
-    });
-</script>
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Ketika elemen provinsi berubah
+            $('#provinsi').change(function() {
+                // Ambil nilai provinsi yang dipilih
+                var selectedProvinsi = $(this).val();
+
+                // Lakukan request AJAX untuk mendapatkan data kabupaten berdasarkan provinsi
+                $.ajax({
+                    url: '/get-kabupaten', // Ganti URL dengan endpoint yang sesuai di controller
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token, sesuaikan dengan Laravel
+                        provinsi: selectedProvinsi // Ganti dengan nama field yang sesuai di database
+                    },
+                    success: function(data) {
+                        // Hapus opsi lama pada dropdown kabupaten
+                        $('#kabupaten').empty();
+
+                        // Tambahkan opsi default pada dropdown kabupaten
+                        $('#kabupaten').append(
+                            '<option value="" selected disabled>Pilih Kabupaten</option>');
+
+                        // Tambahkan opsi kabupaten berdasarkan data yang diterima dari server
+                        $.each(data, function(key, value) {
+                            $('#kabupaten').append('<option value="' + value.kabupaten +
+                                '">' +
+                                value.kabupaten + '</option>');
+                        });
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error: ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
