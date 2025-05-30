@@ -160,18 +160,94 @@ class MemberController extends Controller
 
     public function identitas(Request $request){
         $user = Auth::user();
-        // $title = "Identitas dan Berkas | Haifa Nida Wisata";
-        // $member = Member::where('user_id', $user->id)->first();
-        // $provinsis = Provinsi::all();
-
-        return view('home.identitas', 
-        ['user' => Auth::user(),
-         'title' => 'Identitas dan Berkas',
-         'member' => Member::where('user_id', $user->id)->first(),
-         'provinsis' => Provinsi::all(),
-         'kabupatens' => (old('provinsi')) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi'))->first()->id)->get() : Kabupaten::all(),]);
+        $member = Member::where('user_id', $user->id)->first();
+        
+        // Get provinsis
+        $provinsis = Provinsi::all();
+        
+        // Get kabupatens if provinsi is selected
+        $kabupatens = [];
+        if ($member->provinsi) {
+            $provinsi = Provinsi::where('provinsi', $member->provinsi)->first();
+            if ($provinsi) {
+                $kabupatens = Kabupaten::where('provinsi_id', $provinsi->id)->get();
+            }
+        }
+        
+        return view('home.identitas', [
+            'user' => $user,
+            'title' => 'Identitas dan Berkas',
+            'member' => $member,
+            'provinsis' => $provinsis,
+            'kabupatens' => $kabupatens
+        ]);
     }
 
+    public function updateIdentitas(Request $request)
+    {
+        $user = Auth::user();
+        $member = Member::where('user_id', $user->id)->first();
+
+        // Validate User data
+        $validateUser = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'required|string|unique:users,username,' . $user->id,
+            'phone_number' => ['nullable', 'string', 'unique:users,phone_number,' . $user->id, 'regex:/^(?:\+62|0)[0-9\s-]+$/'],
+        ]);
+
+        // Validate Member data
+        $validateMember = $request->validate([
+            'nomor_ktp' => 'nullable|string|max:16',
+            'nama_sesuai_paspor' => 'nullable|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'kewarganegaraan' => 'required|in:WNI,WNA',
+            'alamat' => 'required|string',
+            'kelurahan' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kabupaten' => 'required|string',
+            'provinsi' => 'required|string',
+            'kode_pos' => 'required|string',
+            'tingkat_pendidikan' => 'required|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
+            'pekerjaan' => 'required|string',
+            'nomor_paspor' => 'nullable|string',
+            'tempat_dikeluarkan' => 'nullable|string',
+            'tanggal_dikeluarkan' => 'nullable|date',
+            'tanggal_kadaluarsa' => 'nullable|date',
+            'pernah_umroh' => 'nullable|boolean',
+            'pernah_haji' => 'nullable|boolean',
+            'golongan_darah' => 'required|in:A,B,AB,O',
+            'nama_keluarga_terdekat' => 'required|string',
+            'kontak_keluarga_terdekat' => 'required|string'
+        ]);
+
+        // Handle foto upload
+        if ($request->hasFile('foto')) {
+            // Delete old foto if exists
+            if ($member->foto) {
+                Storage::delete('jemaah-foto/' . $member->foto);
+            }
+            
+            // Store new foto
+            $validateMember['foto'] = $request->file('foto')->store('jemaah-foto', 'public');
+        }
+
+        // Update user data
+        $user->update($validateUser);
+
+        // Sync member profile fields with user fields
+        $validateMember['nama_lengkap'] = $user->name;
+        $validateMember['email'] = $user->email;
+        $validateMember['nomor_telepon'] = $user->phone_number;
+
+        // Update member data
+        $member->update($validateMember);
+
+        return redirect()->route('member.profile', ['mode' => 'show'])->with('success', 'Data identitas berhasil diperbarui');
+    }
+    // --MODIFIED
     public function update(Request $request, Member $member)
     {
         $user = $member->user;
