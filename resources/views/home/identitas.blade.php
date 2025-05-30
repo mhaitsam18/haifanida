@@ -13,10 +13,10 @@
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
                         <h6 class="card-title mb-2">{{ $title }}</h6>
                     </div>
-                    <form action="/admin/member/{{ $member->id }}" method="post" enctype="multipart/form-data">
-                        @method('put')
+                    <form action="{{ route('member.profile.update') }}" method="POST" enctype="multipart/form-data">
+                        @method('PUT') 
                         @csrf
-                        <input type="hidden" name="id" id="id" value="{{ $member->id }}">
+                        <input type="hidden" name="id" value="{{ $member->id }}">
                         <div class="row">
                             <div class="col-lg-4">
                                 <h4 class="mb-3">Autentikasi</h4>
@@ -90,28 +90,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Kata Sandi Baru</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                        id="password" name="password" placeholder="Kata Sandi Saat Ini">
-                                    @error('password')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
-                                    <input type="password"
-                                        class="form-control @error('password_confirmation') is-invalid @enderror"
-                                        id="password_confirmation" name="password_confirmation"
-                                        placeholder="Konfirmasi Kata Sandi">
-                                    @error('password_confirmation')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -236,9 +214,8 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <p>Provinsi</p>
-                                    <label for="provinsi" class="form-label"></label>
-                                    <select class="mb-3 @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi">
+                                    <label for="provinsi" class="form-label">Provinsi</label>
+                                    <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi">
                                         <option value="" selected disabled>Pilih Provinsi</option>
                                         @foreach ($provinsis as $provinsi)
                                             <option value="{{ $provinsi->provinsi }}" @selected($provinsi->provinsi == old('provinsi', $member->provinsi))>
@@ -252,9 +229,8 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <p>Kabupaten / Kota</p>
-                                    <label for="kabupaten" class="form-label"></label>
-                                    <select class="mb-3 @error('kabupaten') is-invalid @enderror" id="kabupaten"
+                                    <label for="kabupaten" class="form-label">Kabupaten / Kota</label>
+                                    <select class="form-select @error('kabupaten') is-invalid @enderror" id="kabupaten"
                                         name="kabupaten">
                                         <option value="" selected disabled>Pilih Kabupaten</option>
                                         @foreach ($kabupatens as $kabupaten)
@@ -495,7 +471,7 @@
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/member" class="btn btn-secondary float-end m-2">Kembali</a>
+                                <a href="{{ route('member.profile', ['mode' => 'show']) }}" class="btn btn-secondary float-end m-2">Kembali</a>
                             </div>
                         </div>
                     </form>
@@ -504,4 +480,41 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // When provinsi dropdown changes
+            $('#provinsi').change(function() {
+                // Get selected provinsi value
+                var selectedProvinsi = $(this).val();
+
+                // Make AJAX request to get kabupaten data
+                $.ajax({
+                    url: '/get-kabupaten',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        provinsi: selectedProvinsi
+                    },
+                    success: function(data) {
+                        // Clear and update kabupaten dropdown
+                        $('#kabupaten').empty();
+                        $('#kabupaten').append(
+                            '<option value="" selected disabled>Pilih Kabupaten</option>');
+
+                        // Add new kabupaten options
+                        $.each(data, function(key, value) {
+                            $('#kabupaten').append('<option value="' + value.kabupaten +
+                                '">' + value.kabupaten + '</option>');
+                        });
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error: ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
