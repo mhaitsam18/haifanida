@@ -62,6 +62,7 @@ use App\Http\Controllers\MenuRoleController;
 use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\MemberTagihanController;
 use App\Http\Controllers\UmrohController;
 use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
@@ -410,6 +411,10 @@ Route::middleware('auth')->group(function () {
                     Route::prefix('berkas')->group(function () {
                         Route::get('/', [AdminBerkasJemaahController::class, 'index'])->name('admin.jemaah.berkas.index');
                         Route::get('/create', [AdminBerkasJemaahController::class, 'create'])->name('admin.jemaah.berkas.create');
+                        // MODIFIED--
+                        Route::get('/{berkasJemaah}/preview', [AdminBerkasJemaahController::class, 'preview'])
+                            ->name('admin.jemaah.berkas.preview');
+                        // --MODIFIED
                     });
                     Route::prefix('kamar')->group(function () {
                         Route::get('/', [AdminKamarJemaahController::class, 'index'])->name('admin.jemaah.kamar.index');
@@ -462,7 +467,7 @@ Route::middleware('auth')->group(function () {
             // MODIFIED--
             Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
             Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
-            Route::get('/tagihan', [MemberController::class, 'tagihan'])->name('member.tagihan');
+            Route::get('/tagihan/{id}', [MemberTagihanController::class, 'index'])->name('member.tagihan');
             Route::get('/identitas', [MemberController::class, 'identitas'])->name('member.identtias');
             // --MODIFIED
         });
