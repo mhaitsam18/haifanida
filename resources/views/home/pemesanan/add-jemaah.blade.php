@@ -53,17 +53,16 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label for="foto" class="form-label fw-semibold">Foto <span class="text-info">(3x4 background putih)</span></label>
-                            <div class="card bg-light p-3 text-center position-relative">
-                                <div id="preview-container" class="mb-2 d-flex justify-content-center">
-                                    <img id="preview-image" src="{{ asset('storage/user-photo/crtnC5JGyJ05AGNYE5sN8oD3mDFt6CwYgzRMSzo3.png') }}" alt="Preview" class="img-thumbnail" style="height: 150px; width: auto;">
-                                </div>
-                                <div class="position-relative">
-                                    <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="previewImage(this)">
-                                    <label for="foto" class="btn btn-primary w-100 mt-2">
-                                        <i class="fas fa-upload me-2"></i>Pilih Foto
-                                    </label>
-                                </div>
+                            <label class="form-label fw-semibold">Foto <span class="text-danger">*</span></label>
+                            <div class="text-center mb-3">
+                                <!-- Modified: Default to pas-foto.jpg -->
+                                <img id="preview-image" src="{{ asset('storage/jemaah-foto/pas-foto.jpg') }}" alt="Preview" class="img-thumbnail" style="height: 150px; width: auto;">
+                            </div>
+                            <div class="position-relative">
+                                <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="previewImage(this)">
+                                <label for="foto" class="btn btn-primary w-100 mt-2">
+                                    <i class="fas fa-upload me-2"></i>Pilih Foto
+                                </label>
                             </div>
                         </div>
                         
@@ -433,18 +432,22 @@
 
 @section('script')
     <script>
+        // MODIFIED: Add proper image preview functionality
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-image').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
         $(document).ready(function() {
             $('#foto').on('change', function() {
-                const file = $(this).prop('files')[0];
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('.img-preview').attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(file);
+                previewImage(this);
             });
-        });
     </script>
     <script>
         $(document).ready(function() {
