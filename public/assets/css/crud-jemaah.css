@@ -1,0 +1,67 @@
+
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    .form-label {
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+    
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+    }
+    
+    .bg-gradient-info {
+        background: linear-gradient(45deg, #36b9cc, #1a8a98);
+    }
+    
+    .bg-gradient-success {
+        background: linear-gradient(45deg, #1cc88a, #13855c);
+    }
+    
+    .bg-gradient-warning {
+        background: linear-gradient(45deg, #f6c23e, #dda20a);
+    }
+    
+    .bg-gradient-danger {
+        background: linear-gradient(45deg, #e74a3b, #be2617);
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+    }
+    
+    .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+    
+    .btn-primary:hover {
+        background-color: #2e59d9;
+        border-color: #2653d4;
+    }
+    
+    .text-primary {
+        color: #4e73df !important;
+    }
+    
+    /* Form file input styling */
+    input[type="file"] {
+        display: none;
+    }
+    
+    .required-field::after {
+        content: " *";
+        color: red;
+    }
