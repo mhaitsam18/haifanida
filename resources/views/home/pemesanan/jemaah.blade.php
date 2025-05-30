@@ -59,7 +59,7 @@
                                         <td class="print-hilang">
                                             <div class="d-flex align-items-center">
                                                 <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" class="badge btn-primary d-inline-block m-1">Berkas</a>
-                                                <a href="#" class="badge bg-success d-inline-block m-1">Edit</a>
+                                                <a href="{{ route('pemesanan.jemaah.edit', [$pemesanan->id, $jemaah->id]) }}" class="badge bg-success d-inline-block m-1">Edit</a>
                                                 <form action="{{ route('jemaah.destroy', $jemaah->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
                                                     @csrf
                                                     @method('DELETE')
