@@ -467,7 +467,7 @@ Route::middleware('auth')->group(function () {
             // MODIFIED--
             Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
             Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
-            Route::get('/tagihan', [MemberController::class, 'tagihan'])->name('member.tagihan');
+            Route::get('/tagihan/{id}', [MemberTagihanController::class, 'index'])->name('member.tagihan');
             Route::get('/identitas', [MemberController::class, 'identitas'])->name('member.identitas');
             Route::put('/identitas', [MemberController::class, 'updateIdentitas'])->name('member.identitas.update');
             // --MODIFIED
