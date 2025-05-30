@@ -252,14 +252,24 @@ class UmrohController extends Controller
         ]);
 
         try {
-            // Simpan foto
+            // MODIFIED: Handle photo storage properly using public/storage/jemaah-foto
             if ($request->hasFile('foto')) {
-                $validateData['foto'] = $request->file('foto')->store('jemaah-foto');
+                $file = $request->file('foto');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                
+                // Make sure the directory exists
+                $path = public_path('storage/jemaah-foto');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                // Move the uploaded file
+                $file->move($path, $filename);
+                $validateData['foto'] = 'jemaah-foto/' . $filename;
             }
 
             // Tambahkan data wajib
             $validateData['pemesanan_id'] = $id;
-            // $validateData['is_active'] = true;
 
             Jemaah::create($validateData);
             $this->updateJumlahOrangPemesanan($id);
