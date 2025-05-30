@@ -1,0 +1,116 @@
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    .form-label {
+        color: #495057;
+        font-weight: 500;
+    }
+    
+    .card {
+        transition: all 0.2s;
+        border: none;
+        border-radius: 10px;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+    }
+    
+    .bg-gradient-info {
+        background: linear-gradient(45deg, #36b9cc, #1a8a98);
+    }
+    
+    .bg-gradient-success {
+        background: linear-gradient(45deg, #1cc88a, #13855c);
+    }
+    
+    .bg-gradient-warning {
+        background: linear-gradient(45deg, #f6c23e, #dda20a);
+    }
+    
+    .form-control, .form-select {
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-radius: 5px 0 0 5px;
+    }
+    
+    .form-check-input:checked {
+        background-color: #4e73df;
+        border-color: #4e73df;
+    }
+    
+    .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+    
+    .btn-primary:hover {
+        background-color: #2e59d9;
+        border-color: #2653d4;
+    }
+    
+    .btn-outline-secondary {
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+    
+    .btn-light {
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+    
+    .img-thumbnail {
+        border-radius: 10px;
+        max-width: 150px;
+        height: auto;
+    }
+    
+    input[type="file"] {
+        display: none;
+    }
+    
+    .required-field::after {
+        content: " *";
+        color: red;
+    }
+    
+    .form-check-label {
+        cursor: pointer;
+    }
+    
+    .card-body {
+        padding: 2rem;
+    }
+    
+    .container {
+        padding: 2rem 0;
+    }
+    
+    .text-primary {
+        color: #4e73df !important;
+    }
