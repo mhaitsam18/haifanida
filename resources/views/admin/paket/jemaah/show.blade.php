@@ -247,6 +247,7 @@
                                                     <td>{{ $berkas->status }}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center ">
+                                                            <a href="{{ route('admin.jemaah.berkas.preview', [$jemaah->id, $berkas->id]) }}" target="_blank" class="badge bg-haifa d-inline-block ms-1">Lihat Berkas di storage</a>
                                                             <a href="{{ asset('storage/' . $berkas->file_path) }}"
                                                                 class="badge bg-haifa d-inline-block ms-1">Lihat Berkas</a>
                                                             {{-- <a href="/admin/berkas-jemaah/{{ $berkas->id }}"
