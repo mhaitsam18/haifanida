@@ -321,116 +321,92 @@ class UmrohController extends Controller
             // Log::error("Gagal update jumlah orang untuk pemesanan ID: {$pemesananId}. Error: " . $e->getMessage());
         }
     }
-//     public function store(Request $request)
-//     {
-//         $validator = Validator::make($request->all(), [
-//     'paket_id' => 'required|exists:pakets,id',
-//     'jamaah' => 'required|array',
-//     'jamaah.*.nama_lengkap' => 'required|string|max:255',
-//     'jamaah.*.email' => 'required|email|max:255',
-//     'jamaah.*.nomor_telepon' => 'required|string|max:20',
-//     'jamaah.*.nomor_ktp' => 'required|string|max:20',
-//     'jamaah.*.tempat_lahir' => 'required|string|max:100',
-//     'jamaah.*.tanggal_lahir' => 'required|date',
-//     'jamaah.*.jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-//     'jamaah.*.golongan_darah' => 'required|in:A,B,AB,O',
-//     'jamaah.*.kewarganegaraan' => 'required|in:WNI,WNA',
-//     'jamaah.*.provinsi' => 'required|string|max:100', // Validasi nama provinsi
-//     'jamaah.*.kabupaten' => 'required|string|max:100',
-//     'jamaah.*.kecamatan' => 'required|string|max:100',
-//     'jamaah.*.kelurahan' => 'required|string|max:100',
-//     'jamaah.*.kode_pos' => 'required|string|max:10',
-//     'jamaah.*.tingkat_pendidikan' => 'required|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
-//     'jamaah.*.alamat' => 'required|string',
-//     'jamaah.*.pekerjaan' => 'required|string|max:100',
-//     'jamaah.*.foto' => 'nullable|image|mimes:jpeg,png|max:2048',
-//     'jamaah.*.nama_sesuai_paspor' => 'required|string|max:255',
-//     'jamaah.*.nomor_paspor' => 'required|string|max:20',
-//     'jamaah.*.tempat_dikeluarkan' => 'required|string|max:100',
-//     'jamaah.*.tanggal_dikeluarkan' => 'required|date',
-//     'jamaah.*.tanggal_kadaluarsa' => 'required|date',
-//     'jamaah.*.nama_keluarga_terdekat' => 'required|string|max:255',
-//     'jamaah.*.kontak_keluarga_terdekat' => 'required|string|max:20',
-//     'jamaah.*.pilihan_kamar' => 'required|in:Double,Triple,Quad',
-//     'jamaah.*.ekstra' => 'nullable|array',
-//     'catatan' => 'nullable|string',
-// ]);
+    
+    public function editJemaah($pemesananId, $jemaahId)
+    {   
+        $pemesanan = Pemesanan::findOrFail($pemesananId);
+        $jemaah = Jemaah::findOrFail($jemaahId);
+        
+        // MODIFIED: Load provinsi and kabupaten data for dropdowns
+        return view('home.pemesanan.edit-jemaah', [
+            'title' => 'Edit Data Jemaah',
+            'pemesanan' => $pemesanan,
+            'jemaah' => $jemaah,
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => (old('provinsi', $jemaah->provinsi)) ? 
+                Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi', $jemaah->provinsi))->first()->id)->get() 
+                : Kabupaten::all()
+        ]);
+    }
 
-// if ($validator->fails()) {
-//     return redirect()->back()->withErrors($validator)->withInput();
-// }
+    public function updateJemaah(Request $request, $pemesananId, $jemaahId)
+    {
+        $jemaah = Jemaah::findOrFail($jemaahId);
+        
+        // MODIFIED: Validate request data
+        $validateData = $request->validate([
+            'nomor_ktp' => 'nullable|string',
+            'nama_lengkap' => 'nullable|string',
+            'nama_sesuai_paspor' => 'nullable|string',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'kewarganegaraan' => 'nullable|string',
+            'alamat' => 'nullable|string',
+            'kelurahan' => 'nullable|string',
+            'kecamatan' => 'nullable|string',
+            'kabupaten' => 'nullable|string',
+            'provinsi' => 'nullable|string',
+            'kode_pos' => 'nullable|string',
+            'nomor_telepon' => 'nullable|string',
+            'email' => 'nullable|string',
+            'tingkat_pendidikan' => 'nullable|string',
+            'pekerjaan' => 'nullable|string',
+            'nomor_paspor' => 'nullable|string',
+            'tempat_dikeluarkan' => 'nullable|string',
+            'tanggal_dikeluarkan' => 'nullable|date',
+            'tanggal_kadaluarsa' => 'nullable|date',
+            'pernah_umroh' => 'nullable|boolean',
+            'pernah_haji' => 'nullable|boolean',
+            'hubungan_mahram' => 'nullable|string',
+            'golongan_darah' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
+            'nama_keluarga_terdekat' => 'nullable|string',
+            'kontak_keluarga_terdekat' => 'nullable|string',
+        ]);
 
-// $validated = $validator->validated();
+        try {
+            // MODIFIED: Handle photo update
+            if ($request->hasFile('foto')) {
+                // Delete old photo if exists
+                if ($jemaah->foto && file_exists(public_path('storage/' . $jemaah->foto))) {
+                    unlink(public_path('storage/' . $jemaah->foto));
+                }
+                
+                // Store new photo
+                $file = $request->file('foto');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                
+                // Make sure the directory exists
+                $path = public_path('storage/jemaah-foto');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+                
+                // Move the uploaded file
+                $file->move($path, $filename);
+                $validateData['foto'] = 'jemaah-foto/' . $filename;
+            }
 
-// $pemesanan = \App\Models\Pemesanan::create([
-//     'paket_id' => $validated['paket_id'],
-//     'user_id' => auth()->id(),
-//     'jumlah_orang' => count($validated['jamaah']),
-//     'total_harga' => $this->calculateTotalHarga($validated['jamaah'], $validated['paket_id']),
-//     'status' => 'Tertunda',
-//     'tanggal_pesan' => now(),
-//     'metode_pembayaran' => 'Bank Transfer',
-// ]);
+            $jemaah->update($validateData);
 
-// foreach ($validated['jamaah'] as $index => $jamaahData) {
-//     $jamaah = \App\Models\Jemaah::create([
-//         'pemesanan_id' => $pemesanan->id,
-//         'nama_lengkap' => $jamaahData['nama_lengkap'],
-//         'email' => $jamaahData['email'],
-//         'nomor_telepon' => $jamaahData['nomor_telepon'],
-//         'nomor_ktp' => $jamaahData['nomor_ktp'],
-//         'tempat_lahir' => $jamaahData['tempat_lahir'],
-//         'tanggal_lahir' => $jamaahData['tanggal_lahir'],
-//         'jenis_kelamin' => $jamaahData['jenis_kelamin'],
-//         'golongan_darah' => $jamaahData['golongan_darah'],
-//         'kewarganegaraan' => $jamaahData['kewarganegaraan'],
-//         'provinsi' => $jamaahData['provinsi'], // Simpan nama provinsi langsung
-//         'kabupaten' => $jamaahData['kabupaten'],
-//         'kecamatan' => $jamaahData['kecamatan'],
-//         'kelurahan' => $jamaahData['kelurahan'],
-//         'kode_pos' => $jamaahData['kode_pos'],
-//         'tingkat_pendidikan' => $jamaahData['tingkat_pendidikan'],
-//         'alamat' => $jamaahData['alamat'],
-//         'pekerjaan' => $jamaahData['pekerjaan'],
-//         'nama_sesuai_paspor' => $jamaahData['nama_sesuai_paspor'],
-//         'nomor_paspor' => $jamaahData['nomor_paspor'],
-//         'tempat_dikeluarkan' => $jamaahData['tempat_dikeluarkan'],
-//         'tanggal_dikeluarkan' => $jamaahData['tanggal_dikeluarkan'],
-//         'tanggal_kadaluarsa' => $jamaahData['tanggal_kadaluarsa'],
-//         'nama_keluarga_terdekat' => $jamaahData['nama_keluarga_terdekat'],
-//         'kontak_keluarga_terdekat' => $jamaahData['kontak_keluarga_terdekat'],
-//         'pilihan_kamar' => $jamaahData['pilihan_kamar'],
-//         'foto' => isset($request->file('jamaah')[$index]['foto']) ? $request->file('jamaah')[$index]['foto']->store('jamaah_fotos', 'public') : null,
-//     ]);
+            return redirect()->route('pemesanan.jemaah.list', $pemesananId)
+                ->with('success', 'Data jemaah berhasil diperbarui');
 
-//     if (isset($jamaahData['ekstra'])) {
-//         foreach ($jamaahData['ekstra'] as $ekstra) {
-//             \App\Models\PemesananEkstra::create([
-//                 'pemesanan_id' => $pemesanan->id,
-//                 'jamaah_id' => $jamaah->id,
-//                 'ekstra' => $ekstra,
-//                 'jumlah' => 1,
-//                 'total_harga' => Ekstra::where('nama_ekstra', $ekstra)->first()->harga_default,
-//             ]);
-//         }
-//     }
-// }
-
-// return redirect()->route('pemesanan.payment', $pemesanan->id)->with('success', 'Pemesanan berhasil, silakan lanjutkan ke pembayaran.');
-//     }
-
-//     private function calculateTotalHarga($jamaahData, $paketId)
-//     {
-//         $paket = Paket::findOrFail($paketId);
-//         $total = $paket->harga * count($jamaahData);
-//         foreach ($jamaahData as $jamaah) {
-//             if (isset($jamaah['ekstra'])) {
-//                 foreach ($jamaah['ekstra'] as $ekstra) {
-//                     $total += Ekstra::where('nama_ekstra', $ekstra)->first()->harga_default;
-//                 }
-//             }
-//         }
-//         return $total;
-//     }
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Gagal memperbarui data jemaah: '.$e->getMessage());
+        }
+    }
     
 }
