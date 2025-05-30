@@ -6,7 +6,9 @@ use App\Models\Berkas;
 use App\Models\BerkasJemaah;
 use App\Models\Jemaah;
 use Illuminate\Http\Request;
-
+// MODIFIED--
+use Illuminate\Support\Facades\Storage;
+// --MODIFIED
 class AdminBerkasJemaahController extends Controller
 {
     /**
@@ -66,7 +68,20 @@ class AdminBerkasJemaahController extends Controller
             'berkasJemaah' => $berkasJemaah,
         ]);
     }
+    // MODIFIED--
+    public function preview($jemaah, BerkasJemaah $berkasJemaah)
+    {
+        
+        if (!Storage::disk('public')->exists($berkasJemaah->file_path)) {
+            abort(404);
+        }
 
+        $mime = Storage::disk('public')->mimeType($berkasJemaah->file_path);
+        $file = Storage::disk('public')->get($berkasJemaah->file_path);
+
+        return response($file, 200)->header('Content-Type', $mime);
+    }
+    // --MODIFIED
     /**
      * Show the form for editing the specified resource.
      */
