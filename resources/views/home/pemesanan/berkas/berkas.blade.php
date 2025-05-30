@@ -17,7 +17,7 @@
                class="btn btn-success me-2">
                 <i class="fas fa-plus me-1"></i> Tambah Berkas
             </a>
-            <a href="{{ route('pemesanan.jemaah', $pemesanan->id) }}" class="btn btn-secondary">
+            <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
