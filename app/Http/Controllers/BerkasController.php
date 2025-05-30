@@ -72,7 +72,18 @@ class BerkasController extends Controller
 
         return view('home.pemesanan.berkas.berkas', compact('pemesanan', 'jemaah', 'berkasJemaahs', 'title'));
     }
+    public function preview(Pemesanan $pemesanan, Jemaah $jemaah, BerkasJemaah $berkasJemaah)
+    {
+        
+        if (!Storage::disk('public')->exists($berkasJemaah->file_path)) {
+            abort(404);
+        }
 
+        $mime = Storage::disk('public')->mimeType($berkasJemaah->file_path);
+        $file = Storage::disk('public')->get($berkasJemaah->file_path);
+
+        return response($file, 200)->header('Content-Type', $mime);
+    }
     /**
      * Menampilkan form edit berkas jemaah
      */
