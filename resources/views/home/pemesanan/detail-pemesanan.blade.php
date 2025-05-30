@@ -98,7 +98,7 @@
                                         <i data-feather="users" class="icon-sm me-1"></i>
                                         Data Jema'ah
                                     </a>
-                                    <a href="/admin/pemesanan/{{ $pemesanan->id }}/tagihan" 
+                                    <a href="{{ route('member.tagihan', $pemesanan->id) }}" 
                                         class="btn btn-success btn-sm me-2 mb-2">
                                         <i data-feather="file-text" class="icon-sm me-1"></i>
                                         Lihat Tagihan
