@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+@endsection
+
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -131,40 +135,6 @@
         </div>
     </div>
 </div>
-
-<style>
-.profile-photo-container {
-    position: relative;
-    display: inline-block;
-    padding: 8px;
-    background: linear-gradient(45deg, #4e73df, #36b9cc);
-    border-radius: 50%;
-}
-
-.profile-photo-container img {
-    border: 4px solid white;
-}
-
-.custom-file-upload {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 1rem;
-}
-
-.form-control:focus {
-    border-color: #0056b3;
-    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
-}
-
-.card-header.bg-gradient-primary {
-    background: linear-gradient(45deg, #0056b3, #007bff);
-}
-
-.form-floating > .form-control:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label {
-    color: #0056b3;
-}
-</style>
 
 @endsection
 
