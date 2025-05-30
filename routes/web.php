@@ -568,6 +568,7 @@ Route::post('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::c
 Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/edit', [BerkasController::class, 'editBerkasJemaah'])->name('pemesanan.jemaah.berkas.edit');
 Route::put('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'updateBerkasJemaah'])->name('pemesanan.jemaah.berkas.update');
 Route::delete('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'destroyBerkasJemaah'])->name('pemesanan.jemaah.berkas.destroy');
+Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/preview', [BerkasController::class, 'preview'])->name('pemesanan.jemaah.berkas.preview');//preview berkas jemaah
 Route::get('/pemesanan/{id}/jemaah', [BerkasController::class, 'someMethod'])->name('pemesanan.jemaah');
 
 // MODIFIED: Add routes for edit and update jemaah
