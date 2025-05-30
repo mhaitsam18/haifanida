@@ -412,8 +412,7 @@ Route::middleware('auth')->group(function () {
                         Route::get('/', [AdminBerkasJemaahController::class, 'index'])->name('admin.jemaah.berkas.index');
                         Route::get('/create', [AdminBerkasJemaahController::class, 'create'])->name('admin.jemaah.berkas.create');
                         // MODIFIED--
-                        Route::get('/{berkasJemaah}/preview', [AdminBerkasJemaahController::class, 'preview'])
-                            ->name('admin.jemaah.berkas.preview');
+                        Route::get('/{berkasJemaah}/preview', [AdminBerkasJemaahController::class, 'preview'])->name('admin.jemaah.berkas.preview');
                         // --MODIFIED
                     });
                     Route::prefix('kamar')->group(function () {
