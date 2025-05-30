@@ -1,6 +1,10 @@
 <!-- resources/views/jemaah/create.blade.php -->
 @extends('layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/crud-jemaah.css') }}">
+@endsection
+
 @section('content')
 <div class="container py-4 mb-5">
     <!-- Form Header with Modern Design -->
@@ -341,13 +345,13 @@
         
         <!-- Form Actions -->
         <div class="d-flex justify-content-between mt-4 pt-3">
-            <button type="button" class="btn btn-outline-secondary btn-lg px-5">
+            <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" class="btn btn-outline-secondary btn-lg px-5">
                 <i class="fas fa-arrow-left me-2"></i>Kembali
-            </button>
+            </a>
             <div>
-                <button type="reset" class="btn btn-light btn-lg me-2">
+                {{-- <button type="reset" class="btn btn-light btn-lg me-2">
                     <i class="fas fa-redo me-2"></i>Reset
-                </button>
+                </button> --}}
                 <button type="submit" class="btn btn-primary btn-lg px-5">
                     <i class="fas fa-save me-2"></i>Simpan Data
                 </button>
@@ -356,78 +360,6 @@
     </form>
 </div>
 
-@endsection
-
-@section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
-    
-    .form-label {
-        color: #495057;
-        margin-bottom: 0.5rem;
-    }
-    
-    .card {
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-    }
-    
-    .bg-gradient-primary {
-        background: linear-gradient(45deg, #4e73df, #224abe);
-    }
-    
-    .bg-gradient-info {
-        background: linear-gradient(45deg, #36b9cc, #1a8a98);
-    }
-    
-    .bg-gradient-success {
-        background: linear-gradient(45deg, #1cc88a, #13855c);
-    }
-    
-    .bg-gradient-warning {
-        background: linear-gradient(45deg, #f6c23e, #dda20a);
-    }
-    
-    .bg-gradient-danger {
-        background: linear-gradient(45deg, #e74a3b, #be2617);
-    }
-    
-    .form-control:focus, .form-select:focus {
-        border-color: #4e73df;
-        box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
-    }
-    
-    .btn-primary {
-        background-color: #4e73df;
-        border-color: #4e73df;
-    }
-    
-    .btn-primary:hover {
-        background-color: #2e59d9;
-        border-color: #2653d4;
-    }
-    
-    .text-primary {
-        color: #4e73df !important;
-    }
-    
-    /* Form file input styling */
-    input[type="file"] {
-        display: none;
-    }
-    
-    .required-field::after {
-        content: " *";
-        color: red;
-    }
-</style>
 @endsection
 
 @section('script')
