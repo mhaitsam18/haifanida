@@ -72,8 +72,8 @@
                                             @endphp
                                             
                                             @if(in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif']))
-                                                <img src="{{ asset('storage/' . $berkasJemaah->file_path) }}" 
-                                                     alt="Berkas" class="img-thumbnail mb-2" style="max-width: 80px; max-height: 80px;">
+                                                {{-- <img src="{{ asset('storage/' . $berkasJemaah->file_path) }}" 
+                                                     alt="Berkas" class="img-thumbnail mb-2" style="max-width: 80px; max-height: 80px;"> ilangin fotonya --}}
                                             @else
                                                 <div class="d-flex align-items-center mb-2">
                                                     @if(strtolower($fileExtension) == 'pdf')
@@ -91,7 +91,8 @@
                                             @endif
                                             
                                             <div>
-                                                <a href="{{ asset('storage/' . $berkasJemaah->file_path) }}" 
+                                                {{-- tombol liat preview berkas dari storage --}}
+                                                <a href="{{ route('pemesanan.jemaah.berkas.preview', [$pemesanan->id, $jemaah->id, $berkasJemaah->id]) }}" 
                                                    target="_blank" class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-eye"></i> Lihat
                                                 </a>
