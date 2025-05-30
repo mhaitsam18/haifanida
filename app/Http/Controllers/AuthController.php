@@ -173,15 +173,25 @@ class AuthController extends Controller
         if (Auth::attempt($loginCredentials, $remember)) {
             $request->session()->regenerate();
             
-            // MODIFIED: Simpan data member ke session jika role member
+            // Simpan data member ke session jika role member
             if (auth()->user()->role_id === 3) {
                 $member = Member::where('user_id', auth()->user()->id)->first();
                 $request->session()->put('member', $member);
                 $request->session()->put('member_id', $member->id);
+                return redirect()->route('index')->with('success', 'Login berhasil!');
             }
-
-            // MODIFIED: Redirect ke home controller untuk mendapatkan data yang diperlukan
-            return redirect()->route('index')->with('success', 'Login berhasil!');
+            
+            // Redirect berdasarkan role
+            switch(auth()->user()->role_id) {
+                case 1: // Admin
+                    return redirect('/admin/index')->with('success', 'Login berhasil!');
+                case 2: // Author
+                    return redirect('/author/index')->with('success', 'Login berhasil!');
+                case 4: // Agen 
+                    return redirect('/agen/index')->with('success', 'Login berhasil!');
+                default:
+                    return redirect()->route('index')->with('success', 'Login berhasil!');
+            }
         }
 
         return back()->with('loginError', 'Email atau Username atau Password Salah');
