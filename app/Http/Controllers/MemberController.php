@@ -38,13 +38,43 @@ class MemberController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
+        $member = Member::where('user_id', $user->id)->first();
         
+        // Validate User data
         $validateUser = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'username' => 'required|string|unique:users,username,' . $user->id,
-            'phone_number' => 'nullable|string|unique:users,phone_number,' . $user->id,
+            'phone_number' => ['nullable', 'string', 'unique:users,phone_number,' . $user->id, 'regex:/^(?:\+62|0)[0-9\s-]+$/'],
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
             'password' => 'nullable|string'
+        ]);
+
+        // Validate Member data
+        $validateMember = $request->validate([
+            'nomor_ktp' => 'nullable|string',
+            'nama_sesuai_paspor' => 'nullable|string',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'kewarganegaraan' => 'nullable|in:WNI,WNA',
+            'alamat' => 'nullable|string',
+            'kelurahan' => 'nullable|string',
+            'kecamatan' => 'nullable|string',
+            'kabupaten' => 'nullable|string',
+            'provinsi' => 'nullable|string',
+            'kode_pos' => 'nullable|string',
+            'tingkat_pendidikan' => 'nullable|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
+            'pekerjaan' => 'nullable|string',
+            'nomor_paspor' => 'nullable|string',
+            'tempat_dikeluarkan' => 'nullable|string',
+            'tanggal_dikeluarkan' => 'nullable|date',
+            'tanggal_kadaluarsa' => 'nullable|date',
+            'pernah_umroh' => 'nullable|boolean',
+            'pernah_haji' => 'nullable|boolean',
+            'golongan_darah' => 'nullable|in:A,B,AB,O',
+            'nama_keluarga_terdekat' => 'nullable|string',
+            'kontak_keluarga_terdekat' => 'nullable|string'
         ]);
 
         // Handle password
@@ -54,26 +84,30 @@ class MemberController extends Controller
             unset($validateUser['password']);
         }
 
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($user->photo) {
+                Storage::delete('public/user-photo/' . $user->photo);
+            }
+            
+            // Store new photo
+            $validateUser['photo'] = $request->file('photo')->store('user-photo', 'public');
+            $validateMember['foto'] = $validateUser['photo'];
+        }
+
         // Update user data
-        $user->name = $validateUser['name'];
-        $user->email = $validateUser['email'];
-        $user->username = $validateUser['username'];
-        $user->phone_number = $validateUser['phone_number'];
-        if (isset($validateUser['password'])) {
-            $user->password = $validateUser['password'];
-        }
-        $user->save();
+        $user->update($validateUser);
 
-        // Update member data if exists
-        if ($member = Member::where('user_id', $user->id)->first()) {
-            $member->update([
-                'nama_lengkap' => $validateUser['name'],
-                'email' => $validateUser['email'],
-                'nomor_telepon' => $validateUser['phone_number']
-            ]);
-        }
+        // Sync member profile fields with user fields
+        $validateMember['nama_lengkap'] = $user->name;
+        $validateMember['email'] = $user->email;
+        $validateMember['nomor_telepon'] = $user->phone_number;
 
-        return redirect()->route('member.profile', ['mode' => 'show'])->with('success', 'Profile updated successfully!');
+        // Update member data
+        $member->update($validateMember);
+
+        return redirect()->route('member.profile', ['mode' => 'show'])->with('success', 'Profile berhasil diperbarui');
     }
 
     // Daftar keberangkatan - menampilkan perjalanan yang akan datang
@@ -147,7 +181,6 @@ class MemberController extends Controller
             'username' => 'required|string|unique:users,username,' . $user->id,
             'phone_number' => ['nullable', 'string', 'unique:users,phone_number,' . $user->id, 'regex:/^(?:\+62|0)[0-9\s-]+$/'],
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
-            'password' => 'nullable|string|confirmed',
         ]);
 
         $validateMember = $request->validate([
@@ -156,14 +189,14 @@ class MemberController extends Controller
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'kewarganegaraan' => 'nullable|string',
+            'kewarganegaraan' => 'nullable|in:WNI,WNA',
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
             'kabupaten' => 'nullable|string',
             'provinsi' => 'nullable|string',
             'kode_pos' => 'nullable|string',
-            'tingkat_pendidikan' => 'nullable|string',
+            'tingkat_pendidikan' => 'nullable|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
             'pekerjaan' => 'nullable|string',
             'nomor_paspor' => 'nullable|string',
             'tempat_dikeluarkan' => 'nullable|string',
@@ -171,29 +204,30 @@ class MemberController extends Controller
             'tanggal_kadaluarsa' => 'nullable|date',
             'pernah_umroh' => 'nullable|boolean',
             'pernah_haji' => 'nullable|boolean',
-            // 'hubungan_mahram' => 'nullable|string',
-            'golongan_darah' => 'nullable|string',
+            'golongan_darah' => 'nullable|in:A,B,AB,O',
             'nama_keluarga_terdekat' => 'nullable|string',
             'kontak_keluarga_terdekat' => 'nullable|string',
-            'is_active' => 'nullable|boolean',
         ]);
 
+        // Handle photo upload
         if ($request->hasFile('photo')) {
-            $validateUser['photo'] = $request->file('photo')->store('user-photo');
-            $validateMember['foto'] = $request->file('photo')->store('member-foto');
-        } else {
-            $validateUser['photo'] = $user->photo;
-            $validateMember['foto'] = $member->foto;
+            // Delete old photo if exists
+            if ($user->photo) {
+                Storage::delete($user->photo);
+            }
+            
+            // Store new photo in member-foto directory
+            $validateUser['photo'] = $request->file('photo')->store('member-foto', 'public');
+            $validateMember['foto'] = $validateUser['photo'];
         }
 
-        if (!empty($validateUser['password'])) {
-            $validateUser['password'] = Hash::make($validateUser['password']);
-        } else {
-            $validateUser['password'] = $user->password;
-        }
+        // Password remains unchanged
+        $validateUser['password'] = $user->password;
 
+        // Update user data
         $user->update($validateUser);
 
+        // Update member data
         $validateMember['nama_lengkap'] = $user->name;
         $validateMember['email'] = $user->email;
         $validateMember['nomor_telepon'] = $user->phone_number;
