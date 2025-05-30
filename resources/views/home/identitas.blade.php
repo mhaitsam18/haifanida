@@ -19,10 +19,9 @@
     </div>
 
     <!-- Main Form -->
-    <form action="{{ route('member.profile.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('member.identitas.update') }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
-        <input type="hidden" name="id" value="{{ $member->id }}">
         <div class="row g-4">
             <!-- Autentikasi Card -->
             <div class="col-lg-6">
@@ -51,10 +50,10 @@
                                     id="email" name="email" value="{{ old('email', $member->user->email) }}"
                                     placeholder="nama@email.com" required>
                             </div>
-                            <span id="email-availability"></span>
                             @error('email')
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
+                            <div id="email-availability" class="mt-1"></div>
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label required-field">Username</label>
@@ -65,10 +64,10 @@
                                     value="{{ old('username', $member->user->username) }}"
                                     placeholder="Masukkan username" required>
                             </div>
-                            <span id="username-availability"></span>
                             @error('username')
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
+                            <div id="username-availability" class="mt-1"></div>
                         </div>
                         <div class="mb-3">
                             <label for="phone_number" class="form-label required-field">Nomor Ponsel</label>
@@ -84,18 +83,18 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label required-field">Foto</label>
+                            <label class="form-label required-field">Foto Jemaah</label>
                             <div class="text-center mb-3">
-                                <img id="preview-image" src="{{ asset('storage/' . ($member->user->photo ?? 'jemaah-foto/pas-foto.jpg')) }}"
+                                <img id="preview-image" src="{{ $member->foto ? asset('storage/jemaah-foto/' . $member->foto) : asset('storage/jemaah-foto/pas-foto.jpg') }}"
                                     class="img-thumbnail" style="height: 150px; width: auto;">
                             </div>
                             <div class="position-relative">
-                                <input type="file" class="form-control @error('photo') is-invalid @enderror"
-                                    id="photo" name="photo" accept="image/*" onchange="previewImage(this)">
-                                <label for="photo" class="btn btn-primary w-100 mt-2">
-                                    <i class="fas fa-upload me-2"></i>Pilih Foto
+                                <input type="file" class="form-control @error('foto') is-invalid @enderror"
+                                    id="foto" name="foto" accept="image/*" onchange="previewImage(this)">
+                                <label for="foto" class="btn btn-primary w-100 mt-2">
+                                    <i class="fas fa-upload me-2"></i>Pilih Foto Jemaah
                                 </label>
-                                @error('photo')
+                                @error('foto')
                                     <div class="text-danger fs-6">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -454,9 +453,9 @@
                 <i class="fas fa-arrow-left me-2"></i>Kembali
             </a>
             <div>
-                <button type="reset" class="btn btn-light btn-lg me-2">
+                {{-- <button type="reset" class="btn btn-light btn-lg me-2">
                     <i class="fas fa-redo me-2"></i>Reset
-                </button>
+                </button> --}}
                 <button type="submit" class="btn btn-primary btn-lg px-5">
                     <i class="fas fa-save me-2"></i>Simpan Data
                 </button>
@@ -472,6 +471,7 @@
         // AJAX untuk mengambil data kabupaten berdasarkan provinsi
         $('#provinsi').change(function() {
             var selectedProvinsi = $(this).val();
+            
             $.ajax({
                 url: '/get-kabupaten',
                 type: 'POST',
@@ -485,12 +485,23 @@
                     $.each(data, function(key, value) {
                         $('#kabupaten').append('<option value="' + value.kabupaten + '">' + value.kabupaten + '</option>');
                     });
+
+                    // If there's a saved kabupaten value, set it
+                    var savedKabupaten = "{{ old('kabupaten', $member->kabupaten ?? '') }}";
+                    if (savedKabupaten) {
+                        $('#kabupaten').val(savedKabupaten);
+                    }
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     console.error('Error: ' + errorThrown);
                 }
             });
         });
+
+        // Trigger provinsi change if there's a selected value
+        if ($('#provinsi').val()) {
+            $('#provinsi').trigger('change');
+        }
 
         // Image preview
         window.previewImage = function(input) {
