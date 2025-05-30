@@ -49,8 +49,9 @@
                                         <td>{{ $jemaah->nomor_telepon }}</td>
                                         <td> 
                                             @if($jemaah->foto)
+                                                <!-- MODIFIED: Set fixed dimensions for consistent photo size -->
                                                 <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
-                                                     class="img-thumbnail img-fluid">
+                                                     class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
                                             @else
                                                 <span class="text-muted">Tidak ada foto</span>
                                             @endif
