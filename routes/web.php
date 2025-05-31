@@ -65,6 +65,7 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\MemberTagihanController;
 use App\Http\Controllers\UmrohController;
 use App\Http\Controllers\BerkasController;
+use App\Http\Controllers\PemesananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -520,7 +521,7 @@ Route::post('/pemesanan/jemaah/store/{id}', [UmrohController::class, 'storeJemaa
 Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
 Route::delete('/jemaah/{jemaah}', [UmrohController::class, 'destroy'])->name('jemaah.destroy');
 
-
+// PEMESANAN
 Route::get('/jemaah', function () {
     return view('home.pemesanan.jemaah', ['title' => 'Data Jemaah']);
 });
@@ -533,21 +534,34 @@ Route::get('/detail-jemaah', function () {
 Route::get('/tambah-berkas', function () {
     return view('home.pemesanan.add-berkas', ['title' => 'Tambah Berkas']);
 });
-Route::get('/pemesanan-kamar', function () {
-    return view('home.pemesanan.kamar.pemesanan-kamar', ['title' => 'Pesan Kamar']);
+// Route::get('/pemesanan-kamar', function () {
+//     return view('home.pemesanan.kamar.pemesanan-kamar', ['title' => 'Pesan Kamar']);
+// });
+
+// MODIFIED
+Route::get('/pemesanan-kamar', [PemesananController::class, 'createPemesananKamar'])->name('pemesanan.kamar');
+Route::post('/pemesanan-kamar', [PemesananController::class, 'storePemesananKamar'])->name('pemesanan.kamar.store');
+
+Route::get('/tambah-ekstra', [PemesananController::class, 'createPemesananEkstra'])->name('pemesanan-ekstra.create');
+Route::post('/pemesanan-ekstra', [PemesananController::class, 'storePemesananEkstra'])->name('pemesanan-ekstra.store');
+
+Route::get('/tambah-permintaan', [PemesananController::class, 'createPermintaanKamar'])->name('permintaan.kamar.create');
+
+// MODIFIED
+
+Route::get('/data-permintaan', function () {
+    return view('home.pemesanan.kamar.permintaan.detail-permintaan', ['title' => 'Permintaan Kamar']);
 });
-Route::get('/detail-permintaan', function () {
-    return view('home.pemesanan.kamar.permintaan.detail-permintaan', ['title' => 'Data Detail Permintaan Kamar']);
-});
-Route::get('/tambah-permintaan', function () {
-    return view('home.pemesanan.kamar.permintaan.add-permintaan', ['title' => 'Tambah Permintaan Kamar']);
-});
-Route::get('/tambah-ekstra', function () {
-    return view('home.pemesanan.ekstra.add-ekstra', ['title' => 'Tambah Pesanan Ekstra']);
-});
+// Route::get('/tambah-permintaan', function () {
+//     return view('home.pemesanan.kamar.permintaan.add-permintaan', ['title' => 'Tambah Permintaan Kamar']);
+// });
+// Route::get('/tambah-ekstra', function () {
+//     return view('home.pemesanan.ekstra.add-ekstra', ['title' => 'Tambah Pesanan Ekstra']);
+// });
 Route::get('/tambah-pembayaran', function () {
     return view('home.pemesanan.pembayaran.add-pembayaran', ['title' => 'Tambah Pembayaran']);
 });
+
 
 Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
 Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
