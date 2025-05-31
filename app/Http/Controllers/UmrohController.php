@@ -174,10 +174,12 @@ class UmrohController extends Controller
     public function detailPemesanan($id)
     {   
         $user = Auth::user();
-        $pemesanan = Pemesanan::findOrFail($id);
-        // where('id', $id)
-        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
-        // ->firstOrFail();
+        $pemesanan = Pemesanan::
+        // findOrFail($id);
+        // BYPASS DEV
+        where('id', $id)
+        ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
+        ->firstOrFail();
         return view('home.pemesanan.detail-pemesanan', [
             'title' => 'Detail Pemesanan',
             'pemesanan' => $pemesanan,
@@ -188,11 +190,12 @@ class UmrohController extends Controller
     public function listJemaah($id)
     {   
         $jemaahs = Jemaah::where('pemesanan_id', $id)->get();
-        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan = Pemesanan::
+        // findOrFail($id);
         // BYPASS DEV
-        // where('id', $id)
-        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
-        // ->firstOrFail();
+        where('id', $id)
+        ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
+        ->firstOrFail();
         return view('home.pemesanan.jemaah', [
             'title' => 'Detail Pemesanan',
             'pemesanan' => $pemesanan,
@@ -201,11 +204,12 @@ class UmrohController extends Controller
     }
     public function createJemaah($id)
     {
-        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan = Pemesanan::
+        // findOrFail($id);
         // BYPASS DEV
-        // where('id', $id)
-        // ->where('user_id', auth()->id()) //agar hanya milik dia saja yang bisa dia lihat
-        // ->firstOrFail();
+        where('id', $id)
+        ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
+        ->firstOrFail();
         return view('home.pemesanan.add-jemaah', [
             'title' => 'Tambah Jemaah',
             'pemesanan' => $pemesanan,
