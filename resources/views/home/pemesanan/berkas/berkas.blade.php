@@ -18,8 +18,8 @@
         </div>
         <div class="col-md-6 text-end">
             <a href="{{ route('pemesanan.jemaah.add-berkas', [$pemesanan->id, $jemaah->id]) }}" 
-               class="btn btn-success me-2 px-4 py-2">
-                <i class="fas fa-plus me-2"></i>Tambah Berkas
+               class="btn btn-primary me-2 px-4 py-2">
+                <i class="fas fa-plus-circle me-2"></i>Tambah Berkas
             </a>
             <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" 
                class="btn btn-outline-secondary px-4 py-2">
