@@ -13,7 +13,7 @@
     <!-- Header Section -->
     <div class="row mb-4 align-items-center">
         <div class="col-md-8">
-            <h2 class="fw-bold text-primary mb-2">EDIT BERKAS JEMAAH</h2>
+            <h2 class="fw-bold text-primary mb-2">Edit Berkas Jemaah</h2>
             <h5 class="fw-bold" style="color: #4e73df;">{{ $jemaah->nama_lengkap }}</h5>
         </div>
         <div class="col-md-4 text-end">
