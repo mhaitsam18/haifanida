@@ -60,7 +60,10 @@ class BerkasController extends Controller
      * Menampilkan berkas jemaah
      */
     public function berkasJemaah(Pemesanan $pemesanan, Jemaah $jemaah)
-    {
+    {   
+        if (auth()->id() !== $pemesanan->user_id) {
+        abort(403, 'Anda tidak berhak mengakses berkas ini.');
+        }
         $berkasJemaahs = BerkasJemaah::with('berkas')
             ->where('jemaah_id', $jemaah->id)
             ->whereHas('jemaah', function ($query) use ($pemesanan) {
@@ -74,7 +77,9 @@ class BerkasController extends Controller
     }
     public function preview(Pemesanan $pemesanan, Jemaah $jemaah, BerkasJemaah $berkasJemaah)
     {
-        
+        if (auth()->id() !== $pemesanan->user_id) {
+        abort(403, 'Anda tidak berhak mengakses berkas ini.');
+        }
         if (!Storage::disk('public')->exists($berkasJemaah->file_path)) {
             abort(404);
         }
