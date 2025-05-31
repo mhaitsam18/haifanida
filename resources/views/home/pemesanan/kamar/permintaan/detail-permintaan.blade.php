@@ -10,10 +10,10 @@
     <!-- Header Section with improved spacing and alignment -->
     <div class="row mb-4 align-items-center">
         <div class="col-md-6">
-            <h2 class="fw-bold text-primary">DETAIL PEMESANAN KAMAR</h2>
+            <h2 class="fw-bold text-primary">PERMINTAAN KAMAR</h2>
         </div>
         <div class="col-md-6 text-end">
-            <a href="" class="btn btn-primary me-2">
+            <a href="/tambah-permintaan" class="btn btn-primary me-2">
                 <i class="fas fa-plus-circle me-1"></i> Tambah
             </a>
             <a href="" class="btn btn-secondary">
