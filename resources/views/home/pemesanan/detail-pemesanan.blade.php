@@ -149,19 +149,20 @@
                                             <td>{{ $kamar->keterangan ?: '-' }}</td>
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <a href="/admin/pemesanan-kamar/{{ $kamar->id }}" 
-                                                        class="btn btn-primary btn-sm">
+                                                    <a href="/data-permintaan" class="btn btn-primary btn-xs me-2" title="Lihat Detail">
                                                         <i data-feather="eye" class="icon-xs"></i>
+                                                        Lihat Permintaan
                                                     </a>
-                                                    <a href="/admin/pemesanan-kamar/{{ $kamar->id }}/edit" 
-                                                        class="btn btn-success btn-sm">
+                                                    <a href="#" class="btn btn-success btn-xs me-2" title="Edit Data">
                                                         <i data-feather="edit" class="icon-xs"></i>
+                                                        Edit
                                                     </a>
-                                                    <form action="/admin/pemesanan-kamar/{{ $kamar->id }}" method="post" class="d-inline">
+                                                    <form action="/hapus-pemesanan-kamar/{{ $kamar->id }}" method="post" class="d-inline">
                                                         @method('delete')
                                                         @csrf
-                                                        <button type="submit" class="btn btn-danger btn-sm tombol-hapus">
+                                                        <button type="submit" class="btn btn-danger btn-xs tombol-hapus" title="Hapus Data">
                                                             <i data-feather="trash-2" class="icon-xs"></i>
+                                                            Hapus
                                                         </button>
                                                     </form>
                                                 </div>
@@ -216,15 +217,16 @@
                                             <td>{{ $ekstra->keterangan ?: '-' }}</td>
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <a href="/admin/pemesanan-ekstra/{{ $ekstra->id }}/edit" 
-                                                        class="btn btn-success btn-sm">
+                                                    <a href="/edit-ekstra/{{ $ekstra->id }}" class="btn btn-success btn-xs me-2" title="Edit Data">
                                                         <i data-feather="edit" class="icon-xs"></i>
+                                                        Edit
                                                     </a>
-                                                    <form action="/admin/pemesanan-ekstra/{{ $ekstra->id }}" method="post" class="d-inline">
+                                                    <form action="/hapus-ekstra/{{ $ekstra->id }}" method="post" class="d-inline">
                                                         @method('delete')
                                                         @csrf
-                                                        <button type="submit" class="btn btn-danger btn-sm tombol-hapus">
+                                                        <button type="submit" class="btn btn-danger btn-xs tombol-hapus" title="Hapus Data">
                                                             <i data-feather="trash-2" class="icon-xs"></i>
+                                                            Hapus
                                                         </button>
                                                     </form>
                                                 </div>
