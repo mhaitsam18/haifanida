@@ -123,7 +123,7 @@
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="nama_sesuai_paspor" class="form-label">Nama Sesuai Paspor</label>
                             <input type="text" class="form-control @error('nama_sesuai_paspor') is-invalid @enderror"
                                 id="nama_sesuai_paspor" name="nama_sesuai_paspor"
@@ -132,7 +132,7 @@
                             @error('nama_sesuai_paspor')
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label for="tempat_lahir" class="form-label required-field">Kota Tempat Lahir</label>
                             <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror"
@@ -351,6 +351,16 @@
                                     placeholder="Masukkan nomor paspor">
                             </div>
                             @error('nomor_paspor')
+                                <div class="text-danger fs-6">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama_sesuai_paspor" class="form-label">Nama Sesuai Paspor</label>
+                            <input type="text" class="form-control @error('nama_sesuai_paspor') is-invalid @enderror"
+                                id="nama_sesuai_paspor" name="nama_sesuai_paspor"
+                                value="{{ old('nama_sesuai_paspor', $member->nama_sesuai_paspor) }}"
+                                placeholder="Nama sesuai paspor">
+                            @error('nama_sesuai_paspor')
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
                         </div>
