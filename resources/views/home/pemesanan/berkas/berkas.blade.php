@@ -164,8 +164,8 @@
                             Silahkan upload berkas yang diperlukan untuk melengkapi pendaftaran Anda.
                         </p>
                         <a href="{{ route('pemesanan.jemaah.add-berkas', [$pemesanan->id, $jemaah->id]) }}" 
-                           class="btn btn-success btn-lg px-4 py-2">
-                            <i class="fas fa-plus me-2"></i> Upload Berkas Pertama
+                           class="btn btn-primary me-2 px-4 py-2">
+                                <i class="fas fa-plus-circle me-2"></i>Upload Berkas Pertama
                         </a>
                     </div>
                 </div>
