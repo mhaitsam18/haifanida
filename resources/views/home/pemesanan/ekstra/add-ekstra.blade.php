@@ -31,13 +31,64 @@
                             <label for="jenis_ekstra" class="form-label fw-semibold">Ekstra / Tambahan <span class="text-danger">*</span></label>
                             <select class="form-select" id="jenis_ekstra" name="jenis_ekstra" required onchange="updateHargaSatuan()">
                                 <option selected disabled value="">Pilih Jenis Ekstra</option>
-                                <option value="1" data-harga="150000">Paket Makan Premium</option>
-                                <option value="2" data-harga="100000">Transportasi Lokal</option>
-                                <option value="3" data-harga="75000">Laundry Service</option>
-                                <option value="4" data-harga="200000">Tour Guide Pribadi</option>
-                                <option value="5" data-harga="50000">Welcome Package</option>
+                                @foreach ($ekstras as $ekstra)
+                                    <option value="{{ $ekstra->id }}" data-harga="{{ $ekstra->harga_default }}">
+                                        {{ $ekstra->nama_ekstra }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
+
+                        <!-- DEBUG INFO START -->
+                            <div class="mt-3 p-3 bg-light border rounded">
+                                <strong>🔍 DEBUG INFO - Data Ekstras:</strong>
+                                <div class="mt-2">
+                                    <small class="text-muted">Total data: {{ count($ekstras) }}</small>
+                                </div>
+                                @if(count($ekstras) > 0)
+                                    <div class="table-responsive mt-2">
+                                        <table class="table table-sm table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nama Ekstra</th>
+                                                    <th>Jenis</th>
+                                                    <th>Harga Default</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($ekstras as $ekstra)
+                                                <tr>
+                                                    <td>{{ $ekstra->id }}</td>
+                                                    <td>{{ $ekstra->nama_ekstra }}</td>
+                                                    <td>{{ $ekstra->jenis_ekstra ?? 'NULL' }}</td>
+                                                    <td>
+                                                        @if($ekstra->harga_default)
+                                                            <span class="text-success">Rp {{ number_format($ekstra->harga_default, 0, ',', '.') }}</span>
+                                                        @else
+                                                            <span class="text-danger">NULL/KOSONG</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
+                                    <div class="alert alert-warning mt-2">
+                                        <strong>⚠️ Tidak ada data ekstras yang ditemukan!</strong><br>
+                                        <small>Periksa query di controller: whereIn('jenis_ekstra', ['perlengkapan', 'jasa', 'pesawat'])</small>
+                                    </div>
+                                @endif
+                                
+                                <!-- Debug Raw Data -->
+                                <details class="mt-3">
+                                    <summary class="text-primary" style="cursor: pointer;">📋 Raw Data (JSON)</summary>
+                                    <pre class="mt-2 p-2 bg-dark text-light rounded" style="font-size: 11px; max-height: 200px; overflow-y: auto;">{{ json_encode($ekstras->toArray(), JSON_PRETTY_PRINT) }}</pre>
+                                </details>
+                            </div>
+                            <!-- DEBUG INFO END -->
+                        
                         
                         <div class="mb-3">
                             <label for="harga_satuan" class="form-label fw-semibold">Harga Satuan</label>
@@ -53,8 +104,6 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                 <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" value="1" required onchange="hitungTotalHarga()" onkeyup="hitungTotalHarga()">
-                                <button type="button" class="btn btn-outline-secondary" onclick="decrementJumlah()"><i class="fas fa-minus"></i></button>
-                                <button type="button" class="btn btn-outline-secondary" onclick="incrementJumlah()"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                         
@@ -107,23 +156,28 @@
         if (ekstraSelect.selectedIndex > 0) {
             const selectedOption = ekstraSelect.options[ekstraSelect.selectedIndex];
             const harga = selectedOption.getAttribute('data-harga');
-            
-            // Format the harga with Indonesian Rupiah format
-            const formattedHarga = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(harga);
-            
-            hargaSatuanInput.value = formattedHarga;
-            
-            // Update total harga as well
-            hitungTotalHarga();
+
+            if (harga) {
+                const hargaAngka = parseInt(harga);
+                
+                const formattedHarga = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(hargaAngka);
+                
+                hargaSatuanInput.value = formattedHarga;
+
+                hitungTotalHarga();
+            } else {
+                hargaSatuanInput.value = '';
+            }
         } else {
             hargaSatuanInput.value = '';
             document.getElementById('total_harga').value = '';
         }
     }
+
     
     // Function to calculate total harga
     function hitungTotalHarga() {
