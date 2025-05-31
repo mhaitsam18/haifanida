@@ -1,0 +1,83 @@
+    .container {
+        max-width: 1400px;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem; /* Square badges */
+        font-weight: 500;
+    }
+
+    .btn-sm {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+        transition: all 0.2s ease;
+        border-radius: 0.25rem; /* Square buttons */
+    }
+
+    .btn-sm:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline-primary, .btn-outline-warning, .btn-outline-danger {
+        border-width: 2px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem; /* Less rounded card */
+    }
+
+    .card-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa !important;
+        border-radius: 0.5rem 0.5rem 0 0; /* Square top corners */
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+        transition: background-color 0.2s ease;
+    }
+
+    .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .text-info {
+        color: #0dcaf0 !important;
+    }
+
+    .text-warning {
+        color: #ffc107 !important;
+    }
+
+    .alert-info {
+        background-color: #e7f4ff;
+        border: none;
+        border-radius: 0.25rem; /* Square alert */
+    }
+
+    .gap-2 {
+        gap: 0.5rem;
+    }
+
+    .table-responsive {
+        border-radius: 0 0 0.5rem 0.5rem; /* Square bottom corners */
+        overflow: hidden;
+    }
+
+    .btn-success, .btn-outline-secondary {
+        border-radius: 0.25rem; /* Square header buttons */
+    }
+
+
+    
