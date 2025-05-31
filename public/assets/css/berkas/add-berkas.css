@@ -1,0 +1,68 @@
+
+    .container {
+        max-width: 1400px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem; /* Less rounded card */
+    }
+
+    .card-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa !important;
+        border-radius: 0.5rem 0.5rem 0 0; /* Square top corners */
+    }
+
+    .alert-danger {
+        border-left: 4px solid #dc3545;
+        border-radius: 0.25rem; /* Square alert */
+    }
+
+    .btn, .btn-sm {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+        transition: all 0.2s ease;
+        border-radius: 0.25rem; /* Square buttons */
+    }
+
+    .btn:hover, .btn-sm:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline-primary, .btn-outline-secondary, .btn-primary {
+        border-width: 2px;
+    }
+
+    .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .text-info {
+        color: #0dcaf0 !important;
+    }
+
+    .gap-2 {
+        gap: 0.5rem;
+    }
+
+    .border {
+        border: 1px solid #dee2e6 !important;
+        border-radius: 0.25rem; /* Square border for file preview */
+    }
+
+    .form-control, .form-select {
+        border-radius: 0.25rem; /* Square form inputs */
+    }
+
+    .input-group-text {
+        border-radius: 0.25rem 0 0 0.25rem; /* Square input group */
+    }
