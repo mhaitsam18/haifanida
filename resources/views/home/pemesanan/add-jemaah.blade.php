@@ -37,7 +37,7 @@
                     <div class="card-body p-4">
                         <div class="mb-3">
                             <label for="nama_lengkap" class="form-label fw-semibold">Nama Lengkap (Sesuai KTP) <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-lg" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap" required>
+                            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap" required>
                         </div>
                         
                         <div class="mb-3">
