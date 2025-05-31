@@ -73,6 +73,7 @@ DATABASE
 ## dalam scope
 - bagian Tambah Jemaah bagian 1(jamaah pertama) drop down untuk provinsi ada, namun dropdown kabupaten tidak muncul, sedangkan ketika tambah 1 lagi dibawahnya itu normal normal 
 - ada kesalahan pada UmrahController, tidak mengambil data kabupaten, sudah di fix
+- adanya vulnerability pada table berkas yang dimana tidak tersedianya kolom user_id yang mengupload file berkas tersebut yang menyebabkan tidak dapat dilakukannya pengecekan akses(apakah user yg ingin melihat preveiew adalah user yang mengupload?)
 ## luar scope=
 - autentikasi
 ```
