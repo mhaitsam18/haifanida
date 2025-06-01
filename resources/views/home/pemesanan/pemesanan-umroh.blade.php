@@ -164,7 +164,7 @@
                         <select name="kamars[${kamarIndex}][tipe_kamar]" class="form-select" required>
                             <option value="">Pilih Tipe Kamar</option>
                             @foreach($kamars as $kamar)
-                            <option value="{{ $kamar->nama_ekstra }}">{{ $kamar->nama_ekstra }} | Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }}</option>
+                            <option value="{{ $kamar->nama_ekstra }}">{{ $kamar->nama_ekstra }} | Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }} | {{ $kamar->keterangan }}</option>
                             @endforeach
                         </select>
                     </div>
