@@ -4,8 +4,8 @@
 <div class="container py-4 mb-5">
     <div class="row justify-content-center mb-3">
         <div class="col-md-8 text-center">
-            <h2 class="fw-bold mb-0 text-primary">Tambah Pemesanan Ekstra</h2>
-            <p class="text-muted">Silakan pilih layanan tambahan yang diinginkan</p>
+            <h2 class="fw-bold mb-0 text-primary">Edit Pemesanan Ekstra</h2>
+            <p class="text-muted">Silakan ubah layanan tambahan yang diinginkan</p>
         </div>
     </div>
 
@@ -16,8 +16,9 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <form action="{{ route('pemesanan-ekstra.store') }}" method="POST">
+    <form action="{{ route('pemesanan-ekstra.update', $pemesananEkstra) }}" method="POST">
         @csrf
+        @method('PUT')
         <input type="hidden" name="pemesanan_id" id="pemesanan_id" value="{{ $pemesanan_id }}">
 
         <div class="row justify-content-center">
@@ -32,13 +33,13 @@
                         <div class="mb-3">
                             <label for="jenis_ekstra" class="form-label fw-semibold">Ekstra / Tambahan <span class="text-danger">*</span></label>
                             <select class="form-select @error('jenis_ekstra') is-invalid @enderror" id="jenis_ekstra" name="jenis_ekstra" required>
-                                <option selected disabled value="">Pilih Jenis Ekstra</option>
+                                <option disabled value="">Pilih Jenis Ekstra</option>
                                 @foreach ($ekstras as $ekstra)
                                     <option value="{{ $ekstra->id }}"
                                         data-harga="{{ $ekstra->harga_default }}"
                                         data-keterangan="{{ $ekstra->keterangan ?? $ekstra->deskripsi ?? '' }}"
                                         data-nama="{{ $ekstra->nama_ekstra }}"
-                                        @selected($ekstra->id == old('jenis_ekstra'))>
+                                        @selected($ekstra->id == old('jenis_ekstra', $pemesananEkstra->ekstra == $ekstra->nama_ekstra ? $ekstra->id : ''))>
                                         {{ $ekstra->nama_ekstra }} | Rp {{ number_format($ekstra->harga_default, 0, ',', '.') }}
                                     </option>
                                 @endforeach
@@ -65,7 +66,7 @@
                             <label for="jumlah" class="form-label fw-semibold">Jumlah <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah" name="jumlah" min="1" value="{{ old('jumlah', 1) }}" required>
+                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah" name="jumlah" min="1" value="{{ old('jumlah', $pemesananEkstra->jumlah) }}" required>
                             </div>
                             <small id="keterangan_description" class="text-muted"></small>
                             @error('jumlah')
@@ -87,7 +88,7 @@
 
                         <div class="mb-3">
                             <label for="keterangan" class="form-label fw-semibold">Keterangan / Catatan</label>
-                            <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan" rows="3" placeholder="Masukkan keterangan atau catatan tambahan (opsional)">{{ old('keterangan') }}</textarea>
+                            <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan" rows="3" placeholder="Masukkan keterangan atau catatan tambahan (opsional)">{{ old('keterangan', $pemesananEkstra->keterangan) }}</textarea>
                             @error('keterangan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -100,14 +101,14 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-8 d-flex justify-content-between">
                 <a href="{{ route('pemesanan.detail', $pemesanan_id) }}" class="btn btn-outline-secondary px-4 py-2">
-    <i class="fas fa-arrow-left me-2"></i> Kembali
-</a>
+                    <i class="fas fa-arrow-left me-2"></i> Kembali
+                </a>
                 <div>
                     {{-- <button type="reset" class="btn btn-light me-2" onclick="resetForm()">
                         <i class="fas fa-redo me-1"></i>Reset
                     </button> --}}
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-1"></i>Simpan Data
+                        <i class="fas fa-save me-1"></i>Simpan Perubahan
                     </button>
                 </div>
             </div>

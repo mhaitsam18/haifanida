@@ -50,7 +50,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="tanggal_pembayaran" class="form-label">Tanggal Pembayaran</label>
                                     <input type="date"
                                         class="form-control @error('tanggal_pembayaran') is-invalid @enderror"
@@ -62,7 +62,23 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
+                                </div> --}}
+                                {{-- MODIFIED --}}
+                                <div class="mb-3">
+                                    <label for="tanggal_pembayaran" class="form-label">Tanggal Pembayaran</label>
+                                    <input type="date"
+                                        class="form-control @error('tanggal_pembayaran') is-invalid @enderror"
+                                        id="tanggal_pembayaran" name="tanggal_pembayaran"
+                                        value="{{ old('tanggal_pembayaran', $pembayaran->tanggal_pembayaran ? \Carbon\Carbon::parse($pembayaran->tanggal_pembayaran)->format('Y-m-d') : '') }}"
+                                        placeholder="Tanggal Pembayaran"
+                                        readonly> <!-- Tambahkan readonly jika admin hanya memverifikasi status -->
+                                    @error('tanggal_pembayaran')
+                                        <div class="text-danger fs-6">
+                                            {{ $message }}
+                                        </div>
+                                @enderror
                                 </div>
+                                {{-- END MODIFIED --}}
                                 <div class="mb-3">
                                     <label for="bukti_pembayaran" class="form-label">Bukti Pembayaran</label>
                                     <input type="file"
