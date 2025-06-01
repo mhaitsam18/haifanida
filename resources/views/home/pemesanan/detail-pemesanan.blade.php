@@ -195,60 +195,53 @@
                         </a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th width="5%">#</th>
-                                    <th>Ekstra / Tambahan</th>
-                                    <th>Jumlah</th>
-                                    <th>Total Harga</th>
-                                    <th>Keterangan</th>
-                                    <th width="15%">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($pemesanan->pemesananEkstras->count() > 0)
-                                    @foreach ($pemesanan->pemesananEkstras as $ekstra)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $ekstra->ekstra }}</td>
-                                            <td>{{ $ekstra->jumlah }}</td>
-                                            <td>Rp {{ number_format($ekstra->total_harga, 2, ',', '.') }}</td>
-                                            <td>{{ $ekstra->keterangan ?: '-' }}</td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <a href="/edit-ekstra/{{ $ekstra->id }}" class="btn btn-success btn-xs me-2" title="Edit Data">
-                                                        <i data-feather="edit" class="icon-xs"></i>
-                                                        Edit
-                                                    </a>
-                                                    <form action="/hapus-ekstra/{{ $ekstra->id }}" method="post" class="d-inline">
-                                                        @method('delete')
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-danger btn-xs tombol-hapus" title="Hapus Data">
-                                                            <i data-feather="trash-2" class="icon-xs"></i>
-                                                            Hapus
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="6" class="text-center py-3 text-muted">
-                                            <i data-feather="info" class="icon-md mb-2"></i>
-                                            <p>Belum ada pemesanan ekstra</p>
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                        <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ekstra</th>
+            <th>Jumlah</th>
+            <th>Total Harga</th>
+            <th>Keterangan</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($pemesanan->pemesananEkstras as $pemesananEkstra)
+            <tr>
+                <td>{{ $pemesananEkstra->ekstra }}</td>
+                <td>{{ $pemesananEkstra->jumlah }}</td>
+                <td>Rp {{ number_format($pemesananEkstra->total_harga, 0, ',', '.') }}</td>
+                <td>{{ $pemesananEkstra->keterangan ?? '-' }}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="{{ route('pemesanan-ekstra.edit', $pemesananEkstra) }}" class="btn btn-success btn-xs me-2" title="Edit Data">
+                            <i data-feather="edit" class="icon-xs"></i>
+                            Edit
+                        </a>
+                        <form action="{{ route('pemesanan-ekstra.destroy', $pemesananEkstra) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pemesanan ekstra ini?');">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-xs tombol-hapus" title="Hapus Data">
+                                <i data-feather="trash-2" class="icon-xs"></i>
+                                Hapus
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5" class="text-center">Tidak ada pemesanan ekstra.</td>
+            </tr>
+        @endforelse
+    </tbody>
+</table>
                     </div>
                 </div>
 
                 <hr class="my-4">
 
-                <!-- Pembayaran Section -->
+                {{-- <!-- Pembayaran Section -->
                 <div class="mb-2">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0"><i data-feather="credit-card" class="icon-sm me-2"></i>Pembayaran</h5>
@@ -318,7 +311,65 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> --}}
+                <!-- Pembayaran Section -->
+<div class="mb-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0"><i data-feather="credit-card" class="icon-sm me-2"></i>Pembayaran</h5>
+        <a href="{{ route('pembayaran.create', $pemesanan->id) }}" 
+           class="btn btn-primary btn-sm">
+            <i data-feather="plus" class="icon-sm me-1"></i>
+            Tambah Pembayaran
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="bg-light">
+                <tr>
+                    <th width="5%">#</th>
+                    <th>Jumlah Pembayaran</th>
+                    <th>Metode Pembayaran</th>
+                    <th>Tanggal Pembayaran</th>
+                    <th>Bukti Pembayaran</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($pemesanan->pembayarans->count() > 0)
+                    @foreach ($pemesanan->pembayarans as $pembayaran)
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>Rp {{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}</td>
+        <td>{{ $pembayaran->metode_pembayaran }}</td>
+        <td>{{ Carbon::parse($pembayaran->tanggal_pembayaran)->isoFormat('LL') }}</td>
+        <td>
+            <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" 
+               class="btn btn-outline-info btn-sm" target="_blank">
+                <i data-feather="file" class="icon-xs me-1"></i> Lihat Bukti
+            </a>
+        </td>
+        <td>
+            <span class="badge {{ $pembayaran->status_pembayaran == 'diterima' ? 'bg-success' : ($pembayaran->status_pembayaran == 'ditolak' ? 'bg-danger' : 'bg-warning') }}">
+                {{ ucfirst($pembayaran->status_pembayaran) }}
+            </span>
+        </td>
+        <td>
+            <!-- Users typically shouldn't edit/delete payments; this is admin-only -->
+        </td>
+    </tr>
+@endforeach
+                @else
+                    <tr>
+                        <td colspan="6" class="text-center py-3 text-muted">
+                            <i data-feather="info" class="icon-md mb-2"></i>
+                            <p>Belum ada riwayat pembayaran</p>
+                        </td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
             </div>
         </div>
     </div>
