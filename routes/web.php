@@ -66,6 +66,7 @@ use App\Http\Controllers\MemberTagihanController;
 use App\Http\Controllers\UmrohController;
 use App\Http\Controllers\BerkasController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\PembayaranController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -588,3 +589,16 @@ Route::get('/pemesanan/{id}/jemaah', [BerkasController::class, 'someMethod'])->n
 // MODIFIED: Add routes for edit and update jemaah
 Route::get('/pemesanan/{pemesanan}/jemaah/{jemaah}/edit', [UmrohController::class, 'editJemaah'])->name('pemesanan.jemaah.edit');
 Route::put('/pemesanan/{pemesanan}/jemaah/{jemaah}', [UmrohController::class, 'updateJemaah'])->name('pemesanan.jemaah.update');
+
+Route::get('/pemesanan-ekstra/{pemesanan_id?}', [PemesananController::class, 'createPemesananEkstra'])->name('pemesanan-ekstra.create');
+Route::post('/pemesanan-ekstra', [PemesananController::class, 'storePemesananEkstra'])->name('pemesanan-ekstra.store');
+Route::get('/pemesanan-ekstra/{pemesananEkstra}/edit', [PemesananController::class, 'editPemesananEkstra'])->name('pemesanan-ekstra.edit');
+Route::put('/pemesanan-ekstra/{pemesananEkstra}', [PemesananController::class, 'updatePemesananEkstra'])->name('pemesanan-ekstra.update');
+Route::delete('/pemesanan-ekstra/{pemesananEkstra}', [PemesananController::class, 'destroyPemesananEkstra'])->name('pemesanan-ekstra.destroy');
+
+// User routes
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pemesanan/{pemesanan}/pembayaran/create', [PembayaranController::class, 'createPembayaran'])->name('pembayaran.create');
+    Route::post('/pembayaran', [PembayaranController::class, 'storePembayaran'])->name('pembayaran.store');
+});
