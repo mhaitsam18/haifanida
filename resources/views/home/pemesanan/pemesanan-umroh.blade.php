@@ -71,7 +71,14 @@
                                 <label for="jumlah_orang" class="form-label">Jumlah Jemaah<span class="text-danger">*</span></label>
                                 <input type="number" min="1" class="form-control" id="jumlah_orang" name="jumlah_orang" required>
                             </div>
+                            <hr>
+                            <h5>Pemesanan Kamar</h5>
+                            <div id="kamar-container"></div>
+                            <button type="button" class="btn btn-outline-primary mb-3" onclick="addKamarCard()">+ Tambah Kamar</button>
 
+                            <h5>Pemesanan Ekstra</h5>
+                            <div id="ekstra-container"></div>
+                            <button type="button" class="btn btn-outline-primary mb-3" onclick="addEkstraCard()">+ Tambah Ekstra</button>
                             <div class="text-end">
                                 <a href="/paket/{{ $paket->id }}" class="btn btn-sm btn-secondary mb-1">
                                     <i data-feather="arrow-left" class="icon-sm me-2"></i>Kembali
@@ -81,6 +88,7 @@
                                 </button>
                             </div>
                         </div>
+                        {{-- aku mau menambahkan card pemesanan kamar dan pemesanan ekstra dibawah ini --}}
                     </div>
                 </form>
 
@@ -142,6 +150,62 @@
             document.getElementById('email').value = '';
             document.getElementById('telepon').value = '';
         }
+    }
+    let kamarIndex = 0;
+    let ekstraIndex = 0;
+
+    function addKamarCard() {
+        kamarIndex++;
+        const kamarCard = `
+            <div class="card mb-2" id="kamar-card-${kamarIndex}">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label>Tipe Kamar</label>
+                        <select name="kamars[${kamarIndex}][tipe_kamar]" class="form-select" required>
+                            <option value="">Pilih Tipe Kamar</option>
+                            @foreach($kamars as $kamar)
+                            <option value="{{ $kamar->nama_ekstra }}">{{ $kamar->nama_ekstra }} | Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>Jumlah Pengisi</label>
+                        <input type="number" min="1" name="kamars[${kamarIndex}][jumlah_pengisi]" class="form-control" required>
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeCard('kamar-card-${kamarIndex}')">Hapus</button>
+                </div>
+            </div>
+        `;
+        document.getElementById('kamar-container').insertAdjacentHTML('beforeend', kamarCard);
+    }
+
+    function addEkstraCard() {
+        ekstraIndex++;
+        const ekstraCard = `
+            <div class="card mb-2" id="ekstra-card-${ekstraIndex}">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label>Jenis Ekstra</label>
+                        <select name="ekstras[${ekstraIndex}][ekstra]" class="form-select" required>
+                            <option value="">Pilih Ekstra</option>
+                            @foreach($ekstras as $ekstra)
+                            <option value="{{ $ekstra->nama_ekstra }}">{{ $ekstra->nama_ekstra }} | Rp.{{ number_format($ekstra->harga_default, 2, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>Jumlah Ekstra</label>
+                        <input type="number" min="1" name="ekstras[${ekstraIndex}][jumlah]" class="form-control" required>
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeCard('ekstra-card-${ekstraIndex}')">Hapus</button>
+                </div>
+            </div>
+        `;
+        document.getElementById('ekstra-container').insertAdjacentHTML('beforeend', ekstraCard);
+    }
+
+    function removeCard(id) {
+        document.getElementById(id).remove();
     }
 </script>
 @endsection
