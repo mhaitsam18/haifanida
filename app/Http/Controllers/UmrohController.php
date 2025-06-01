@@ -129,63 +129,63 @@ class UmrohController extends Controller
         ]);
     }
 
-    public function storePemesanan(Request $request)
-    {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'paket_id' => 'required|integer',
-            'user_id' => 'required|integer',
-            // 'is_umroh' => 'nullable|integer',
-            // 'is_haji' => 'nullable|integer',
-            // 'is_wisata_halal' => 'nullable|integer',
-            'status' => 'nullable|string',
-            'tanggal_pesan' => 'nullable|date',
-            // 'tanggal_berangkat' => 'nullable|date',
-            'jumlah_orang' => 'nullable|integer',
-            'total_harga' => 'nullable|integer',
-            'metode_pembayaran' => 'nullable|string',
-            'is_pembayaran_lunas' => 'nullable|integer',
-            'tanggal_pelunasan' => 'nullable|date',
-            // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
-        ]);
+    // public function storePemesanan(Request $request)
+    // {
+    //     // Validasi input
+    //     $validator = Validator::make($request->all(), [
+    //         'paket_id' => 'required|integer',
+    //         'user_id' => 'required|integer',
+    //         // 'is_umroh' => 'nullable|integer',
+    //         // 'is_haji' => 'nullable|integer',
+    //         // 'is_wisata_halal' => 'nullable|integer',
+    //         'status' => 'nullable|string',
+    //         'tanggal_pesan' => 'nullable|date',
+    //         // 'tanggal_berangkat' => 'nullable|date',
+    //         'jumlah_orang' => 'nullable|integer',
+    //         'total_harga' => 'nullable|integer',
+    //         'metode_pembayaran' => 'nullable|string',
+    //         'is_pembayaran_lunas' => 'nullable|integer',
+    //         'tanggal_pelunasan' => 'nullable|date',
+    //         // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
+    //     ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
 
-        // Ambil data paket
-        $paket = Paket::findOrFail($request->paket_id);
-        // Simpan pemesanan
-        $pemesanan = new Pemesanan();
-        $pemesanan->paket_id = $request->paket_id;
-        $pemesanan->user_id = $request->user_id;
-        $pemesanan->status = "pending";
-        $pemesanan->tanggal_pesan = $request->tanggal_pesan;
-        $pemesanan->jumlah_orang = $request->jumlah_orang;
-        $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_orang; // Contoh perhitungan
-        $pemesanan->metode_pembayaran = $request->metode_pembayaran;
-        $pemesanan->is_pembayaran_lunas = 0;
-        $pemesanan->tanggal_pelunasan = $request->tanggal_pelunasan;
-        $pemesanan->save();
-        // Redirect ke halaman detail pemesanan
-        return redirect()->route('pemesanan.detail', $pemesanan->id)->with('success', 'Pemesanan berhasil disimpan!');
-    }
+    //     // Ambil data paket
+    //     $paket = Paket::findOrFail($request->paket_id);
+    //     // Simpan pemesanan
+    //     $pemesanan = new Pemesanan();
+    //     $pemesanan->paket_id = $request->paket_id;
+    //     $pemesanan->user_id = $request->user_id;
+    //     $pemesanan->status = "pending";
+    //     $pemesanan->tanggal_pesan = $request->tanggal_pesan;
+    //     $pemesanan->jumlah_orang = $request->jumlah_orang;
+    //     $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_orang; // Contoh perhitungan
+    //     $pemesanan->metode_pembayaran = $request->metode_pembayaran;
+    //     $pemesanan->is_pembayaran_lunas = 0;
+    //     $pemesanan->tanggal_pelunasan = $request->tanggal_pelunasan;
+    //     $pemesanan->save();
+    //     // Redirect ke halaman detail pemesanan
+    //     return redirect()->route('pemesanan.detail', $pemesanan->id)->with('success', 'Pemesanan berhasil disimpan!');
+    // }
 
-    public function detailPemesanan($id)
-    {   
-        $user = Auth::user();
-        $pemesanan = Pemesanan::
-        // findOrFail($id);
-        // BYPASS DEV
-        where('id', $id)
-        ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
-        ->firstOrFail();
-        return view('home.pemesanan.detail-pemesanan', [
-            'title' => 'Detail Pemesanan',
-            'pemesanan' => $pemesanan,
-            'user' => $user
-        ]);
-    }
+    // public function detailPemesanan($id)
+    // {   
+    //     $user = Auth::user();
+    //     $pemesanan = Pemesanan::
+    //     // findOrFail($id);
+    //     // BYPASS DEV
+    //     where('id', $id)
+    //     ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
+    //     ->firstOrFail();
+    //     return view('home.pemesanan.detail-pemesanan', [
+    //         'title' => 'Detail Pemesanan',
+    //         'pemesanan' => $pemesanan,
+    //         'user' => $user
+    //     ]);
+    // }
     
     public function listJemaah($id)
     {   
@@ -196,10 +196,13 @@ class UmrohController extends Controller
         where('id', $id)
         ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
         ->firstOrFail();
+        $paket = $pemesanan->paket;
+
         return view('home.pemesanan.jemaah', [
-            'title' => 'Detail Pemesanan',
+            'title' => 'Detail Jemaah',
             'pemesanan' => $pemesanan,
-            'jemaahs' => $jemaahs
+            'jemaahs' => $jemaahs,
+            'paket' => $paket
         ]);
     }
     public function createJemaah($id)
