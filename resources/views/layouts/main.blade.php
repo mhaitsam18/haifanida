@@ -112,6 +112,7 @@
     {{-- MODIFIED-- --}}
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     {{-- --MODIFIED --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
