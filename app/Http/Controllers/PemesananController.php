@@ -8,6 +8,7 @@ use App\Models\PemesananKamar;
 use App\Models\PermintaanKamar;
 use App\Models\PemesananEkstra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
@@ -194,35 +195,172 @@ class PemesananController extends Controller
 
 //-- PEMESANAN EKSTRA --//
 
-    public function createPemesananEkstra()
+    // public function createPemesananEkstra()
+    // {
+    //     $ekstras = Ekstra::whereIn('jenis_ekstra', ['perlengkapan', 'jasa', 'pesawat'])->get();
+
+    //     return view('home.pemesanan.ekstra.add-ekstra', [
+    //         'title' => 'Tambah Pemesanan Ekstra',
+    //         'ekstras' => $ekstras,
+    //     ]);
+    // }
+
+    // public function storePemesananEkstra(Request $request)
+    // {
+    //     $request->validate([
+    //         'jenis_ekstra' => 'required|exists:ekstra,id',
+    //         'jumlah' => 'required|integer|min:1',
+    //     ]);
+
+    //     $ekstra = Ekstra::findOrFail($request->jenis_ekstra);
+
+    //     // Gunakan harga_default sesuai dengan yang ada di view
+    //     $totalHarga = $ekstra->harga_default * $request->jumlah;
+
+    //     PemesananEkstra::create([
+    //         'ekstra' => $ekstra->nama_ekstra,
+    //         'jumlah' => $request->jumlah,
+    //         'total_harga' => $totalHarga,
+    //         'keterangan' => $request->keterangan,
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Pemesanan ekstra berhasil disimpan.');
+    // }
+
+    /**
+     * Menampilkan form untuk menambah pemesanan ekstra.
+     */
+    public function createPemesananEkstra($pemesanan_id = null)
     {
         $ekstras = Ekstra::whereIn('jenis_ekstra', ['perlengkapan', 'jasa', 'pesawat'])->get();
+        $pemesanan_id = $pemesanan_id ?? (Auth::check() ? Pemesanan::where('user_id', Auth::id())->latest()->first()->id ?? null : null);
+
+        if (!$pemesanan_id || !Pemesanan::find($pemesanan_id)) {
+            return redirect()->route('home')->with('error', 'Pemesanan tidak ditemukan. Silakan buat pemesanan terlebih dahulu.');
+        }
 
         return view('home.pemesanan.ekstra.add-ekstra', [
             'title' => 'Tambah Pemesanan Ekstra',
             'ekstras' => $ekstras,
+            'pemesanan_id' => $pemesanan_id,
         ]);
     }
 
+    /**
+     * Menyimpan pemesanan ekstra ke database.
+     */
     public function storePemesananEkstra(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
+            'pemesanan_id' => 'required|exists:pemesanan,id',
             'jenis_ekstra' => 'required|exists:ekstra,id',
             'jumlah' => 'required|integer|min:1',
+            'total_harga' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string|max:255',
+        ], [
+            'pemesanan_id.required' => 'Pemesanan tidak ditemukan.',
+            'pemesanan_id.exists' => 'Pemesanan tidak valid.',
+            'jenis_ekstra.required' => 'Jenis ekstra harus dipilih.',
+            'jenis_ekstra.exists' => 'Jenis ekstra tidak valid.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'jumlah.integer' => 'Jumlah harus berupa angka bulat.',
+            'jumlah.min' => 'Jumlah minimal adalah 1.',
+            'total_harga.required' => 'Total harga harus diisi.',
+            'total_harga.numeric' => 'Total harga harus berupa angka.',
         ]);
 
-        $ekstra = Ekstra::findOrFail($request->jenis_ekstra);
+        // \Log::info('Fetching Ekstra with ID: ' . $validatedData['jenis_ekstra']);
+        $ekstra = Ekstra::findOrFail($validatedData['jenis_ekstra']);
 
-        // Gunakan harga_default sesuai dengan yang ada di view
-        $totalHarga = $ekstra->harga_default * $request->jumlah;
+        $expectedTotalHarga = $ekstra->harga_default * $validatedData['jumlah'];
+        if (abs($validatedData['total_harga'] - $expectedTotalHarga) > 0.01) {
+            return back()->withInput()->withErrors(['total_harga' => 'Total harga tidak sesuai dengan perhitungan.']);
+        }
 
         PemesananEkstra::create([
+            'pemesanan_id' => $validatedData['pemesanan_id'],
             'ekstra' => $ekstra->nama_ekstra,
-            'jumlah' => $request->jumlah,
-            'total_harga' => $totalHarga,
-            'keterangan' => $request->keterangan,
+            'jumlah' => $validatedData['jumlah'],
+            'total_harga' => $validatedData['total_harga'],
+            'keterangan' => $validatedData['keterangan'],
         ]);
 
-        return redirect()->back()->with('success', 'Pemesanan ekstra berhasil disimpan.');
+            return redirect()->route('pemesanan.detail', $validatedData['pemesanan_id'])
+                ->with('success', 'Pemesanan ekstra berhasil disimpan.');
+        }
+
+    /**
+     * Show the form for editing the specified extra booking.
+     */
+public function editPemesananEkstra(PemesananEkstra $pemesananEkstra)
+{
+    $ekstras = Ekstra::whereIn('jenis_ekstra', ['perlengkapan', 'jasa', 'pesawat'])->get();
+    $pemesanan_id = $pemesananEkstra->pemesanan_id;
+
+    if (!Pemesanan::find($pemesanan_id)) {
+        return redirect()->route('home')->with('error', 'Pemesanan tidak ditemukan.');
     }
+
+    return view('home.pemesanan.ekstra.edit-ekstra', [
+        'title' => 'Edit Pemesanan Ekstra',
+        'ekstras' => $ekstras,
+        'pemesanan_id' => $pemesanan_id,
+        'pemesananEkstra' => $pemesananEkstra,
+    ]);
+}
+
+    /**
+     * Update the specified extra booking in storage.
+     */
+    public function updatePemesananEkstra(Request $request, PemesananEkstra $pemesananEkstra)
+    {
+        $validatedData = $request->validate([
+            'pemesanan_id' => 'required|exists:pemesanan,id',
+            'jenis_ekstra' => 'required|exists:ekstra,id',
+            'jumlah' => 'required|integer|min:1',
+            'total_harga' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string|max:255',
+        ], [
+            'pemesanan_id.required' => 'Pemesanan tidak ditemukan.',
+            'pemesanan_id.exists' => 'Pemesanan tidak valid.',
+            'jenis_ekstra.required' => 'Jenis ekstra harus dipilih.',
+            'jenis_ekstra.exists' => 'Jenis ekstra tidak valid.',
+            'jumlah.required' => 'Jumlah harus diisi.',
+            'jumlah.integer' => 'Jumlah harus berupa angka bulat.',
+            'jumlah.min' => 'Jumlah minimal adalah 1.',
+            'total_harga.required' => 'Total harga harus diisi.',
+            'total_harga.numeric' => 'Total harga harus berupa angka.',
+        ]);
+
+        $ekstra = Ekstra::findOrFail($validatedData['jenis_ekstra']);
+
+        $expectedTotalHarga = $ekstra->harga_default * $validatedData['jumlah'];
+        if (abs($validatedData['total_harga'] - $expectedTotalHarga) > 0.01) {
+            return back()->withInput()->withErrors(['total_harga' => 'Total harga tidak sesuai dengan perhitungan.']);
+        }
+
+        $pemesananEkstra->update([
+            'pemesanan_id' => $validatedData['pemesanan_id'],
+            'ekstra' => $ekstra->nama_ekstra,
+            'jumlah' => $validatedData['jumlah'],
+            'total_harga' => $validatedData['total_harga'],
+            'keterangan' => $validatedData['keterangan'],
+        ]);
+
+        return redirect()->route('pemesanan.detail', $validatedData['pemesanan_id'])
+            ->with('success', 'Pemesanan ekstra berhasil diperbarui.');
+    }
+
+    /**
+     * Remove the specified extra booking from storage.
+     */
+    public function destroyPemesananEkstra(PemesananEkstra $pemesananEkstra)
+    {
+        $pemesanan_id = $pemesananEkstra->pemesanan_id;
+        $pemesananEkstra->delete();
+
+        return redirect()->route('pemesanan.detail', $pemesanan_id)
+            ->with('success', 'Pemesanan ekstra berhasil dihapus.');
+    }
+
 }
