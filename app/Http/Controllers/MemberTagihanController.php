@@ -9,14 +9,16 @@ use Illuminate\Http\Request;
 
 class MemberTagihanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index($id)
     {   
         $pemesanan = Pemesanan::where('id', $id)
             ->with(['paket', 'pemesananKamars.permintaans', 'pemesananEkstras'])
             ->first();
+
+        // if (!$p.maah) {
+        //     abort(404, 'Pemesanan tidak ditemukan');
+        // }
+
         $tagihans = [
             [
                 'deskripsi' => $pemesanan->paket->nama_paket,
@@ -56,13 +58,21 @@ class MemberTagihanController extends Controller
                 'total' => $pemesanan_ekstra->total_harga,
             ];
         }
-        $pembayaran = Pembayaran::where('pemesanan_id', $pemesanan->id)->where('status_pembayaran', 'diterima')->sum('jumlah_pembayaran');
+
+        $pembayaran = Pembayaran::where('pemesanan_id', $pemesanan->id)
+            ->where('status_pembayaran', 'diterima')
+            ->sum('jumlah_pembayaran');
 
         $totals = array_column($tagihans, 'total');
         $balance = array_sum($totals);
         $tax = ($balance * 11) / 100;
         $balance += $tax;
         $balance -= $pembayaran;
+
+        // Update is_pembayaran_lunas based on balance
+        $pemesanan->is_pembayaran_lunas = $balance <= 0;
+        $pemesanan->save();
+
         return view('home.pemesanan.tagihan', [
             'title' => 'Data Pemesanan',
             'page' => 'pemesanan',
@@ -72,6 +82,7 @@ class MemberTagihanController extends Controller
             'balance' => $balance,
         ]);
     }
+
     public function tagihanGrup(Grup $grup = null)
     {
         return view('errors.coming-soon', [
@@ -80,16 +91,10 @@ class MemberTagihanController extends Controller
             'pesan' => 'Fitur Ini akan segera Hadir',
             'page' => 'tagihan-grup',
         ]);
-        // return view('admin.paket.grup.tagihan', [
-        //     'title' => 'Tagihan Grup',
-        //     'page' => 'tagihan-grup',
-        // ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function cetak(Pemesanan $pemesanan)
     {
+        // Implement print functionality if needed
     }
 }
