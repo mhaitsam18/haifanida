@@ -19,7 +19,7 @@
             <a href="{{ route('pemesanan.jemaah.create', $pemesanan->id) }}" class="btn btn-primary me-2 px-4 py-2">
                 <i class="fas fa-plus-circle me-2"></i> Tambah
             </a>
-            <a href="{{ route('pemesanan.detail',  $pemesanan->id) }}" class="btn btn-outline-secondary px-4 py-2">
+            <a href="{{ route('pemesanan.detail', $pemesanan->id) }}" class="btn btn-outline-secondary px-4 py-2">
                 <i class="fas fa-arrow-left me-2"></i> Kembali
             </a>
         </div>
@@ -28,7 +28,7 @@
     <!-- Card container for better visual appearance -->
     <div class="card shadow border-0">
         <div class="card-header bg-light border-0 py-3">
-            <h4 class="mb-0 text-secondary fw-semibold">Data Jemaah Keberangkatan 24 Februari 2024</h4>
+            <h4 class="mb-0 text-secondary fw-semibold">Data Jemaah Keberangkatan {{ $paket->nama_paket }}</h4>
         </div>
         <div class="card-body p-0">
             <!-- Responsive table with better spacing -->
