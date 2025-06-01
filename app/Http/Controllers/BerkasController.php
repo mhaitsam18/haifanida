@@ -16,7 +16,16 @@ class BerkasController extends Controller
     {
         $pemesanan = Pemesanan::findOrFail($pemesananId);
         $jemaah = Jemaah::findOrFail($jemaahId);
-        $berkass = Berkas::all(); 
+        
+        // ORIGINAL CODE:
+        // $berkass = Berkas::all();
+        
+        // MODIFIED CODE: Fetch only berkas that haven't been uploaded by this jemaah
+        $uploadedBerkasIds = BerkasJemaah::where('jemaah_id', $jemaahId)
+            ->pluck('berkas_id')
+            ->toArray();
+        $berkass = Berkas::whereNotIn('id', $uploadedBerkasIds)->get();
+        
         $title = 'Tambah Berkas Jemaah';
 
         return view('home.pemesanan.berkas.add-berkas', compact('pemesanan', 'jemaah', 'berkass', 'title'));
