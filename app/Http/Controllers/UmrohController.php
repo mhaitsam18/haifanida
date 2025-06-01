@@ -124,6 +124,8 @@ class UmrohController extends Controller
 
         return view('home.pemesanan.pemesanan-umroh', [
             'title' => 'Form Pemesanan Umroh',
+            'kamars' => Ekstra::where('jenis_ekstra', 'tipe kamar')->get(),
+            'ekstras' => Ekstra::whereNotIn('jenis_ekstra', ['tipe kamar', 'permintaan kamar'])->get(),
             'paket' => $paket,
             'user' => $user
         ]);
