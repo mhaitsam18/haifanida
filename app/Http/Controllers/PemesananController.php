@@ -45,48 +45,130 @@ class PemesananController extends Controller
 
 //-- PEMESANAN --//
 
+    // public function storePemesanan(Request $request)
+    // {
+    //     // Validasi input
+    //     $validator = Validator::make($request->all(), [
+    //         'paket_id' => 'required|integer',
+    //         'user_id' => 'required|integer',
+    //         // 'is_umroh' => 'nullable|integer',
+    //         // 'is_haji' => 'nullable|integer',
+    //         // 'is_wisata_halal' => 'nullable|integer',
+    //         'status' => 'nullable|string',
+    //         'tanggal_pesan' => 'nullable|date',
+    //         // 'tanggal_berangkat' => 'nullable|date',
+    //         'jumlah_orang' => 'required|integer',
+    //         'total_harga' => 'nullable|integer',
+    //         'metode_pembayaran' => 'nullable|string',
+    //         'is_pembayaran_lunas' => 'nullable|integer',
+    //         'tanggal_pelunasan' => 'nullable|date',
+    //         // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
+
+    //     // Ambil data paket
+    //     $paket = Paket::findOrFail($request->paket_id);
+    //     // Simpan pemesanan
+    //     $pemesanan = new Pemesanan();
+    //     $pemesanan->paket_id = $request->paket_id;
+    //     $pemesanan->user_id = $request->user_id;
+    //     $pemesanan->status = "pending";
+    //     $pemesanan->tanggal_pesan = $request->tanggal_pesan;
+    //     $pemesanan->jumlah_orang = $request->jumlah_orang;
+    //     $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_orang; // Contoh perhitungan
+    //     $pemesanan->metode_pembayaran = $request->metode_pembayaran;
+    //     $pemesanan->is_pembayaran_lunas = 0;
+    //     $pemesanan->tanggal_pelunasan = $request->tanggal_pelunasan;
+    //     $pemesanan->save();
+    //     // Redirect ke halaman detail pemesanan
+    //     return redirect()->route('pemesanan.detail', $pemesanan->id)->with('success', 'Pemesanan berhasil disimpan!');
+    // }
     public function storePemesanan(Request $request)
     {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'paket_id' => 'required|integer',
+        // Validasi data umum pemesanan
+        $validatedData = $request->validate([
+            'paket_id' => 'required|integer|exists:paket,id',
             'user_id' => 'required|integer',
-            // 'is_umroh' => 'nullable|integer',
-            // 'is_haji' => 'nullable|integer',
-            // 'is_wisata_halal' => 'nullable|integer',
-            'status' => 'nullable|string',
-            'tanggal_pesan' => 'nullable|date',
-            // 'tanggal_berangkat' => 'nullable|date',
-            'jumlah_orang' => 'required|integer',
-            'total_harga' => 'nullable|integer',
+            'tanggal_pesan' => 'required|date',
+            'jumlah_orang' => 'required|integer|min:1',
             'metode_pembayaran' => 'nullable|string',
-            'is_pembayaran_lunas' => 'nullable|integer',
             'tanggal_pelunasan' => 'nullable|date',
-            // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        // Ambil data paket untuk perhitungan total, misalnya
+        $paket = Paket::findOrFail($validatedData['paket_id']);
+
+        // Simpan data pemesanan
+        $pemesanan = new Pemesanan();
+        $pemesanan->paket_id = $validatedData['paket_id'];
+        $pemesanan->user_id = $validatedData['user_id'];
+        $pemesanan->status = "pending";
+        $pemesanan->tanggal_pesan = $validatedData['tanggal_pesan'];
+        $pemesanan->jumlah_orang = $validatedData['jumlah_orang'];
+        $pemesanan->total_harga = $paket->harga * $validatedData['jumlah_orang']; 
+        $pemesanan->metode_pembayaran = $validatedData['metode_pembayaran'] ?? null;
+        $pemesanan->is_pembayaran_lunas = 0;
+        $pemesanan->tanggal_pelunasan = $validatedData['tanggal_pelunasan'] ?? null;
+        $pemesanan->save();
+
+        // PROSES PEMESANAN KAMAR (data dinamis dari "kamars" array)
+        if ($request->has('kamars') && is_array($request->kamars)) {
+            foreach ($request->kamars as $kamarData) {
+                // Validasi tiap data kamar
+                $validatedKamar = validator($kamarData, [
+                    'tipe_kamar' => 'required|string',
+                    'jumlah_pengisi' => 'required|integer|min:1',
+                ])->validate();
+                
+                // Misal, kita ambil harga kamar dari tabel Ekstra dengan tipe kamar
+                $ekstraKamar = Ekstra::where('jenis_ekstra', 'tipe kamar')
+                            ->where('nama_ekstra', $validatedKamar['tipe_kamar'])
+                            ->first();
+                $hargaKamar = $ekstraKamar ? $ekstraKamar->harga_default : 0;
+
+                PemesananKamar::create([
+                    'pemesanan_id' => $pemesanan->id,
+                    'tipe_kamar' => $validatedKamar['tipe_kamar'],
+                    'jumlah_pengisi' => $validatedKamar['jumlah_pengisi'],
+                    'harga' => $hargaKamar,
+                    // Opsional: masukkan keterangan jika tersedia
+                    'keterangan' => $kamarData['keterangan'] ?? null,
+                ]);
+            }
         }
 
-        // Ambil data paket
-        $paket = Paket::findOrFail($request->paket_id);
-        // Simpan pemesanan
-        $pemesanan = new Pemesanan();
-        $pemesanan->paket_id = $request->paket_id;
-        $pemesanan->user_id = $request->user_id;
-        $pemesanan->status = "pending";
-        $pemesanan->tanggal_pesan = $request->tanggal_pesan;
-        $pemesanan->jumlah_orang = $request->jumlah_orang;
-        $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_orang; // Contoh perhitungan
-        $pemesanan->metode_pembayaran = $request->metode_pembayaran;
-        $pemesanan->is_pembayaran_lunas = 0;
-        $pemesanan->tanggal_pelunasan = $request->tanggal_pelunasan;
-        $pemesanan->save();
-        // Redirect ke halaman detail pemesanan
-        return redirect()->route('pemesanan.detail', $pemesanan->id)->with('success', 'Pemesanan berhasil disimpan!');
-    }
+        // PROSES PEMESANAN EKSTRA (data dinamis dari "ekstras" array)
+        if ($request->has('ekstras') && is_array($request->ekstras)) {
+            foreach ($request->ekstras as $ekstraData) {
+                // Validasi tiap data ekstra
+                $validatedEkstra = validator($ekstraData, [
+                    'ekstra' => 'required|string',
+                    'jumlah' => 'required|integer|min:1',
+                ])->validate();
 
+                // Dapatkan data ekstra untuk harga default
+                $dataEkstra = Ekstra::where('nama_ekstra', $validatedEkstra['ekstra'])
+                                ->first();
+                $hargaEkstra = $dataEkstra ? $dataEkstra->harga_default : 0;
+                $totalHargaEkstra = $hargaEkstra * $validatedEkstra['jumlah'];
+
+                PemesananEkstra::create([
+                    'pemesanan_id' => $pemesanan->id,
+                    'ekstra' => $validatedEkstra['ekstra'],
+                    'jumlah' => $validatedEkstra['jumlah'],
+                    'total_harga' => $totalHargaEkstra,
+                    'keterangan' => $ekstraData['keterangan'] ?? null,
+                ]);
+            }
+        }
+
+        return redirect()->route('pemesanan.detail', $pemesanan->id)
+            ->with('success', 'Pemesanan berhasil disimpan!');
+    }
+    
     public function detailPemesanan($id)
     {   
         $user = Auth::user();
