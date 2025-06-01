@@ -2,16 +2,104 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jemaah;
+use App\Models\Paket;
 use App\Models\Ekstra;
 use App\Models\Pemesanan;
 use App\Models\PemesananKamar;
 use App\Models\PermintaanKamar;
 use App\Models\PemesananEkstra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
+
+//-- PEMESAN --// 
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'email' => 'required|email',
+            'telepon' => 'required|string',
+            'jumlah_jemaah' => 'required|integer|min:1',
+        ]);
+
+        if ($request->has('is_jemaah')) {
+            Jemaah::create([
+                'user_id' => auth()->id(),
+                'nama_lengkap' => $request->nama,
+                'email' => $request->email,
+                'nomor_telepon' => $request->telepon,
+                'foto' => null, // atau default value jika perlu
+            ]);
+        }
+
+        // Redirect ke halaman daftar jemaah
+        return redirect()->route('pemesanan.detail', [
+            'pemesanan' => $request->input('pemesanan_id')
+        ])->with('success', 'Data pemesan berhasil disimpan.');
+    }
+
+//-- PEMESANAN --//
+
+    public function storePemesanan(Request $request)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'paket_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            // 'is_umroh' => 'nullable|integer',
+            // 'is_haji' => 'nullable|integer',
+            // 'is_wisata_halal' => 'nullable|integer',
+            'status' => 'nullable|string',
+            'tanggal_pesan' => 'nullable|date',
+            // 'tanggal_berangkat' => 'nullable|date',
+            'jumlah_orang' => 'required|integer',
+            'total_harga' => 'nullable|integer',
+            'metode_pembayaran' => 'nullable|string',
+            'is_pembayaran_lunas' => 'nullable|integer',
+            'tanggal_pelunasan' => 'nullable|date',
+            // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Ambil data paket
+        $paket = Paket::findOrFail($request->paket_id);
+        // Simpan pemesanan
+        $pemesanan = new Pemesanan();
+        $pemesanan->paket_id = $request->paket_id;
+        $pemesanan->user_id = $request->user_id;
+        $pemesanan->status = "pending";
+        $pemesanan->tanggal_pesan = $request->tanggal_pesan;
+        $pemesanan->jumlah_orang = $request->jumlah_orang;
+        $pemesanan->total_harga = $paket->harga * $pemesanan->jumlah_orang; // Contoh perhitungan
+        $pemesanan->metode_pembayaran = $request->metode_pembayaran;
+        $pemesanan->is_pembayaran_lunas = 0;
+        $pemesanan->tanggal_pelunasan = $request->tanggal_pelunasan;
+        $pemesanan->save();
+        // Redirect ke halaman detail pemesanan
+        return redirect()->route('pemesanan.detail', $pemesanan->id)->with('success', 'Pemesanan berhasil disimpan!');
+    }
+
+    public function detailPemesanan($id)
+    {   
+        $user = Auth::user();
+        $pemesanan = Pemesanan::
+        where('id', $id)
+        ->where('user_id', auth()->id()) //agar hanya pemesanan milik dia saja yang bisa dia lihat
+        ->firstOrFail();
+        return view('home.pemesanan.detail-pemesanan', [
+            'title' => 'Detail Pemesanan',
+            'pemesanan' => $pemesanan,
+            'user' => $user
+        ]);
+    }
 
 //-- PEMESANAN KAMAR --//
 
