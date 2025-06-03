@@ -1,0 +1,352 @@
+/* Booking Area Styles */
+.booking-area {
+    background: #f8f9fa;
+    padding: 100px 0 70px;
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-area .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Form Card */
+.booking-area .card {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 24px;
+}
+
+.booking-area .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 86, 179, 0.12);
+    border-color: #0056b3;
+}
+
+.booking-area .card-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+}
+
+.booking-area .card-header h5 {
+    color: #2d3748;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.booking-area .card-header i {
+    color: #0056b3;
+    font-size: 24px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.booking-area .card:hover .card-header i {
+    color: #007bff;
+    transform: rotate(5deg);
+}
+
+.booking-area .card-body {
+    padding: 25px;
+}
+
+/* Form Inputs */
+.booking-area .form-control,
+.booking-area .form-select {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 16px;
+    color: #4a5568;
+    transition: all 0.3s ease;
+}
+
+.booking-area .form-control:focus,
+.booking-area .form-select:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+    outline: none;
+}
+
+.booking-area .form-label {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.booking-area .form-check {
+    margin-bottom: 20px;
+}
+
+.booking-area .form-check-label {
+    font-size: 16px;
+    color: #4a5568;
+}
+
+.booking-area .form-check-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    cursor: pointer;
+}
+
+.booking-area .form-check-input:checked {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Dynamic Kamar and Ekstra Cards */
+.booking-area #kamar-container .card,
+.booking-area #ekstra-container .card {
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.booking-area #kamar-container .card:hover,
+.booking-area #ekstra-container .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 86, 179, 0.1);
+    border-color: #0056b3;
+}
+
+.booking-area #kamar-container .card-body,
+.booking-area #ekstra-container .card-body {
+    padding: 15px;
+}
+
+/* Buttons */
+.booking-area .btn {
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 15px 30px; /* Unified padding for consistency */
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.booking-area .btn-back {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%); /* Gray for Back */
+    color: #ffffff;
+    border: none;
+}
+
+.booking-area .btn-back:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #6c757d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+}
+
+.booking-area .btn-continue {
+    background: linear-gradient(135deg, #0056b3 0%, #007bff 100%); /* Blue for Continue */
+    color: #ffffff;
+    border: none;
+}
+
+.booking-area .btn-continue:hover {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 86, 179, 0.3);
+}
+
+.booking-area .btn-outline-primary {
+    border-color: #0056b3;
+    color: #0056b3;
+    background: transparent;
+}
+
+.booking-area .btn-outline-primary:hover {
+    background: #0056b3;
+    color: #ffffff;
+    box-shadow: 0 6px 15px rgba(0, 86, 179, 0.2);
+}
+
+.booking-area .btn-danger {
+    background: #dc3545;
+    border: none;
+    color: #ffffff;
+}
+
+.booking-area .btn-danger:hover {
+    background: #c82333;
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.2);
+}
+
+/* Sidebar (Ringkasan Paket) */
+.booking-area .sidebar-wrap {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.08);
+    transition: all 0.3s ease;
+}
+
+.booking-area .sidebar-wrap:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 86, 179, 0.12);
+    border-color: #0056b3;
+}
+
+.booking-area .sidebar-wrap .card {
+    border: none;
+    box-shadow: none;
+}
+
+.booking-area .sidebar-wrap .card-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.booking-area .sidebar-wrap .card-body {
+    padding: 20px;
+}
+
+.booking-area .sidebar-wrap h4 {
+    color: #2d3748;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.booking-area .sidebar-wrap img {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 86, 179, 0.1);
+    transition: all 0.3s ease;
+}
+
+.booking-area .sidebar-wrap img:hover {
+    transform: scale(1.02);
+}
+
+.booking-area .sidebar-wrap p {
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.booking-area .sidebar-wrap p i {
+    color: #0056b3;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.booking-area .sidebar-wrap .border-top {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.booking-area .sidebar-wrap .d-flex {
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.booking-area .sidebar-wrap .fw-bold {
+    color: #2d3748;
+}
+
+/* Responsive Design */
+/* Responsive Design */
+@media (max-width: 992px) {
+    .booking-area {
+        padding: 80px 0 50px;
+    }
+
+    .booking-area .card-header {
+        padding: 15px;
+    }
+
+    .booking-area .card-body {
+        padding: 20px;
+    }
+
+    .booking-area .form-control,
+    .booking-area .form-select {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .booking-area .btn {
+        padding: 12px 25px;
+        font-size: 15px;
+    }
+
+    .booking-area .sidebar-wrap {
+        margin-top: 0;
+        position: sticky;
+        top: 90px;
+    }
+}
+
+@media (max-width: 576px) {
+    .booking-area .col-8,
+    .booking-area .col-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .booking-area .sidebar-wrap {
+        margin-top: 20px;
+        position: static;
+    }
+
+    .booking-area {
+        padding: 60px 0 40px;
+    }
+
+    .booking-area .card-header h5 {
+        font-size: 1.2rem;
+    }
+
+    .booking-area .form-label {
+        font-size: 14px;
+    }
+
+    .booking-area .sidebar-wrap h4 {
+        font-size: 1.4rem;
+    }
+
+    .booking-area .sidebar-wrap img {
+        max-width: 60px;
+        max-height: 60px;
+    }
+
+    .booking-area .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-area .col-8,
+    .booking-area .col-4,
+    .booking-area .col-md-8,
+    .booking-area .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .booking-area .sidebar-wrap {
+        margin-top: 20px;
+        position: static;
+    }
+}
+
