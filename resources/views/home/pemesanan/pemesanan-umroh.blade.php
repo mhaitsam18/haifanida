@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/form-pemesanan.css') }}">
+@endsection
+
 @section('content')
 @php
     use Carbon\Carbon;
@@ -25,76 +29,90 @@
 
 <div class="booking-area pt-100 pb-70">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
+        <div class="row align-items-start">
+            <!-- Left Column: Data Pemesan, Pemesanan Kamar, Pemesanan Ekstra -->
+            <div class="col-8 col-md-8 col-lg-8">
                 <form method="POST" action="{{ route('pemesan.store') }}" id="formPemesanan">
                     @csrf
                     <input type="hidden" name="paket_id" value="{{ $paket->id }}">
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
-                    {{-- <input type="hidden" name="jumlah_orang" value="0"> --}}
                     <input type="hidden" name="tanggal_pesan" value="<?php echo htmlspecialchars($tanggalPemesanan); ?>">
-
-                    <!-- Form Jemaah -->
+                    <!-- Card 1: Data Pemesan -->
                     <div class="card mb-4">
                         <div class="card-header bg-light">
                             <h5 class="m-0"><i class='bx bx-user-circle'></i> Data Pemesan</h5>
                         </div>
                         <div class="card-body">
-
-                            <!-- Checkbox apakah jemaah -->
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="isJemaah" name="is_jemaah" onchange="fillDataFromMember()">
-                                <label class="form-check-label" for="isJemaah">
-                                    Apakah Anda Jemaah?
-                                </label>
-                            </div>
-
-                            <!-- Form Input -->
+                            <!-- Form Input: Personal Info -->
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Pemesan</label>
-                                <input type="text" class="form-control" id="nama" name="nama"
-                                    value="{{ old('nama', $user->name ?? '') }}" required>
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama', $user->name ?? '') }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Pemesan</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ old('email', $user->email ?? '') }}" required>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email ?? '') }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="telepon" class="form-label">Nomor Telepon</label>
-                                <input type="text" class="form-control" id="telepon" name="telepon"
-                                    value="{{ old('telepon', $user->phone_number ?? '') }}" required>
+                                <input type="text" class="form-control" id="telepon" name="telepon" value="{{ old('telepon', $user->phone_number ?? '') }}" required>
                             </div>
+
+                            <!-- Separator Line -->
+                            <hr class="my-4" style="border-top: 1px solid #e2e8f0;">
 
                             <!-- Jumlah Jemaah -->
                             <div class="mb-4">
                                 <label for="jumlah_orang" class="form-label">Jumlah Jemaah<span class="text-danger">*</span></label>
                                 <input type="number" min="1" class="form-control" id="jumlah_orang" name="jumlah_orang" required>
                             </div>
-                            <hr>
-                            <h5>Pemesanan Kamar</h5>
-                            <div id="kamar-container"></div>
-                            <button type="button" class="btn btn-outline-primary mb-3" onclick="addKamarCard()">+ Tambah Kamar</button>
 
-                            <h5>Pemesanan Ekstra</h5>
-                            <div id="ekstra-container"></div>
-                            <button type="button" class="btn btn-outline-primary mb-3" onclick="addEkstraCard()">+ Tambah Ekstra</button>
-                            <div class="text-end">
-                                <a href="/paket/{{ $paket->id }}" class="btn btn-sm btn-secondary mb-1">
-                                    <i data-feather="arrow-left" class="icon-sm me-2"></i>Kembali
-                                </a>
-                                <button type="submit" class="btn default-btn btn-bg-two border-radius-5">
-                                    <i class='bx bx-check-circle'></i> Lanjutkan
-                                </button>
+                            <!-- Checkbox apakah jemaah -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="isJemaah" name="is_jemaah" onchange="fillDataFromMember()">
+                                <label class="form-check-label" for="isJemaah">
+                                    Pemesan adalah Jemaah?
+                                </label>
                             </div>
                         </div>
-                        {{-- aku mau menambahkan card pemesanan kamar dan pemesanan ekstra dibawah ini --}}
+                    </div>
+
+                    <!-- Card 2: Pemesanan Kamar -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="m-0"><i class='bx bx-building'></i> Pemesanan Kamar</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="kamar-container"></div>
+                            <button type="button" class="btn btn-outline-primary mb-3" onclick="addKamarCard()">+ Tambah Kamar</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Pemesanan Ekstra -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="m-0"><i class='bx bx-plus-circle'></i> Pemesanan Ekstra</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="ekstra-container"></div>
+                            <button type="button" class="btn btn-outline-primary mb-3" onclick="addEkstraCard()">+ Tambah Ekstra</button>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="text-end">
+                        <a href="/paket/{{ $paket->id }}" class="btn default-btn btn-bg-two border-radius-5 btn-back">
+                            <i data-feather="arrow-left" class="icon-sm me-2"></i>Kembali
+                        </a>
+                        <button type="submit" class="btn default-btn btn-bg-two border-radius-5 btn-continue">
+                            <i class='bx bx-check-circle'></i> Lanjutkan
+                        </button>
                     </div>
                 </form>
+            </div>
 
-            <!-- Sidebar: Ringkasan Paket -->
-            <div class="col-lg-4">
-                <div class="sidebar-wrap sticky-top" style="top: 20px;">
+            <!-- Right Column: Ringkasan Paket -->
+            <div class="col-4 col-md-4 col-lg-4">
+                <div class="sidebar-wrap" style="position: sticky; top: 90px; z-index: 10;">
                     <div class="card mb-4">
                         <div class="card-header bg-light">
                             <h5 class="m-0"><i class='bx bx-package'></i> Ringkasan Paket</h5>
