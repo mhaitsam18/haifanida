@@ -1,0 +1,110 @@
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa !important;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    transition: background-color 0.2s ease;
+}
+
+.table-responsive {
+    border-radius: 0 0 0.5rem 0.5rem;
+    overflow: hidden;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+.btn-sm {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    transition: all 0.2s ease;
+    border-radius: 0.25rem;
+}
+
+.btn-sm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-outline-primary, .btn-outline-warning, .btn-outline-danger, .btn-outline-info {
+    border-width: 2px;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.alert-info {
+    background-color: #e7f4ff;
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.text-info {
+    color: #0dcaf0 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.img-fluid {
+    border-radius: 0.5rem;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.text-primary {
+    color: #4e73df !important;
+}
+
+.text-secondary {
+    color: #6c757d !important;
+}
+
+.btn-primary, .btn-outline-secondary, .btn-success, .btn-outline-info {
+    border-radius: 0.25rem;
+}
