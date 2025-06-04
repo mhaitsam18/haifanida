@@ -1,0 +1,296 @@
+/* General styles */
+.container {
+    max-width: 1400px;
+    padding: 15px;
+}
+
+/* Card styles */
+.card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.card-body {
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+}
+
+/* Logo and header section */
+.noble-ui-logo img {
+    max-height: 100px;
+    width: auto;
+}
+
+/* Company and customer info section */
+.col-lg-3 {
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+/* Invoice header section - Repositioned */
+.container-fluid.d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.col-lg-3.pe-0 {
+    margin-bottom: 2rem;
+    width: 100%;
+    padding-right: 15px !important;
+}
+
+.col-lg-3.pe-0 h4.fw-bolder {
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+.col-lg-3.pe-0 h6,
+.col-lg-3.pe-0 p,
+.col-lg-3.pe-0 h4 {
+    text-align: left;
+}
+
+/* Main table styles */
+.table-responsive {
+    margin-bottom: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    vertical-align: middle;
+    border-color: #dee2e6;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Invoice summary section */
+.col-md-6.ms-auto {
+    margin-top: 20px;
+    width: 50%;
+    float: right;
+    margin-bottom: 2rem;
+}
+
+.col-md-6.ms-auto .table {
+    margin-top: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.col-md-6.ms-auto .table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.col-md-6.ms-auto .table tr:last-child td {
+    border-bottom: none;
+    font-weight: 700;
+    background-color: #f8f9fa;
+}
+
+.col-md-6.ms-auto .table td:first-child {
+    width: 60%;
+}
+
+.col-md-6.ms-auto .table td.text-end {
+    width: 40%;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden; /* Prevent horizontal scroll of container */
+    }
+
+    .card {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        overflow-x: hidden; /* Prevent horizontal scroll of card */
+    }
+
+    .card-body {
+        padding: 15px;
+        border: none;
+        overflow-x: hidden; /* Prevent horizontal scroll of card body */
+    }
+
+    /* Company info mobile adjustments */
+    .container-fluid.d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    .col-lg-3 {
+        width: 100%;
+        padding: 0 15px;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    /* Only table container should scroll */
+    .container-fluid.mt-5.d-flex.justify-content-center.w-100 {
+        overflow-x: hidden; /* Container shouldn't scroll */
+    }
+
+    .table-responsive {
+        margin: 15px 0;
+        overflow-x: auto; /* Only table scrolls */
+        border: none;
+        border-top: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        min-width: 800px;
+        white-space: nowrap;
+    }
+
+    /* Summary table - prevent scroll */
+    .col-md-6.ms-auto {
+        width: 100%;
+        float: none;
+        margin: 0;
+        padding: 15px;
+        background: #fff;
+        overflow-x: hidden;
+    }
+
+    .col-md-6.ms-auto .table {
+        min-width: 0;
+        width: 100%;
+        white-space: normal;
+    }
+
+    .col-md-6.ms-auto .table td {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        white-space: normal;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .col-md-6.ms-auto .table tr:last-child td {
+        background-color: #f8f9fa;
+        font-weight: 700;
+        border-bottom: none;
+    }
+
+    .col-md-6.ms-auto .table td:first-child {
+        width: 60%;
+        padding-right: 10px;
+    }
+
+    .col-md-6.ms-auto .table td.text-end {
+        width: 40%;
+    }
+
+    /* Button container */
+    .container-fluid.w-100 {
+        padding: 15px;
+        margin-top: 0;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Smaller mobile devices */
+@media screen and (max-width: 576px) {
+    .card-body {
+        padding: 10px 0;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px 6px;
+        font-size: 0.8rem;
+    }
+
+    .col-md-6.ms-auto .table td {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .col-lg-3.pe-0 {
+        padding: 0 10px;
+    }
+
+    .col-lg-3.pe-0 h4.fw-bolder {
+        font-size: 1.3rem;
+    }
+
+    .col-lg-3.pe-0 h4.fw-normal {
+        font-size: 1.2rem;
+    }
+
+    .col-lg-3.pe-0 h6 {
+        font-size: 0.9rem;
+    }
+}
+
+/* Fix sticky header for iOS */
+@supports (-webkit-touch-callout: none) {
+    .card-header {
+        position: -webkit-sticky;
+    }
+}
+
+/* Print styles */
+@media print {
+    .container {
+        max-width: none;
+        width: 100%;
+        padding: 0;
+    }
+    
+    .card {
+        border: none;
+        box-shadow: none;
+    }
+    
+    .btn {
+        display: none;
+    }
+    
+    .table {
+        border-collapse: collapse;
+    }
+    
+    .table th,
+    .table td {
+        border: 1px solid #dee2e6;
+    }
+    
+    .table-responsive {
+        overflow: visible;
+    }
+}
