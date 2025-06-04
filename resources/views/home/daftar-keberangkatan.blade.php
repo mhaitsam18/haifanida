@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
+@section('style')
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/daftar-keberangkatan.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/daftar-keberangkatan-mobile.css') }}">
+@endsection
+
 @section('content')
+
+
     <div class="section-title text-center">
         <h2>Daftar Keberangkatan</h2>
         <h6>Daftar perjalanan yang akan datang</h6>
