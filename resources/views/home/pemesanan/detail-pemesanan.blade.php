@@ -25,10 +25,25 @@
             -->
             <!-- MODIFIED -->
             <a href="{{ $pemesanan->paket->tanggal_selesai >= Carbon::now() ? route('member.daftar-keberangkatan') : route('member.riwayat-perjalanan') }}" 
-               class="btn btn-outline-secondary px-4 py-2">
+               class="btn btn-outline-secondary px-4 py-2 btn-kembali">
                 <i class="fas fa-arrow-left me-2"></i>Kembali
             </a>
             <!-- END MODIFIED -->
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="alert alert-contact mb-4">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-headset contact-icon"></i>
+            <div class="flex-grow-1">
+                <p class="contact-text">Butuh bantuan atau ingin mengubah pesanan Anda?</p>
+                <p class="mb-2 text-muted small">Hubungi admin kami untuk bantuan cepat dan mudah</p>
+                <a href="https://wa.me/6282299198002?text=Halo%20Admin,%20saya%20ingin%20menanyakan%20atau%20mengubah%20pemesanan%20(ID:%20{{ $pemesanan->id }})" 
+                   class="btn btn-contact" target="_blank">
+                    <i class="fab fa-whatsapp me-2"></i>Hubungi Admin
+                </a>
+            </div>
         </div>
     </div>
 
@@ -73,10 +88,10 @@
                                         <span class="fw-bold">Jumlah Pesanan:</span> 
                                         <span class="ms-2">{{ $pemesanan->jumlah_orang }} pax</span>
                                     </li>
-                                    <li class="mb-2">
+                                    {{-- <li class="mb-2">
                                         <span class="fw-bold">Total Harga:</span> 
                                         <span class="ms-2 text-success">Rp {{ number_format($pemesanan->harga, 2, ',', '.') }}</span>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -103,11 +118,11 @@
                             </div>
                             <div class="d-flex gap-2">
                                 <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" 
-                                   class="btn btn-sm btn-primary px-3 py-2">
+                                   class="btn btn-primary">
                                     <i class="fas fa-users me-2"></i>Data Jema'ah
                                 </a>
                                 <a href="{{ route('member.tagihan', $pemesanan->id) }}" 
-                                   class="btn btn-sm btn-success px-3 py-2">
+                                   class="btn btn-success">
                                     <i class="fas fa-file-invoice me-2"></i>Lihat Tagihan
                                 </a>
                             </div>
@@ -116,81 +131,15 @@
                 </div>
             </div>
 
-                        <!-- Pemesanan Kamar Section -->
-            <!-- ORIGINAL -->
-            <!--
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0 fw-bold"><i data-feather="home" class="icon-sm me-2"></i>Pemesanan Kamar</h5>
-                    <a href="/pemesanan-kamar" class="btn btn-primary btn-sm">
-                        <i data-feather="plus" class="icon-sm me-1"></i>
-                        Tambah Kamar
-                    </a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped align-middle">
-                        <thead class="bg-light">
-                            <tr>
-                                <th width="5%">#</th>
-                                <th>Tipe Kamar</th>
-                                <th>Jumlah Pengisi</th>
-                                <th>Harga</th>
-                                <th>Keterangan</th>
-                                <th width="20%">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($pemesanan->pemesananKamars->count() > 0)
-                                @foreach ($pemesanan->pemesananKamars as $kamar)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $kamar->tipe_kamar }}</td>
-                                        <td>{{ $kamar->jumlah_pengisi }}</td>
-                                        <td>Rp {{ number_format($kamar->harga, 2, ',', '.') }}</td>
-                                        <td>{{ $kamar->keterangan ?: '-' }}</td>
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <a href="/data-permintaan" class="btn btn-outline-primary btn-sm me-2" title="Lihat Detail">
-                                                    <i data-feather="eye" class="icon-xs"></i>
-                                                    Lihat
-                                                </a>
-                                                <a href="#" class="btn btn-outline-warning btn-sm me-2" title="Edit Data">
-                                                    <i data-feather="edit" class="icon-xs"></i>
-                                                    Edit
-                                                </a>
-                                                <form action="/hapus-pemesanan-kamar/{{ $kamar->id }}" method="post" class="d-inline">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm tombol-hapus" title="Hapus Data">
-                                                        <i data-feather="trash-2" class="icon-xs"></i>
-                                                        Hapus
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">
-                                        <i data-feather="info" class="icon-md mb-2"></i>
-                                        <p class="mb-0">Belum ada pemesanan kamar</p>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            -->
+            <!-- Pemesanan Kamar Section -->
             <!-- MODIFIED -->
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-home me-2"></i>Pemesanan Kamar</h5>
-                    <a href="/pemesanan-kamar" 
+                    {{-- <a href="/pemesanan-kamar" 
                        class="btn btn-sm btn-primary px-3 py-2">
                         <i class="fas fa-plus me-2"></i>Tambah Kamar
-                    </a>
+                    </a> --}}
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped mb-0">
@@ -200,8 +149,8 @@
                                 <th class="px-4 py-3">Tipe Kamar</th>
                                 <th class="px-4 py-3">Jumlah Pengisi</th>
                                 <th class="px-4 py-3">Harga</th>
-                                <th class="px-4 py-3">Keterangan</th>
-                                <th class="px-4 py-3" width="20%">Aksi</th>
+                                {{-- <th class="px-4 py-3">Keterangan</th> --}}
+                                {{-- <th class="px-4 py-3" width="20%">Aksi</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -212,8 +161,8 @@
                                         <td class="px-4">{{ $kamar->tipe_kamar }}</td>
                                         <td class="px-4">{{ $kamar->jumlah_pengisi }}</td>
                                         <td class="px-4">Rp {{ number_format($kamar->harga, 2, ',', '.') }}</td>
-                                        <td class="px-4">{{ $kamar->keterangan ?: '-' }}</td>
-                                        <td class="px-4">
+                                        {{-- <td class="px-4">{{ $kamar->keterangan ?: '-' }}</td> --}}
+                                        {{-- <td class="px-4">
                                             <div class="d-flex gap-2">
                                                 <a href="/data-permintaan" 
                                                    class="btn btn-sm btn-outline-primary btn-icon-only" title="Permintaan Kamar">
@@ -235,7 +184,7 @@
                                                     </button>
                                                 </form>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             @else
@@ -256,10 +205,10 @@
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-plus-circle me-2"></i>Pemesanan Ekstra</h5>
-                    <a href="{{ route('pemesanan-ekstra.create', $pemesanan->id) }}" 
+                    {{-- <a href="{{ route('pemesanan-ekstra.create', $pemesanan->id) }}" 
                        class="btn btn-sm btn-primary px-3 py-2">
                         <i class="fas fa-plus me-2"></i>Tambah Ekstra
-                    </a>
+                    </a> --}}
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped mb-0">
@@ -269,8 +218,8 @@
                                 <th class="px-4 py-3">Ekstra</th>
                                 <th class="px-4 py-3">Jumlah</th>
                                 <th class="px-4 py-3">Total Harga</th>
-                                <th class="px-4 py-3">Keterangan</th>
-                                <th class="px-4 py-3" width="20%">Aksi</th>
+                                {{-- <th class="px-4 py-3">Keterangan</th>
+                                <th class="px-4 py-3" width="20%">Aksi</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -280,7 +229,7 @@
                                     <td class="px-4">{{ $pemesananEkstra->ekstra }}</td>
                                     <td class="px-4">{{ $pemesananEkstra->jumlah }}</td>
                                     <td class="px-4">Rp {{ number_format($pemesananEkstra->total_harga, 2, ',', '.') }}</td>
-                                    <td class="px-4">{{ $pemesananEkstra->keterangan ?? '-' }}</td>
+                                    {{-- <td class="px-4">{{ $pemesananEkstra->keterangan ?? '-' }}</td>
                                     <td class="px-4">
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('pemesanan-ekstra.edit', $pemesananEkstra) }}" 
@@ -299,7 +248,7 @@
                                                 </button>
                                             </form>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @empty
                                 <tr>
@@ -316,10 +265,10 @@
 
             <!-- Pembayaran Section -->
             <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3 pembayaran-header">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-credit-card me-2"></i>Pembayaran</h5>
                     <a href="{{ route('pembayaran.create', $pemesanan->id) }}" 
-                       class="btn btn-sm btn-primary px-3 py-2">
+                       class="btn btn-primary">
                         <i class="fas fa-plus me-2"></i>Tambah Pembayaran
                     </a>
                 </div>
