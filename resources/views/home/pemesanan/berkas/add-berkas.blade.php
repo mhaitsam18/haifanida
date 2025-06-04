@@ -60,7 +60,7 @@ System: Main Form -->
                         <div class="mb-3">
                             <label for="file_path" class="form-label fw-semibold">Unggah File <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                {{-- <span class="input-group-text"></span> --}}
                                 <input type="file" class="form-control @error('file_path') is-invalid @enderror" id="file_path" name="file_path" required accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
                             </div>
                             <small class="text-muted">Format file yang didukung: PDF, JPG, PNG, DOC, DOCX. Ukuran maksimal: 2MB</small>
