@@ -272,3 +272,119 @@
         </div>
     </div>
 @endsection
+
+<style>
+.faq-accordion .accordion-item {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.faq-accordion .accordion-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.faq-accordion .accordion-content {
+    display: none;
+    padding: 20px;
+    background: #ffffff;
+    border-top: 1px solid #e9ecef;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.faq-accordion .accordion-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Mengatur teks dan ikon agar terpisah */
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: none;
+    position: relative;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.faq-accordion .accordion-title:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+    color: #0071dc;
+}
+
+.faq-accordion .accordion-title i {
+    font-size: 20px;
+    color: #0071dc;
+    transition: transform 0.3s ease, color 0.3s ease;
+    margin-left: 10px; /* Jarak dari teks */
+    align-self: flex-end; /* Memindahkan ikon ke bawah secara vertikal */
+}
+
+.faq-accordion .accordion-title.active {
+    /* background: #0071dc; */
+    color: #ffffff;
+    border-radius: 8px 8px 0 0;
+}
+
+.faq-accordion .accordion-title.active i {
+    transform: rotate(45deg);
+    color: #ffffff;
+}
+
+.faq-accordion .accordion-content p {
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    .faq-accordion .accordion-title {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
+
+    .faq-accordion .accordion-content {
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .faq-accordion .accordion-title i {
+        font-size: 18px;
+    }
+}
+</style>
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        // Close all accordion contents initially
+        $('.accordion-content').hide();
+        
+        $('.accordion-title').click(function(e) {
+            e.preventDefault();
+            
+            let $this = $(this);
+            let $content = $this.next('.accordion-content');
+            let $icon = $this.find('i');
+            
+            // Close all other accordions
+            $('.accordion-content').not($content).slideUp(300);
+            $('.accordion-title').not($this).removeClass('active');
+            $('.accordion-title').not($this).find('i').removeClass('bx-minus').addClass('bx-plus');
+            
+            // Toggle current accordion
+            $content.slideToggle(300);
+            $this.toggleClass('active');
+            
+            if($this.hasClass('active')) {
+                $icon.removeClass('bx-plus').addClass('bx-minus');
+            } else {
+                $icon.removeClass('bx-minus').addClass('bx-plus');
+            }
+        });
+    });
+</script>
+@endsection

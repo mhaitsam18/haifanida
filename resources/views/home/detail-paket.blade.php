@@ -127,9 +127,15 @@
                                 </div>
                                 <div class="price-unit">per orang</div>
                             </div>
-                            <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="btn btn-order">
-                                <i class='bx bx-cart' style="margin-right: 8px;"></i>Pesan Sekarang
-                            </a>
+                            @auth
+                                <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="btn btn-order">
+                                    <i class='bx bx-cart' style="margin-right: 8px;"></i>Pesan Sekarang
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-order">
+                                    <i class='bx bx-cart' style="margin-right: 8px;"></i>Login untuk Pesan
+                                </a>
+                            @endauth
                             
                             <!-- WhatsApp Share Button -->
                             <div class="text-center">
