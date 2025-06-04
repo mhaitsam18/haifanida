@@ -1,4 +1,9 @@
 @extends('layouts.main')
+
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/tagihan.css') }}">
+@endsection
+
 @section('content')
     @php
         use Carbon\Carbon;
@@ -124,10 +129,10 @@
                         </div>
                     </div>
                     <div class="container-fluid w-100">
-                        <a href="javascript:;" class="btn btn-haifa float-end mt-4 ms-2"><i data-feather="send"
+                        {{-- <a href="javascript:;" class="btn btn-haifa float-end mt-4 ms-2"><i data-feather="send"
                                 class="me-3 icon-md"></i>Kirim Tagihan</a>
                         <a href="javascript:;" class="btn btn-outline-haifa float-end mt-4 ms-2"><i data-feather="printer"
-                                class="me-2 icon-md"></i>Cetak</a>
+                                class="me-2 icon-md"></i>Cetak</a> --}}
                         <a href="{{ route('pemesanan.detail', $pemesanan->id) }}" class="btn btn-secondary float-end mt-4 ms-2"><i
                                 data-feather="arrow-left" class="icon-sm me-2"></i>Kembali</a>
                     </div>
