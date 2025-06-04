@@ -150,25 +150,42 @@
 </div>
 
 <script>
-    function fillDataFromMember() {
-        const isChecked = document.getElementById('isJemaah').checked;
+    // Simpan data user asli saat halaman dimuat
+let originalUserData = {
+    nama: '',
+    email: '',
+    telepon: ''
+};
 
-        if (isChecked) {
-            @if(isset($member))
-                document.getElementById('nama').value = @json($member->nama_lengkap);
-                document.getElementById('email').value = @json($member->email);
-                document.getElementById('telepon').value = @json($member->nomor_telepon);
-            @else
-                document.getElementById('nama').value = @json($user->name);
-                document.getElementById('email').value = @json($user->email);
-                document.getElementById('telepon').value = @json($user->phone_number);
-            @endif
-        } else {
-            document.getElementById('nama').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('telepon').value = '';
-        }
+// Inisialisasi data asli saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    // Simpan data user asli
+    originalUserData.nama = document.getElementById('nama').value;
+    originalUserData.email = document.getElementById('email').value;
+    originalUserData.telepon = document.getElementById('telepon').value;
+});
+
+function fillDataFromMember() {
+    const isChecked = document.getElementById('isJemaah').checked;
+
+    if (isChecked) {
+        // Jika checkbox dicentang, isi dengan data member atau user
+        @if(isset($member))
+            document.getElementById('nama').value = @json($member->nama_lengkap);
+            document.getElementById('email').value = @json($member->email);
+            document.getElementById('telepon').value = @json($member->nomor_telepon);
+        @else
+            document.getElementById('nama').value = @json($user->name);
+            document.getElementById('email').value = @json($user->email);
+            document.getElementById('telepon').value = @json($user->phone_number);
+        @endif
+    } else {
+        // Jika checkbox tidak dicentang, kembalikan ke data user asli
+        document.getElementById('nama').value = originalUserData.nama;
+        document.getElementById('email').value = originalUserData.email;
+        document.getElementById('telepon').value = originalUserData.telepon;
     }
+}
     let kamarIndex = 0;
     let ekstraIndex = 0;
 
