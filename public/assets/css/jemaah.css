@@ -1,4 +1,4 @@
-    .container {
+.container {
         max-width: 1400px;
     }
 
@@ -66,3 +66,173 @@
     .pagination .page-link {
         border-radius: 0.25rem; /* Square pagination */
     }
+
+    /* Enhanced Responsive Styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0;
+        width: 100%;
+    }
+
+    .row {
+        margin: 0;
+    }
+
+    /* Header fixes */
+    .row.mb-4 {
+        padding: 25px 15px 15px;
+        margin-bottom: 0 !important;
+    }
+
+    .col-md-6 {
+        padding: 0;
+    }
+
+    h2.fw-bold.text-primary {
+        font-size: 1.5rem;
+        margin-bottom: 8px !important;
+        padding-top: 10px;
+    }
+
+    .text-end {
+        text-align: left !important;
+        margin-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .card {
+        margin: 0;
+        border-radius: 0;
+    }
+
+    /* Better table scrolling */
+    .table-responsive {
+        margin: 0;
+        border-radius: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+        width: 100vw;
+    }
+
+    .table {
+        margin-bottom: 0;
+        min-width: 800px;
+    }
+
+    .table th, .table td {
+        font-size: 0.85rem;
+        padding: 12px 8px;
+        white-space: nowrap;
+        min-width: 100px;
+    }
+
+    /* Column specific widths */
+    .table th:first-child,
+    .table td:first-child {
+        min-width: 50px;
+        width: 5%;
+    }
+
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+        min-width: 150px;
+        width: 20%;
+    }
+
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+        min-width: 150px;
+        width: 20%;
+    }
+
+    .table th:nth-child(4),
+    .table td:nth-child(4) {
+        min-width: 120px;
+        width: 15%;
+    }
+
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+        min-width: 100px;
+        width: 15%;
+    }
+
+    .table th:last-child,
+    .table td:last-child {
+        min-width: 140px;
+        width: 25%;
+    }
+
+    /* Fix card header */
+    .card-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #f8f9fa;
+        padding: 15px;
+    }
+
+    /* Action buttons in table */
+    .d-flex.gap-2 {
+        flex-wrap: nowrap;
+        gap: 5px;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        height: 32px;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Top action buttons */
+    .btn-primary,
+    .btn-outline-secondary {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    /* Image thumbnail adjustments */
+    .img-thumbnail {
+        max-width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
+
+    /* Pagination adjustments */
+    .pagination {
+        justify-content: center;
+        margin: 15px 0;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .container {
+        padding: 0;
+    }
+
+    h2.fw-bold.text-primary {
+        font-size: 1.3rem;
+    }
+
+    .table th, .table td {
+        font-size: 0.8rem;
+        padding: 10px 6px;
+    }
+
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+        height: 30px;
+    }
+}
+
+/* Fix sticky header for iOS */
+@supports (-webkit-touch-callout: none) {
+    .card-header {
+        position: -webkit-sticky;
+    }
+}
