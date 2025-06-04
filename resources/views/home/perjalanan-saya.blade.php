@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/perjalanan-saya.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/perjalanan-saya-mobile.css') }}">
+@endsection
+
 @section('content')
+
+
     <div class="section-title text-center">
         <h2>Riwayat Perjalanan</h2>
         <h6>Daftar perjalanan yang telah selesai</h6>
