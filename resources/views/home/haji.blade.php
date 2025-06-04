@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/coming-soon.css') }}">
+@endsection
+
 @section('content')
     @php
         use Carbon\Carbon;
@@ -24,98 +28,24 @@
         </div>
     </div>
 
-    <div class="content-area pt-30 pb-70">
+    <div class="content-area pt-30 pb-70" style="background-color: #ffffff;">
         <div class="container">
             <div class="section-title text-center">
-                <span class="sp-color2">Paket Pilihan</span>
-                <h2>Pilih Paket Haji Anda</h2>
+                {{-- <span class="sp-color2">Segera Hadir</span>
+                <h2>Paket Haji Anda</h2> --}}
             </div>
             <div class="row pt-45">
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <a href="blog-details.html">
-                                <img src="/assets-techex-demo/images/blog/blog-img1.jpg" alt="Blog Images" loading="lazy">
-                            </a>
-                            <div class="blog-tag">
-                                <h3>11</h3>
-                                <span>Dec</span>
+                <div class="col-lg-12 col-md-12">
+                    <div class="coming-soon-content text-center">
+                        <h1 class="coming-soon-title">Coming Soon!</h1>
+                        <p>Kami sedang mempersiapkan pengalaman terbaik untuk perjalanan Haji Anda. Tunggu kabar terbaru dari kami!</p>
+                        <div class="coming-soon-decoration">
+                            <div class="particle-effect"></div>
+                            <div class="icon-wrapper">
+                                <i class='bx bx-time-five'></i>
                             </div>
                         </div>
-                        <div class="content">
-                            <ul>
-                                <li>
-                                    <a href="blog-1.html"><i class='bx bxs-user'></i> By Admin</a>
-                                </li>
-                                <li>
-                                    <a href="blog-1.html"><i class='bx bx-purchase-tag-alt'></i>Business</a>
-                                </li>
-                            </ul>
-                            <h3>
-                                <a href="blog-details.html">Product Idea Solution for New Generation</a>
-                            </h3>
-                            <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                auctor, nisi elit consequat ipsum.</p>
-                            <a href="blog-details.html" class="read-btn">Read More <i class='bx bx-chevron-right'></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <a href="blog-details.html">
-                                <img src="/assets-techex-demo/images/blog/blog-img2.jpg" alt="Blog Images" loading="lazy">
-                            </a>
-                            <div class="blog-tag">
-                                <h3>14</h3>
-                                <span>Dec</span>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <ul>
-                                <li>
-                                    <a href="blog-1.html"><i class='bx bxs-user'></i> By Admin</a>
-                                </li>
-                                <li>
-                                    <a href="blog-1.html"><i class='bx bx-purchase-tag-alt'></i>Invention</a>
-                                </li>
-                            </ul>
-                            <h3>
-                                <a href="blog-details.html">New Device Invention for Digital Platform</a>
-                            </h3>
-                            <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                auctor, nisi elit consequat ipsum.</p>
-                            <a href="blog-details.html" class="read-btn">Read More <i class='bx bx-chevron-right'></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3">
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <a href="blog-details.html">
-                                <img src="/assets-techex-demo/images/blog/blog-img3.jpg" alt="Blog Images" loading="lazy">
-                            </a>
-                            <div class="blog-tag">
-                                <h3>17</h3>
-                                <span>Dec</span>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <ul>
-                                <li>
-                                    <a href="blog-1.html"><i class='bx bxs-user'></i> By Admin</a>
-                                </li>
-                                <li>
-                                    <a href="blog-1.html"><i class='bx bx-purchase-tag-alt'></i>Achive</a>
-                                </li>
-                            </ul>
-                            <h3>
-                                <a href="blog-details.html">Business Strategy Make His Goal Acheive </a>
-                            </h3>
-                            <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                auctor, nisi elit consequat ipsum.</p>
-                            <a href="blog-details.html" class="read-btn">Read More <i class='bx bx-chevron-right'></i></a>
-                        </div>
+                        {{-- <a href="/home" class="btn-order mt-4">Kembali ke Beranda <i class='bx bx-chevron-right'></i></a> --}}
                     </div>
                 </div>
             </div>
