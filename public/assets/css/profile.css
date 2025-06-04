@@ -29,3 +29,164 @@
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
     color: #0056b3;
 }
+
+/* Container spacing */
+.container.py-5 {
+    margin-top: 4rem;
+    padding-top: 2rem !important;
+}
+
+/* Card styling */
+.card {
+    margin-bottom: 2rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Form fields and display styling */
+.form-control-lg, 
+.form-select-lg, 
+.form-floating > .form-control,
+.form-floating > .form-select {
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.form-floating > label {
+    padding: 0.75rem 1rem;
+}
+
+/* Button styling */
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+}
+
+/* Button container for mobile */
+@media (max-width: 768px) {
+    .container.py-5 {
+        margin-top: 5rem;
+    }
+
+    .mt-4.d-flex.gap-3 {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+
+    .btn-lg {
+        width: 100%;
+        margin: 0.25rem 0;
+        padding: 0.7rem 1rem !important;
+        font-size: 0.95rem;
+        min-height: 45px;
+    }
+
+    .card-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .card-body {
+        padding: 1.5rem 1rem;
+    }
+
+    .form-control-lg {
+        padding: 0.8rem !important;
+    }
+
+    .form-control-lg, 
+    .form-select-lg,
+    .form-floating > .form-control,
+    .form-floating > .form-select {
+        min-height: 42px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .form-floating > label {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .bg-light.rounded-3 {
+        padding: 0.75rem !important;
+        font-size: 0.95rem;
+    }
+
+    .form-label.text-muted.small {
+        font-size: 0.8rem;
+        margin-bottom: 0.3rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 576px) {
+    .container.py-5 {
+        margin-top: 6rem;
+        padding: 0 0.5rem !important;
+    }
+
+    .card-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-lg {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+
+    .mt-4.d-flex.gap-3 {
+        gap: 0.5rem !important;
+    }
+
+    .form-control-lg, 
+    .form-select-lg,
+    .form-floating > .form-control,
+    .form-floating > .form-select {
+        min-height: 40px;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    .form-floating > label {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    .bg-light.rounded-3 {
+        padding: 0.6rem !important;
+        font-size: 0.9rem;
+    }
+
+    .form-label.text-muted.small {
+        font-size: 0.75rem;
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Profile edit spacing */
+.col-lg-4 {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 992px) {
+    .col-lg-4 {
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-lg-4 {
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #eee;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-lg-4 {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+    }
+}
