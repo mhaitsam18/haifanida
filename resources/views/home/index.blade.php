@@ -1,4 +1,3 @@
-INDEX
 @extends('layouts.main')
 @section('style')
     <style>
