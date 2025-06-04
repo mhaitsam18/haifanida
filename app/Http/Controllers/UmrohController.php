@@ -310,25 +310,25 @@ class UmrohController extends Controller
 
       protected function updateJumlahOrangPemesanan($pemesananId)
     {
-        try {
-            $pemesanan = Pemesanan::findOrFail($pemesananId);
-            $jumlahJemaahAktual = Jemaah::where('pemesanan_id', $pemesananId)->count();
+        // try {
+        //     $pemesanan = Pemesanan::findOrFail($pemesananId);
+        //     $jumlahJemaahAktual = Jemaah::where('pemesanan_id', $pemesananId)->count();
 
-            $pemesanan->jumlah_orang = $jumlahJemaahAktual;
-            // Anda mungkin juga ingin mengkalkulasi ulang total_harga di sini
-            // $paket = Paket::find($pemesanan->paket_id);
-            // if ($paket) {
-            //     $pemesanan->total_harga = $paket->harga * $jumlahJemaahAktual;
-            // }
-            $pemesanan->save();
+        //     $pemesanan->jumlah_orang = $jumlahJemaahAktual;
+        //     // Anda mungkin juga ingin mengkalkulasi ulang total_harga di sini
+        //     // $paket = Paket::find($pemesanan->paket_id);
+        //     // if ($paket) {
+        //     //     $pemesanan->total_harga = $paket->harga * $jumlahJemaahAktual;
+        //     // }
+        //     $pemesanan->save();
 
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            // Handle jika pemesanan tidak ditemukan, mungkin log error
-            // Log::error("Pemesanan dengan ID: {$pemesananId} tidak ditemukan saat update jumlah orang.");
-        } catch (\Exception $e) {
-            // Handle error lainnya
-            // Log::error("Gagal update jumlah orang untuk pemesanan ID: {$pemesananId}. Error: " . $e->getMessage());
-        }
+        // } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        //     // Handle jika pemesanan tidak ditemukan, mungkin log error
+        //     // Log::error("Pemesanan dengan ID: {$pemesananId} tidak ditemukan saat update jumlah orang.");
+        // } catch (\Exception $e) {
+        //     // Handle error lainnya
+        //     // Log::error("Gagal update jumlah orang untuk pemesanan ID: {$pemesananId}. Error: " . $e->getMessage());
+        // }
     }
     
     public function editJemaah($pemesananId, $jemaahId)
