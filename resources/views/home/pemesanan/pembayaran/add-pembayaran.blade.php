@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/pembayaran/add-pembayaran.css') }}">
+@endsection
+
 @section('content')
     <div class="container py-4 mb-5">
         @if (session('error'))
@@ -49,10 +53,15 @@
 
                             <div class="mb-3">
                                 <label for="metode_pembayaran" class="form-label fw-semibold">Metode Pembayaran <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('metode_pembayaran') is-invalid @enderror" 
-                                       id="metode_pembayaran" name="metode_pembayaran" 
-                                       value="{{ old('metode_pembayaran') }}" 
-                                       required placeholder="Masukkan metode pembayaran (QRIS, Transfer Bank, dll)">
+                                <select class="form-select @error('metode_pembayaran') is-invalid @enderror" 
+                                        id="metode_pembayaran" name="metode_pembayaran" required>
+                                    <option value="" selected disabled>Pilih Metode Pembayaran</option>
+                                    <option value="QRIS" @selected(old('metode_pembayaran') == 'QRIS')>QRIS</option>
+                                    <option value="Transfer Bank" @selected(old('metode_pembayaran') == 'Transfer Bank')>Transfer Bank</option>
+                                    <option value="Cash" @selected(old('metode_pembayaran') == 'Cash')>Cash / Tunai</option>
+                                    {{-- <option value="Kartu Kredit" @selected(old('metode_pembayaran') == 'Kartu Kredit')>Kartu Kredit</option>
+                                    <option value="Kartu Debit" @selected(old('metode_pembayaran') == 'Kartu Debit')>Kartu Debit</option> --}}
+                                </select>
                                 @error('metode_pembayaran')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -100,9 +109,9 @@
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
                     <div>
-                        <button type="reset" class="btn btn-light me-2">
+                        {{-- <button type="reset" class="btn btn-light me-2">
                             <i class="fas fa-redo me-1"></i> Reset
-                        </button>
+                        </button> --}}
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-1"></i> Simpan Data
                         </button>
