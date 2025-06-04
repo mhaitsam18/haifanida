@@ -17,7 +17,7 @@
             margin-bottom: 25px;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
             background: linear-gradient(135deg, #0056b3, #00c4cc, #e91e63);
-            /* -webkit-background-clip: text; */
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientShift 5s ease infinite;
             transition: all 0.3s ease;
