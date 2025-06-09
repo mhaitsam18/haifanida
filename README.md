@@ -82,8 +82,3 @@ DATABASE
 - jika belum ada di database -> masukin datanya ke database -> muncul terjadi kesalahan(pdhl keregister)
 - wah ada di database -> masuk ke beranda dengan status member
 ```
-- ketika mengisi registrasi, lalu register manual, muncul error http://blablabla/bla/bla/-getverivicationlink does not exist
-- lalu Connection could not be established with host "ssl://mail.haifanida.com:465": stream_socket_client(): Unable to connect to ssl://mail.haifanida.com:465 (A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond)
-![WhatsApp Image 2025-05-19 at 00 11 26_a4305686](https://github.com/user-attachments/assets/c78726d8-261d-46dc-b3af-03462bb552ab)
-sepertinya karena localhost
-- 
