@@ -232,6 +232,74 @@
         </div>
     </div>
 
+    <!-- MODIFIED-- -->
+    <!-- Tim Pembantu Pengembang Website -->
+    <div class="row align-items-center">
+        <div class="col-lg-12">
+            <div class="about-content ml-25">
+                <section class="container py-5">
+                    <h2 class="text-center mb-4">Tim Pembantu Pengembang Website</h2>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-palette fa-3x text-success mb-3"></i>
+                                    <h5 class="card-title" style="font-size: 1rem; overflow: hidden; white-space: nowrap">Nuansa Bening Aura Jelita</h5>
+                                    <p>Frontend</p>
+                                    <p>Universitas Pendidikan Indonesia, Ilmu Komputer</p>
+                                    <a href="https://github.com/nbeningg" target="_blank" class="btn btn-dark btn-sm mt-2">
+                                        <i class="fab fa-github mr-1"></i> Github Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-terminal fa-3x text-danger mb-3"></i>
+                                    <h5 class="card-title" style="font-size: 1rem; overflow: hidden; white-space: nowrap">Kasyful Haq Bachariputra</h5>
+                                    <p>Frontend</p>
+                                    <p>Universitas Pendidikan Indonesia, Ilmu Komputer</p>
+                                    <a href="https://github.com/DatBoiSUS-Baka" target="_blank" class="btn btn-dark btn-sm mt-2">
+                                        <i class="fab fa-github mr-1"></i> Github Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-cogs fa-3x text-warning mb-3"></i>
+                                    <h5 class="card-title" style="font-size: 1rem; overflow: hidden; white-space: nowrap">Meisya Amalia</h5>
+                                    <p>Backend</p>
+                                    <p>Universitas Pendidikan Indonesia, Ilmu Komputer</p>
+                                    <a href="https://github.com/Meisya721" target="_blank" class="btn btn-dark btn-sm mt-2">
+                                        <i class="fab fa-github mr-1"></i> Github Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-code fa-3x text-primary mb-3"></i>
+                                    <h5 class="card-title" style="font-size: 1rem; overflow: hidden; white-space: nowrap">Ibnu Fadhilah</h5>
+                                    <p>Backend</p>
+                                    <p>Universitas Pendidikan Indonesia, Ilmu Komputer</p>
+                                    <a href="https://github.com/Noov-hub" target="_blank" class="btn btn-dark btn-sm mt-2">
+                                        <i class="fab fa-github mr-1"></i> Github Profile
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- --MODIFIED -->
 
     <div class="choose-area pt-100 pb-70">
         <div class="container">
@@ -616,7 +684,7 @@
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">Numbers Are Talking</span>
-                <h2>Let’s Check Our Business Growth and Success Story</h2>
+                <h2>Let's Check Our Business Growth and Success Story</h2>
                 <p>Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id
                     elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris Morbi accumsan ipsum velit. </p>
             </div>
