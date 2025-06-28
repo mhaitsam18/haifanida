@@ -248,7 +248,13 @@
                                 </li>
                             </ul>
                         </li>
-
+                        @auth
+                        <li class="nav-item">
+                            <a href="{{ route('member.daftar-keberangkatan') }}" class="nav-link">
+                                Daftar Keberangkatan
+                            </a>
+                        </li>
+                        @endauth
                         <div class="nav-side d-display">
                             {{-- <div class="nav-side-item">
                                 <div class="search-box">
@@ -265,11 +271,7 @@
                                 @auth
                                 <div class="nav-side-item d-flex align-items-center">
                                     <!-- Daftar Keberangkatan Link -->
-                                    <li class="nav-item">
-                                        <a href="{{ route('member.daftar-keberangkatan') }}" class="nav-link">
-                                            Daftar Keberangkatan
-                                        </a>
-                                    </li>
+                                    
                                     <!-- Profile Dropdown -->
                                     <li class="nav-item profile-dropdown">
                                         <a href="#" class="btn p-0 border-0 bg-transparent">
