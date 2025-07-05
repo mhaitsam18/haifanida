@@ -291,6 +291,32 @@ function fillDataFromMember() {
     function removeCard(id) {
         document.getElementById(id).remove();
     }
+    // Validasi form sebelum submit
+    document.getElementById('formPemesanan').addEventListener('submit', function(event) {
+        // Ambil nilai jumlah jemaah
+        const jumlahJemaah = parseInt(document.getElementById('jumlah_orang').value, 10) || 0;
+
+        // Hitung total pengisi dari semua kamar yang ditambahkan
+        let totalPengisiKamar = 0;
+        const listPengisiKamar = document.querySelectorAll('input[name^="kamars["][name$="][jumlah_pengisi]"]');
+        listPengisiKamar.forEach(input => {
+            totalPengisiKamar += parseInt(input.value, 10) || 0;
+        });
+
+        // Bandingkan jumlah jemaah dengan total pengisi kamar
+        if (jumlahJemaah !== totalPengisiKamar) {
+            // Hentikan proses submit form
+            event.preventDefault();
+
+            // Tampilkan notifikasi error menggunakan SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Jumlah Tidak Sesuai',
+                text: `Total pengisi kamar (${totalPengisiKamar}) tidak sesuai dengan jumlah jemaah yang didaftarkan (${jumlahJemaah}). Mohon periksa kembali.`,
+                confirmButtonText: 'Mengerti'
+            });
+        }
+    });
 </script>
 @endsection
 
