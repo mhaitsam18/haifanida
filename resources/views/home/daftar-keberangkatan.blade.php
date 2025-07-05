@@ -43,6 +43,18 @@
                     <div class="card-body">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3>{{ $item->paket->nama_paket }}</h3>
+                            @php
+                                    $status = $item->status;
+                                    $badgeClass = '';
+                                    if ($status == 'Tertunda') {
+                                        $badgeClass = 'bg-secondary';
+                                    } elseif (in_array($status, ['diterima', 'dikonfirmasi'])) {
+                                        $badgeClass = 'bg-success';
+                                    } elseif (in_array($status, ['ditolak', 'dibatalkan'])) {
+                                        $badgeClass = 'bg-danger';
+                                    }
+                                @endphp
+                                <span class="badge {{ $badgeClass }} px-3 py-2">{{ ucfirst($status) }}</span>
                             <span class="badge bg-primary">Akan Datang</span>
                         </div>
                         <div class="d-flex align-items-start m-3">
