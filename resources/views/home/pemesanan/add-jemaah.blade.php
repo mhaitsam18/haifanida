@@ -380,6 +380,7 @@
             $('#foto').on('change', function() {
                 previewImage(this);
             });
+        });
     </script>
     <script>
         $(document).ready(function() {
