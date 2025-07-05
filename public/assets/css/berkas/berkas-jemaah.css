@@ -1,0 +1,269 @@
+.container {
+        max-width: 1400px;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem; /* Square badges */
+        font-weight: 500;
+    }
+
+    .btn-sm {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+        transition: all 0.2s ease;
+        border-radius: 0.25rem; /* Square buttons */
+    }
+
+    .btn-sm:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline-primary, .btn-outline-warning, .btn-outline-danger {
+        border-width: 2px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem; /* Less rounded card */
+    }
+
+    .card-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa !important;
+        border-radius: 0.5rem 0.5rem 0 0; /* Square top corners */
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+        transition: background-color 0.2s ease;
+    }
+
+    .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .text-info {
+        color: #0dcaf0 !important;
+    }
+
+    .text-warning {
+        color: #ffc107 !important;
+    }
+
+    .alert-info {
+        background-color: #e7f4ff;
+        border: none;
+        border-radius: 0.25rem; /* Square alert */
+    }
+
+    .gap-2 {
+        gap: 0.5rem;
+    }
+
+    .table-responsive {
+        border-radius: 0 0 0.5rem 0.5rem; /* Square bottom corners */
+        overflow: hidden;
+    }
+
+    .btn-success, .btn-outline-secondary {
+        border-radius: 0.25rem; /* Square header buttons */
+    }
+
+    /* Enhanced Responsive Styles */
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 0;
+            width: 100%;
+        }
+
+        .row {
+            margin: 0;
+        }
+
+        /* Header fixes */
+        .row.mb-4 {
+            padding: 25px 15px 15px; /* Increased top padding */
+            margin-bottom: 0 !important;
+        }
+
+        .col-md-6 {
+            padding: 0;
+        }
+
+        h2.fw-bold.text-primary {
+            font-size: 1.5rem;
+            margin-bottom: 8px !important;
+            padding-top: 10px; /* Added top padding */
+        }
+
+        .fs-5.fw-bold {
+            font-size: 1.1rem !important;
+            margin-bottom: 20px; /* Increased bottom margin */
+        }
+
+        .text-end {
+            text-align: left !important;
+            margin-top: 5px;
+            padding-bottom: 10px;
+        }
+
+        .card {
+            margin: 0;
+            border-radius: 0;
+        }
+
+        /* Better table scrolling */
+        .table-responsive {
+            margin: 0;
+            border-radius: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            width: 100vw;
+        }
+
+        .table {
+            margin-bottom: 0;
+            min-width: 800px; /* Ensure table can scroll horizontally */
+        }
+
+        .table th, .table td {
+            font-size: 0.85rem;
+            padding: 12px 8px;
+            white-space: nowrap;
+            min-width: 100px; /* Minimum column width */
+        }
+
+        /* Column specific widths */
+        .table th:first-child,
+        .table td:first-child {
+            min-width: 50px;
+            width: 5%;
+        }
+
+        .table th:nth-child(2),
+        .table td:nth-child(2) {
+            min-width: 150px;
+            width: 25%;
+        }
+
+        .table th:nth-child(3),
+        .table td:nth-child(3) {
+            min-width: 120px;
+            width: 20%;
+        }
+
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            min-width: 100px;
+            width: 15%;
+        }
+
+        .table th:nth-child(5),
+        .table td:nth-child(5) {
+            min-width: 100px;
+            width: 15%;
+        }
+
+        .table th:last-child,
+        .table td:last-child {
+            min-width: 140px;
+            width: 20%;
+        }
+
+        /* Fix card header */
+        .card-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: #f8f9fa;
+            padding: 15px;
+        }
+
+        /* Action buttons in table */
+        .d-flex.gap-2 {
+            flex-wrap: nowrap;
+            gap: 5px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            height: 32px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Top action buttons */
+        .btn-primary,
+        .btn-outline-secondary {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        /* Alert positioning */
+        .alert {
+            margin: 15px;
+        }
+
+        /* Status Info section */
+        .alert-info {
+            margin: 15px;
+        }
+
+        /* File information styling */
+        .small {
+            font-size: 0.75rem;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .container {
+            padding: 0;
+        }
+
+        h2.fw-bold.text-primary {
+            font-size: 1.3rem;
+        }
+
+        .fs-5.fw-bold {
+            font-size: 1rem !important;
+        }
+
+        .table th, .table td {
+            font-size: 0.8rem;
+            padding: 10px 6px;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            height: 30px;
+        }
+
+        /* Adjust badge in card header */
+        .card-header .badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+        }
+    }
+
+    /* Fix sticky header for iOS */
+    @supports (-webkit-touch-callout: none) {
+        .card-header {
+            position: -webkit-sticky;
+        }
+    }
+
+

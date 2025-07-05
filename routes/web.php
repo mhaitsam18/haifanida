@@ -62,6 +62,11 @@ use App\Http\Controllers\MenuRoleController;
 use App\Http\Controllers\ProvinsiController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\MemberTagihanController;
+use App\Http\Controllers\UmrohController;
+use App\Http\Controllers\BerkasController;
+use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\PembayaranController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -96,7 +101,10 @@ Route::redirect('/form-kuesioner', 'https://docs.google.com/forms/d/e/1FAIpQLSdh
 Route::get('/keluhan', [HomeController::class, 'keluhan'])->name('home.keluhan');
 Route::get('/kuesioner', [HomeController::class, 'kuesioner'])->name('home.kuesioner');
 
-Route::get('/umroh', [HomeController::class, 'umroh'])->name('home.umroh');
+// Route::get('/umroh', [HomeController::class, 'umroh'])->name('home.umroh');
+Route::get('/umroh', [UmrohController::class, 'index'])->name('home.umroh'); // Tambahan
+Route::get('/paket/{id}', [UmrohController::class, 'show'])->name('home.detail-paket'); // Tambahan
+
 Route::get('/haji', [HomeController::class, 'haji'])->name('home.haji');
 Route::get('/wisata-halal', [HomeController::class, 'wisataHalal'])->name('home.wisata-halal');
 
@@ -147,8 +155,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password/{user}', [ForgotPasswordController::class, 'updatePassword'])->name('password.update');
 
 
-    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
-    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+    // MODIFIED: Memisahkan route untuk login dan register dengan Google
+    Route::get('auth/google/login', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'login')
+        ->name('auth.google.login');
+    Route::get('auth/google/register', [GoogleController::class, 'redirectToGoogle'])
+        ->defaults('type', 'register')
+        ->name('auth.google.register');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])
+        ->name('auth.google.callback');
 });
 
 
@@ -398,6 +413,9 @@ Route::middleware('auth')->group(function () {
                     Route::prefix('berkas')->group(function () {
                         Route::get('/', [AdminBerkasJemaahController::class, 'index'])->name('admin.jemaah.berkas.index');
                         Route::get('/create', [AdminBerkasJemaahController::class, 'create'])->name('admin.jemaah.berkas.create');
+                        // MODIFIED--
+                        Route::get('/{berkasJemaah}/preview', [AdminBerkasJemaahController::class, 'preview'])->name('admin.jemaah.berkas.preview');
+                        // --MODIFIED
                     });
                     Route::prefix('kamar')->group(function () {
                         Route::get('/', [AdminKamarJemaahController::class, 'index'])->name('admin.jemaah.kamar.index');
@@ -447,6 +465,117 @@ Route::middleware('auth')->group(function () {
         Route::prefix('member')->group(function () {
             Route::get('/', [HomeController::class, 'index'])->name('member');
             Route::get('/index', [MemberController::class, 'index'])->name('member.index');
+            // MODIFIED--
+            Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
+            Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+            Route::get('/tagihan/{id}', [MemberTagihanController::class, 'index'])->name('member.tagihan');
+            Route::get('/identitas', [MemberController::class, 'identitas'])->name('member.identitas');
+            Route::put('/identitas', [MemberController::class, 'updateIdentitas'])->name('member.identitas.update');
+            // --MODIFIED
+
+            // MODIFIED--
+            // UNTUK PEMESANAN
+            Route::get('/pemesanan/umroh', [UmrohController::class, 'formPemesanan'])->name('umroh.formPemesanan');
+
+            Route::get('/umroh', [UmrohController::class, 'index'])->name('umroh.index');
+            Route::get('/umroh/{id}', [UmrohController::class, 'show'])->name('umroh.show');
+            Route::post('/umroh/form-pemesanan', [UmrohController::class, 'formPemesanan'])->name('umroh.form-pemesanan');
+            // Route::post('/umroh/store', [UmrohController::class, 'store'])->name('pemesanan.store');
+
+            // Route untuk halaman pembayaran (sesuaikan dengan implementasi kamu)
+            Route::get('/pemesanan/{id}/payment', function ($id) {
+                // Ganti dengan controller atau view untuk halaman pembayaran
+                return view('home.pemesanan.payment', ['pemesanan_id' => $id]);
+            })->name('pemesanan.payment');
+
+            Route::post('/pemesanan/store', [PemesananController::class, 'storePemesanan'])->name('pemesan.store');
+            Route::get('/pemesanan/detail/{id}', [PemesananController::class, 'detailPemesanan'])->name('pemesanan.detail');
+
+            Route::get('/pemesanan/jemaah/{id}', [UmrohController::class, 'listJemaah'])->name('pemesanan.jemaah.list'); // Untuk tombol "Lihat Data Jamaah"
+            Route::get('/pemesanan/add-jemaah/{id}', [UmrohController::class, 'createJemaah'])->name('pemesanan.jemaah.create');
+            // Route untuk menyimpan data jemaah
+            Route::post('/pemesanan/jemaah/store/{id}', [UmrohController::class, 'storeJemaah'])->name('pemesanan.jemaah.store');
+            // Route::get('/pemesanan/jamaah/{id}', [UmrohController::class, 'detailJamaah'])->name('pemesanan.detail.jamaah'); // Untuk tombol "Lihat detail Jamaah"
+            Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
+            Route::delete('/jemaah/{jemaah}', [UmrohController::class, 'destroy'])->name('jemaah.destroy');
+
+            // PEMESANAN
+            Route::get('/jemaah', function () {
+                return view('home.pemesanan.jemaah', ['title' => 'Data Jemaah']);
+            });
+            Route::get('/tambah-jemaah', function () {
+                return view('home.pemesanan.add-jemaah', ['title' => 'Tambah Data Jemaah']);
+            });
+            Route::get('/detail-jemaah', function () {
+                return view('home.pemesanan.detail-jemaah', ['title' => 'Detail Data Jemaah']);
+            });
+            Route::get('/tambah-berkas', function () {
+                return view('home.pemesanan.add-berkas', ['title' => 'Tambah Berkas']);
+            });
+            // Route::get('/pemesanan-kamar', function () {
+            //     return view('home.pemesanan.kamar.pemesanan-kamar', ['title' => 'Pesan Kamar']);
+            // });
+
+            // MODIFIED
+            Route::get('/pemesanan-kamar', [PemesananController::class, 'createPemesananKamar'])->name('pemesanan.kamar');
+            Route::post('/pemesanan-kamar', [PemesananController::class, 'storePemesananKamar'])->name('pemesanan.kamar.store');
+
+            Route::get('/tambah-ekstra', [PemesananController::class, 'createPemesananEkstra'])->name('pemesanan-ekstra.create');
+            Route::post('/pemesanan-ekstra', [PemesananController::class, 'storePemesananEkstra'])->name('pemesanan-ekstra.store');
+
+            Route::get('/tambah-permintaan', [PemesananController::class, 'createPermintaanKamar'])->name('permintaan.kamar.create');
+
+            // MODIFIED
+
+            Route::get('/data-permintaan', function () {
+                return view('home.pemesanan.kamar.permintaan.detail-permintaan', ['title' => 'Permintaan Kamar']);
+            });
+            // Route::get('/tambah-permintaan', function () {
+            //     return view('home.pemesanan.kamar.permintaan.add-permintaan', ['title' => 'Tambah Permintaan Kamar']);
+            // });
+            // Route::get('/tambah-ekstra', function () {
+            //     return view('home.pemesanan.ekstra.add-ekstra', ['title' => 'Tambah Pesanan Ekstra']);
+            // });
+            Route::get('/tambah-pembayaran', function () {
+                return view('home.pemesanan.pembayaran.add-pembayaran', ['title' => 'Tambah Pembayaran']);
+            });
+
+
+            Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+            Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
+            Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');
+
+            // Rute untuk daftar keberangkatan (upcoming trips)
+            Route::get('/member/daftar-keberangkatan', [MemberController::class, 'daftarKeberangkatan'])
+                ->name('member.daftar-keberangkatan');
+
+            // Rute untuk riwayat perjalanan (trip history)
+            Route::get('/member/riwayat-perjalanan', [MemberController::class, 'riwayatPerjalanan'])
+                ->name('member.riwayat-perjalanan');
+
+            // Routes untuk berkas jemaah
+            Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'berkasJemaah'])->name('pemesanan.jemaah.berkas');
+            Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/create', [BerkasController::class, 'create'])->name('pemesanan.jemaah.add-berkas');
+            Route::post('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'store'])->name('pemesanan.jemaah.berkas.store');
+            Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/edit', [BerkasController::class, 'editBerkasJemaah'])->name('pemesanan.jemaah.berkas.edit');
+            Route::put('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'updateBerkasJemaah'])->name('pemesanan.jemaah.berkas.update');
+            Route::delete('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'destroyBerkasJemaah'])->name('pemesanan.jemaah.berkas.destroy');
+            Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/preview', [BerkasController::class, 'preview'])->name('pemesanan.jemaah.berkas.preview');//preview berkas jemaah
+            Route::get('/pemesanan/{id}/jemaah', [BerkasController::class, 'someMethod'])->name('pemesanan.jemaah');
+
+            // MODIFIED: Add routes for edit and update jemaah
+            Route::get('/pemesanan/{pemesanan}/jemaah/{jemaah}/edit', [UmrohController::class, 'editJemaah'])->name('pemesanan.jemaah.edit');
+            Route::put('/pemesanan/{pemesanan}/jemaah/{jemaah}', [UmrohController::class, 'updateJemaah'])->name('pemesanan.jemaah.update');
+
+            Route::get('/pemesanan-ekstra/{pemesanan_id?}', [PemesananController::class, 'createPemesananEkstra'])->name('pemesanan-ekstra.create');
+            Route::post('/pemesanan-ekstra', [PemesananController::class, 'storePemesananEkstra'])->name('pemesanan-ekstra.store');
+            Route::get('/pemesanan-ekstra/{pemesananEkstra}/edit', [PemesananController::class, 'editPemesananEkstra'])->name('pemesanan-ekstra.edit');
+            Route::put('/pemesanan-ekstra/{pemesananEkstra}', [PemesananController::class, 'updatePemesananEkstra'])->name('pemesanan-ekstra.update');
+            Route::delete('/pemesanan-ekstra/{pemesananEkstra}', [PemesananController::class, 'destroyPemesananEkstra'])->name('pemesanan-ekstra.destroy');
+
+            Route::get('/pemesanan/{pemesanan}/pembayaran/create', [PembayaranController::class, 'createPembayaran'])->name('pembayaran.create');
+            Route::post('/pembayaran', [PembayaranController::class, 'storePembayaran'])->name('pembayaran.store');
+            // --MODIFIED
         });
         Route::prefix('jemaah')->group(function () {
             Route::middleware('jemaah')->group(function () {
@@ -471,3 +600,112 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+// MODIFIED--
+// // UNTUK PEMESANAN
+// Route::get('/pemesanan/umroh', [UmrohController::class, 'formPemesanan'])->name('umroh.formPemesanan');
+
+// Route::get('/umroh', [UmrohController::class, 'index'])->name('umroh.index');
+// Route::get('/umroh/{id}', [UmrohController::class, 'show'])->name('umroh.show');
+// Route::post('/umroh/form-pemesanan', [UmrohController::class, 'formPemesanan'])->name('umroh.form-pemesanan');
+// // Route::post('/umroh/store', [UmrohController::class, 'store'])->name('pemesanan.store');
+
+// // Route untuk halaman pembayaran (sesuaikan dengan implementasi kamu)
+// Route::get('/pemesanan/{id}/payment', function ($id) {
+//     // Ganti dengan controller atau view untuk halaman pembayaran
+//     return view('home.pemesanan.payment', ['pemesanan_id' => $id]);
+// })->name('pemesanan.payment');
+
+// Route::post('/pemesanan/store', [PemesananController::class, 'storePemesanan'])->name('pemesan.store');
+// Route::get('/pemesanan/detail/{id}', [PemesananController::class, 'detailPemesanan'])->name('pemesanan.detail');
+
+// Route::get('/pemesanan/jemaah/{id}', [UmrohController::class, 'listJemaah'])->name('pemesanan.jemaah.list'); // Untuk tombol "Lihat Data Jamaah"
+// Route::get('/pemesanan/add-jemaah/{id}', [UmrohController::class, 'createJemaah'])->name('pemesanan.jemaah.create');
+// // Route untuk menyimpan data jemaah
+// Route::post('/pemesanan/jemaah/store/{id}', [UmrohController::class, 'storeJemaah'])->name('pemesanan.jemaah.store');
+// // Route::get('/pemesanan/jamaah/{id}', [UmrohController::class, 'detailJamaah'])->name('pemesanan.detail.jamaah'); // Untuk tombol "Lihat detail Jamaah"
+// Route::get('/pemesanan/tagihan/{id}', [UmrohController::class, 'lihatTagihan'])->name('pemesanan.tagihan'); // Untuk tombol "Lihat Tagihan"
+// Route::delete('/jemaah/{jemaah}', [UmrohController::class, 'destroy'])->name('jemaah.destroy');
+
+// // PEMESANAN
+// Route::get('/jemaah', function () {
+//     return view('home.pemesanan.jemaah', ['title' => 'Data Jemaah']);
+// });
+// Route::get('/tambah-jemaah', function () {
+//     return view('home.pemesanan.add-jemaah', ['title' => 'Tambah Data Jemaah']);
+// });
+// Route::get('/detail-jemaah', function () {
+//     return view('home.pemesanan.detail-jemaah', ['title' => 'Detail Data Jemaah']);
+// });
+// Route::get('/tambah-berkas', function () {
+//     return view('home.pemesanan.add-berkas', ['title' => 'Tambah Berkas']);
+// });
+// // Route::get('/pemesanan-kamar', function () {
+// //     return view('home.pemesanan.kamar.pemesanan-kamar', ['title' => 'Pesan Kamar']);
+// // });
+
+// // MODIFIED
+// Route::get('/pemesanan-kamar', [PemesananController::class, 'createPemesananKamar'])->name('pemesanan.kamar');
+// Route::post('/pemesanan-kamar', [PemesananController::class, 'storePemesananKamar'])->name('pemesanan.kamar.store');
+
+// Route::get('/tambah-ekstra', [PemesananController::class, 'createPemesananEkstra'])->name('pemesanan-ekstra.create');
+// Route::post('/pemesanan-ekstra', [PemesananController::class, 'storePemesananEkstra'])->name('pemesanan-ekstra.store');
+
+// Route::get('/tambah-permintaan', [PemesananController::class, 'createPermintaanKamar'])->name('permintaan.kamar.create');
+
+// // MODIFIED
+
+// Route::get('/data-permintaan', function () {
+//     return view('home.pemesanan.kamar.permintaan.detail-permintaan', ['title' => 'Permintaan Kamar']);
+// });
+// // Route::get('/tambah-permintaan', function () {
+// //     return view('home.pemesanan.kamar.permintaan.add-permintaan', ['title' => 'Tambah Permintaan Kamar']);
+// // });
+// // Route::get('/tambah-ekstra', function () {
+// //     return view('home.pemesanan.ekstra.add-ekstra', ['title' => 'Tambah Pesanan Ekstra']);
+// // });
+// Route::get('/tambah-pembayaran', function () {
+//     return view('home.pemesanan.pembayaran.add-pembayaran', ['title' => 'Tambah Pembayaran']);
+// });
+
+
+// Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+// Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
+// Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');
+
+// // Rute untuk daftar keberangkatan (upcoming trips)
+// Route::get('/member/daftar-keberangkatan', [MemberController::class, 'daftarKeberangkatan'])
+//     ->name('member.daftar-keberangkatan');
+
+// // Rute untuk riwayat perjalanan (trip history)
+// Route::get('/member/riwayat-perjalanan', [MemberController::class, 'riwayatPerjalanan'])
+//     ->name('member.riwayat-perjalanan');
+
+// // Routes untuk berkas jemaah
+// Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'berkasJemaah'])->name('pemesanan.jemaah.berkas');
+// Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/create', [BerkasController::class, 'create'])->name('pemesanan.jemaah.add-berkas');
+// Route::post('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas', [BerkasController::class, 'store'])->name('pemesanan.jemaah.berkas.store');
+// Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/edit', [BerkasController::class, 'editBerkasJemaah'])->name('pemesanan.jemaah.berkas.edit');
+// Route::put('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'updateBerkasJemaah'])->name('pemesanan.jemaah.berkas.update');
+// Route::delete('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}', [BerkasController::class, 'destroyBerkasJemaah'])->name('pemesanan.jemaah.berkas.destroy');
+// Route::get('pemesanan/{pemesanan}/jemaah/{jemaah}/berkas/{berkasJemaah}/preview', [BerkasController::class, 'preview'])->name('pemesanan.jemaah.berkas.preview');//preview berkas jemaah
+// Route::get('/pemesanan/{id}/jemaah', [BerkasController::class, 'someMethod'])->name('pemesanan.jemaah');
+
+// // MODIFIED: Add routes for edit and update jemaah
+// Route::get('/pemesanan/{pemesanan}/jemaah/{jemaah}/edit', [UmrohController::class, 'editJemaah'])->name('pemesanan.jemaah.edit');
+// Route::put('/pemesanan/{pemesanan}/jemaah/{jemaah}', [UmrohController::class, 'updateJemaah'])->name('pemesanan.jemaah.update');
+
+// Route::get('/pemesanan-ekstra/{pemesanan_id?}', [PemesananController::class, 'createPemesananEkstra'])->name('pemesanan-ekstra.create');
+// Route::post('/pemesanan-ekstra', [PemesananController::class, 'storePemesananEkstra'])->name('pemesanan-ekstra.store');
+// Route::get('/pemesanan-ekstra/{pemesananEkstra}/edit', [PemesananController::class, 'editPemesananEkstra'])->name('pemesanan-ekstra.edit');
+// Route::put('/pemesanan-ekstra/{pemesananEkstra}', [PemesananController::class, 'updatePemesananEkstra'])->name('pemesanan-ekstra.update');
+// Route::delete('/pemesanan-ekstra/{pemesananEkstra}', [PemesananController::class, 'destroyPemesananEkstra'])->name('pemesanan-ekstra.destroy');
+
+// // User routes
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/pemesanan/{pemesanan}/pembayaran/create', [PembayaranController::class, 'createPembayaran'])->name('pembayaran.create');
+//     Route::post('/pembayaran', [PembayaranController::class, 'storePembayaran'])->name('pembayaran.store');
+// });
+
+// --MODIFIED

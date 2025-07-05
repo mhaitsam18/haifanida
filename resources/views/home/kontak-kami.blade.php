@@ -31,7 +31,7 @@
             <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
         </div>
     </div>
-    <div class="contact-form-area pt-100">
+    <div class="contact-form-area pt-50 pb-50">
         <div class="container">
             <div class="section-title text-center">
                 <h2>Konsultasikan Rencana Perjalanan Anda</h2>
@@ -159,7 +159,7 @@
             </div>
         </div>
     </div>
-    <div class="contact-form-area pt-100">
+    <div class="contact-form-area pt-50">
         <div class="container">
             <div class="section-title text-center">
                 <h2>Informasi Kontak</h2>
@@ -167,8 +167,11 @@
             <div class="row pt-45">
                 <div class="col-lg-12">
                     <h5 class="card-title">Customer Service</h5>
-                    <a href="https://wa.me/6282299198002" target="_blank" class="card-text">WA: +62 (822) 9919-8002</a>
+                    <a href="https://wa.me/6282299198002" target="_blank" class="card-text">
+                        <img src="/assets/img/logos/logo-wa.png" alt="WhatsApp Logo" style="width: 24px; height: 24px; vertical-align: middle;"> +62 (822) 9919-8002
+                    </a>
                     <hr>
+                    {{--
                     <h5 class="card-title">Staf Administrasi: Rini Apriyani</h5>
                     <a href="https://wa.me/628111720494" target="_blank" class="card-text">WA: +62 (811) 1720-494</a>
                     <hr>
@@ -186,7 +189,7 @@
                     <hr>
                     <h5 class="card-title">Komisaris Utama: Dr.H. Fakhrurrozi, Lc.,MA</h5>
                     <a href="https://wa.me/6281220747000" target="_blank" class="card-text">WA: +62 (812) 2074-7000</a>
-                    <hr>
+                    <hr> --}}
                 </div>
             </div>
         </div>
@@ -197,7 +200,7 @@
         <div class="container-fluid m-0 p-0">
             <div id="map"></div>
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50194.82376159623!2d-6.29973643426355!3d107.29942526757624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b4a08eb8621697%3A0xe5d6e4710a09b66e!2sStaunton%2C%20VA%2024401%2C%20USA!5e0!3m2!1sen!2sbd!4v1607173226867!5m2!1sen!2sbd"></iframe>
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4070.1583314211575!2d107.29679825896102!3d-6.299718274308804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e697761e03cf5ab%3A0x707fddda5f250f94!2sPT.%20Haifa%20Nida%20Wisata%20%7C%20Travel%20Umroh%20Karawang%20Pertama%20%7C%20Biro%20Umrah%20%7C%20Muslim%20Tour%20Umroh%20Resmi%20Terbaik%20Terpercaya!5e0!3m2!1sid!2sid!4v1746594252410!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 @endsection

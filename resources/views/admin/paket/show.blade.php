@@ -69,7 +69,8 @@
                                                 <li>Jenis Paket : {{ $paket->jenis_paket }}</li>
                                                 <li>Durasi : {{ $paket->durasi }} Hari</li>
                                                 <li>Harga : Rp.{{ number_format($paket->harga, 2, ',', '.') }}</li>
-                                                <li>Kantor : {{ $paket->kantor->nama_kantor }}</li>
+                                                {{-- MODIFY 
+                                                {{-- <li>Kantor : {{ $paket->kantor->nama_kantor }}</li> --}}
                                             </ul>
                                         </div>
                                         <div class="col">
@@ -326,7 +327,8 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $grup->agen->user->name ?? null }}</td>
-                                                    <td>{{ $grup->nama_grup }}</td>
+                                                    <td>{{ optional($grup->grup)->nama_grup ?? '-' }}</td>
+                                                    {{-- <td>{{ $grup->nama_grup }}</td> --}}
                                                     <td>{{ $grup->ketua_grup }}</td>
                                                     <td>{{ $grup->keterangan_grup }}</td>
                                                     <td>{{ $grup->kuota_grup }}</td>
@@ -436,7 +438,8 @@
                                         @foreach ($jemaahs as $jemaah)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $jemaah->grup->nama_grup }}</td>
+                                                <td>{{ optional($jemaah->grup)->nama_grup ?? '-' }}</td>
+                                                {{-- <td>{{ $jemaah->grup->nama_grup }}</td> --}}
                                                 <td>{{ $jemaah->nama_lengkap }}</td>
                                                 <td>{{ $jemaah->email }}</td>
                                                 <td>{{ $jemaah->nomor_telepon }}</td>

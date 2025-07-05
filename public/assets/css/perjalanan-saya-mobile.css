@@ -1,0 +1,224 @@
+/* Mobile Responsive CSS for Perjalanan Saya */
+
+/* Title and Header Styles */
+.section-title {
+    padding: 25px 15px 15px;
+    margin-top: 80px;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.section-title h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: #4e73df;
+    font-weight: 600;
+}
+
+.section-title h6 {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Card and Content Styles */
+.card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa !important;
+    padding: 1rem 1.25rem;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .section-title {
+        padding: 20px 15px 15px;
+        margin-top: 60px;
+    }
+
+    .section-title h2 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+
+    .section-title h6 {
+        font-size: 0.9rem;
+    }
+
+    /* Card Adjustments */
+    .card {
+        margin: 10px 0;
+        border-radius: 0;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-header {
+        padding: 15px;
+        flex-direction: column;
+        align-items: start !important;
+    }
+
+    .card-header h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    /* Image and Content Layout */
+    .d-flex.align-items-start {
+        flex-direction: column;
+    }
+
+    .d-flex.align-items-start img {
+        width: 100% !important;
+        max-height: 200px;
+        object-fit: cover;
+        margin-bottom: 15px;
+        margin-right: 0 !important;
+        border-radius: 8px;
+    }
+
+    .d-flex.align-items-start .container {
+        padding: 0;
+    }
+
+    /* Text Content */
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .row p {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .fas {
+        width: 20px;
+    }
+
+    /* Button Container */
+    .d-flex.justify-content-end {
+        margin-top: 15px;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn i {
+        margin-right: 8px;
+        width: 16px;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 576px) {
+    .section-title {
+        padding: 15px 10px;
+        margin-top: 55px;
+    }
+
+    .section-title h2 {
+        font-size: 1.3rem;
+    }
+
+    .section-title h6 {
+        font-size: 0.85rem;
+    }
+
+    .card-header h3 {
+        font-size: 1.2rem;
+    }
+
+    h5 {
+        font-size: 0.95rem;
+    }
+
+    .row p {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .d-flex.align-items-start img {
+        max-height: 180px;
+    }
+
+    /* Alert Styling */
+    .alert {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .alert i {
+        font-size: 1.8rem;
+    }
+
+    .alert h4 {
+        font-size: 1.1rem;
+        margin: 12px 0;
+    }
+
+    .alert p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Landscape Mode */
+@media (max-width: 812px) and (orientation: landscape) {
+    .d-flex.align-items-start {
+        flex-direction: row;
+    }
+
+    .d-flex.align-items-start img {
+        width: 40% !important;
+        margin-right: 15px !important;
+        margin-bottom: 0;
+    }
+
+    .card-header {
+        flex-direction: row;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .btn {
+        width: auto;
+    }
+}
+
+/* Badge Styling */
+.badge {
+    padding: 0.4em 0.8em;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+.badge.bg-secondary {
+    background-color: #858796 !important;
+}

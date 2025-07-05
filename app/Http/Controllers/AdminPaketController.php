@@ -37,7 +37,7 @@ class AdminPaketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Paket $paket)
     {
         $validateData = $request->validate([
             // 'kode_paket' => 'nullable',
@@ -53,14 +53,32 @@ class AdminPaketController extends Controller
             'tanggal_mulai' => 'required|string',
             'tanggal_selesai' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
-            'published_at' => 'nullable',
         ]);
+
+        $validateData['published_at'] = $request->published_at ? now() : null;
+        
+        // --MODIFIED
+        /*
         if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('paket-gambar');
+            $path = $request->file('gambar')->store('paket-gambar', 'public'); //metode penyimpanan file gambar ini terlalu strict/ketat untuk penjagaan keamanan, dan munkin hanya dipakai untuk upload file/berkas berkas jamaah saja
+            $paket->gambar = str_replace('public/', '', $path); //
             $validateData['gambar'] = $path;
         }
-        Paket::create($validateData);
-        return redirect('/admin/paket')->with('success', 'Data paket berhasil ditambah');
+        */
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('storage/paket-gambar'), $filename);
+            $validateData['gambar'] = 'paket-gambar/' . $filename;
+        }
+        // MODIFIED--
+
+        if (is_array($validateData)) {
+            Paket::create($validateData);
+            return redirect('/admin/paket')->with('success', 'Data paket berhasil ditambah');
+        } else {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat validasi data');
+        }
     }
 
     /**
@@ -68,10 +86,7 @@ class AdminPaketController extends Controller
      */
     public function show(Paket $paket)
     {
-
         $jemaahs = Jemaah::query();
-
-
 
         if ($paket) {
             $jemaahs->whereHas('pemesanan', function ($query) use ($paket) {
@@ -123,16 +138,24 @@ class AdminPaketController extends Controller
             'tanggal_mulai' => 'required|string',
             'tanggal_selesai' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
-            'published_at' => 'nullable',
         ]);
+
+        $validateData['published_at'] = $request->published_at ? now() : null;
+
         if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('paket-gambar');
+            $path = $request->file('gambar')->store('paket-gambar', 'public');
+            $paket->gambar = str_replace('public/', '', $path);
             $validateData['gambar'] = $path;
         } else {
             $validateData['gambar'] = $paket->gambar;
         }
-        $paket->update($validateData);
-        return redirect('/admin/paket')->with('success', 'Data paket berhasil diubah');
+
+        if (is_array($validateData)) {
+            $paket->update($validateData);
+            return redirect('/admin/paket')->with('success', 'Data paket berhasil diubah');
+        } else {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat validasi data');
+        }
     }
 
     /**

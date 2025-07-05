@@ -1,0 +1,218 @@
+/* Mobile Responsive CSS for Perjalanan Saya */
+
+@media (max-width: 768px) {
+    /* Card Adjustments */
+    .card {
+        width: 100% !important;
+        margin: 10px 0;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-header {
+        padding: 15px;
+        flex-direction: column;
+        align-items: start !important;
+    }
+
+    .card-header h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    /* Image and Content Layout */
+    .d-flex.align-items-start {
+        flex-direction: column;
+    }
+
+    .d-flex.align-items-start img {
+        width: 100% !important;
+        margin-bottom: 15px;
+        margin-right: 0 !important;
+    }
+
+    /* Container Adjustments */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Text Sizes */
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+    }
+
+    /* Icons and Details */
+    .row p {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+
+    .fas {
+        width: 20px;
+    }
+
+    /* Button Adjustments */
+    .d-flex.justify-content-end {
+        margin-top: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Alert for No Data */
+    .alert {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .alert i {
+        font-size: 2rem;
+    }
+
+    .alert h4 {
+        font-size: 1.2rem;
+        margin: 15px 0;
+    }
+
+    .alert p {
+        font-size: 0.9rem;
+    }
+
+    /* Section Title */
+    .section-title {
+        padding: 15px;
+    }
+
+    .section-title h2 {
+        font-size: 1.5rem;
+    }
+
+    .section-title h6 {
+        font-size: 0.9rem;
+    }
+
+    /* Row Spacing */
+    .my-5 {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Smaller Mobile Devices */
+    .card-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-body {
+        padding: 12px;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+    }
+
+    h5 {
+        font-size: 0.9rem;
+    }
+
+    .row p {
+        font-size: 0.8rem;
+    }
+
+    /* Image Enhancement */
+    .d-flex.align-items-start img {
+        border-radius: 6px;
+    }
+
+    /* Button Enhancements */
+    .btn {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    /* Section Title */
+    .section-title h2 {
+        font-size: 1.3rem;
+    }
+
+    .section-title h6 {
+        font-size: 0.8rem;
+    }
+
+    /* Alert Adjustments */
+    .alert {
+        padding: 15px;
+    }
+
+    .alert i {
+        font-size: 1.8rem;
+    }
+
+    .alert h4 {
+        font-size: 1.1rem;
+    }
+
+    .alert p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape Mode Optimization */
+@media (max-width: 812px) and (orientation: landscape) {
+    .d-flex.align-items-start {
+        flex-direction: row;
+    }
+
+    .d-flex.align-items-start img {
+        width: 40% !important;
+        margin-right: 15px !important;
+        margin-bottom: 0;
+    }
+
+    .card-header {
+        flex-direction: row;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .btn {
+        width: auto;
+    }
+}
+
+/* Tablet Optimization */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .card {
+        width: 90% !important;
+    }
+
+    .d-flex.align-items-start img {
+        width: 200px !important;
+    }
+
+    .card-header h3 {
+        font-size: 1.4rem;
+    }
+
+    h5 {
+        font-size: 1.1rem;
+    }
+
+    .row p {
+        font-size: 1rem;
+    }
+}

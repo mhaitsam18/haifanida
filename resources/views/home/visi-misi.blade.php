@@ -23,7 +23,7 @@
             <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
         </div>
     </div>
-    <div class="privacy-policy-area pt-100 pb-70">
+    <div class="content-area pt-30 pb-70">
         <div class="container">
             <div class="section-title text-center">
                 <span class="sp-color2">{{ $konten->judul }}</span>
@@ -38,7 +38,7 @@
             </div>
 
             <!-- Visi dan Misi -->
-            <div class="row pt-45">
+            <div class="row pt-70">
                 <div class="col-lg-12">
                     <div class="single-content">
                         <h3>Visi</h3>

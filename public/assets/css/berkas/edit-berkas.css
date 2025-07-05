@@ -1,0 +1,280 @@
+.container {
+        max-width: 1400px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }    .card {
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem; /* Less rounded card */
+    }    /* Gradient Backgrounds */
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+    }
+
+    .card-header {
+        background: linear-gradient(45deg, #4e73df, #224abe) !important;
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    .card-header,
+    .card-header h5,
+    .card-header span,
+    .card-header .fw-semibold,
+    .card-header .text-dark {
+        color: white !important;
+    }
+
+    .card-header i {
+        color: white !important;
+    }
+
+    .alert-danger {
+        border-left: 4px solid #dc3545;
+        border-radius: 0.25rem; /* Square alert */
+    }
+
+    .btn-sm, .btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+        transition: all 0.2s ease;
+        border-radius: 0.25rem; /* Square buttons */
+    }
+
+    .btn-sm:hover, .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline-primary, .btn-outline-secondary, .btn-primary {
+        border-width: 2px;
+    }
+
+    .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .text-info {
+        color: #0dcaf0 !important;
+    }
+
+    .gap-2 {
+        gap: 0.5rem;
+    }
+
+    .border {
+        border: 1px solid #dee2e6 !important;
+        border-radius: 0.25rem; /* Square border for file preview */
+    }
+
+    .form-control {
+        border-radius: 0.25rem; /* Square form inputs */
+    }    /* Enhanced Responsive Styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .py-5 {
+        padding-top: 5rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    /* Header Section Adjustments */
+    .row.justify-content-center.mb-4 {
+        margin: 45px 0 25px;
+        padding-top: 45px;
+    }
+
+    h2.fw-bold.text-primary {
+        font-size: 1.5rem;
+        margin-bottom: 12px !important;
+        padding-top: 45px;
+        margin-top: 25px;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        margin-top: 8px;
+        margin-top: 5px;
+    }
+
+    .fs-5.fw-bold {
+        font-size: 1.1rem !important;
+        margin: 12px 0;
+        color: #4e73df;
+    }
+
+    /* Card Adjustments */
+    .card {
+        margin: 0;
+        border-radius: 8px;
+    }
+
+    .card-header {
+        padding: 15px;
+    }
+
+    .card-body {
+        padding: 20px 15px;
+    }
+
+    /* Form Elements */
+    .form-label {
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.75rem;
+        height: auto;
+        margin-bottom: 5px;
+    }
+
+    .input-group {
+        margin-bottom: 8px;
+    }
+
+    .input-group-text {
+        padding: 0.5rem 0.75rem;
+    }
+
+    /* Current File Info */
+    .current-file {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+
+    .file-info {
+        font-size: 0.85rem;
+        margin: 8px 0;
+    }
+
+    /* File Preview */
+    .preview-container {
+        margin: 15px 0;
+        padding: 10px;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+    }
+
+    /* Button Adjustments */
+    .mt-3 {
+        margin-top: 1.5rem !important;
+    }
+
+    .btn {
+        width: auto;
+        min-width: 120px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+
+    .d-flex.justify-content-between {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn i {
+        font-size: 0.9rem;
+    }
+
+    /* Error Messages */
+    .invalid-feedback {
+        font-size: 0.75rem;
+        margin-top: 4px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .py-5 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    h2.fw-bold.text-primary {
+        font-size: 1.3rem;
+        margin-bottom: 8px !important;
+        padding-top: 20px;
+    }
+
+    .fs-5.fw-bold {
+        font-size: 1rem !important;
+    }
+
+    .card-body {
+        padding: 15px 12px;
+    }
+
+    /* Stack buttons on very small screens */
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        margin: 5px 0;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Adjust form elements */
+    .form-control {
+        font-size: 0.85rem;
+        padding: 0.45rem 0.7rem;
+    }
+
+    /* File preview adjustments */
+    .preview-container {
+        padding: 8px;
+    }
+
+    .file-info {
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-height: 576px) and (orientation: landscape) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        margin: 10px 0;
+    }
+
+    .btn-container {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+    }
+
+    .btn {
+        width: auto;
+        flex: 1;
+    }
+}
+
+/* Fix for iOS devices */
+@supports (-webkit-touch-callout: none) {
+    .form-control {
+        font-size: 16px; /* Prevent zoom on input focus */
+    }
+}
