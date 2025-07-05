@@ -21,6 +21,20 @@
 
     @if($pemesanan && count($pemesanan) > 0)
     <div class="container">
+        <!-- Status Info -->
+        <div class="alert alert-info mt-4 shadow-sm">
+            <div class="d-flex align-items-start">
+                <i class="fas fa-info-circle me-2 mt-1 fa-lg"></i>
+                <div>
+                    <h6 class="alert-heading mb-2 fw-semibold">Informasi Status Pemesanan</h6>
+                    <ul class="mb-0 small">
+                        <li><strong>Tertunda:</strong> Pesanan Anda sedang menunggu konfirmasi dari admin.</li>
+                        <li><strong>Diterima/Dikonfirmasi:</strong> Pesanan Anda telah disetujui. Anda dapat melanjutkan untuk melengkapi data jemaah.</li>
+                        <li><strong>Ditolak/Dibatalkan:</strong> Pesanan Anda ditolak atau dibatalkan. Silakan hubungi admin untuk informasi lebih lanjut.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         @foreach($pemesanan as $item)
             @php
                 $departure = Carbon::parse($item->paket->tanggal_mulai);
