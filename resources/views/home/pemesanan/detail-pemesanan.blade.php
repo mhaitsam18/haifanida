@@ -60,6 +60,21 @@
         <div class="card-header bg-light py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="mb-0 text-secondary fw-semibold">Detail Pemesanan</h4>
+                <div class="d-flex align-items-center">
+                    <span class="text-muted me-2">Status Pemesanan :</span>
+                    @php
+                        $status = $pemesanan->status;
+                        $badgeClass = '';
+                        if ($status == 'Tertunda') {
+                            $badgeClass = 'bg-secondary';
+                        } elseif (in_array($status, ['diterima', 'dikonfirmasi'])) {
+                            $badgeClass = 'bg-success';
+                        } elseif (in_array($status, ['ditolak', 'dibatalkan'])) {
+                            $badgeClass = 'bg-danger';
+                        }
+                    @endphp
+                    <span class="badge {{ $badgeClass }} px-3 py-2">{{ ucfirst($status) }}</span>
+                </div>
             </div>
         </div>
         
