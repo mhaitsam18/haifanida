@@ -67,12 +67,12 @@
                             </div>
 
                             <!-- Checkbox apakah jemaah -->
-                            <div class="form-check mb-4">
+                            {{-- <div class="form-check mb-4">
                                 <input class="form-check-input" type="checkbox" id="isJemaah" name="is_jemaah" onchange="fillDataFromMember()">
                                 <label class="form-check-label" for="isJemaah">
                                     Pemesan adalah Jemaah?
                                 </label>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
