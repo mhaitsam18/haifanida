@@ -26,16 +26,16 @@ class PemesananController extends Controller
             'telepon' => 'required|string',
             'jumlah_jemaah' => 'required|integer|min:1',
         ]);
-
-        if ($request->has('is_jemaah')) {
-            Jemaah::create([
-                'user_id' => auth()->id(),
-                'nama_lengkap' => $request->nama,
-                'email' => $request->email,
-                'nomor_telepon' => $request->telepon,
-                'foto' => null, // atau default value jika perlu
-            ]);
-        }
+        // FITUR AUTOFILL JIKA USER SUDAH LOGIN (BELUM DIIMPLEMENTASI)
+        // if ($request->has('is_jemaah')) {
+        //     Jemaah::create([
+        //         'user_id' => auth()->id(),
+        //         'nama_lengkap' => $request->nama,
+        //         'email' => $request->email,
+        //         'nomor_telepon' => $request->telepon,
+        //         'foto' => null, // atau default value jika perlu
+        //     ]);
+        // }
 
         // Redirect ke halaman daftar jemaah
         return redirect()->route('pemesanan.detail', [
@@ -166,7 +166,7 @@ class PemesananController extends Controller
         }
 
         return redirect()->route('pemesanan.detail', $pemesanan->id)
-            ->with('success', 'Pemesanan berhasil disimpan!');
+            ->with('success', 'Silahkan tunggu pihak kami menghubungi anda untuk melakukan konfirmasi pemesanan.');
     }
     
     public function detailPemesanan($id)
