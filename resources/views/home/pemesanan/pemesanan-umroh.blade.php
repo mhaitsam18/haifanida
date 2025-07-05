@@ -196,22 +196,71 @@ function fillDataFromMember() {
                 <div class="card-body">
                     <div class="mb-2">
                         <label>Tipe Kamar</label>
-                        <select name="kamars[${kamarIndex}][tipe_kamar]" class="form-select" required>
+                        <select name="kamars[${kamarIndex}][tipe_kamar]" class="form-select" onchange="updateJumlahPengisi(this, ${kamarIndex})" required>
                             <option value="">Pilih Tipe Kamar</option>
                             @foreach($kamars as $kamar)
-                            <option value="{{ $kamar->nama_ekstra }}">{{ $kamar->nama_ekstra }} | Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }} | {{ $kamar->keterangan }}</option>
+                            <option value="{{ $kamar->nama_ekstra }}" data-keterangan="{{ $kamar->keterangan }}">{{ $kamar->nama_ekstra }} | Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }} | {{ $kamar->keterangan }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-2">
                         <label>Jumlah Pengisi</label>
-                        <input type="number" min="1" name="kamars[${kamarIndex}][jumlah_pengisi]" class="form-control" required>
+                        <input type="number" min="1" id="jumlah-pengisi-${kamarIndex}" name="kamars[${kamarIndex}][jumlah_pengisi]" class="form-control" required>
                     </div>
                     <button type="button" class="btn btn-danger btn-sm" onclick="removeCard('kamar-card-${kamarIndex}')">Hapus</button>
                 </div>
             </div>
         `;
         document.getElementById('kamar-container').insertAdjacentHTML('beforeend', kamarCard);
+    }
+
+    function updateJumlahPengisi(selectElement, index) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const keterangan = selectedOption.getAttribute('data-keterangan');
+        const inputPengisi = document.getElementById(`jumlah-pengisi-${index}`);
+
+        if (!keterangan) {
+            inputPengisi.min = 1;
+            inputPengisi.removeAttribute('max');
+            inputPengisi.readOnly = false;
+            inputPengisi.value = '';
+            return;
+        }
+
+        // Reset state
+        inputPengisi.readOnly = false;
+        inputPengisi.removeAttribute('max');
+
+        // Pola untuk "harus diisi X orang"
+        let match = keterangan.match(/harus diisi (\d+) orang/);
+        if (match) {
+            const jumlah = match[1];
+            inputPengisi.min = jumlah;
+            inputPengisi.max = jumlah;
+            inputPengisi.value = jumlah;
+            inputPengisi.readOnly = true;
+            return;
+        }
+
+        // Pola untuk "dapat diisi 1 s/d X orang"
+        match = keterangan.match(/dapat diisi 1 s\/d (\d+) orang/);
+        if (match) {
+            const maxJumlah = match[1];
+            inputPengisi.min = 1;
+            inputPengisi.max = maxJumlah;
+            inputPengisi.value = 1; // Set default value to min
+            return;
+        }
+
+        // Pola untuk "hanya dapat diisi X orang" atau "dapat diisi X orang"
+        match = keterangan.match(/(?:hanya dapat|dapat) diisi (\d+) orang/);
+        if (match) {
+            const jumlah = match[1];
+            inputPengisi.min = jumlah;
+            inputPengisi.max = jumlah;
+            inputPengisi.value = jumlah;
+            inputPengisi.readOnly = true;
+        }
     }
 
     function addEkstraCard() {
