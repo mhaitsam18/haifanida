@@ -105,7 +105,7 @@ class PemesananController extends Controller
         $pemesanan = new Pemesanan();
         $pemesanan->paket_id = $validatedData['paket_id'];
         $pemesanan->user_id = $validatedData['user_id'];
-        $pemesanan->status = "pending";
+        $pemesanan->status = "Tertunda";
         $pemesanan->tanggal_pesan = $validatedData['tanggal_pesan'];
         $pemesanan->jumlah_orang = $validatedData['jumlah_orang'];
         $pemesanan->total_harga = $paket->harga * $validatedData['jumlah_orang']; 
