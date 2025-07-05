@@ -117,10 +117,18 @@
                                 </ul>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" 
-                                   class="btn btn-primary">
-                                    <i class="fas fa-users me-2"></i>Data Jema'ah
-                                </a>
+                                @if(in_array($pemesanan->status, ['dikonfirmasi', 'diterima']))
+                                    <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" 
+                                       class="btn btn-primary">
+                                        <i class="fas fa-users me-2"></i>Data Jema'ah
+                                    </a>
+                                @else
+                                    <a href="javascript:void(0);" 
+                                       class="btn btn-primary" 
+                                       onclick="showJemaahInfo()">
+                                        <i class="fas fa-users me-2"></i>Data Jema'ah
+                                    </a>
+                                @endif
                                 <a href="{{ route('member.tagihan', $pemesanan->id) }}" 
                                    class="btn btn-success">
                                     <i class="fas fa-file-invoice me-2"></i>Lihat Tagihan
@@ -346,4 +354,18 @@
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function showJemaahInfo() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Informasi',
+            text: 'Data jemaah dapat diisi setelah status pemesanan Dikonfirmasi.\nHarap menunggu konfirmasi dari admin atau menghubungi admin untuk bantuan lebih lanjut.',
+            confirmButtonText: 'Mengerti'
+        });
+    }
+</script>
 @endsection
