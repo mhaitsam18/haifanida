@@ -1,5 +1,10 @@
 @extends('layouts.main')
 
+@section('style')
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=Quicksand:wght@700&display=swap"
+        rel="stylesheet">
+@endsection
+
 @section('content')
     @php
         use Carbon\Carbon;
@@ -238,126 +243,232 @@
         <div class="container">
             <div class="section-title text-center mb-5">
                 <span class="sp-color2">Tim Pengembang</span>
-                <h2>Tim Pembantu Pengembang Website</h2>
+                <h2>Tim Pengembang Website</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-12 mb-4">
+                    <div class="card border-0 shadow-lg h-100"
+                        style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
+                        <div
+                            style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(52,58,64,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);">
+                        </div>
+
+                        <div class="card-body text-center p-4" style="position: relative; z-index: 2;">
+                            <div class="mb-3" style="position: relative;">
+                                <div
+                                    style="background: linear-gradient(135deg, #343a40, #495057); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(52,58,64,0.3); position: relative; overflow: hidden;">
+                                    <div
+                                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%); animation: shine 2s infinite;">
+                                    </div>
+                                    <span
+                                        style="font-size: 3rem; color: white; font-family: 'Poppins'; position: relative; z-index: 2;">;</span>
+                                </div>
+                            </div>
+                            <h5 class="card-title mb-2"
+                                style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Haitsam</h5>
+                            <div class="mb-2"
+                                style="background: linear-gradient(135deg, #6c757d, #adb5bd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">
+                                Project Owner & Fullstack Dev.
+                            </div>
+                            <div class="text-muted small mb-3"
+                                style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
+                                <div
+                                    style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">
+                                    Universitas Telkom</div>
+                                <div style="color: #6c757d; font-size: 0.7rem; line-height: 1.2;">Sistem Informasi</div>
+                            </div>
+                            <a href="https://github.com/mhaitsam18" target="_blank" class="btn btn-dark btn-sm"
+                                style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(255,255,255,0.1); transition: all 0.3s ease;">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow-lg h-100" style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
+                    <div class="card border-0 shadow-lg h-100"
+                        style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
                         <!-- Glow Effect -->
-                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(40,167,69,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);"></div>
-                        
+                        <div
+                            style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(40,167,69,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);">
+                        </div>
+
                         <div class="card-body text-center p-4" style="position: relative; z-index: 2;">
                             <div class="mb-3" style="position: relative;">
-                                <div style="background: linear-gradient(135deg, #28a745, #20c997); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(40,167,69,0.3); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;"></div>
-                                    <i class="fas fa-palette fa-2x text-white" style="position: relative; z-index: 2;"></i>
+                                <div
+                                    style="background: linear-gradient(135deg, #28a745, #20c997); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(40,167,69,0.3); position: relative; overflow: hidden;">
+                                    <div
+                                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;">
+                                    </div>
+                                    <i class="fas fa-palette fa-2x text-white"
+                                        style="position: relative; z-index: 2;"></i>
                                 </div>
                             </div>
-                            <h5 class="card-title mb-2" style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nuansa Bening A.J.</h5>
-                            <div class="mb-2" style="background: linear-gradient(135deg, #28a745, #20c997); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">Frontend Developer</div>
-                            <div class="text-muted small mb-3" style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
-                                <div style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">Universitas Pendidikan Indonesia</div>
+                            <h5 class="card-title mb-2"
+                                style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Nuansa Bening A.J.</h5>
+                            <div class="mb-2"
+                                style="background: linear-gradient(135deg, #28a745, #20c997); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">
+                                Frontend Developer</div>
+                            <div class="text-muted small mb-3"
+                                style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
+                                <div
+                                    style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">
+                                    Universitas Pendidikan Indonesia</div>
                                 <div style="color: #6c757d; font-size: 0.7rem; line-height: 1.2;">Ilmu Komputer</div>
                             </div>
-                            <a href="https://github.com/nbeningg" target="_blank" class="btn btn-dark btn-sm" style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
+                            <a href="https://github.com/nbeningg" target="_blank" class="btn btn-dark btn-sm"
+                                style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow-lg h-100" style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(220,53,69,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);"></div>
-                        
+                    <div class="card border-0 shadow-lg h-100"
+                        style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
+                        <div
+                            style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(220,53,69,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);">
+                        </div>
+
                         <div class="card-body text-center p-4" style="position: relative; z-index: 2;">
                             <div class="mb-3" style="position: relative;">
-                                <div style="background: linear-gradient(135deg, #dc3545, #fd7e14); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(220,53,69,0.3); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;"></div>
-                                    <i class="fas fa-terminal fa-2x text-white" style="position: relative; z-index: 2;"></i>
+                                <div
+                                    style="background: linear-gradient(135deg, #dc3545, #fd7e14); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(220,53,69,0.3); position: relative; overflow: hidden;">
+                                    <div
+                                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;">
+                                    </div>
+                                    <i class="fas fa-terminal fa-2x text-white"
+                                        style="position: relative; z-index: 2;"></i>
                                 </div>
                             </div>
-                            <h5 class="card-title mb-2" style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Kasyful Haq B.</h5>
-                            <div class="mb-2" style="background: linear-gradient(135deg, #dc3545, #fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">Frontend Developer</div>
-                            <div class="text-muted small mb-3" style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
-                                <div style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">Universitas Pendidikan Indonesia</div>
+                            <h5 class="card-title mb-2"
+                                style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Kasyful Haq B.</h5>
+                            <div class="mb-2"
+                                style="background: linear-gradient(135deg, #dc3545, #fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">
+                                Frontend Developer</div>
+                            <div class="text-muted small mb-3"
+                                style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
+                                <div
+                                    style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">
+                                    Universitas Pendidikan Indonesia</div>
                                 <div style="color: #6c757d; font-size: 0.7rem; line-height: 1.2;">Ilmu Komputer</div>
                             </div>
-                            <a href="https://github.com/DatBoiSUS-Baka" target="_blank" class="btn btn-dark btn-sm" style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
+                            <a href="https://github.com/DatBoiSUS-Baka" target="_blank" class="btn btn-dark btn-sm"
+                                style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow-lg h-100" style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,193,7,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);"></div>
-                        
+                    <div class="card border-0 shadow-lg h-100"
+                        style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
+                        <div
+                            style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,193,7,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);">
+                        </div>
+
                         <div class="card-body text-center p-4" style="position: relative; z-index: 2;">
                             <div class="mb-3" style="position: relative;">
-                                <div style="background: linear-gradient(135deg, #ffc107, #fd7e14); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(255,193,7,0.3); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;"></div>
+                                <div
+                                    style="background: linear-gradient(135deg, #ffc107, #fd7e14); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(255,193,7,0.3); position: relative; overflow: hidden;">
+                                    <div
+                                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;">
+                                    </div>
                                     <i class="fas fa-cogs fa-2x text-white" style="position: relative; z-index: 2;"></i>
                                 </div>
                             </div>
-                            <h5 class="card-title mb-2" style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Meisya Amalia</h5>
-                            <div class="mb-2" style="background: linear-gradient(135deg, #ffc107, #fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">Backend Developer</div>
-                            <div class="text-muted small mb-3" style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
-                                <div style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">Universitas Pendidikan Indonesia</div>
+                            <h5 class="card-title mb-2"
+                                style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Meisya Amalia</h5>
+                            <div class="mb-2"
+                                style="background: linear-gradient(135deg, #ffc107, #fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">
+                                Backend Developer</div>
+                            <div class="text-muted small mb-3"
+                                style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
+                                <div
+                                    style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">
+                                    Universitas Pendidikan Indonesia</div>
                                 <div style="color: #6c757d; font-size: 0.7rem; line-height: 1.2;">Ilmu Komputer</div>
                             </div>
-                            <a href="https://github.com/Meisya721" target="_blank" class="btn btn-dark btn-sm" style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
+                            <a href="https://github.com/Meisya721" target="_blank" class="btn btn-dark btn-sm"
+                                style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow-lg h-100" style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
-                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,123,255,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);"></div>
-                        
+                    <div class="card border-0 shadow-lg h-100"
+                        style="transition: all 0.4s ease; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f0f0); position: relative; overflow: hidden;">
+                        <div
+                            style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,123,255,0.1) 0%, transparent 70%); transition: all 0.4s ease; transform: scale(0);">
+                        </div>
+
                         <div class="card-body text-center p-4" style="position: relative; z-index: 2;">
                             <div class="mb-3" style="position: relative;">
-                                <div style="background: linear-gradient(135deg, #007bff, #6610f2); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,123,255,0.3); position: relative; overflow: hidden;">
-                                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;"></div>
+                                <div
+                                    style="background: linear-gradient(135deg, #007bff, #6610f2); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,123,255,0.3); position: relative; overflow: hidden;">
+                                    <div
+                                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%); animation: shine 2s infinite;">
+                                    </div>
                                     <i class="fas fa-code fa-2x text-white" style="position: relative; z-index: 2;"></i>
                                 </div>
                             </div>
-                            <h5 class="card-title mb-2" style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ibnu Fadhilah</h5>
-                            <div class="mb-2" style="background: linear-gradient(135deg, #007bff, #6610f2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">Backend Developer</div>
-                            <div class="text-muted small mb-3" style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
-                                <div style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">Universitas Pendidikan Indonesia</div>
+                            <h5 class="card-title mb-2"
+                                style="font-size: 1rem; font-weight: 700; color: #2c3e50; background: linear-gradient(135deg, #2c3e50, #34495e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Ibnu Fadhilah</h5>
+                            <div class="mb-2"
+                                style="background: linear-gradient(135deg, #007bff, #6610f2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; font-size: 0.9rem; white-space: nowrap;">
+                                Backend Developer</div>
+                            <div class="text-muted small mb-3"
+                                style="background: rgba(108,117,125,0.1); border-radius: 10px; padding: 6px;">
+                                <div
+                                    style="font-weight: 600; color: #495057; font-size: 0.75rem; line-height: 1.2; margin-bottom: 2px;">
+                                    Universitas Pendidikan Indonesia</div>
                                 <div style="color: #6c757d; font-size: 0.7rem; line-height: 1.2;">Ilmu Komputer</div>
                             </div>
-                            <a href="https://github.com/Noov-hub" target="_blank" class="btn btn-dark btn-sm" style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
+                            <a href="https://github.com/Noov-hub" target="_blank" class="btn btn-dark btn-sm"
+                                style="border-radius: 25px; padding: 8px 20px; background: linear-gradient(135deg, #343a40, #495057); border: none; box-shadow: 0 5px 15px rgba(52,58,64,0.3); transition: all 0.3s ease;">
                                 <i class="fab fa-github"></i> GitHub
                             </a>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
 
     <style>
         @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(200%) rotate(45deg); }
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(200%) rotate(45deg);
+            }
         }
-        
+
         .card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
         }
-        
+
         .card:hover div[style*="radial-gradient"] {
             transform: scale(1) !important;
         }
-        
+
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(52,58,64,0.4) !important;
+            box-shadow: 0 8px 20px rgba(52, 58, 64, 0.4) !important;
         }
-        
+
         .card-body {
             backdrop-filter: blur(10px);
         }

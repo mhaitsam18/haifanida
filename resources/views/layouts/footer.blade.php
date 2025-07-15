@@ -184,7 +184,7 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script> Haifa Nida Wisata. Built by
-                    <a href="https://www.instagram.com/mhaitsam" target="_blank">Haitsam</a>.
+                    <a href="https://github.com/mhaitsam18" target="_blank">Haitsam dkk.</a>.
                     All Rights Reserved
                 </p>
             </div>
