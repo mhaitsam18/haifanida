@@ -65,8 +65,8 @@
                                     <i class='bx bx-message'></i>
                                     <h3>Email</h3>
                                     <a
-                                        href="mailto:alamatemail@domain.com?subject=Pertanyaan&body=Saya memiliki beberapa pertanyaan tentang produk Anda"><span
-                                            class="__cf_email__">cs@haifanida.com</span></a>
+                                        href="mailto:cs@haifanida.id?subject=Pertanyaan&body=Saya memiliki beberapa pertanyaan tentang produk Anda"><span
+                                            class="__cf_email__">cs@haifanida.id</span></a>
                                 </div>
                             </li>
                         </ul>

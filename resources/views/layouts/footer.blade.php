@@ -113,8 +113,8 @@
                                 <div class="content">
                                     <i class='bx bx-message'></i>
                                     <h3>Email</h3>
-                                    <a href="mailto:cs@haifanida.com"><span class="__cf_email__"
-                                            data-cfemail="761e131a1a19360213151e130e5815191b">[cs@haifanida.com]</span></a>
+                                    <a href="mailto:cs@haifanida.id"><span class="__cf_email__"
+                                            data-cfemail="761e131a1a19360213151e130e5815191b">[cs@haifanida.id]</span></a>
                                 </div>
                             </li>
                         </ul>

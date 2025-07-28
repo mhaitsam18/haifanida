@@ -6,10 +6,10 @@
     @php
         use Carbon\Carbon;
     @endphp
-    
+
     <!-- Link ke CSS file yang baru -->
     <link rel="stylesheet" href="{{ asset('assets/css/umroh-package.css') }}">
-    
+
     <div class="inner-banner">
         <div class="container">
             <div class="inner-title text-center">
@@ -54,7 +54,7 @@
                                     </div>
                                     <p class="info-card-content">{{ $paket->destinasi }}</p>
                                 </div>
-                                
+
                                 <div class="info-card">
                                     <div class="info-card-header">
                                         <i class='bx bx-time info-card-icon'></i>
@@ -62,7 +62,7 @@
                                     </div>
                                     <p class="info-card-content">{{ $paket->durasi }} Hari</p>
                                 </div>
-                                
+
                                 <div class="info-card">
                                     <div class="info-card-header">
                                         <i class='bx bx-calendar info-card-icon'></i>
@@ -70,7 +70,7 @@
                                     </div>
                                     <p class="info-card-content">{{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}</p>
                                 </div>
-                                
+
                                 <div class="info-card">
                                     <div class="info-card-header">
                                         <i class='bx bx-calendar info-card-icon'></i>
@@ -78,7 +78,7 @@
                                     </div>
                                     <p class="info-card-content">{{ Carbon::parse($paket->tanggal_selesai)->format('d M Y') }}</p>
                                 </div>
-                                
+
                                 <div class="info-card">
                                     <div class="info-card-header">
                                         <i class='bx bxs-plane-take-off info-card-icon'></i>
@@ -86,7 +86,7 @@
                                     </div>
                                     <p class="info-card-content">{{ $paket->tempat_keberangkatan }}</p>
                                 </div>
-                                
+
                                 <div class="info-card">
                                     <div class="info-card-header">
                                         <i class='bx bxs-plane-land info-card-icon'></i>
@@ -131,12 +131,16 @@
                                 <a href="{{ route('umroh.formPemesanan', ['paket_id' => $paket->id]) }}" class="btn btn-order">
                                     <i class='bx bx-cart' style="margin-right: 8px;"></i>Pesan Sekarang
                                 </a>
+                                {{-- <a href="https://wa.me/6282299198002?text=Assalamu%27alaikum%20Haifa%20Nida%20Wisata%2C%0ASaya%20ingin%20memesan%20*Paket%20Umroh%20Istimewa%2012%20Hari%20-%20Keberangkatan%2020%20November%202025*.%0ALink%20brosur%3A%20https%3A%2F%2Fwww.haifanidawisata.co.id%2Fumroh-istimewa-november-2025%0AMohon%20informasi%20lebih%20lanjut.%0AJazakumullah%20khairan." class="btn btn-order" target="_blank">
+                                    <i class='bx bx-cart' style="margin-right: 8px;"></i>Pesan Sekarang
+                                </a> --}}
+
                             @else
                                 <a href="{{ route('login') }}" class="btn btn-order">
                                     <i class='bx bx-cart' style="margin-right: 8px;"></i>Login untuk Pesan
                                 </a>
                             @endauth
-                            
+
                             <!-- WhatsApp Share Button -->
                             <div class="text-center">
                                 <a href="#" id="shareWhatsAppBtn" class="btn btn-whatsapp d-flex justify-content-center align-items-center">
@@ -198,53 +202,53 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const shareWhatsAppBtn = document.getElementById('shareWhatsAppBtn');
-        
-        shareWhatsAppBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Helper function untuk decode HTML entities
-            function decodeHtmlEntities(text) {
-                const textarea = document.createElement('textarea');
-                textarea.innerHTML = text;
-                return textarea.value;
-            }
-            
-            // Decode deskripsi dan fasilitas
-            const deskripsi = {!! json_encode(strip_tags($paket->deskripsi)) !!};
-            const fasilitas = {!! json_encode(strip_tags($paket->fasilitas)) !!};
-            
-            const decodedDeskripsi = decodeHtmlEntities(deskripsi);
-            const decodedFasilitas = decodeHtmlEntities(fasilitas);
-            
-            const message = `🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang! 
-Berikut detail paket yang aku pilih:
+        document.addEventListener('DOMContentLoaded', function() {
+            const shareWhatsAppBtn = document.getElementById('shareWhatsAppBtn');
 
-✈️ {{ $paket->nama_paket }}
-📆 Keberangkatan: {{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}
-⏱️ Durasi: {{ $paket->durasi }} Hari
-🌐 Destinasi: {{ $paket->destinasi }}
-💰 Harga: Rp {{ number_format($paket->harga, 0, ',', '.') }}/orang
+            shareWhatsAppBtn.addEventListener('click', function(e) {
+                e.preventDefault();
 
-${decodedDeskripsi}
+                // Helper function untuk decode HTML entities
+                function decodeHtmlEntities(text) {
+                    const textarea = document.createElement('textarea');
+                    textarea.innerHTML = text;
+                    return textarea.value;
+                }
 
-Fasilitas:
-${decodedFasilitas}
+                // Decode deskripsi dan fasilitas
+                const deskripsi = {!! json_encode(strip_tags($paket->deskripsi)) !!};
+                const fasilitas = {!! json_encode(strip_tags($paket->fasilitas)) !!};
 
-🙋‍♂️ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
-📱 WhatsApp: https://wa.me/6282299198002
-📍 Kantor: Jl. Raya Karawang No. 88`;
+                const decodedDeskripsi = decodeHtmlEntities(deskripsi);
+                const decodedFasilitas = decodeHtmlEntities(fasilitas);
 
-            // Encode message untuk URL
-            const encodedMessage = encodeURIComponent(message);
-            
-            // Buat WhatsApp link
-            const whatsappLink = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-            
-            // Buka WhatsApp di tab baru
-            window.open(whatsappLink, '_blank');
+                const message = `🕋 Bismillah, aku mau daftar Umroh di PT. Haifa Nida Wisata Karawang!
+    Berikut detail paket yang aku pilih:
+
+    ✈️ {{ $paket->nama_paket }}
+    📆 Keberangkatan: {{ Carbon::parse($paket->tanggal_mulai)->format('d M Y') }}
+    ⏱️ Durasi: {{ $paket->durasi }} Hari
+    🌐 Destinasi: {{ $paket->destinasi }}
+    💰 Harga: Rp {{ number_format($paket->harga, 0, ',', '.') }}/orang
+
+    ${decodedDeskripsi}
+
+    Fasilitas:
+    ${decodedFasilitas}
+
+    🙋‍♂️ Tertarik juga? Bisa langsung hubungi admin PT. Haifa:
+    📱 WhatsApp: https://wa.me/6282299198002
+    📍 Kantor: Jl. Raya Karawang No. 88`;
+
+                // Encode message untuk URL
+                const encodedMessage = encodeURIComponent(message);
+
+                // Buat WhatsApp link
+                const whatsappLink = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+
+                // Buka WhatsApp di tab baru
+                window.open(whatsappLink, '_blank');
+            });
         });
-    });
     </script>
 @endsection

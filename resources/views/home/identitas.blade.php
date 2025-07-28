@@ -85,7 +85,7 @@
                         <div class="mb-3">
                             <label class="form-label required-field">Foto Jemaah</label>
                             <div class="text-center mb-3">
-                                <img id="preview-image" src="{{ $member->foto ? asset('storage/jemaah-foto/' . $member->foto) : asset('storage/jemaah-foto/pas-foto.jpg') }}"
+                                <img id="preview-image" src="{{ $member->foto ? asset('storage/' . $member->foto) : asset('storage/jemaah-foto/pas-foto.jpg') }}"
                                     class="img-thumbnail" style="height: 150px; width: auto;">
                             </div>
                             <div class="position-relative">
@@ -481,7 +481,7 @@
         // AJAX untuk mengambil data kabupaten berdasarkan provinsi
         $('#provinsi').change(function() {
             var selectedProvinsi = $(this).val();
-            
+
             $.ajax({
                 url: '/get-kabupaten',
                 type: 'POST',

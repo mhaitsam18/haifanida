@@ -61,13 +61,13 @@
                                         <td>{{ $paket->durasi }} Hari</td>
                                         <td>Rp.{{ number_format($paket->harga, 2, ',', '.') }}</td>
                                         <td>{!! $paket->fasilitas !!}</td>
-                                        <td>{{ $paket->deskripsi }}</td>
+                                        <td>{!! $paket->deskripsi !!}</td>
                                         <td>{{ $paket->tempat_keberangkatan }}</td>
                                         <td>{{ $paket->tempat_kepulangan }}</td>
                                         <td>{{ Carbon::parse($paket->tanggal_mulai)->isoFormat('LL') }}</td>
                                         <td>{{ Carbon::parse($paket->tanggal_selesai)->isoFormat('LL') }}</td>
                                         <td>
-                                            <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Foto Kantor"
+                                            <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Gambar Paket"
                                                 style="border-radius: 0%; width: 150px; height: 100px;">
                                         </td>
                                         <td>

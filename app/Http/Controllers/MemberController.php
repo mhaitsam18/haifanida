@@ -11,7 +11,7 @@ use App\Models\Member;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;    
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 // --MODIFIED
@@ -39,7 +39,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $member = Member::where('user_id', $user->id)->first();
-        
+
         // Validate User data
         $validateUser = $request->validate([
             'name' => 'required|string',
@@ -90,7 +90,7 @@ class MemberController extends Controller
             if ($user->photo) {
                 Storage::delete('public/user-photo/' . $user->photo);
             }
-            
+
             // Store new photo
             $validateUser['photo'] = $request->file('photo')->store('user-photo', 'public');
             $validateMember['foto'] = $validateUser['photo'];
@@ -115,7 +115,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $title = 'Daftar Keberangkatan | Haifa Nida Wisata';
-        
+
         // Get upcoming trips where end date is in the future
         $pemesanan = $user->pemesanans()
             ->with('paket')
@@ -133,7 +133,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $title = 'Riwayat Perjalanan | Haifa Nida Wisata';
-        
+
         // Get completed trips where end date is in the past
         $pemesanan = $user->pemesanans()
             ->with('paket')
@@ -161,10 +161,10 @@ class MemberController extends Controller
     public function identitas(Request $request){
         $user = Auth::user();
         $member = Member::where('user_id', $user->id)->first();
-        
+
         // Get provinsis
         $provinsis = Provinsi::all();
-        
+
         // Get kabupatens if provinsi is selected
         $kabupatens = [];
         if ($member->provinsi) {
@@ -173,7 +173,7 @@ class MemberController extends Controller
                 $kabupatens = Kabupaten::where('provinsi_id', $provinsi->id)->get();
             }
         }
-        
+
         return view('home.identitas', [
             'user' => $user,
             'title' => 'Identitas dan Berkas',
@@ -229,7 +229,7 @@ class MemberController extends Controller
             if ($member->foto) {
                 Storage::delete('jemaah-foto/' . $member->foto);
             }
-            
+
             // Store new foto
             $validateMember['foto'] = $request->file('foto')->store('jemaah-foto', 'public');
         }
@@ -291,9 +291,9 @@ class MemberController extends Controller
             if ($user->photo) {
                 Storage::delete($user->photo);
             }
-            
-            // Store new photo in member-foto directory
-            $validateUser['photo'] = $request->file('photo')->store('member-foto', 'public');
+
+            // Store new photo in user-photo directory
+            $validateUser['photo'] = $request->file('photo')->store('user-photo', 'public');
             $validateMember['foto'] = $validateUser['photo'];
         }
 
@@ -320,29 +320,44 @@ class MemberController extends Controller
         ]);
 
         $user = Auth::user();
-
+        // Handle photo upload
         if ($request->hasFile('photo')) {
             // Delete old photo if exists
             if ($user->photo) {
-                $oldPhotoPath = public_path('storage/user-photo/' . $user->photo);
-                if (file_exists($oldPhotoPath)) {
-                    unlink($oldPhotoPath);
-                }
+                Storage::delete($user->photo);
             }
 
-            // Store new photo
-            $file = $request->file('photo');
-            $filename = time() . '_' . $user->id . '.' . $file->getClientOriginalExtension();
-            
-            // Move file to public/storage/user-photo directory
-            $file->move(public_path('storage/user-photo'), $filename);
-
-            // Update user profile with just the filename
-            $user->photo = $filename;
-            $user->save();
+            // Store new photo in user-photo directory
+            $validateUser['photo'] = $request->file('photo')->store('user-photo', 'public');
+            $validateMember['foto'] = $validateUser['photo'];
+            $user->update($validateUser);
+            // $user->member->update($validateMember);
 
             return redirect()->back()->with('success', 'Profile picture updated successfully!');
         }
+
+        // if ($request->hasFile('photo')) {
+        //     // Delete old photo if exists
+        //     if ($user->photo) {
+        //         $oldPhotoPath = public_path('storage/user-photo/' . $user->photo);
+        //         if (file_exists($oldPhotoPath)) {
+        //             unlink($oldPhotoPath);
+        //         }
+        //     }
+
+        //     // Store new photo
+        //     $file = $request->file('photo');
+        //     $filename = time() . '_' . $user->id . '.' . $file->getClientOriginalExtension();
+
+        //     // Move file to public/storage/user-photo directory
+        //     $file->move(public_path('storage/user-photo'), $filename);
+
+        //     // Update user profile with just the filename
+        //     $user->photo = $filename;
+        //     $user->save();
+
+        //     return redirect()->back()->with('success', 'Profile picture updated successfully!');
+        // }
 
         return redirect()->back()->with('error', 'No image file uploaded.');
     }

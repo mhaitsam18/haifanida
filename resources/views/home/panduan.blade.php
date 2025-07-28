@@ -166,69 +166,94 @@
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div> --}}
-    <div class="row pt-45">
-        <div class="col-lg-12">
-            {{-- <div class="terms-conditions-img">
-                <img src="/assets-techex-demo/images/umroh-guide-img.jpg" alt="Images">
-            </div> --}}
-            <div class="single-content">
-                <h3>Panduan Umroh</h3>
-                <p>
-                    Perjalanan umroh adalah ibadah yang membutuhkan persiapan fisik, mental, dan spiritual. Kami menyediakan panduan lengkap untuk memastikan perjalanan Anda berjalan lancar dan khusyuk. Mulai dari pengurusan dokumen hingga tata cara ibadah, kami akan memandu Anda di setiap langkah.
-                </p>
-                <p>
-                    Pastikan Anda memahami syarat dan ketentuan perjalanan, termasuk jadwal keberangkatan, akomodasi, dan peraturan selama di Tanah Suci. Kami juga menyediakan pembimbing berpengalaman untuk membantu menjalankan ibadah sesuai tuntunan syariat.
-                </p>
-            </div>
-            <div class="single-content">
-                <h3>01. Persiapan Dokumen Perjalanan</h3>
-                <p>
-                    Sebelum berangkat, pastikan Anda memiliki paspor yang berlaku minimal 6 bulan, kartu identitas, dan bukti vaksin meningitis. Kami akan membantu memverifikasi dokumen dan mengurus visa umroh agar prosesnya cepat dan mudah.
-                </p>
-                <p>
-                    Selain itu, siapkan salinan dokumen penting dan simpan dalam tempat yang aman. Kami juga merekomendasikan untuk membawa kartu kesehatan atau catatan medis jika Anda memiliki kondisi kesehatan tertentu.
-                </p>
-            </div>
-            <div class="single-content">
-                <h3>02. Persiapan Fisik dan Mental</h3>
-                <p>
-                    Perjalanan umroh membutuhkan stamina yang baik karena melibatkan aktivitas fisik seperti tawaf dan sai. Lakukan olahraga ringan seperti berjalan kaki beberapa minggu sebelum keberangkatan untuk membangun kekuatan fisik.
-                </p>
-                <p>
-                    Persiapan mental juga penting. Pelajari tata cara umroh, niat, dan doa-doa yang diperlukan. Kami menyediakan sesi manasik umroh untuk membantu Anda memahami setiap langkah ibadah dengan baik.
-                </p>
-            </div>
-            <div class="single-content">
-                <h3>03. Tata Cara Ibadah Umroh</h3>
-                <p>
-                    Ibadah umroh terdiri dari beberapa tahapan utama: ihram, tawaf, sai, dan tahallul. Setiap tahapan memiliki aturan dan doa khusus yang harus diikuti. Pembimbing kami akan mendampingi Anda untuk memastikan semua rukun umroh dilakukan dengan benar.
-                </p>
-                <p>
-                    Selama di Tanah Suci, jaga kekhusyukan dan hindari perbuatan yang dapat membatalkan ibadah. Kami juga akan memberikan panduan tentang adab di Masjidil Haram dan Masjid Nabawi.
-                </p>
-            </div>
-            <div class="single-content">
-                <h3>04. Pengelolaan Keuangan Selama Perjalanan</h3>
-                <p>
-                    Siapkan dana yang cukup untuk kebutuhan pribadi seperti makanan tambahan, oleh-oleh, atau keperluan darurat. Kami merekomendasikan membawa mata uang Riyal Saudi dalam jumlah yang wajar dan kartu pembayaran internasional.
-                </p>
-                <p>
-                    Hindari membawa uang tunai dalam jumlah besar untuk alasan keamanan. Tim kami akan memberikan saran tentang tempat penukaran uang yang terpercaya di Makkah dan Madinah.
-                </p>
-            </div>
-            <div class="single-content">
-                <h3>05. Keamanan dan Keselamatan</h3>
-                <p>
-                    Kami bekerja sama dengan penyedia layanan terpercaya untuk memastikan keamanan jamaah selama perjalanan. Selalu ikuti instruksi pembimbing dan hindari berpisah dari rombongan tanpa pemberitahuan.
-                </p>
-                <p>
-                    Simpan nomor kontak darurat tim kami dan pihak berwenang setempat. Pastikan Anda juga membawa perlengkapan pribadi seperti masker, hand sanitizer, dan obat-obatan pribadi untuk menjaga kesehatan.
-                </p>
+            </div>  --}}
+            <div class="row pt-45">
+                <div class="col-lg-12">
+                    <div class="single-content">
+                        <h3>Panduan Umroh</h3>
+                        <p>
+                            Perjalanan umroh adalah ibadah yang membutuhkan persiapan fisik, mental, dan spiritual. Kami menyediakan panduan lengkap untuk memastikan perjalanan Anda berjalan lancar dan khusyuk. Mulai dari pengurusan dokumen hingga tata cara ibadah, kami akan memandu Anda di setiap langkah.
+                        </p>
+                        <p>
+                            Pastikan Anda memahami syarat dan ketentuan perjalanan, termasuk jadwal keberangkatan, akomodasi, dan peraturan selama di Tanah Suci. Kami juga menyediakan pembimbing berpengalaman untuk membantu menjalankan ibadah sesuai tuntunan syariat.
+                        </p>
+                    </div>
+
+                    <!-- 5 Pasti Umroh -->
+                    <div class="single-content">
+                        <h3>5 Pasti Umroh dari Kementerian Agama</h3>
+                        <div class="row align-items-start">
+                            <!-- Teks 5 Pasti Umrah -->
+                            <div class="col-md-8">
+                                <p>PT. Haifa Nida Wisata Karawang berkomitmen memenuhi seluruh standar <strong>5 Pasti Umrah</strong> dari Kementerian Agama Republik Indonesia:</p>
+                                <ul>
+                                    <li><strong>1. Pasti Travel Berizin</strong> – Terdaftar resmi di Kemenag RI dan <a href="https://validation.timsertifikasi.org/search?certnumber=TiMS%2FPPIU2234126" target="_blank" rel="noopener noreferrer">terakreditasi A.</a></li>
+                                    <li><strong>2. Pasti Jadwalnya</strong> – Keberangkatan dan kepulangan sesuai jadwal resmi yang disampaikan secara tertulis.</li>
+                                    <li><strong>3. Pasti Terbangnya</strong> – Menggunakan maskapai resmi, tiket dikeluarkan sebelum keberangkatan.</li>
+                                    <li><strong>4. Pasti Visanya</strong> – Visa resmi terbit sebelum keberangkatan.</li>
+                                    <li><strong>5. Pasti Layanannya</strong> – Layanan hotel, transportasi, konsumsi, manasik, dan pembimbing sesuai standar.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Logo di sebelah kanan -->
+                            <div class="col-md-4 text-center">
+                                <img src="{{ asset('assets/img/logos/logo-pastiumrah.png') }}" alt="5 Pasti Umrah"
+                                    style="max-width: 100%; height: auto;">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="single-content">
+                        <h3>01. Persiapan Dokumen Perjalanan</h3>
+                        <p>
+                            Sebelum berangkat, pastikan Anda memiliki paspor yang berlaku minimal 6 bulan, kartu identitas, dan bukti vaksin meningitis. Kami akan membantu memverifikasi dokumen dan mengurus visa umroh agar prosesnya cepat dan mudah.
+                        </p>
+                        <p>
+                            Selain itu, siapkan salinan dokumen penting dan simpan dalam tempat yang aman. Kami juga merekomendasikan untuk membawa kartu kesehatan atau catatan medis jika Anda memiliki kondisi kesehatan tertentu.
+                        </p>
+                    </div>
+                    <div class="single-content">
+                        <h3>02. Persiapan Fisik dan Mental</h3>
+                        <p>
+                            Perjalanan umroh membutuhkan stamina yang baik karena melibatkan aktivitas fisik seperti tawaf dan sai. Lakukan olahraga ringan seperti berjalan kaki beberapa minggu sebelum keberangkatan untuk membangun kekuatan fisik.
+                        </p>
+                        <p>
+                            Persiapan mental juga penting. Pelajari tata cara umroh, niat, dan doa-doa yang diperlukan. Kami menyediakan sesi manasik umroh untuk membantu Anda memahami setiap langkah ibadah dengan baik.
+                        </p>
+                    </div>
+                    <div class="single-content">
+                        <h3>03. Tata Cara Ibadah Umroh</h3>
+                        <p>
+                            Ibadah umroh terdiri dari beberapa tahapan utama: ihram, tawaf, sai, dan tahallul. Setiap tahapan memiliki aturan dan doa khusus yang harus diikuti. Pembimbing kami akan mendampingi Anda untuk memastikan semua rukun umroh dilakukan dengan benar.
+                        </p>
+                        <p>
+                            Selama di Tanah Suci, jaga kekhusyukan dan hindari perbuatan yang dapat membatalkan ibadah. Kami juga akan memberikan panduan tentang adab di Masjidil Haram dan Masjid Nabawi.
+                        </p>
+                        <a href="/buku-manasik" target="_blank" rel="noopener noreferrer">Download buku Manasik di sini</a>
+                    </div>
+                    <div class="single-content">
+                        <h3>04. Pengelolaan Keuangan Selama Perjalanan</h3>
+                        <p>
+                            Siapkan dana yang cukup untuk kebutuhan pribadi seperti makanan tambahan, oleh-oleh, atau keperluan darurat. Kami merekomendasikan membawa mata uang Riyal Saudi dalam jumlah yang wajar dan kartu pembayaran internasional.
+                        </p>
+                        <p>
+                            Hindari membawa uang tunai dalam jumlah besar untuk alasan keamanan. Tim kami akan memberikan saran tentang tempat penukaran uang yang terpercaya di Makkah dan Madinah.
+                        </p>
+                    </div>
+                    <div class="single-content">
+                        <h3>05. Keamanan dan Keselamatan</h3>
+                        <p>
+                            Kami bekerja sama dengan penyedia layanan terpercaya untuk memastikan keamanan jamaah selama perjalanan. Selalu ikuti instruksi pembimbing dan hindari berpisah dari rombongan tanpa pemberitahuan.
+                        </p>
+                        <p>
+                            Simpan nomor kontak darurat tim kami dan pihak berwenang setempat. Pastikan Anda juga membawa perlengkapan pribadi seperti masker, hand sanitizer, dan obat-obatan pribadi untuk menjaga kesehatan.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 @endsection
