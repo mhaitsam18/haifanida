@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class PemesananController extends Controller
 {
 
-//-- PEMESAN --// 
+//-- PEMESAN --//
 
     public function store(Request $request)
     {
@@ -24,7 +24,7 @@ class PemesananController extends Controller
             'nama' => 'required|string',
             'email' => 'required|email',
             'telepon' => 'required|string',
-            'jumlah_jemaah' => 'required|integer|min:1',
+            'jumlah_jemaah' => 'required|numeric|min:1',
         ]);
         // FITUR AUTOFILL JIKA USER SUDAH LOGIN (BELUM DIIMPLEMENTASI)
         // if ($request->has('is_jemaah')) {
@@ -57,8 +57,8 @@ class PemesananController extends Controller
     //         'status' => 'nullable|string',
     //         'tanggal_pesan' => 'nullable|date',
     //         // 'tanggal_berangkat' => 'nullable|date',
-    //         'jumlah_orang' => 'required|integer',
-    //         'total_harga' => 'nullable|integer',
+    //         'jumlah_orang' => 'required|numeric',
+    //         'total_harga' => 'nullable|numeric',
     //         'metode_pembayaran' => 'nullable|string',
     //         'is_pembayaran_lunas' => 'nullable|integer',
     //         'tanggal_pelunasan' => 'nullable|date',
@@ -93,7 +93,7 @@ class PemesananController extends Controller
             'paket_id' => 'required|integer|exists:paket,id',
             'user_id' => 'required|integer',
             'tanggal_pesan' => 'required|date',
-            'jumlah_orang' => 'required|integer|min:1',
+            'jumlah_orang' => 'required|numeric|min:1',
             'metode_pembayaran' => 'nullable|string',
             'tanggal_pelunasan' => 'nullable|date',
         ]);
@@ -108,7 +108,7 @@ class PemesananController extends Controller
         $pemesanan->status = "Tertunda";
         $pemesanan->tanggal_pesan = $validatedData['tanggal_pesan'];
         $pemesanan->jumlah_orang = $validatedData['jumlah_orang'];
-        $pemesanan->total_harga = $paket->harga * $validatedData['jumlah_orang']; 
+        $pemesanan->total_harga = $paket->harga * $validatedData['jumlah_orang'];
         $pemesanan->metode_pembayaran = $validatedData['metode_pembayaran'] ?? null;
         $pemesanan->is_pembayaran_lunas = 0;
         $pemesanan->tanggal_pelunasan = $validatedData['tanggal_pelunasan'] ?? null;
@@ -120,9 +120,9 @@ class PemesananController extends Controller
                 // Validasi tiap data kamar
                 $validatedKamar = validator($kamarData, [
                     'tipe_kamar' => 'required|string',
-                    'jumlah_pengisi' => 'required|integer|min:1',
+                    'jumlah_pengisi' => 'required|numeric|min:1',
                 ])->validate();
-                
+
                 // Misal, kita ambil harga kamar dari tabel Ekstra dengan tipe kamar
                 $ekstraKamar = Ekstra::where('jenis_ekstra', 'tipe kamar')
                             ->where('nama_ekstra', $validatedKamar['tipe_kamar'])
@@ -146,7 +146,7 @@ class PemesananController extends Controller
                 // Validasi tiap data ekstra
                 $validatedEkstra = validator($ekstraData, [
                     'ekstra' => 'required|string',
-                    'jumlah' => 'required|integer|min:1',
+                    'jumlah' => 'required|numeric|min:1',
                 ])->validate();
 
                 // Dapatkan data ekstra untuk harga default
@@ -168,9 +168,9 @@ class PemesananController extends Controller
         return redirect()->route('pemesanan.detail', $pemesanan->id)
             ->with('success', 'Silahkan tunggu pihak kami menghubungi anda untuk melakukan konfirmasi pemesanan.');
     }
-    
+
     public function detailPemesanan($id)
-    {   
+    {
         $user = Auth::user();
         $pemesanan = Pemesanan::
         where('id', $id)
@@ -203,15 +203,15 @@ class PemesananController extends Controller
     {
         $validateData = $request->validate([
             'tipe_kamar' => 'required|string',
-            'jumlah_pengisi' => 'required|integer',
+            'jumlah_pengisi' => 'required|numeric',
             'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ]);
-        
+
         PemesananKamar::create(array_merge($validateData, [
             'pemesanan_id' => 1 // Replace with actual pemesanan_id logic
         ]));
-        
+
         return back()->with('success', 'Pemesanan Kamar berhasil disimpan');
     }
 
@@ -252,12 +252,12 @@ class PemesananController extends Controller
         $validateData = $request->validate([
             'pemesanan_kamar_id' => 'nullable|integer',
             'permintaan_kamar' => 'required|string',
-            'harga' => 'required|integer',
+            'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ], [
             'permintaan_kamar.required' => 'Permintaan kamar harus dipilih',
             'harga.required' => 'Harga harus diisi',
-            'harga.integer' => 'Harga harus berupa angka',
+            'harga.numeric' => 'Harga harus berupa angka',
         ]);
 
         // Jika ada permintaan khusus, gunakan permintaan khusus
@@ -271,7 +271,7 @@ class PemesananController extends Controller
         unset($validateData['permintaan_kamar']);
 
         PermintaanKamar::create($validateData);
-        
+
         return redirect()->route('permintaan-kamar.index')->with('success', 'Permintaan Kamar berhasil ditambahkan');
     }
 
@@ -309,12 +309,12 @@ class PemesananController extends Controller
         $validateData = $request->validate([
             'pemesanan_kamar_id' => 'nullable|integer',
             'permintaan_kamar' => 'required|string',
-            'harga' => 'required|integer',
+            'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ], [
             'permintaan_kamar.required' => 'Permintaan kamar harus dipilih',
             'harga.required' => 'Harga harus diisi',
-            'harga.integer' => 'Harga harus berupa angka',
+            'harga.numeric' => 'Harga harus berupa angka',
         ]);
 
         // Jika ada permintaan khusus, gunakan permintaan khusus
@@ -328,7 +328,7 @@ class PemesananController extends Controller
         unset($validateData['permintaan_kamar']);
 
         $permintaanKamar->update($validateData);
-        
+
         return redirect()->route('permintaan-kamar.index')->with('success', 'Permintaan Kamar berhasil diperbarui');
     }
 
@@ -379,7 +379,7 @@ class PemesananController extends Controller
     // {
     //     $request->validate([
     //         'jenis_ekstra' => 'required|exists:ekstra,id',
-    //         'jumlah' => 'required|integer|min:1',
+    //         'jumlah' => 'required|numeric|min:1',
     //     ]);
 
     //     $ekstra = Ekstra::findOrFail($request->jenis_ekstra);
@@ -424,7 +424,7 @@ class PemesananController extends Controller
         $validatedData = $request->validate([
             'pemesanan_id' => 'required|exists:pemesanan,id',
             'jenis_ekstra' => 'required|exists:ekstra,id',
-            'jumlah' => 'required|integer|min:1',
+            'jumlah' => 'required|numeric|min:1',
             'total_harga' => 'required|numeric|min:0',
             'keterangan' => 'nullable|string|max:255',
         ], [
@@ -433,7 +433,7 @@ class PemesananController extends Controller
             'jenis_ekstra.required' => 'Jenis ekstra harus dipilih.',
             'jenis_ekstra.exists' => 'Jenis ekstra tidak valid.',
             'jumlah.required' => 'Jumlah harus diisi.',
-            'jumlah.integer' => 'Jumlah harus berupa angka bulat.',
+            'jumlah.numeric' => 'Jumlah harus berupa angka bulat.',
             'jumlah.min' => 'Jumlah minimal adalah 1.',
             'total_harga.required' => 'Total harga harus diisi.',
             'total_harga.numeric' => 'Total harga harus berupa angka.',
@@ -487,7 +487,7 @@ public function editPemesananEkstra(PemesananEkstra $pemesananEkstra)
         $validatedData = $request->validate([
             'pemesanan_id' => 'required|exists:pemesanan,id',
             'jenis_ekstra' => 'required|exists:ekstra,id',
-            'jumlah' => 'required|integer|min:1',
+            'jumlah' => 'required|numeric|min:1',
             'total_harga' => 'required|numeric|min:0',
             'keterangan' => 'nullable|string|max:255',
         ], [
@@ -496,7 +496,7 @@ public function editPemesananEkstra(PemesananEkstra $pemesananEkstra)
             'jenis_ekstra.required' => 'Jenis ekstra harus dipilih.',
             'jenis_ekstra.exists' => 'Jenis ekstra tidak valid.',
             'jumlah.required' => 'Jumlah harus diisi.',
-            'jumlah.integer' => 'Jumlah harus berupa angka bulat.',
+            'jumlah.numeric' => 'Jumlah harus berupa angka bulat.',
             'jumlah.min' => 'Jumlah minimal adalah 1.',
             'total_harga.required' => 'Total harga harus diisi.',
             'total_harga.numeric' => 'Total harga harus berupa angka.',

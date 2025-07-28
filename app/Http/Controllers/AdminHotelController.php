@@ -38,7 +38,7 @@ class AdminHotelController extends Controller
         $validateData = $request->validate([
             'kode_hotel' => 'nullable',
             'nama_hotel' => 'required|string',
-            'bintang' => 'required|integer',
+            'bintang' => 'required|numeric',
             'bintang_setaraf' => 'nullable|string',
             'kota' => 'required|string',
             'negara' => 'required|string',
@@ -88,7 +88,7 @@ class AdminHotelController extends Controller
         $validateData = $request->validate([
             'kode_hotel' => 'nullable',
             'nama_hotel' => 'required|string',
-            'bintang' => 'required|integer',
+            'bintang' => 'required|numeric',
             'bintang_setaraf' => 'nullable|string',
             'kota' => 'required|string',
             'negara' => 'required|string',

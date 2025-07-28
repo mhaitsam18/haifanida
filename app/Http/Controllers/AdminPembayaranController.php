@@ -41,7 +41,7 @@ class AdminPembayaranController extends Controller
     {
         $validateData = $request->validate([
             'pemesanan_id' => 'required|integer',
-            'jumlah_pembayaran' => 'required|integer',
+            'jumlah_pembayaran' => 'required|numeric',
             'metode_pembayaran' => 'required|string',
             'tanggal_pembayaran' => 'required|date',
             'status_pembayaran' => 'required|string',
@@ -89,7 +89,7 @@ class AdminPembayaranController extends Controller
     {
         $validateData = $request->validate([
             'pemesanan_id' => 'required|integer',
-            'jumlah_pembayaran' => 'required|integer',
+            'jumlah_pembayaran' => 'required|numeric',
             'metode_pembayaran' => 'required|string',
             'tanggal_pembayaran' => 'required|date',
             'status_pembayaran' => 'required|string',

@@ -281,9 +281,16 @@
                                             </a>
                                             <ul class="dropdown-menu profile-menu">
                                                 <li class="nav-item">
-                                                    <a href="/member/profile" class="nav-link">
-                                                        Profile
-                                                    </a>
+                                                    @can('admin')
+                                                        <a href="/admin/profile" class="nav-link">
+                                                            Profile
+                                                        </a>
+                                                    @endcan
+                                                    @can('member')
+                                                        <a href="/member/profile" class="nav-link">
+                                                            Profile
+                                                        </a>
+                                                    @endcan
                                                 </li>
                                                 <li class="nav-item">
                                                     <a href="{{ route('member.riwayat-perjalanan') }}" class="nav-link">

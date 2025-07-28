@@ -34,7 +34,7 @@ class PembayaranController extends Controller
     {
         $validatedData = $request->validate([
             'pemesanan_id' => 'required|exists:pemesanan,id',
-            'jumlah_pembayaran' => 'required|integer|min:1',
+            'jumlah_pembayaran' => 'required|numeric|min:1',
             'metode_pembayaran' => 'required|string|max:255',
             'tanggal_pembayaran' => 'required|date',
             'bukti_pembayaran' => 'required|mimes:jpeg,png,jpg,gif,pdf|max:3145728',
@@ -43,7 +43,7 @@ class PembayaranController extends Controller
             'pemesanan_id.required' => 'Pemesanan tidak ditemukan.',
             'pemesanan_id.exists' => 'Pemesanan tidak valid.',
             'jumlah_pembayaran.required' => 'Jumlah pembayaran harus diisi.',
-            'jumlah_pembayaran.integer' => 'Jumlah pembayaran harus berupa angka.',
+            'jumlah_pembayaran.numeric' => 'Jumlah pembayaran harus berupa angka.',
             'jumlah_pembayaran.min' => 'Jumlah pembayaran minimal adalah 1.',
             'metode_pembayaran.required' => 'Metode pembayaran harus diisi.',
             'metode_pembayaran.string' => 'Metode pembayaran harus berupa teks.',

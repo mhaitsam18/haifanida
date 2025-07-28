@@ -44,7 +44,7 @@ class AdminPaketEkstraController extends Controller
         $validateData = $request->validate([
             'paket_id' => 'required|integer',
             'ekstra_id' => 'required|integer',
-            'harga' => 'nullable|integer',
+            'harga' => 'nullable|numeric',
         ]);
 
         PaketEkstra::create($validateData);
@@ -85,7 +85,7 @@ class AdminPaketEkstraController extends Controller
         $validateData = $request->validate([
             'paket_id' => 'required|integer',
             'ekstra_id' => 'required|integer',
-            'harga' => 'nullable|integer',
+            'harga' => 'nullable|numeric',
         ]);
 
         $paketEkstra->update($validateData);

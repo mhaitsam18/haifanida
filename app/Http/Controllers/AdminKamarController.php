@@ -46,9 +46,9 @@ class AdminKamarController extends Controller
             'paket_hotel_id' => 'required|integer',
             'nomor_kamar' => 'nullable|string',
             'tipe_kamar' => 'nullable|string',
-            'kapasitas' => 'nullable|integer',
+            'kapasitas' => 'nullable|numeric',
             'fasilitas' => 'nullable|string',
-            'tersedia' => 'nullable|integer',
+            'tersedia' => 'nullable|numeric',
         ]);
 
         Kamar::create($validateData);
@@ -90,9 +90,9 @@ class AdminKamarController extends Controller
             'paket_hotel_id' => 'required|integer',
             'nomor_kamar' => 'nullable|string',
             'tipe_kamar' => 'nullable|string',
-            'kapasitas' => 'nullable|integer',
+            'kapasitas' => 'nullable|numeric',
             'fasilitas' => 'nullable|string',
-            'tersedia' => 'nullable|integer',
+            'tersedia' => 'nullable|numeric',
         ]);
 
         $kamar->update($validateData);

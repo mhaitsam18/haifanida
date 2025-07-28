@@ -126,8 +126,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="deskripsi" class="form-label">Deskripsi</label>
+                                    {{-- <textarea class="form-control  @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi"
+                                        placeholder="Deskripsi">{{ old('deskripsi', $paket->deskripsi) }}</textarea> --}}
+
                                     <textarea class="form-control  @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi"
-                                        placeholder="Deskripsi">{{ old('deskripsi', $paket->deskripsi) }}</textarea>
+                                        placeholder="deskripsi">{{ old('deskripsi', $paket->deskripsi) }}</textarea>
                                     @error('deskripsi')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
@@ -239,6 +242,30 @@
         if ($("#fasilitas").length) {
             tinymce.init({
                 selector: '#fasilitas',
+                height: 400,
+                default_text_color: 'red',
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen',
+                ],
+                toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons | codesample help',
+                image_advtab: true,
+                templates: [{
+                        title: 'Test template 1',
+                        content: 'Test 1'
+                    },
+                    {
+                        title: 'Test template 2',
+                        content: 'Test 2'
+                    }
+                ],
+                content_css: []
+            });
+        }
+        if ($("#deskripsi").length) {
+            tinymce.init({
+                selector: '#deskripsi',
                 height: 400,
                 default_text_color: 'red',
                 plugins: [

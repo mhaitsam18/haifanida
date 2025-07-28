@@ -37,8 +37,8 @@ class AdminEkstraController extends Controller
     {
         $validateData = $request->validate([
             'nama_ekstra' => 'required|string',
-            'harga_default' => 'nullable|integer',
-            'jenis_ekstra' => 'nullable|string|in:perlengkapan,jasa,permintaan_kamar,tipe_kamar,pesawat',
+            'harga_default' => 'nullable|numeric',
+            'jenis_ekstra' => 'nullable|string|in:perlengkapan,jasa,permintaan kamar,tipe kamar,pesawat',
             'deskripsi' => 'nullable|string',
         ]);
 
@@ -77,8 +77,8 @@ class AdminEkstraController extends Controller
     {
         $validateData = $request->validate([
             'nama_ekstra' => 'required|string',
-            'harga_default' => 'nullable|integer',
-            'jenis_ekstra' => 'nullable|string|in:perlengkapan,jasa,permintaan_kamar,tipe_kamar,pesawat',
+            'harga_default' => 'nullable|numeric',
+            'jenis_ekstra' => 'nullable|string|in:perlengkapan,jasa,permintaan kamar,tipe kamar,pesawat',
             'deskripsi' => 'nullable|string',
         ]);
         $ekstra->update($validateData);

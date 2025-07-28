@@ -49,7 +49,7 @@ class AdminGrupController extends Controller
             'ketua_grup' => 'nullable|string',
             'keterangan_grup' => 'nullable|string',
             'status_grup' => 'nullable|string',
-            'kuota_grup' => 'nullable|integer',
+            'kuota_grup' => 'nullable|numeric',
         ]);
 
         Grup::create($validateData);
@@ -98,7 +98,7 @@ class AdminGrupController extends Controller
             'ketua_grup' => 'nullable|string',
             'keterangan_grup' => 'nullable|string',
             'status_grup' => 'nullable|string',
-            'kuota_grup' => 'nullable|integer',
+            'kuota_grup' => 'nullable|numeric',
         ]);
 
         $grup->update($validateData);

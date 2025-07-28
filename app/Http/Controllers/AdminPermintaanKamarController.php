@@ -44,7 +44,7 @@ class AdminPermintaanKamarController extends Controller
         $validateData = $request->validate([
             'pemesanan_kamar_id' => 'required|integer',
             'permintaan' => 'required|string',
-            'harga' => 'required|integer',
+            'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -90,7 +90,7 @@ class AdminPermintaanKamarController extends Controller
         $validateData = $request->validate([
             'pemesanan_kamar_id' => 'required|integer',
             'permintaan' => 'required|string',
-            'harga' => 'required|integer',
+            'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ]);
 

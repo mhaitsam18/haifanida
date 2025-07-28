@@ -44,8 +44,8 @@ class AdminPemesananKamarController extends Controller
         $validateData = $request->validate([
             'pemesanan_id' => 'required|integer',
             'tipe_kamar' => 'required|string',
-            'jumlah_pengisi' => 'required|integer',
-            'harga' => 'required|integer',
+            'jumlah_pengisi' => 'required|numeric',
+            'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -87,8 +87,8 @@ class AdminPemesananKamarController extends Controller
         $validateData = $request->validate([
             'pemesanan_id' => 'required|integer',
             'tipe_kamar' => 'required|string',
-            'jumlah_pengisi' => 'required|integer',
-            'harga' => 'required|integer',
+            'jumlah_pengisi' => 'required|numeric',
+            'harga' => 'required|numeric',
             'keterangan' => 'nullable|string',
         ]);
 

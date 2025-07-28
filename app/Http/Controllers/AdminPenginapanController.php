@@ -47,8 +47,8 @@ class AdminPenginapanController extends Controller
             'nomor_reservasi' => 'nullable|string',
             'tanggal_check_in' => 'nullable|date',
             'tanggal_check_out' => 'nullable|date',
-            'jumlah_kamar' => 'nullable|integer',
-            'total_harga' => 'nullable|integer',
+            'jumlah_kamar' => 'nullable|numeric',
+            'total_harga' => 'nullable|numeric',
             'keterangan_hotel' => 'nullable|string',
         ]);
 
@@ -93,8 +93,8 @@ class AdminPenginapanController extends Controller
             'nomor_reservasi' => 'nullable|string',
             'tanggal_check_in' => 'nullable|date',
             'tanggal_check_out' => 'nullable|date',
-            'jumlah_kamar' => 'nullable|integer',
-            'total_harga' => 'nullable|integer',
+            'jumlah_kamar' => 'nullable|numeric',
+            'total_harga' => 'nullable|numeric',
             'keterangan_hotel' => 'nullable|string',
         ]);
 

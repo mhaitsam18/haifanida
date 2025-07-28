@@ -41,30 +41,30 @@ class UmrohController extends Controller
         // Base query
         $query = Paket::where('jenis_paket', 'umroh')
             ->whereNotNull('published_at');
-        
+
         // Price range filter
         if ($request->filled('harga_min')) {
             $query->where('harga', '>=', $request->harga_min);
         }
-        
+
         if ($request->filled('harga_max')) {
             $query->where('harga', '<=', $request->harga_max);
         }
-        
+
         // Departure date filter
         if ($request->filled('tanggal_mulai')) {
             $query->where('tanggal_mulai', '>=', $request->tanggal_mulai);
         }
-        
+
         if ($request->filled('tanggal_akhir')) {
             $query->where('tanggal_mulai', '<=', $request->tanggal_akhir);
         }
-        
+
         // Duration filter - Modified
         if ($request->filled('durasi')) {
             $query->where('durasi', $request->durasi);
         }
-        
+
         // Sort options
         if ($request->filled('urutkan')) {
             switch ($request->urutkan) {
@@ -87,10 +87,10 @@ class UmrohController extends Controller
         } else {
             $query->latest();
         }
-        
+
         // Execute query
         $pakets = $query->get();
-        
+
         // Get unique durations for filter options
         $durasiOptions = Paket::where('jenis_paket', 'umroh')
             ->whereNotNull('published_at')
@@ -99,7 +99,7 @@ class UmrohController extends Controller
             ->sort()
             ->values()
             ->toArray();
-            
+
         return view('home.umroh', [
             'title' => 'Paket Umroh',
             'pakets' => $pakets,
@@ -118,7 +118,7 @@ class UmrohController extends Controller
     }
 
     public function formPemesanan(Request $request)
-    {   
+    {
         $user = Auth::user();
         $paket = Paket::findOrFail($request->paket_id);
 
@@ -143,8 +143,8 @@ class UmrohController extends Controller
     //         'status' => 'nullable|string',
     //         'tanggal_pesan' => 'nullable|date',
     //         // 'tanggal_berangkat' => 'nullable|date',
-    //         'jumlah_orang' => 'nullable|integer',
-    //         'total_harga' => 'nullable|integer',
+    //         'jumlah_orang' => 'nullable|numeric',
+    //         'total_harga' => 'nullable|numeric',
     //         'metode_pembayaran' => 'nullable|string',
     //         'is_pembayaran_lunas' => 'nullable|integer',
     //         'tanggal_pelunasan' => 'nullable|date',
@@ -174,7 +174,7 @@ class UmrohController extends Controller
     // }
 
     // public function detailPemesanan($id)
-    // {   
+    // {
     //     $user = Auth::user();
     //     $pemesanan = Pemesanan::
     //     // findOrFail($id);
@@ -188,9 +188,9 @@ class UmrohController extends Controller
     //         'user' => $user
     //     ]);
     // }
-    
+
     public function listJemaah($id)
-    {   
+    {
         $jemaahs = Jemaah::where('pemesanan_id', $id)->get();
         $pemesanan = Pemesanan::
         // findOrFail($id);
@@ -265,13 +265,13 @@ class UmrohController extends Controller
             if ($request->hasFile('foto')) {
                 $file = $request->file('foto');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                
+
                 // Make sure the directory exists
                 $path = public_path('storage/jemaah-foto');
                 if (!file_exists($path)) {
                     mkdir($path, 0777, true);
                 }
-                
+
                 // Move the uploaded file
                 $file->move($path, $filename);
                 $validateData['foto'] = 'jemaah-foto/' . $filename;
@@ -292,7 +292,7 @@ class UmrohController extends Controller
     }
 
     public function destroy(Jemaah $jemaah)
-    {   
+    {
         $pemesananId = $jemaah->pemesanan_id;
             $fotoPath = $jemaah->foto;
 
@@ -330,20 +330,20 @@ class UmrohController extends Controller
         //     // Log::error("Gagal update jumlah orang untuk pemesanan ID: {$pemesananId}. Error: " . $e->getMessage());
         // }
     }
-    
+
     public function editJemaah($pemesananId, $jemaahId)
-    {   
+    {
         $pemesanan = Pemesanan::findOrFail($pemesananId);
         $jemaah = Jemaah::findOrFail($jemaahId);
-        
+
         // MODIFIED: Load provinsi and kabupaten data for dropdowns
         return view('home.pemesanan.edit-jemaah', [
             'title' => 'Edit Data Jemaah',
             'pemesanan' => $pemesanan,
             'jemaah' => $jemaah,
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi', $jemaah->provinsi)) ? 
-                Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi', $jemaah->provinsi))->first()->id)->get() 
+            'kabupatens' => (old('provinsi', $jemaah->provinsi)) ?
+                Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi', $jemaah->provinsi))->first()->id)->get()
                 : Kabupaten::all()
         ]);
     }
@@ -351,7 +351,7 @@ class UmrohController extends Controller
     public function updateJemaah(Request $request, $pemesananId, $jemaahId)
     {
         $jemaah = Jemaah::findOrFail($jemaahId);
-        
+
         // MODIFIED: Validate request data
         $validateData = $request->validate([
             'nomor_ktp' => 'nullable|string',
@@ -391,17 +391,17 @@ class UmrohController extends Controller
                 if ($jemaah->foto && file_exists(public_path('storage/' . $jemaah->foto))) {
                     unlink(public_path('storage/' . $jemaah->foto));
                 }
-                
+
                 // Store new photo
                 $file = $request->file('foto');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                
+
                 // Make sure the directory exists
                 $path = public_path('storage/jemaah-foto');
                 if (!file_exists($path)) {
                     mkdir($path, 0777, true);
                 }
-                
+
                 // Move the uploaded file
                 $file->move($path, $filename);
                 $validateData['foto'] = 'jemaah-foto/' . $filename;
@@ -417,5 +417,5 @@ class UmrohController extends Controller
                 ->with('error', 'Gagal memperbarui data jemaah: '.$e->getMessage());
         }
     }
-    
+
 }

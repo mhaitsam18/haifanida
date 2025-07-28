@@ -44,8 +44,8 @@ class AdminPemesananEkstraController extends Controller
         $validateData = $request->validate([
             'pemesanan_id' => 'required|integer',
             'ekstra' => 'required|string',
-            'jumlah' => 'required|integer',
-            'total_harga' => 'required|integer',
+            'jumlah' => 'required|numeric',
+            'total_harga' => 'required|numeric',
             'keterangan' => 'required|string',
         ]);
 
@@ -87,8 +87,8 @@ class AdminPemesananEkstraController extends Controller
         $validateData = $request->validate([
             'pemesanan_id' => 'required|integer',
             'ekstra' => 'required|string',
-            'jumlah' => 'required|integer',
-            'total_harga' => 'required|integer',
+            'jumlah' => 'required|numeric',
+            'total_harga' => 'required|numeric',
             'keterangan' => 'required|string',
         ]);
 

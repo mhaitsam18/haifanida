@@ -39,7 +39,7 @@ class AdminMaskapaiController extends Controller
         $validateData = $request->validate([
             'kode_maskapai' => 'required|unique:maskapai',
             'nama_maskapai' => 'required|string',
-            'negara_asal' => 'required|integer',
+            'negara_asal' => 'required|numeric',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
             'deskripsi' => 'nullable|string',
         ]);
@@ -84,7 +84,7 @@ class AdminMaskapaiController extends Controller
         $validateData = $request->validate([
             'kode_maskapai' => 'required|unique:maskapais,kode_maskapai,' . $maskapai->id,
             'nama_maskapai' => 'required|string',
-            'negara_asal' => 'required|integer',
+            'negara_asal' => 'required|numeric',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3145728',
             'deskripsi' => 'nullable|string',
         ]);
