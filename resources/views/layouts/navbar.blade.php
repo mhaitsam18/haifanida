@@ -292,11 +292,13 @@
                                                         </a>
                                                     @endcan
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a href="{{ route('member.riwayat-perjalanan') }}" class="nav-link">
-                                                        Riwayat Perjalanan
-                                                    </a>
-                                                </li>
+                                                @can('member')
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('member.riwayat-perjalanan') }}" class="nav-link">
+                                                            Riwayat Perjalanan
+                                                        </a>
+                                                    </li>
+                                                @endcan
                                                 <li class="nav-item">
                                                     <a href="/logout" class="nav-link">
                                                         Logout
