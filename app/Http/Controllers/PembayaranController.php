@@ -16,7 +16,7 @@ class PembayaranController extends Controller
     public function createPembayaran(Pemesanan $pemesanan)
     {
         // Check if pemesanan exists and belongs to the authenticated user
-        if (!$pemesanan->exists || $pemesanan->user_id !== Auth::id()) {
+        if (!$pemesanan->exists || $pemesanan->user_id != Auth::id()) {
             return redirect()->route('home')->with('error', 'Pemesanan tidak ditemukan atau Anda tidak memiliki akses.');
         }
 

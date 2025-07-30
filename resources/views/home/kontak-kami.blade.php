@@ -69,6 +69,22 @@
                                             class="__cf_email__">cs@haifanida.id</span></a>
                                 </div>
                             </li>
+                            <li>
+                                <div class="content">
+                                    <i class='bx bx-money'></i>
+                                    <h3>Nomor Rekening</h3>
+                                    <h6 class="text-white">Bank Mandiri</h6>
+                                    <span class="">1320014831409 a/n Haifa Nida Wisata Karawang</span>
+                                    <h6 class="text-white">Bank BCA</h6>
+                                    <span class="">1092826656 a/n Haifa Nida Wisata Karawang</span>
+                                    <h6 class="text-white">Bank BJB</h6>
+                                    <span class="">0000410697000 a/n Haifa nida wisata karawang, PT</span>
+                                    {{--
+                                    <h6 class="text-white">Bank CIMB Niaga</h6>
+                                    <span class="">860018161900 a/n Haifa Nida Wisata Karawang</span>
+                                     --}}
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

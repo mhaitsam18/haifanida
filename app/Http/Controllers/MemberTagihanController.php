@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class MemberTagihanController extends Controller
 {
     public function index($id)
-    {   
+    {
         $pemesanan = Pemesanan::where('id', $id)
             ->with(['paket', 'pemesananKamars.permintaans', 'pemesananEkstras'])
             ->first();
@@ -65,8 +65,8 @@ class MemberTagihanController extends Controller
 
         $totals = array_column($tagihans, 'total');
         $balance = array_sum($totals);
-        $tax = ($balance * 11) / 100;
-        $balance += $tax;
+        // $tax = ($balance * 11) / 100;
+        // $balance += $tax;
         $balance -= $pembayaran;
 
         // Update is_pembayaran_lunas based on balance
