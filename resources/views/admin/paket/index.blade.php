@@ -37,16 +37,16 @@
                                     {{-- <th class="pt-0">Kode Paket</th> --}}
                                     <th class="pt-0">Nama Paket</th>
                                     <th class="pt-0">Jenis Paket</th>
-                                    <th class="pt-0">Destinasi</th>
+                                    {{-- <th class="pt-0">Destinasi</th> --}}
                                     <th class="pt-0">Durasi</th>
                                     <th class="pt-0">Harga</th>
-                                    <th class="pt-0">Fasilitas</th>
+                                    {{-- <th class="pt-0">Fasilitas</th>
                                     <th class="pt-0">Deskripsi</th>
                                     <th class="pt-0">Tempat Keberangkatan</th>
-                                    <th class="pt-0">Tempat Kepulangan</th>
-                                    <th class="pt-0">Tanggal Mulai</th>
-                                    <th class="pt-0">Tanggal Selesai</th>
-                                    <th class="pt-0">Gambar</th>
+                                    <th class="pt-0">Tempat Kepulangan</th> --}}
+                                    <th class="pt-0">Tanggal Keberangkatan</th>
+                                    <th class="pt-0">Tanggal Kepulangan</th>
+                                    {{-- <th class="pt-0">Gambar</th> --}}
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -57,19 +57,19 @@
                                         {{-- <td>{{ $paket->kode_paket }}</td> --}}
                                         <td>{{ $paket->nama_paket }}</td>
                                         <td>{{ $paket->jenis_paket }}</td>
-                                        <td>{{ $paket->destinasi }}</td>
+                                        {{-- <td>{{ $paket->destinasi }}</td> --}}
                                         <td>{{ $paket->durasi }} Hari</td>
                                         <td>Rp.{{ number_format($paket->harga, 2, ',', '.') }}</td>
-                                        <td>{!! $paket->fasilitas !!}</td>
+                                        {{-- <td>{!! $paket->fasilitas !!}</td>
                                         <td>{!! $paket->deskripsi !!}</td>
                                         <td>{{ $paket->tempat_keberangkatan }}</td>
-                                        <td>{{ $paket->tempat_kepulangan }}</td>
+                                        <td>{{ $paket->tempat_kepulangan }}</td> --}}
                                         <td>{{ Carbon::parse($paket->tanggal_mulai)->isoFormat('LL') }}</td>
                                         <td>{{ Carbon::parse($paket->tanggal_selesai)->isoFormat('LL') }}</td>
-                                        <td>
+                                        {{-- <td>
                                             <img src="{{ asset('storage/' . $paket->gambar) }}" alt="Gambar Paket"
                                                 style="border-radius: 0%; width: 150px; height: 100px;">
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             <div class="d-flex align-items-center ">
                                                 <a href="/admin/paket/{{ $paket->id }}"

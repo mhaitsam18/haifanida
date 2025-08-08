@@ -141,7 +141,7 @@
                             </tr>
                         </table> --}}
 
-                        <h4>Pernyataan Hukum</h4>
+                        <h4>H. Pernyataan Hukum</h4>
                         <p>
                             Dengan mendaftar atau menggunakan layanan, Anda dianggap setuju dengan syarat dan ketentuan ini. Kami berhak memperbarui isi peraturan yang disebabkan regulasi atau kondisi di luar kendali kami.
                         </p>
@@ -150,14 +150,27 @@
                         </p>
                         <p>Kami berkomitmen untuk menyediakan layanan perjalanan umroh yang mencakup transportasi, akomodasi, dan pendampingan ibadah sesuai dengan paket yang dipilih. Namun, layanan dapat berubah karena faktor seperti perubahan jadwal maskapai, regulasi pemerintah, atau keadaan force majeure.</p>
                         <p><strong>PT. Haifa Nida Wisata Karawang</strong> berkomitmen untuk memberikan pelayanan terbaik sesuai prinsip <em>Aman, Nyaman, dan Amanah</em>. Seluruh ketentuan ini dibuat untuk melindungi jamaah dan penyelenggara agar perjalanan ibadah berjalan lancar dan penuh keberkahan.</p>
-                        <h4>Ketentuan Website, Aplikasi dan Sistem Informasi</h4>
-                        <p>Konten pada situs web kami, termasuk teks, gambar, dan logo, adalah milik kami atau mitra kami dan dilindungi oleh hukum hak cipta. Anda dilarang menyalin, mendistribusikan, atau menggunakan konten tersebut tanpa izin tertulis dari kami.</p>
-                        <p>Dengan mengakses situs kami, Anda setuju untuk tidak menggunakan situs ini untuk tujuan yang melanggar hukum atau merusak reputasi kami. Kami berhak membatasi akses Anda jika ditemukan pelanggaran.</p>
-                        <p>Kami akan berupaya memberikan pemberitahuan secepat mungkin atas setiap perubahan. Anda setuju untuk mematuhi instruksi dari pembimbing atau petugas kami selama perjalanan.</p>
-                        <p>Kami tidak bertanggung jawab atas kerugian, cedera, atau kerusakan yang disebabkan oleh faktor di luar kendali kami, termasuk bencana alam, gangguan penerbangan, atau tindakan pihak ketiga. Anda disarankan untuk memiliki asuransi perjalanan untuk perlindungan tambahan.</p>
-                        <p>Tanggung jawab kami terbatas pada penyediaan layanan sesuai dengan kesepakatan. Segala sengketa akan diselesaikan berdasarkan hukum yang berlaku di Indonesia.</p>
-                        <p>Anda bertanggung jawab untuk menjaga kerahasiaan akun dan kata sandi yang digunakan untuk mengakses layanan online kami. Jangan bagikan informasi login Anda dengan pihak lain untuk mencegah penyalahgunaan.</p>
-                        <p>Kami menggunakan langkah-langkah keamanan untuk melindungi data Anda, tetapi Anda juga harus memastikan perangkat Anda aman. Segera laporkan kepada kami jika Anda mencurigai adanya aktivitas tidak sah pada akun Anda.</p>
+
+                        <h4>I. Ketentuan Website, Aplikasi, dan Sistem Informasi</h4>
+                        <p>
+                            Seluruh konten pada situs web, aplikasi, dan sistem informasi kami, termasuk namun tidak terbatas pada teks, gambar, logo, desain, kode program, dan basis data, adalah milik PT. Haifa Nida Wisata Karawang atau mitra resmi kami, dan dilindungi oleh <strong>Undang-Undang Nomor 28 Tahun 2014 tentang Hak Cipta</strong>.
+                            Nomor dan Tanggal Permohonan: <strong>EC002025071030, 19 Juni 2025</strong>, Nomor Pencatatan: <strong>000911291</strong>. Website ini diumumkan pertama kali pada 24 Maret 2022.
+                            Dilarang menyalin, mendistribusikan, memodifikasi, atau menggunakan konten tersebut tanpa izin tertulis dari kami.
+                        </p>
+                        <p>
+                            Dengan mengakses situs atau aplikasi kami, Anda setuju untuk tidak menggunakannya untuk tujuan yang melanggar hukum, merugikan pihak lain, atau merusak reputasi perusahaan.
+                            Kami berhak membatasi atau menghentikan akses Anda apabila ditemukan pelanggaran.
+                        </p>
+                        <p>
+                            Kami tidak bertanggung jawab atas kerugian, kerusakan, atau gangguan layanan yang diakibatkan oleh hal-hal di luar kendali kami, termasuk namun tidak terbatas pada bencana alam, gangguan teknis, serangan siber, atau tindakan pihak ketiga.
+                            Untuk keamanan tambahan, Anda disarankan memiliki perlindungan asuransi perjalanan dan menggunakan perangkat yang aman.
+                        </p>
+                        <p>
+                            Anda bertanggung jawab penuh untuk menjaga kerahasiaan akun dan kata sandi yang digunakan untuk mengakses layanan online kami.
+                            Jangan membagikan informasi login kepada pihak lain.
+                            Kami menerapkan langkah-langkah keamanan sesuai <strong>Undang-Undang Nomor 27 Tahun 2022 tentang Perlindungan Data Pribadi</strong> dan <strong>Undang-Undang Nomor 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik</strong> beserta perubahannya.
+                            Segera hubungi kami jika Anda mencurigai adanya akses tidak sah pada akun Anda.
+                        </p>
                     </div>
                 </div>
             </div>

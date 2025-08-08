@@ -60,7 +60,7 @@
                                     alt="Paket">
                                 <div class="mb-2">
                                     <h4 class="mb-2">{{ $paket->nama_paket }}</h4>
-                                    <p>{{ $paket->deskripsi }}</p>
+                                    <p>{!! $paket->deskripsi !!}</p>
                                     <h5 class="mb-2">Detail:</h5>
                                     <div class="row">
                                         <div class="col">
@@ -69,7 +69,7 @@
                                                 <li>Jenis Paket : {{ $paket->jenis_paket }}</li>
                                                 <li>Durasi : {{ $paket->durasi }} Hari</li>
                                                 <li>Harga : Rp.{{ number_format($paket->harga, 2, ',', '.') }}</li>
-                                                {{-- MODIFY 
+                                                {{-- MODIFY
                                                 {{-- <li>Kantor : {{ $paket->kantor->nama_kantor }}</li> --}}
                                             </ul>
                                         </div>

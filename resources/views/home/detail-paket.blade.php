@@ -101,7 +101,7 @@
                                     <i class='bx bx-detail'></i>Deskripsi Paket
                                 </h3>
                                 <div class="content-section-body">
-                                    {!! nl2br(e($paket->deskripsi)) !!}
+                                    {!! nl2br($paket->deskripsi) !!}
                                 </div>
                             </div>
 
