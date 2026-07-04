@@ -25,6 +25,10 @@ return new class extends Migration
                 ->constrained('jemaah')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->foreignId('member_id')->nullable()
+                ->constrained('member')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
             $table->string('nomor_ktp')->nullable();
             $table->string('nama_lengkap')->nullable();
             $table->string('nama_sesuai_paspor')->nullable();

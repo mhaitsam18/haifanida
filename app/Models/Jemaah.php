@@ -25,6 +25,11 @@ class Jemaah extends Model
         return $this->belongsTo(Grup::class);
     }
 
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
+
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);
