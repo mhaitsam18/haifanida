@@ -15,7 +15,7 @@ class AdminEkstraController extends Controller
         return view('admin.ekstra.index', [
             'title' => 'Master Data Ekstra',
             'page' => 'ekstra',
-            'ekstras' => Ekstra::all(),
+            'ekstras' => Ekstra::paginate(200),
         ]);
     }
 

@@ -19,7 +19,7 @@ class AdminGrupController extends Controller
             'title' => 'Data grup',
             'page' => 'grup',
             'paket' => $paket,
-            'grups' => ($paket) ? $paket->grups()->with('agen.user')->get() : Grup::with('agen.user')->get(),
+            'grups' => ($paket) ? $paket->grups()->with('agen.user')->paginate(200) : Grup::with('agen.user')->paginate(200),
         ]);
     }
 

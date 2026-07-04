@@ -17,7 +17,7 @@ class AdminIsuPerjalananController extends Controller
             'title' => 'Data Isu Perjalanan',
             'page' => 'isu-perjalanan',
             'grup' => $grup,
-            'isuPerjalanans' => ($grup) ? $grup->isuPerjalanans : IsuPerjalanan::all(),
+            'isuPerjalanans' => ($grup) ? $grup->isuPerjalanans()->paginate(200) : IsuPerjalanan::paginate(200),
         ]);
     }
 

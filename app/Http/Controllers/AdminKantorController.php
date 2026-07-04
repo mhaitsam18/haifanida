@@ -17,7 +17,7 @@ class AdminKantorController extends Controller
         return view('admin.kantor.index', [
             'title' => 'Data Kantor',
             'page' => 'kantor',
-            'kantors' => Kantor::with('kabupaten.provinsi')->get(),
+            'kantors' => Kantor::with('kabupaten.provinsi')->paginate(200),
         ]);
     }
 

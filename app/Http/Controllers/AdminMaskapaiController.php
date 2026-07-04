@@ -15,7 +15,7 @@ class AdminMaskapaiController extends Controller
         return view('admin.maskapai.index', [
             'title' => 'Data Maskapai',
             'page' => 'maskapai',
-            'maskapais' => Maskapai::all(),
+            'maskapais' => Maskapai::paginate(200),
         ]);
     }
 

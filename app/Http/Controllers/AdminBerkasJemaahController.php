@@ -19,7 +19,7 @@ class AdminBerkasJemaahController extends Controller
         return view('admin.paket.jemaah.berkas.index', [
             'title' => "Berkas Jema'ah",
             'page' => 'berkas-jemaah',
-            'berkasJemaahs' => $jemaah ? BerkasJemaah::with(['jemaah', 'berkas'])->where('jemaah_id', $jemaah->id)->get() : BerkasJemaah::with(['jemaah', 'berkas'])->get(),
+            'berkasJemaahs' => $jemaah ? BerkasJemaah::with(['jemaah', 'berkas'])->where('jemaah_id', $jemaah->id)->paginate(200) : BerkasJemaah::with(['jemaah', 'berkas'])->paginate(200),
             'jemaah' => $jemaah,
         ]);
     }

@@ -17,7 +17,7 @@ class AdminPembayaranController extends Controller
             'title' => 'Riwayat Pembayaran',
             'page' => 'pembayaran',
             'pemesanan' => $pemesanan,
-            'pembayarans' => ($pemesanan) ? $pemesanan->pembayarans : Pembayaran::all(),
+            'pembayarans' => ($pemesanan) ? $pemesanan->pembayarans()->paginate(200) : Pembayaran::paginate(200),
         ]);
     }
 

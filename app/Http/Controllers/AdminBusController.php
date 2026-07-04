@@ -17,7 +17,7 @@ class AdminBusController extends Controller
             'title' => 'Data bus',
             'page' => 'bus',
             'paket' => $paket,
-            'buses' => ($paket) ? $paket->buses : Bus::all(),
+            'buses' => ($paket) ? $paket->buses()->paginate(200) : Bus::paginate(200),
         ]);
     }
 

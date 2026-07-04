@@ -18,7 +18,7 @@ class AdminPerwakilanController extends Controller
         return view('admin.perwakilan.index', [
             'title' => 'Data perwakilan',
             'page' => 'perwakilan',
-            'perwakilans' => Perwakilan::with('kantor')->get(),
+            'perwakilans' => Perwakilan::with('kantor')->paginate(200),
         ]);
     }
 

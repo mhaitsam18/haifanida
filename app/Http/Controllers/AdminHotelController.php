@@ -15,7 +15,7 @@ class AdminHotelController extends Controller
         return view('admin.hotel.index', [
             'title' => 'Data Hotel',
             'page' => 'hotel',
-            'hotels' => Hotel::all(),
+            'hotels' => Hotel::paginate(200),
         ]);
     }
 

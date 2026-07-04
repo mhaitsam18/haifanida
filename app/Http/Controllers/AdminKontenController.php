@@ -15,7 +15,7 @@ class AdminKontenController extends Controller
         return view('admin.konten.index', [
             'title' => 'Data konten',
             'page' => 'konten',
-            'kontens' => Konten::with('user')->get(),
+            'kontens' => Konten::with('user')->paginate(200),
         ]);
     }
 

@@ -17,7 +17,7 @@ class AdminBusJemaahController extends Controller
         return view('admin.paket.jemaah.bus.index', [
             'title' => 'Data Penumpang',
             'page' => 'bus-jemaah',
-            'busJemaahs' => $jemaah ? BusJemaah::where('jemaah_id', $jemaah->id)->get() : BusJemaah::all(),
+            'busJemaahs' => $jemaah ? BusJemaah::where('jemaah_id', $jemaah->id)->paginate(200) : BusJemaah::paginate(200),
             'jemaah' => $jemaah,
         ]);
     }

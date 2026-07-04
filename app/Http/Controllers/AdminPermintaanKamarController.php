@@ -18,7 +18,7 @@ class AdminPermintaanKamarController extends Controller
             'title' => 'Permintaan Kamar',
             'page' => 'permintaan-kamar',
             'pemesananKamar' => $pemesananKamar,
-            'permintaanKamars' => ($pemesananKamar) ? $pemesananKamar->permintaans : PermintaanKamar::all(),
+            'permintaanKamars' => ($pemesananKamar) ? $pemesananKamar->permintaans()->paginate(200) : PermintaanKamar::paginate(200),
         ]);
     }
 

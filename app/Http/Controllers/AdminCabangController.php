@@ -19,7 +19,7 @@ class AdminCabangController extends Controller
         return view('admin.cabang.index', [
             'title' => 'Data cabang',
             'page' => 'cabang',
-            'cabangs' => Cabang::with(['perwakilan', 'kantor'])->get(),
+            'cabangs' => Cabang::with(['perwakilan', 'kantor'])->paginate(200),
         ]);
     }
 

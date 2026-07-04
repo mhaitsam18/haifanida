@@ -17,7 +17,7 @@ class AdminPesanController extends Controller
         return view('admin.pesan.index', [
             'title' => 'Saran dan Keluhan',
             'page' => 'pesan',
-            'pesans' => Pesan::all(),
+            'pesans' => Pesan::paginate(200),
         ]);
     }
 

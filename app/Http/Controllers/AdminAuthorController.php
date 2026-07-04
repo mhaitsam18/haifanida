@@ -17,7 +17,7 @@ class AdminAuthorController extends Controller
         return view('admin.author.index', [
             'title' => 'Data Author',
             'page' => 'author',
-            'authors' => Author::with('user')->get(),
+            'authors' => Author::with('user')->paginate(200),
         ]);
     }
 

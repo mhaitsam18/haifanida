@@ -18,7 +18,7 @@ class AdminKamarController extends Controller
             'page' => 'kamar',
             'paketHotel' => $paketHotel,
             'penginapan' => $paketHotel,
-            'kamars' => ($paketHotel) ? $paketHotel->kamars : Kamar::all(),
+            'kamars' => ($paketHotel) ? $paketHotel->kamars()->paginate(200) : Kamar::paginate(200),
         ]);
     }
 

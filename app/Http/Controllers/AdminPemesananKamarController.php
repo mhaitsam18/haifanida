@@ -18,7 +18,7 @@ class AdminPemesananKamarController extends Controller
             'title' => 'Pemesanan Kamar',
             'page' => 'pemesanan-kamar',
             'pemesanan' => $pemesanan,
-            'pemesananKamars' => ($pemesanan) ? $pemesanan->pemesananKamars : PemesananKamar::all(),
+            'pemesananKamars' => ($pemesanan) ? $pemesanan->pemesananKamars()->paginate(200) : PemesananKamar::paginate(200),
         ]);
     }
 

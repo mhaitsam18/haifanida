@@ -17,7 +17,7 @@ class AdminGaleriController extends Controller
             'title' => 'Data galeri',
             'page' => 'galeri',
             'paket' => $paket,
-            'galeries' => ($paket) ? $paket->galeries : galeri::all(),
+            'galeries' => ($paket) ? $paket->galeries()->paginate(200) : galeri::paginate(200),
         ]);
     }
 

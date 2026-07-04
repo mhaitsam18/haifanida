@@ -41,7 +41,7 @@ class AdminJemaahController extends Controller
             });
         }
 
-        $jemaahs = $jemaahs->get();
+        $jemaahs = $jemaahs->paginate(200)->withQueryString();
 
         return view('admin.paket.jemaah.index', [
             'title' => 'Data jemaah',

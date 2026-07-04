@@ -17,7 +17,7 @@ class AdminJadwalController extends Controller
             'title' => 'Data Jadwal',
             'page' => 'jadwal',
             'grup' => $grup,
-            'jadwals' => ($grup) ? $grup->jadwals : Jadwal::all(),
+            'jadwals' => ($grup) ? $grup->jadwals()->paginate(200) : Jadwal::paginate(200),
         ]);
     }
 

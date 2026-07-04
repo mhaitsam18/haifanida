@@ -18,7 +18,7 @@ class AdminPenerbanganController extends Controller
             'title' => 'Data Maskapai / penerbangan',
             'page' => 'penerbangan',
             'paket' => $paket,
-            'penerbangans' => ($paket) ? $paket->penerbangans()->with('maskapai')->get() : PaketMaskapai::with('maskapai')->get(),
+            'penerbangans' => ($paket) ? $paket->penerbangans()->with('maskapai')->paginate(200) : PaketMaskapai::with('maskapai')->paginate(200),
         ]);
     }
 

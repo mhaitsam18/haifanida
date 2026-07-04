@@ -15,7 +15,7 @@ class AdminBerkasController extends Controller
         return view('admin.berkas.index', [
             'title' => 'Data berkas',
             'page' => 'berkas',
-            'berkass' => Berkas::all(),
+            'berkass' => Berkas::paginate(200),
         ]);
     }
 

@@ -19,7 +19,7 @@ class AdminMemberController extends Controller
         return view('admin.member.index', [
             'title' => 'Data member',
             'page' => 'member',
-            'members' => Member::with('user')->get(),
+            'members' => Member::with('user')->paginate(200),
         ]);
     }
 

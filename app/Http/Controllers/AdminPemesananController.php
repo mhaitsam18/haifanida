@@ -18,7 +18,7 @@ class AdminPemesananController extends Controller
             'title' => 'Data Pemesanan',
             'page' => 'pemesanan',
             'paket' => $paket,
-            'pemesanans' => ($paket) ? $paket->pemesanans : Pemesanan::all(),
+            'pemesanans' => ($paket) ? $paket->pemesanans()->paginate(200) : Pemesanan::paginate(200),
         ]);
     }
 

@@ -21,7 +21,7 @@ class AdminKamarJemaahController extends Controller
         if ($jemaah) {
             $kamarJemaahs->where('jemaah_id', $jemaah->id);
         }
-        $kamarJemaahs = $kamarJemaahs->get();
+        $kamarJemaahs = $kamarJemaahs->paginate(200)->withQueryString();
         return view('admin.paket.jemaah.kamar.index', [
             'title' => 'Data Tamu',
             'page' => 'kamar-jemaah',

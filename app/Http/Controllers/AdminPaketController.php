@@ -17,7 +17,7 @@ class AdminPaketController extends Controller
         return view('admin.paket.index', [
             'title' => 'Data paket',
             'page' => 'paket',
-            'pakets' => Paket::latest()->get(),
+            'pakets' => Paket::latest()->paginate(200),
         ]);
     }
 

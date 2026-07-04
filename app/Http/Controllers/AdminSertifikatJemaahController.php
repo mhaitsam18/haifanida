@@ -16,7 +16,7 @@ class AdminSertifikatJemaahController extends Controller
         return view('admin.paket.jemaah.sertifikat.index', [
             'title' => "sertifikat Jema'ah",
             'page' => 'sertifikat-jemaah',
-            'sertifikatJemaahs' => $jemaah ? sertifikatJemaah::where('jemaah_id', $jemaah->id)->get() : sertifikatJemaah::all(),
+            'sertifikatJemaahs' => $jemaah ? sertifikatJemaah::where('jemaah_id', $jemaah->id)->paginate(200) : sertifikatJemaah::paginate(200),
             'jemaah' => $jemaah,
         ]);
     }

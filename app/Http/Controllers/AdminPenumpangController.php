@@ -18,7 +18,7 @@ class AdminPenumpangController extends Controller
             'title' => 'Data penumpang',
             'page' => 'penumpang',
             'bus' => $bus,
-            'penumpangs' => ($bus) ? $bus->penumpang : BusJemaah::all(),
+            'penumpangs' => ($bus) ? $bus->penumpang()->paginate(200) : BusJemaah::paginate(200),
         ]);
     }
 

@@ -18,7 +18,7 @@ class AdminPemesananEkstraController extends Controller
             'title' => 'Pemesanan ekstra',
             'page' => 'pemesanan-ekstra',
             'pemesanan' => $pemesanan,
-            'pemesananEkstras' => ($pemesanan) ? $pemesanan->pemesananEkstras : PemesananEkstra::all(),
+            'pemesananEkstras' => ($pemesanan) ? $pemesanan->pemesananEkstras()->paginate(200) : PemesananEkstra::paginate(200),
         ]);
     }
 
