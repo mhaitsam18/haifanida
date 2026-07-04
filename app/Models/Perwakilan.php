@@ -14,10 +14,6 @@ class Perwakilan extends Model
         'id'
     ];
 
-    protected $with = [
-        'kantor',
-    ];
-
     public function kantor()
     {
         return $this->belongsTo(Kantor::class);

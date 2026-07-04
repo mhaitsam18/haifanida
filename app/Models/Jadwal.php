@@ -14,10 +14,6 @@ class Jadwal extends Model
         'id'
     ];
 
-    protected $with = [
-        'grup'
-    ];
-
     public function grup()
     {
         return $this->belongsTo(Grup::class);

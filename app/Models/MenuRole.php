@@ -14,11 +14,6 @@ class MenuRole extends Model
         'id'
     ];
 
-    protected $with = [
-        'menu',
-        'role'
-    ];
-
     public function menu()
     {
         return $this->belongsTo(Menu::class);

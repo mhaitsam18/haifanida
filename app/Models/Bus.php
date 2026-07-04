@@ -14,10 +14,6 @@ class Bus extends Model
         'id'
     ];
 
-    protected $with = [
-        'paket'
-    ];
-
     public function paket()
     {
         return $this->belongsTo(Paket::class);

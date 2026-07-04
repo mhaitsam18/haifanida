@@ -14,11 +14,6 @@ class PaketMaskapai extends Model
         'id'
     ];
 
-    protected $with = [
-        'paket',
-        'maskapai'
-    ];
-
     public function paket()
     {
         return $this->belongsTo(Paket::class);

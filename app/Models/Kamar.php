@@ -14,10 +14,6 @@ class Kamar extends Model
         'id'
     ];
 
-    protected $with = [
-        'paketHotel'
-    ];
-
     // public function paket()
     // {
     //     return $this->belongsTo(Paket::class);

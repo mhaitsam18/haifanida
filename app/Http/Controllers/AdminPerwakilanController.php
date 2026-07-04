@@ -18,7 +18,7 @@ class AdminPerwakilanController extends Controller
         return view('admin.perwakilan.index', [
             'title' => 'Data perwakilan',
             'page' => 'perwakilan',
-            'perwakilans' => Perwakilan::all(),
+            'perwakilans' => Perwakilan::with('kantor')->get(),
         ]);
     }
 
@@ -32,7 +32,7 @@ class AdminPerwakilanController extends Controller
             'page' => 'perwakilan',
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::all(),
+            'kantors' => Kantor::with('kabupaten')->get(),
         ]);
     }
 
@@ -89,7 +89,7 @@ class AdminPerwakilanController extends Controller
             'perwakilan' => $perwakilan,
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::all(),
+            'kantors' => Kantor::with('kabupaten')->get(),
         ]);
     }
 

@@ -14,11 +14,6 @@ class Grup extends Model
         'id'
     ];
 
-    protected $with = [
-        'paket',
-        'agen',
-    ];
-
     public function paket()
     {
         return $this->belongsTo(Paket::class);

@@ -14,10 +14,6 @@ class Kajian extends Model
         'id'
     ];
 
-    protected $with = [
-        'author'
-    ];
-
     public function author()
     {
         return $this->belongsTo(Author::class);

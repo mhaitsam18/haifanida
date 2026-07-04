@@ -14,11 +14,6 @@ class KamarJemaah extends Model
         'id'
     ];
 
-    protected $with = [
-        'kamar',
-        'jemaah'
-    ];
-
     public function kamar()
     {
         return $this->belongsTo(Kamar::class);

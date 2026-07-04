@@ -14,10 +14,6 @@ class PemesananEkstra extends Model
         'id'
     ];
 
-    protected $with = [
-        'pemesanan'
-    ];
-
     public function pemesanan()
     {
         return $this->belongsTo(Pemesanan::class);

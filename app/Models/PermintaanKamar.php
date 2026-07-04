@@ -14,10 +14,6 @@ class PermintaanKamar extends Model
         'id'
     ];
 
-    protected $with = [
-        'pemesananKamar'
-    ];
-
     public function pemesananKamar()
     {
         return $this->belongsTo(PemesananKamar::class);

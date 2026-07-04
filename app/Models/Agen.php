@@ -15,11 +15,6 @@ class Agen extends Model
         'id'
     ];
 
-    protected $with = [
-        'user',
-        'kantor',
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

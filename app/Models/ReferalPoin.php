@@ -14,10 +14,6 @@ class ReferalPoin extends Model
         'id'
     ];
 
-    protected $with = [
-        'referal',
-    ];
-
     public function referal()
     {
         return $this->belongsTo(Referal::class);

@@ -18,7 +18,7 @@ class AdminAdminController extends Controller
         return view('admin.admin.index', [
             'title' => 'Data Admin',
             'page' => 'admin',
-            'admins' => Admin::with('user')->get(),
+            'admins' => Admin::with(['user', 'kantor'])->get(),
         ]);
     }
 

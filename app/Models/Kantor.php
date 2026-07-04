@@ -14,10 +14,6 @@ class Kantor extends Model
         'id'
     ];
 
-    protected $with = [
-        'kabupaten'
-    ];
-
     public function kabupaten()
     {
         return $this->belongsTo(Kabupaten::class);

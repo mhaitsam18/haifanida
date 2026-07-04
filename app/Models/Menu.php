@@ -13,9 +13,6 @@ class Menu extends Model
     protected $guarded = [
         'id'
     ];
-    protected $with = [
-        'children',
-    ];
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'menu_roles');

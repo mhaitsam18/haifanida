@@ -14,11 +14,6 @@ class Cabang extends Model
         'id'
     ];
 
-    protected $with = [
-        'perwakilan',
-        'kantor',
-    ];
-
     public function perwakilan()
     {
         return $this->belongsTo(Perwakilan::class);

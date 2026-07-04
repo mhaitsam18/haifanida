@@ -14,10 +14,6 @@ class SertifikatJemaah extends Model
         'id'
     ];
 
-    protected $with = [
-        'jemaah'
-    ];
-
     public function jemaah()
     {
         return $this->belongsTo(Jemaah::class);

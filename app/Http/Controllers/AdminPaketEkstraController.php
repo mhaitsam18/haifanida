@@ -18,7 +18,7 @@ class AdminPaketEkstraController extends Controller
             'title' => 'Data Ekstra paket',
             'page' => 'paket-ekstra',
             'paket' => $paket,
-            'paketEkstras' => ($paket) ? $paket->paketEkstras : PaketEkstra::all(),
+            'paketEkstras' => ($paket) ? $paket->paketEkstras()->with('ekstra')->get() : PaketEkstra::with('ekstra')->get(),
         ]);
     }
 

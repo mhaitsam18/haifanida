@@ -14,11 +14,6 @@ class PaketEkstra extends Model
         'id'
     ];
 
-    protected $with = [
-        'paket',
-        'ekstra'
-    ];
-
     public function paket()
     {
         return $this->belongsTo(Paket::class);

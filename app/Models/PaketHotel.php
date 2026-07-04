@@ -14,11 +14,6 @@ class PaketHotel extends Model
         'id'
     ];
 
-    protected $with = [
-        'paket',
-        'hotel'
-    ];
-
     public function paket()
     {
         return $this->belongsTo(Paket::class);

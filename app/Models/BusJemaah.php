@@ -14,11 +14,6 @@ class BusJemaah extends Model
         'id'
     ];
 
-    protected $with = [
-        'bus',
-        'jemaah',
-    ];
-
     public function bus()
     {
         return $this->belongsTo(Bus::class);

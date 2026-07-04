@@ -15,11 +15,6 @@ class Jemaah extends Model
         'id'
     ];
 
-    protected $with = [
-        'pemesanan',
-        'grup',
-    ];
-
 
     public function pemesanan()
     {

@@ -15,7 +15,7 @@ class AdminKontenController extends Controller
         return view('admin.konten.index', [
             'title' => 'Data konten',
             'page' => 'konten',
-            'kontens' => Konten::all(),
+            'kontens' => Konten::with('user')->get(),
         ]);
     }
 

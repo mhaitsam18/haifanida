@@ -18,7 +18,7 @@ class AdminPenginapanController extends Controller
             'title' => 'Data Hotel / Penginapan',
             'page' => 'penginapan',
             'paket' => $paket,
-            'penginapans' => ($paket) ? $paket->penginapans : PaketHotel::all(),
+            'penginapans' => ($paket) ? $paket->penginapans()->with('hotel')->get() : PaketHotel::with('hotel')->get(),
         ]);
     }
 

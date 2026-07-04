@@ -15,9 +15,6 @@ class Paket extends Model
         'id'
     ];
     //MODIFIED =
-    protected $with = [
-        'kantor'
-    ];
     
     protected $dates = [
         'published_at', 'tanggal_mulai', 'tanggal_selesai', 'deleted_at'

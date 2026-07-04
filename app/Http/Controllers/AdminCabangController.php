@@ -19,7 +19,7 @@ class AdminCabangController extends Controller
         return view('admin.cabang.index', [
             'title' => 'Data cabang',
             'page' => 'cabang',
-            'cabangs' => Cabang::all(),
+            'cabangs' => Cabang::with(['perwakilan', 'kantor'])->get(),
         ]);
     }
 
@@ -33,7 +33,7 @@ class AdminCabangController extends Controller
             'page' => 'cabang',
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::all(),
+            'kantors' => Kantor::with('kabupaten')->get(),
             'perwakilans' => Perwakilan::all(),
         ]);
     }
@@ -92,7 +92,7 @@ class AdminCabangController extends Controller
             'cabang' => $cabang,
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::all(),
+            'kantors' => Kantor::with('kabupaten')->get(),
             'perwakilans' => Perwakilan::all(),
         ]);
     }

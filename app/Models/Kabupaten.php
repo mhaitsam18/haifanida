@@ -14,10 +14,6 @@ class Kabupaten extends Model
         'id'
     ];
 
-    protected $with = [
-        'provinsi'
-    ];
-
     public function provinsi()
     {
         return $this->belongsTo(Provinsi::class);

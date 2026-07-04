@@ -14,10 +14,6 @@ class SubMenu extends Model
         'id'
     ];
 
-    protected $with = [
-        'menu'
-    ];
-
     public function menu()
     {
         return $this->belongsTo(Menu::class);

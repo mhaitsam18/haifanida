@@ -14,10 +14,6 @@ class Poin extends Model
         'id'
     ];
 
-    protected $with = [
-        'agen',
-    ];
-
     public function agen()
     {
         return $this->belongsTo(Agen::class);

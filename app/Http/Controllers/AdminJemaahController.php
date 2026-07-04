@@ -154,6 +154,8 @@ class AdminJemaahController extends Controller
      */
     public function show(Paket $paket = null, Jemaah $jemaah)
     {
+        $jemaah->load(['berkasJemaahs.berkas', 'kamarJemaahs.kamar.paketHotel.hotel']);
+
         return view('admin.paket.jemaah.show', [
             'title' => 'Detail jemaah',
             'page' => 'jemaah',

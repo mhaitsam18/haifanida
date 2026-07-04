@@ -18,7 +18,7 @@ class AdminAgenController extends Controller
         return view('admin.agen.index', [
             'title' => 'Data Agen',
             'page' => 'agen',
-            'agens' => Agen::with('user')->get(),
+            'agens' => Agen::with(['user', 'kantor'])->get(),
         ]);
     }
 
