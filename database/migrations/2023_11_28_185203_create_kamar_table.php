@@ -18,7 +18,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('nomor_kamar')->nullable(); // Nomor identifikasi kamar
-            $table->string('tipe_kamar')->nullable(); // Tipe kamar ('Single', 'Double', 'Quad', 'Suite', 'Lainnya')
+            $table->enum('tipe_kamar', ['Single', 'Double', 'Triple', 'Quad', 'Suite', 'Lainnya'])->nullable();
             $table->integer('kapasitas')->nullable(); // Kapasitas maksimum penghuni
             $table->text('fasilitas')->nullable(); // Fasilitas yang disediakan di kamar
             $table->boolean('tersedia')->default(true); // Status kamar tersedia atau tidak

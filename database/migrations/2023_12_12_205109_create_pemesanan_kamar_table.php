@@ -17,7 +17,7 @@ return new class extends Migration
                 ->constrained('pemesanan')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('tipe_kamar')->nullable(); // misal tipe kamar quad ( orang)
+            $table->string('tipe_kamar')->nullable(); // dipilih dari katalog Ekstra (jenis_ekstra='tipe kamar'), bukan set tetap
             $table->string('jumlah_pengisi')->nullable(); //misal diisi hanya 3 orang
             $table->float('harga', 16, 2)->nullable(); //misal diisi hanya 3 orang
             $table->text('keterangan')->nullable();

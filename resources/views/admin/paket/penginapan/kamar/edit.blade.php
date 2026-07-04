@@ -38,9 +38,13 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="tipe_kamar" class="form-label">Tipe Kamar</label>
-                                    <input type="text" class="form-control  @error('tipe_kamar') is-invalid @enderror"
-                                        id="tipe_kamar" name="tipe_kamar"
-                                        value="{{ old('tipe_kamar', $kamar->tipe_kamar) }}" placeholder="Tipe Kamar">
+                                    <select class="form-select @error('tipe_kamar') is-invalid @enderror"
+                                        id="tipe_kamar" name="tipe_kamar">
+                                        <option value="" selected disabled>Pilih Tipe Kamar</option>
+                                        @foreach (['Single', 'Double', 'Triple', 'Quad', 'Suite', 'Lainnya'] as $tipe)
+                                            <option value="{{ $tipe }}" @selected($tipe == old('tipe_kamar', $kamar->tipe_kamar))>{{ $tipe }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('tipe_kamar')
                                         <div class="text-danger fs-6">
                                             {{ $message }}

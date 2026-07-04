@@ -45,7 +45,7 @@ class AdminKamarController extends Controller
         $validateData = $request->validate([
             'paket_hotel_id' => 'required|integer',
             'nomor_kamar' => 'nullable|string',
-            'tipe_kamar' => 'nullable|string',
+            'tipe_kamar' => 'nullable|in:Single,Double,Triple,Quad,Suite,Lainnya',
             'kapasitas' => 'nullable|numeric',
             'fasilitas' => 'nullable|string',
             'tersedia' => 'nullable|numeric',
@@ -89,7 +89,7 @@ class AdminKamarController extends Controller
         $validateData = $request->validate([
             'paket_hotel_id' => 'required|integer',
             'nomor_kamar' => 'nullable|string',
-            'tipe_kamar' => 'nullable|string',
+            'tipe_kamar' => 'nullable|in:Single,Double,Triple,Quad,Suite,Lainnya',
             'kapasitas' => 'nullable|numeric',
             'fasilitas' => 'nullable|string',
             'tersedia' => 'nullable|numeric',
