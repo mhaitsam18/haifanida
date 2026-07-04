@@ -24,7 +24,7 @@ return new class extends Migration
             // Destinasi atau tujuan dari paket wisata
             $table->string('destinasi')->nullable();
 
-            $table->enum('jenis_paket', ['umroh', 'haji', 'wisata halal'])->nullable();
+            $table->enum('jenis_paket', ['umroh', 'haji', 'wisata halal'])->nullable()->index();
 
             // Durasi paket wisata, misalnya berapa hari
             $table->integer('durasi')->nullable();
@@ -47,7 +47,7 @@ return new class extends Migration
             $table->string('gambar')->nullable();
 
             // Kolom untuk mengatur status publish
-            $table->timestamp('published_at')->nullable();
+            $table->timestamp('published_at')->nullable()->index();
 
             $table->timestamps();
             $table->softDeletes();

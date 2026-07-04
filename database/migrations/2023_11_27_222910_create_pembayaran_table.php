@@ -19,10 +19,15 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->float('jumlah_pembayaran', 16, 2)->nullable();
             $table->string('metode_pembayaran')->nullable();
-            $table->timestamp('tanggal_pembayaran')->nullable();
+            $table->timestamp('tanggal_pembayaran')->nullable()->index();
             $table->string('bukti_pembayaran')->nullable();
-            $table->enum('status_pembayaran', ['tertunda', 'diterima', 'ditolak'])->nullable();
+            $table->enum('status_pembayaran', ['tertunda', 'diterima', 'ditolak'])->nullable()->index();
             $table->text('keterangan')->nullable();
+            $table->foreignId('diverifikasi_oleh')->nullable()
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

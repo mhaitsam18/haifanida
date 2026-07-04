@@ -58,7 +58,11 @@ class AdminPemesananController extends Controller
             // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
         ]);
 
-        Pemesanan::create($validateData);
+        $pemesanan = Pemesanan::create($validateData);
+        $pemesanan->statusHistories()->create([
+            'status' => $pemesanan->status,
+            'changed_by' => auth()->id(),
+        ]);
         return back()->with('success', 'Data Pemesanan berhasil ditambahkan');
     }
 
@@ -111,7 +115,17 @@ class AdminPemesananController extends Controller
             // 'check_at_least_one' => 'required_without_all:is_umroh,is_haji,is_wisata_halal',
         ]);
 
+        $statusBerubah = $pemesanan->status !== ($validateData['status'] ?? $pemesanan->status);
+
         $pemesanan->update($validateData);
+
+        if ($statusBerubah) {
+            $pemesanan->statusHistories()->create([
+                'status' => $pemesanan->status,
+                'changed_by' => auth()->id(),
+            ]);
+        }
+
         return back()->with('success', 'Data Pemesanan berhasil diperbarui');
     }
 

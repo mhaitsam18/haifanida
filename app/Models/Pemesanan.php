@@ -56,4 +56,9 @@ class Pemesanan extends Model
     {
         return $this->hasMany(Pembayaran::class);
     }
+
+    public function statusHistories()
+    {
+        return $this->hasMany(PemesananStatusHistory::class);
+    }
 }
