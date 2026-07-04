@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+    /* Maroon - warna utama brand */
+    --color-maroon-50: #fdf3f4;
+    --color-maroon-100: #fbe3e6;
+    --color-maroon-200: #f6c7cd;
+    --color-maroon-300: #eb9dab;
+    --color-maroon-400: #dc6c81;
+    --color-maroon-500: #c6425e;
+    --color-maroon-600: #a52a45;
+    --color-maroon-700: #800020;
+    --color-maroon-800: #660019;
+    --color-maroon-900: #4d0013;
+    --color-maroon-950: #2e000b;
+
+    /* Cream - warna latar belakang */
+    --color-cream-50: #fffdf9;
+    --color-cream-100: #fdf6e9;
+    --color-cream-200: #f9ecd0;
+    --color-cream-300: #f2dba8;
+    --color-cream-400: #e6c078;
+    --color-cream-500: #d7a24e;
+}
+
+@layer base {
+    body {
+        @apply bg-cream-100 text-stone-800 font-sans antialiased;
+    }
+}
