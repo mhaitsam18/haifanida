@@ -193,28 +193,28 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="mb-3">
-                            <label for="provinsi" class="form-label">Provinsi</label>
-                            <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi">
+                            <label for="provinsi_id" class="form-label">Provinsi</label>
+                            <select class="form-select @error('provinsi_id') is-invalid @enderror" id="provinsi_id" name="provinsi_id">
                                 <option value="" disabled>Pilih Provinsi</option>
                                 @foreach ($provinsis as $provinsi)
-                                    <option value="{{ $provinsi->provinsi }}" {{ (old('provinsi', $jemaah->provinsi) == $provinsi->provinsi) ? 'selected' : '' }}>
+                                    <option value="{{ $provinsi->id }}" {{ (old('provinsi_id', $jemaah->provinsi_id) == $provinsi->id) ? 'selected' : '' }}>
                                         {{ $provinsi->provinsi }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('provinsi')
+                            @error('provinsi_id')
                                 <div class="text-danger fs-6">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
-                        
+
                         <div class="mb-3">
-                            <label for="kabupaten" class="form-label fw-semibold">Kabupaten/Kota <span class="text-danger">*</span></label>
-                            <select class="form-select" id="kabupaten" name="kabupaten" required>
+                            <label for="kabupaten_id" class="form-label fw-semibold">Kabupaten/Kota <span class="text-danger">*</span></label>
+                            <select class="form-select" id="kabupaten_id" name="kabupaten_id" required>
                                 <option value="" disabled>Pilih Kabupaten/Kota</option>
                                 @foreach ($kabupatens as $kabupaten)
-                                    <option value="{{ $kabupaten->kabupaten }}" {{ (old('kabupaten', $jemaah->kabupaten) == $kabupaten->kabupaten) ? 'selected' : '' }}>
+                                    <option value="{{ $kabupaten->id }}" {{ (old('kabupaten_id', $jemaah->kabupaten_id) == $kabupaten->id) ? 'selected' : '' }}>
                                         {{ $kabupaten->kabupaten }}
                                     </option>
                                 @endforeach
@@ -358,8 +358,8 @@
         });
         
         // Ketika elemen provinsi berubah
-        $('#provinsi').change(function() {
-            // Ambil nilai provinsi yang dipilih
+        $('#provinsi_id').change(function() {
+            // Ambil id provinsi yang dipilih
             var selectedProvinsi = $(this).val();
 
             // Lakukan request AJAX untuk mendapatkan data kabupaten berdasarkan provinsi
@@ -368,24 +368,24 @@
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    provinsi: selectedProvinsi
+                    provinsi_id: selectedProvinsi
                 },
                 success: function(data) {
                     // Hapus opsi lama pada dropdown kabupaten
-                    $('#kabupaten').empty();
+                    $('#kabupaten_id').empty();
 
                     // Tambahkan opsi default pada dropdown kabupaten
-                    $('#kabupaten').append('<option value="" disabled>Pilih Kabupaten</option>');
+                    $('#kabupaten_id').append('<option value="" disabled>Pilih Kabupaten</option>');
 
                     // Tambahkan opsi kabupaten berdasarkan data yang diterima dari server
                     $.each(data, function(key, value) {
-                        $('#kabupaten').append('<option value="' + value.kabupaten + '">' + value.kabupaten + '</option>');
+                        $('#kabupaten_id').append('<option value="' + value.id + '">' + value.kabupaten + '</option>');
                     });
 
                     // Set kabupaten yang sudah tersimpan jika ada
-                    var savedKabupaten = "{{ old('kabupaten', $jemaah->kabupaten) }}";
+                    var savedKabupaten = "{{ old('kabupaten_id', $jemaah->kabupaten_id) }}";
                     if (savedKabupaten) {
-                        $('#kabupaten').val(savedKabupaten);
+                        $('#kabupaten_id').val(savedKabupaten);
                     }
                 },
                 error: function(xhr, textStatus, errorThrown) {
@@ -395,8 +395,8 @@
         });
 
         // Trigger change event pada provinsi jika ada nilai tersimpan
-        if ($('#provinsi').val()) {
-            $('#provinsi').trigger('change');
+        if ($('#provinsi_id').val()) {
+            $('#provinsi_id').trigger('change');
         }
     });
 </script>

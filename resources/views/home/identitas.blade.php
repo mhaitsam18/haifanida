@@ -265,28 +265,28 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="mb-3">
-                            <label for="provinsi" class="form-label required-field">Provinsi</label>
-                            <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi" required>
+                            <label for="provinsi_id" class="form-label required-field">Provinsi</label>
+                            <select class="form-select @error('provinsi_id') is-invalid @enderror" id="provinsi_id" name="provinsi_id" required>
                                 <option value="" selected disabled>Pilih Provinsi</option>
                                 @foreach ($provinsis as $provinsi)
-                                    <option value="{{ $provinsi->provinsi }}" @selected($provinsi->provinsi == old('provinsi', $member->provinsi))>
+                                    <option value="{{ $provinsi->id }}" @selected($provinsi->id == old('provinsi_id', $member->provinsi_id))>
                                         {{ $provinsi->provinsi }}</option>
                                 @endforeach
                             </select>
-                            @error('provinsi')
+                            @error('provinsi_id')
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="kabupaten" class="form-label required-field">Kabupaten/Kota</label>
-                            <select class="form-select @error('kabupaten') is-invalid @enderror" id="kabupaten" name="kabupaten" required>
+                            <label for="kabupaten_id" class="form-label required-field">Kabupaten/Kota</label>
+                            <select class="form-select @error('kabupaten_id') is-invalid @enderror" id="kabupaten_id" name="kabupaten_id" required>
                                 <option value="" selected disabled>Pilih Kabupaten</option>
                                 @foreach ($kabupatens as $kabupaten)
-                                    <option value="{{ $kabupaten->kabupaten }}" @selected($kabupaten->kabupaten == old('kabupaten', $member->kabupaten))>
+                                    <option value="{{ $kabupaten->id }}" @selected($kabupaten->id == old('kabupaten_id', $member->kabupaten_id))>
                                         {{ $kabupaten->kabupaten }}</option>
                                 @endforeach
                             </select>
-                            @error('kabupaten')
+                            @error('kabupaten_id')
                                 <div class="text-danger fs-6">{{ $message }}</div>
                             @enderror
                         </div>
@@ -479,7 +479,7 @@
 <script>
     $(document).ready(function() {
         // AJAX untuk mengambil data kabupaten berdasarkan provinsi
-        $('#provinsi').change(function() {
+        $('#provinsi_id').change(function() {
             var selectedProvinsi = $(this).val();
 
             $.ajax({
@@ -487,19 +487,19 @@
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    provinsi: selectedProvinsi
+                    provinsi_id: selectedProvinsi
                 },
                 success: function(data) {
-                    $('#kabupaten').empty();
-                    $('#kabupaten').append('<option value="" selected disabled>Pilih Kabupaten</option>');
+                    $('#kabupaten_id').empty();
+                    $('#kabupaten_id').append('<option value="" selected disabled>Pilih Kabupaten</option>');
                     $.each(data, function(key, value) {
-                        $('#kabupaten').append('<option value="' + value.kabupaten + '">' + value.kabupaten + '</option>');
+                        $('#kabupaten_id').append('<option value="' + value.id + '">' + value.kabupaten + '</option>');
                     });
 
                     // If there's a saved kabupaten value, set it
-                    var savedKabupaten = "{{ old('kabupaten', $member->kabupaten ?? '') }}";
+                    var savedKabupaten = "{{ old('kabupaten_id', $member->kabupaten_id ?? '') }}";
                     if (savedKabupaten) {
-                        $('#kabupaten').val(savedKabupaten);
+                        $('#kabupaten_id').val(savedKabupaten);
                     }
                 },
                 error: function(xhr, textStatus, errorThrown) {
@@ -509,8 +509,8 @@
         });
 
         // Trigger provinsi change if there's a selected value
-        if ($('#provinsi').val()) {
-            $('#provinsi').trigger('change');
+        if ($('#provinsi_id').val()) {
+            $('#provinsi_id').trigger('change');
         }
 
         // Image preview

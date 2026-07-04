@@ -63,8 +63,8 @@ class MemberController extends Controller
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
-            'kabupaten' => 'nullable|string',
-            'provinsi' => 'nullable|string',
+            'kabupaten_id' => 'nullable|integer',
+            'provinsi_id' => 'nullable|integer',
             'kode_pos' => 'nullable|string',
             'tingkat_pendidikan' => 'nullable|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
             'pekerjaan' => 'nullable|string',
@@ -171,11 +171,8 @@ class MemberController extends Controller
 
         // Get kabupatens if provinsi is selected
         $kabupatens = [];
-        if ($member->provinsi) {
-            $provinsi = Provinsi::where('provinsi', $member->provinsi)->first();
-            if ($provinsi) {
-                $kabupatens = Kabupaten::where('provinsi_id', $provinsi->id)->get();
-            }
+        if ($member->provinsi_id) {
+            $kabupatens = Kabupaten::where('provinsi_id', $member->provinsi_id)->get();
         }
 
         return view('home.identitas', [
@@ -211,8 +208,8 @@ class MemberController extends Controller
             'alamat' => 'required|string',
             'kelurahan' => 'required|string',
             'kecamatan' => 'required|string',
-            'kabupaten' => 'required|string',
-            'provinsi' => 'required|string',
+            'kabupaten_id' => 'required|integer',
+            'provinsi_id' => 'required|integer',
             'kode_pos' => 'required|string',
             'tingkat_pendidikan' => 'required|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
             'pekerjaan' => 'required|string',
@@ -273,8 +270,8 @@ class MemberController extends Controller
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
-            'kabupaten' => 'nullable|string',
-            'provinsi' => 'nullable|string',
+            'kabupaten_id' => 'nullable|integer',
+            'provinsi_id' => 'nullable|integer',
             'kode_pos' => 'nullable|string',
             'tingkat_pendidikan' => 'nullable|in:SD,SLTP,SLTA,D1/D2/D3,D4/S1,S2,S3',
             'pekerjaan' => 'nullable|string',

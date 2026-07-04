@@ -32,7 +32,7 @@ class AdminMemberController extends Controller
             'title' => 'Tambah member',
             'page' => 'member',
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi')) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi'))->first()->id)->get() : Kabupaten::all(),
+            'kabupatens' => (old('provinsi_id')) ? Kabupaten::where('provinsi_id', old('provinsi_id'))->get() : Kabupaten::all(),
         ]);
     }
 
@@ -62,8 +62,8 @@ class AdminMemberController extends Controller
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
-            'kabupaten' => 'nullable|string',
-            'provinsi' => 'nullable|string',
+            'kabupaten_id' => 'nullable|integer',
+            'provinsi_id' => 'nullable|integer',
             'kode_pos' => 'nullable|string',
             // 'email' => 'nullable|string',
             // 'nomor_telepon' => 'nullable|string',
@@ -135,7 +135,7 @@ class AdminMemberController extends Controller
             'page' => 'member',
             'member' => $member,
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi', $member->provinsi)) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi', $member->provinsi))->first()->id)->get() : Kabupaten::all(),
+            'kabupatens' => (old('provinsi_id', $member->provinsi_id)) ? Kabupaten::where('provinsi_id', old('provinsi_id', $member->provinsi_id))->get() : Kabupaten::all(),
         ]);
     }
 
@@ -164,8 +164,8 @@ class AdminMemberController extends Controller
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
-            'kabupaten' => 'nullable|string',
-            'provinsi' => 'nullable|string',
+            'kabupaten_id' => 'nullable|integer',
+            'provinsi_id' => 'nullable|integer',
             'kode_pos' => 'nullable|string',
             'tingkat_pendidikan' => 'nullable|string',
             'pekerjaan' => 'nullable|string',

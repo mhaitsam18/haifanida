@@ -20,6 +20,16 @@ class Member extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class);
+    }
+
+    public function kabupaten()
+    {
+        return $this->belongsTo(Kabupaten::class);
+    }
+
     // public function pemesanans()
     // {
     //     return $this->hasMany(Pemesanan::class);

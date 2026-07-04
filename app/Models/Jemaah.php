@@ -25,6 +25,16 @@ class Jemaah extends Model
         return $this->belongsTo(Grup::class);
     }
 
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class);
+    }
+
+    public function kabupaten()
+    {
+        return $this->belongsTo(Kabupaten::class);
+    }
+
 
     public function mahram() //setiap Wanita harus memiliki Mahram yang terhubung ke jema'ah laki-laki
     {

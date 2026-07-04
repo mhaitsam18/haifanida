@@ -55,8 +55,8 @@
                                                 <li>Alamat Lengkap: {{ $jemaah->alamat }}</li>
                                                 <li>Kelurahan: {{ $jemaah->kelurahan }}</li>
                                                 <li>Kecamatan: {{ $jemaah->kecamatan }}</li>
-                                                <li>Kabupaten: {{ $jemaah->kabupaten }}</li>
-                                                <li>Provinsi: {{ $jemaah->provinsi }}</li>
+                                                <li>Kabupaten: {{ $jemaah->kabupaten->kabupaten ?? '-' }}</li>
+                                                <li>Provinsi: {{ $jemaah->provinsi->provinsi ?? '-' }}</li>
                                                 <li>Kode Pos: {{ $jemaah->kode_pos }}</li>
 
                                             </ul>

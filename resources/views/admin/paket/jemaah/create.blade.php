@@ -251,32 +251,34 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="provinsi" class="form-label">Provinsi</label>
-                                    <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi"
-                                        name="provinsi">
+                                    <label for="provinsi_id" class="form-label">Provinsi</label>
+                                    <select class="form-select @error('provinsi_id') is-invalid @enderror" id="provinsi_id"
+                                        name="provinsi_id">
                                         <option value="" selected disabled>Pilih Provinsi</option>
                                         @foreach ($provinsis as $provinsi)
-                                            <option value="{{ $provinsi->provinsi }}" @selected($provinsi->provinsi == old('provinsi'))>
+                                            <option value="{{ $provinsi->id }}" @selected($provinsi->id == old('provinsi_id'))>
                                                 {{ $provinsi->provinsi }}</option>
                                         @endforeach
                                     </select>
-                                    @error('provinsi')
+                                    @error('provinsi_id')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="kabupaten" class="form-label">Kabupaten / Kota</label>
-                                    <select class="form-select @error('kabupaten') is-invalid @enderror" id="kabupaten"
-                                        name="kabupaten">
+                                    <label for="kabupaten_id" class="form-label">Kabupaten / Kota</label>
+                                    <select class="form-select @error('kabupaten_id') is-invalid @enderror" id="kabupaten_id"
+                                        name="kabupaten_id">
                                         <option value="" selected disabled>Pilih Kabupaten</option>
-                                        @foreach ($kabupatens as $kabupaten)
-                                            <option value="{{ $kabupaten->kabupaten }}" @selected($kabupaten->kabupaten == old('kabupaten'))>
-                                                {{ $kabupaten->kabupaten }}</option>
-                                        @endforeach
+                                        @if (old('kabupaten_id'))
+                                            @foreach ($kabupatens as $kabupaten)
+                                                <option value="{{ $kabupaten->id }}" @selected($kabupaten->id == old('kabupaten_id'))>
+                                                    {{ $kabupaten->kabupaten }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
-                                    @error('kabupaten')
+                                    @error('kabupaten_id')
                                         <div class="text-danger fs-6">
                                             {{ $message }}
                                         </div>
@@ -532,29 +534,29 @@
     <script>
         $(document).ready(function() {
             // Ketika elemen provinsi berubah
-            $('#provinsi').change(function() {
-                // Ambil nilai provinsi yang dipilih
+            $('#provinsi_id').change(function() {
+                // Ambil id provinsi yang dipilih
                 var selectedProvinsi = $(this).val();
 
                 // Lakukan request AJAX untuk mendapatkan data kabupaten berdasarkan provinsi
                 $.ajax({
-                    url: '/get-kabupaten', // Ganti URL dengan endpoint yang sesuai di controller
+                    url: '/get-kabupaten',
                     type: 'POST',
                     data: {
-                        _token: '{{ csrf_token() }}', // CSRF token, sesuaikan dengan Laravel
-                        provinsi: selectedProvinsi // Ganti dengan nama field yang sesuai di database
+                        _token: '{{ csrf_token() }}',
+                        provinsi_id: selectedProvinsi
                     },
                     success: function(data) {
                         // Hapus opsi lama pada dropdown kabupaten
-                        $('#kabupaten').empty();
+                        $('#kabupaten_id').empty();
 
                         // Tambahkan opsi default pada dropdown kabupaten
-                        $('#kabupaten').append(
+                        $('#kabupaten_id').append(
                             '<option value="" selected disabled>Pilih Kabupaten</option>');
 
                         // Tambahkan opsi kabupaten berdasarkan data yang diterima dari server
                         $.each(data, function(key, value) {
-                            $('#kabupaten').append('<option value="' + value.kabupaten +
+                            $('#kabupaten_id').append('<option value="' + value.id +
                                 '">' +
                                 value.kabupaten + '</option>');
                         });

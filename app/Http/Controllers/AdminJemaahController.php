@@ -96,7 +96,7 @@ class AdminJemaahController extends Controller
             'pemesanans' => $pemesanan ? $pemesanan->paket->pemesanans : [],
             'grups' => $grup ? $grup->paket->grups : [],
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi')) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi'))->first()->id)->get() : Kabupaten::all(),
+            'kabupatens' => (old('provinsi_id')) ? Kabupaten::where('provinsi_id', old('provinsi_id'))->get() : Kabupaten::all(),
         ]);
     }
 
@@ -119,8 +119,8 @@ class AdminJemaahController extends Controller
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
-            'kabupaten' => 'nullable|string',
-            'provinsi' => 'nullable|string',
+            'kabupaten_id' => 'nullable|integer',
+            'provinsi_id' => 'nullable|integer',
             'kode_pos' => 'nullable|string',
             'nomor_telepon' => 'nullable|string',
             'email' => 'nullable|string',
@@ -203,7 +203,7 @@ class AdminJemaahController extends Controller
             'pemesanans' => $pemesanan->paket->pemesanans ?? [],
             'grups' => $grup->paket->grups ?? [],
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi', $jemaah->provinsi)) ? Kabupaten::where('provinsi_id', Provinsi::where('provinsi', old('provinsi', $jemaah->provinsi))->first()->id)->get() : Kabupaten::all(),
+            'kabupatens' => (old('provinsi_id', $jemaah->provinsi_id)) ? Kabupaten::where('provinsi_id', old('provinsi_id', $jemaah->provinsi_id))->get() : Kabupaten::all(),
         ]);
     }
 
@@ -227,8 +227,8 @@ class AdminJemaahController extends Controller
             'alamat' => 'nullable|string',
             'kelurahan' => 'nullable|string',
             'kecamatan' => 'nullable|string',
-            'kabupaten' => 'nullable|string',
-            'provinsi' => 'nullable|string',
+            'kabupaten_id' => 'nullable|integer',
+            'provinsi_id' => 'nullable|integer',
             'kode_pos' => 'nullable|string',
             'nomor_telepon' => 'nullable|string',
             'email' => 'nullable|string',

@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use App\Models\BerkasJemaah;
 use App\Models\BusJemaah;
 use App\Models\Jemaah;
+use App\Models\Kabupaten;
 use App\Models\Kamar;
 use App\Models\KamarJemaah;
+use App\Models\Provinsi;
 use App\Models\SertifikatJemaah;
 use App\Models\Testimoni;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,6 +21,10 @@ class JemaahTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $jawaBaratId = Provinsi::where('provinsi', 'Jawa Barat')->first()->id;
+        $karawangId = Kabupaten::where('kabupaten', 'Kabupaten Karawang')->first()->id;
+        $purwakartaId = Kabupaten::where('kabupaten', 'Kabupaten Purwakarta')->first()->id;
+
         $jemaahs = [
             [
                 'pemesanan_id' => 1,
@@ -33,8 +39,8 @@ class JemaahTableSeeder extends Seeder
                 'alamat' => 'Jl. Raya Cilamaya, Dusun KedungAsem, Rt.08/Rw.04',
                 'kelurahan' => 'Mekarmaya',
                 'kecamatan' => 'Cilamaya Wetan',
-                'kabupaten' => 'Kabupaten Karawang',
-                'provinsi' => 'Jawa Barat',
+                'kabupaten_id' => $karawangId,
+                'provinsi_id' => $jawaBaratId,
                 'kode_pos' => '41384',
                 'nomor_telepon' => '+6282117503125',
                 'email' => 'haitsam03@gmail.com',
@@ -65,8 +71,8 @@ class JemaahTableSeeder extends Seeder
                 'alamat' => 'Jl. Raya Sempur',
                 'kelurahan' => 'Sempur',
                 'kecamatan' => 'Plered',
-                'kabupaten' => 'Purwakarta',
-                'provinsi' => 'Jawa Barat',
+                'kabupaten_id' => $purwakartaId,
+                'provinsi_id' => $jawaBaratId,
                 'kode_pos' => '41162',
                 'nomor_telepon' => '+6281384129373',
                 'email' => 'nhalimatu@gmail.com',

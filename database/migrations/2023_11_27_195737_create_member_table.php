@@ -27,8 +27,14 @@ return new class extends Migration
             $table->text('alamat')->nullable();
             $table->string('kelurahan')->nullable();
             $table->string('kecamatan')->nullable();
-            $table->string('kabupaten')->nullable();
-            $table->string('provinsi')->nullable();
+            $table->foreignId('kabupaten_id')->nullable()
+                ->constrained('kabupaten')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
+            $table->foreignId('provinsi_id')->nullable()
+                ->constrained('provinsi')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
             $table->string('kode_pos')->nullable();
             $table->string('nomor_telepon')->nullable();
             $table->string('email')->nullable();
