@@ -2,6 +2,7 @@
 
 @theme {
     --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
 
     /* Maroon - warna utama brand */
     --color-maroon-50: #fdf3f4;
@@ -28,5 +29,18 @@
 @layer base {
     body {
         @apply bg-cream-100 text-stone-800 font-sans antialiased;
+    }
+
+    h1, h2, h3, .font-display {
+        font-family: var(--font-display);
+    }
+}
+
+@layer utilities {
+    /* Motif geometris tipis ala ornamen Islami, dipakai sebagai aksen pembatas section */
+    .motif-divider {
+        background-image: repeating-linear-gradient(45deg, currentColor 0, currentColor 1px, transparent 0, transparent 12px);
+        height: 3px;
+        opacity: 0.35;
     }
 }

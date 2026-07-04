@@ -1,6 +1,7 @@
-<header x-data="{ mobileOpen: false }" class="relative z-40">
+<header x-data="{ mobileOpen: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 12)"
+    class="sticky top-0 z-40">
     {{-- Top bar --}}
-    <div class="hidden bg-maroon-900 text-cream-100 md:block">
+    <div class="hidden bg-maroon-900 text-cream-100 transition-all md:block" :class="scrolled ? 'max-h-0 overflow-hidden opacity-0' : 'max-h-10 opacity-100'">
         <div class="mx-auto flex max-w-7xl items-center justify-end gap-4 px-4 py-1.5 text-sm">
             <a href="https://www.tiktok.com/@haifanidaofficial" target="_blank" class="hover:text-cream-300"><i class="bx bxl-tiktok"></i></a>
             <a href="https://www.facebook.com/haifanidaofficial" target="_blank" class="hover:text-cream-300"><i class="bx bxl-facebook"></i></a>
@@ -11,7 +12,7 @@
     </div>
 
     {{-- Main nav --}}
-    <nav class="border-b border-maroon-100 bg-cream-50">
+    <nav class="border-b border-maroon-100 bg-cream-50/95 backdrop-blur transition-shadow" :class="scrolled && 'shadow-md'">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <a href="/" class="flex items-center">
                 <img src="/assets/img/logos/logo-lanskap-2.png" alt="Haifa Nida Wisata" class="h-12 w-auto">
