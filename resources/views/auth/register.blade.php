@@ -1,231 +1,95 @@
-@extends('layouts.main')
-@section('style')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        .btn-google {
-            background-color: #4285F4;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+@extends('layouts.app')
 
-        .btn-google:hover {
-            background-color: #357AE8;
-        }
-    </style>
-@endsection
 @section('content')
     @php
-        use Carbon\Carbon;
         $googleData = session('google_data');
     @endphp
 
+    <section class="py-16">
+        <div class="mx-auto grid max-w-5xl gap-10 px-4 lg:grid-cols-2 lg:items-center">
+            <div class="hidden overflow-hidden rounded-2xl lg:block">
+                <img src="/assets/img/mekkah/aviator70.jpg" alt="Haifa Nida Wisata" class="aspect-3/4 w-full object-cover">
+            </div>
 
-    <div class="user-area pt-100 pb-70">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="user-img">
-                        <img src="/assets/img/mekkah/aviator70.jpg" alt="Images" loading="lazy">
+            <div class="rounded-2xl border border-cream-200 bg-cream-50 p-8 shadow-sm">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">Daftar Akun Baru</h2>
+                <p class="mt-1 text-sm text-stone-500">Mulai perjalanan ibadah Anda bersama kami</p>
+
+                @if (session()->has('loginError'))
+                    <div class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ session('loginError') }}</div>
+                @endif
+                @if (session()->has('success'))
+                    <div class="mt-4 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('success') }}</div>
+                @endif
+                @if (session()->has('status'))
+                    <div class="mt-4 rounded-lg bg-sky-50 px-4 py-3 text-sm text-sky-700">{{ session('status') }}</div>
+                @endif
+                @if (session()->has('info'))
+                    <div class="mt-4 rounded-lg bg-sky-50 px-4 py-3 text-sm text-sky-700">{{ session('info') }}</div>
+                @endif
+
+                <form action="/register" method="post" class="mt-6">
+                    @csrf
+                    @if ($googleData)
+                        <input type="hidden" name="google_id" value="{{ $googleData['google_id'] }}">
+                        <input type="hidden" name="google_token" value="{{ $googleData['google_token'] }}">
+                        <input type="hidden" name="avatar" value="{{ $googleData['avatar'] }}">
+                    @endif
+
+                    <x-form-input label="Nama Lengkap" name="name" placeholder="Nama Lengkap" :value="$googleData['name'] ?? old('name')" required @if ($googleData) readonly @endif />
+                    <div>
+                        <x-form-input label="Username" name="username" placeholder="Username" :value="old('username')" required />
+                        <p id="username-availability" class="-mt-3 mb-3 text-xs"></p>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="user-form">
-                        <div class="contact-form">
-                            <h2>Daftar</h2>
-                            @if (session()->has('loginError'))
-                                <div class="alert alert-danger mb-3 mx-auto" role="alert">
-                                    {{ session('loginError') }}
-                                </div>
-                            @endif
-                            @if (session()->has('success'))
-                                <div class="alert alert-success mb-3 mx-auto" role="alert">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-                            @if (session()->has('status'))
-                                <div class="alert alert-info mb-3 mx-auto" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-                            @if (session()->has('info'))
-                                <div class="alert alert-info mb-3 mx-auto" role="alert">
-                                    {{ session('info') }}
-                                </div>
-                            @endif
-                            <form action="/register" method="post">
-                                @csrf
-                                @if($googleData)
-                                    <input type="hidden" name="google_id" value="{{ $googleData['google_id'] }}">
-                                    <input type="hidden" name="google_token" value="{{ $googleData['google_token'] }}">
-                                    <input type="hidden" name="avatar" value="{{ $googleData['avatar'] }}">
-                                @endif
-                                <div class="row">
-                                    <div class="col-lg-12 ">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                name="name" id="name" required data-error="Masukkan Nama Lengkap"
-                                                placeholder="Nama Lengkap" value="{{ $googleData['name'] ?? old('name') }}" 
-                                                {{ $googleData ? 'readonly' : '' }}>
-                                            @error('name')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- ... -->
-                                    <div class="col-lg-12 ">
-                                        <div class="form-group">
-                                            <input type="text"
-                                                class="form-control @error('username') is-invalid @enderror" name="username"
-                                                id="username" required data-error="Masukkan Username"
-                                                placeholder="Username" value="{{ old('username') }}">
-                                            @error('username')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            <!-- Tambahkan elemen span untuk menampilkan pesan ketersediaan -->
-                                            <span id="username-availability"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 ">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                                name="email" id="email" required data-error="Masukkan Email"
-                                                placeholder="Email" value="{{ $googleData['email'] ?? old('email') }}"
-                                                {{ $googleData ? 'readonly' : '' }}>
-                                            @error('email')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            <span id="email-availability"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 ">
-                                        <div class="form-group">
-                                            <input type="text"
-                                                class="form-control @error('phone_number') is-invalid @enderror"
-                                                name="phone_number" id="phone_number" required
-                                                data-error="Masukkan phone_number" placeholder="Nomor Ponsel"
-                                                value="{{ old('phone_number') }}">
-                                            @error('phone_number')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <!-- ... -->
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input class="form-control @error('password') is-invalid @enderror"
-                                                type="password" name="password" id="password" placeholder="Kata Sandi">
-                                            @error('password')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                type="password" name="password_confirmation" id="password_confirmation"
-                                                placeholder="Konfirmasi Kata Sandi">
-                                            @error('password_confirmation')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 ">
-                                        <button type="submit" class="default-btn btn-bg-two">
-                                            Daftar
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-12 mt-3">
-                                        <!-- MODIFIED: Update route register Google -->
-                                        <a href="{{ route('auth.google.register') }}" class="btn btn-google">
-                                            <i class="fa-brands fa-google"></i> Daftar dengan Google
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <p class="account-desc">
-                                            Sudah Punya Akun?
-                                            <a href="/login">Log In Sekarang</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                    <div>
+                        <x-form-input label="Email" name="email" type="email" placeholder="Email" :value="$googleData['email'] ?? old('email')" required @if ($googleData) readonly @endif />
+                        <p id="email-availability" class="-mt-3 mb-3 text-xs"></p>
                     </div>
-                </div>
+                    <x-form-input label="Nomor Ponsel" name="phone_number" placeholder="Nomor Ponsel" :value="old('phone_number')" required />
+                    <x-form-input label="Kata Sandi" name="password" type="password" placeholder="Kata Sandi" required />
+                    <x-form-input label="Konfirmasi Kata Sandi" name="password_confirmation" type="password" placeholder="Konfirmasi Kata Sandi" required />
+
+                    <x-button type="submit" class="w-full justify-center">Daftar</x-button>
+
+                    <a href="{{ route('auth.google.register') }}" class="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-sky-600 py-2.5 text-sm font-semibold text-white hover:bg-sky-700">
+                        <i class="bx bxl-google"></i> Daftar dengan Google
+                    </a>
+
+                    <p class="mt-5 text-center text-sm text-stone-500">
+                        Sudah Punya Akun? <a href="/login" class="font-medium text-maroon-700 hover:text-maroon-900">Log In Sekarang</a>
+                    </p>
+                </form>
             </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @section('script')
-    <!-- Style lainnya -->
-
-    <!-- Tambahkan script jQuery -->
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-oP6HI/t1dWC72dtFZlG5o5ZI7bA17GNE2qF/3c5z9I="
-        crossorigin="anonymous"></script> --}}
-
     <script>
-        $(document).ready(function() {
-            // Menangkap peristiwa input pada bidang username
-            $('#username').on('input', function() {
-                var username = $(this).val();
-
-                // Mengirim permintaan AJAX untuk memeriksa ketersediaan username
-                $.ajax({
-                    url: '/check-username/' + username,
-                    type: 'GET',
-                    success: function(response) {
-                        if (response.status === 'available') {
-                            // Username tersedia
-                            $('#username-availability').text('Username tersedia').css('color',
-                                'green');
-                        } else {
-                            // Username sudah digunakan
-                            $('#username-availability').text('Username sudah digunakan').css(
-                                'color', 'red');
-                        }
+        document.addEventListener('DOMContentLoaded', function () {
+            function checkAvailability(inputId, resultId, urlPrefix, label) {
+                const input = document.getElementById(inputId);
+                input.addEventListener('input', function () {
+                    if (!this.value) {
+                        document.getElementById(resultId).textContent = '';
+                        return;
                     }
+                    fetch(urlPrefix + '/' + encodeURIComponent(this.value), {
+                        headers: { 'Accept': 'application/json' },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const available = data.status === 'available';
+                            const el = document.getElementById(resultId);
+                            el.textContent = available ? label + ' tersedia' : label + ' sudah digunakan';
+                            el.style.color = available ? '#15803d' : '#dc2626';
+                        })
+                        .catch(error => console.error('Error:', error));
                 });
-            });
+            }
 
-            // Menangkap peristiwa input pada bidang email
-            $('#email').on('input', function() {
-                var email = $(this).val();
-
-                // Mengirim permintaan AJAX untuk memeriksa ketersediaan email
-                $.ajax({
-                    url: '/check-email/' + email,
-                    type: 'GET',
-                    success: function(response) {
-                        if (response.status === 'available') {
-                            // Email tersedia
-                            $('#email-availability').text('Email tersedia').css('color',
-                                'green');
-                        } else {
-                            // Email sudah digunakan
-                            $('#email-availability').text('Email sudah digunakan').css('color',
-                                'red');
-                        }
-                    }
-                });
-            });
+            checkAvailability('username', 'username-availability', '/check-username', 'Username');
+            checkAvailability('email', 'email-availability', '/check-email', 'Email');
         });
     </script>
 @endsection

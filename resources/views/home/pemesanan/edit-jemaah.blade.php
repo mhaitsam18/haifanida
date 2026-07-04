@@ -1,403 +1,210 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/crud-jemaah.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-<div class="container py-4 mb-5">
-    <!-- Form Header with Modern Design -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h2 class="fw-bold mb-0 text-primary">Edit Data Jemaah</h2>
-                    <p class="text-muted">Silakan perbarui data jemaah dengan benar</p>
-                </div>
+    <section class="py-10">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-8">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">Edit Data Jemaah</h2>
+                <p class="mt-1 text-sm text-stone-500">Silakan perbarui data jemaah dengan benar</p>
             </div>
-        </div>
-    </div>
 
-    <!-- Main Form -->
-    <form action="{{ route('pemesanan.jemaah.update', [$pemesanan->id, $jemaah->id]) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <!-- Modern Card-Based Form Layout -->
-        <div class="row g-4">
-            <!-- Personal Data Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3 h-100">
-                    <div class="card-header bg-gradient-primary text-white py-3">
-                        <h5 class="mb-0">
-                            <i class="fas fa-user-circle me-2"></i>
-                            Data Pribadi
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="nama_lengkap" class="form-label fw-semibold">Nama Lengkap (Sesuai KTP) <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $jemaah->nama_lengkap) }}" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $jemaah->email) }}" required>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="nomor_telepon" class="form-label fw-semibold">Nomor Ponsel <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon" value="{{ old('nomor_telepon', $jemaah->nomor_telepon) }}" required>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Foto <span class="text-danger">*</span></label>
-                            <div class="text-center mb-3">
-                                <img id="preview-image" src="{{ $jemaah->foto ? asset('storage/' . $jemaah->foto) : asset('storage/jemaah-foto/pas-foto.jpg') }}" alt="Preview" class="img-thumbnail" style="height: 150px; width: auto;">
-                            </div>
-                            <div class="position-relative">
-                                <input type="file" class="form-control" id="foto" name="foto" accept="image/*" onchange="previewImage(this)">
-                                <label for="foto" class="btn btn-primary w-100 mt-2">
-                                    <i class="fas fa-upload me-2"></i>Ubah Foto
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="nomor_ktp" class="form-label fw-semibold">Nomor KTP <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                <input type="text" class="form-control" id="nomor_ktp" name="nomor_ktp" value="{{ old('nomor_ktp', $jemaah->nomor_ktp) }}" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Birth Information Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3 h-100">
-                    <div class="card-header bg-gradient-info text-white py-3">
-                        <h5 class="mb-0">
-                            <i class="fas fa-info-circle me-2"></i>
-                            Informasi Kelahiran & Data Diri
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
+            <form action="{{ route('pemesanan.jemaah.update', [$pemesanan->id, $jemaah->id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-user-circle"></i> Data Pribadi
+                        </h3>
+                        <x-form-input label="Nama Lengkap (Sesuai KTP)" name="nama_lengkap" :value="$jemaah->nama_lengkap" required />
+                        <x-form-input label="Email" name="email" type="email" :value="$jemaah->email" required />
+                        <x-form-input label="Nomor Ponsel" name="nomor_telepon" :value="$jemaah->nomor_telepon" required />
+
                         <div class="mb-4">
-                            <label for="tempat_lahir" class="form-label fw-semibold">Kota Tempat Lahir <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $jemaah->tempat_lahir) }}" required>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal Lahir <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir', $jemaah->tanggal_lahir) }}" required>
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Foto <span class="text-maroon-700">*</span></label>
+                            <div class="mb-3 text-center">
+                                <img id="preview-image" src="{{ $jemaah->foto ? asset('storage/' . $jemaah->foto) : asset('storage/jemaah-foto/pas-foto.jpg') }}" alt="Preview" class="mx-auto h-36 w-auto rounded-lg border border-cream-200">
                             </div>
+                            <label for="foto" class="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-maroon-700 py-2.5 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
+                                <i class="bx bx-upload"></i> Ubah Foto
+                            </label>
+                            <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(this)" class="hidden">
                         </div>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Jenis Kelamin <span class="text-danger">*</span></label>
-                                <div class="d-flex gap-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jk_laki" value="Laki-laki" {{ (old('jenis_kelamin', $jemaah->jenis_kelamin) == 'Laki-laki') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="jk_laki">
-                                            <i class="fas fa-male text-primary me-1"></i> Laki-laki
+
+                        <x-form-input label="Nomor KTP" name="nomor_ktp" :value="$jemaah->nomor_ktp" required />
+                    </x-card>
+
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-info-circle"></i> Informasi Kelahiran &amp; Data Diri
+                        </h3>
+                        <x-form-input label="Kota Tempat Lahir" name="tempat_lahir" :value="$jemaah->tempat_lahir" required />
+                        <x-form-input label="Tanggal Lahir" name="tanggal_lahir" type="date" :value="$jemaah->tanggal_lahir" required />
+
+                        <div class="mb-4 grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="mb-1.5 block text-sm font-medium text-stone-700">Jenis Kelamin <span class="text-maroon-700">*</span></label>
+                                <div class="flex gap-4">
+                                    @foreach (['Laki-laki', 'Perempuan'] as $jk)
+                                        <label class="flex items-center gap-2 text-sm text-stone-700">
+                                            <input type="radio" name="jenis_kelamin" value="{{ $jk }}" class="text-maroon-700 focus:ring-maroon-400"
+                                                @checked(old('jenis_kelamin', $jemaah->jenis_kelamin) == $jk)> {{ $jk }}
                                         </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jk_perempuan" value="Perempuan" {{ (old('jenis_kelamin', $jemaah->jenis_kelamin) == 'Perempuan') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="jk_perempuan">
-                                            <i class="fas fa-female text-danger me-1"></i> Perempuan
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Golongan Darah</label>
-                                <div class="d-flex flex-wrap gap-2">
-                                    @foreach(['A', 'B', 'AB', 'O'] as $goldar)
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="golongan_darah" id="gol_{{ strtolower($goldar) }}" value="{{ $goldar }}" {{ (old('golongan_darah', $jemaah->golongan_darah) == $goldar) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="gol_{{ strtolower($goldar) }}">{{ $goldar }}</label>
-                                    </div>
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Kewarganegaraan <span class="text-danger">*</span></label>
-                            <div class="d-flex gap-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="kewarganegaraan" id="wni" value="WNI" {{ (old('kewarganegaraan', $jemaah->kewarganegaraan) == 'WNI') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="wni">
-                                        <i class="fas fa-flag text-danger me-1"></i> WNI
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="kewarganegaraan" id="wna" value="WNA" {{ (old('kewarganegaraan', $jemaah->kewarganegaraan) == 'WNA') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="wna">
-                                        <i class="fas fa-globe text-primary me-1"></i> WNA
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Tingkat Pendidikan</label>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @foreach(['SD' => 'SD/MI/Sederajat', 'SLTP' => 'SMP/MTs/Sederajat', 'SLTA' => 'SMA/SMK/MA/Sederajat', 'D1/D2/D3' => 'D1/D2/D3'] as $value => $label)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="{{ strtolower($value) }}" value="{{ $value }}" {{ (old('tingkat_pendidikan', $jemaah->tingkat_pendidikan) == $value) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="{{ strtolower($value) }}">{{ $label }}</label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                                <div class="col-md-6">
-                                    @foreach(['D4/S1' => 'D4/S1', 'S2' => 'S2', 'S3' => 'S3'] as $value => $label)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio" name="tingkat_pendidikan" id="{{ strtolower($value) }}" value="{{ $value }}" {{ (old('tingkat_pendidikan', $jemaah->tingkat_pendidikan) == $value) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="{{ strtolower($value) }}">{{ $label }}</label>
-                                    </div>
+                            <div>
+                                <label class="mb-1.5 block text-sm font-medium text-stone-700">Golongan Darah</label>
+                                <div class="flex flex-wrap gap-3">
+                                    @foreach (['A', 'B', 'AB', 'O'] as $goldar)
+                                        <label class="flex items-center gap-1.5 text-sm text-stone-700">
+                                            <input type="radio" name="golongan_darah" value="{{ $goldar }}" class="text-maroon-700 focus:ring-maroon-400"
+                                                @checked(old('golongan_darah', $jemaah->golongan_darah) == $goldar)> {{ $goldar }}
+                                        </label>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="pekerjaan" class="form-label fw-semibold">Pekerjaan</label>
-                            <input type="text" class="form-control" id="pekerjaan" name="pekerjaan" value="{{ old('pekerjaan', $jemaah->pekerjaan) }}" placeholder="Masukkan pekerjaan">
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Kewarganegaraan <span class="text-maroon-700">*</span></label>
+                            <div class="flex gap-4">
+                                @foreach (['WNI', 'WNA'] as $kwn)
+                                    <label class="flex items-center gap-2 text-sm text-stone-700">
+                                        <input type="radio" name="kewarganegaraan" value="{{ $kwn }}" class="text-maroon-700 focus:ring-maroon-400"
+                                            @checked(old('kewarganegaraan', $jemaah->kewarganegaraan) == $kwn)> {{ $kwn }}
+                                    </label>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Address Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header bg-gradient-success text-white py-3">
-                        <h5 class="mb-0">
-                            <i class="fas fa-map-marker-alt me-2"></i>
-                            Alamat Lengkap
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="provinsi_id" class="form-label">Provinsi</label>
-                            <select class="form-select @error('provinsi_id') is-invalid @enderror" id="provinsi_id" name="provinsi_id">
+
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Tingkat Pendidikan</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                @foreach ([
+                                    'SD' => 'SD/MI/Sederajat', 'SLTP' => 'SMP/MTs/Sederajat', 'SLTA' => 'SMA/SMK/MA/Sederajat', 'D1/D2/D3' => 'D1/D2/D3',
+                                    'D4/S1' => 'D4/S1', 'S2' => 'S2', 'S3' => 'S3',
+                                ] as $value => $label)
+                                    <label class="flex items-center gap-2 text-sm text-stone-700">
+                                        <input type="radio" name="tingkat_pendidikan" value="{{ $value }}" class="text-maroon-700 focus:ring-maroon-400"
+                                            @checked(old('tingkat_pendidikan', $jemaah->tingkat_pendidikan) == $value)> {{ $label }}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <x-form-input label="Pekerjaan" name="pekerjaan" :value="$jemaah->pekerjaan" />
+                    </x-card>
+
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-map"></i> Alamat Lengkap
+                        </h3>
+                        <div class="mb-4">
+                            <label for="provinsi_id" class="mb-1.5 block text-sm font-medium text-stone-700">Provinsi</label>
+                            <select id="provinsi_id" name="provinsi_id"
+                                class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                                 <option value="" disabled>Pilih Provinsi</option>
                                 @foreach ($provinsis as $provinsi)
-                                    <option value="{{ $provinsi->id }}" {{ (old('provinsi_id', $jemaah->provinsi_id) == $provinsi->id) ? 'selected' : '' }}>
-                                        {{ $provinsi->provinsi }}
-                                    </option>
+                                    <option value="{{ $provinsi->id }}" @selected(old('provinsi_id', $jemaah->provinsi_id) == $provinsi->id)>{{ $provinsi->provinsi }}</option>
                                 @endforeach
                             </select>
                             @error('provinsi_id')
-                                <div class="text-danger fs-6">
-                                    {{ $message }}
-                                </div>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
-                        <div class="mb-3">
-                            <label for="kabupaten_id" class="form-label fw-semibold">Kabupaten/Kota <span class="text-danger">*</span></label>
-                            <select class="form-select" id="kabupaten_id" name="kabupaten_id" required>
+                        <div class="mb-4">
+                            <label for="kabupaten_id" class="mb-1.5 block text-sm font-medium text-stone-700">Kabupaten/Kota <span class="text-maroon-700">*</span></label>
+                            <select id="kabupaten_id" name="kabupaten_id" required
+                                class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                                 <option value="" disabled>Pilih Kabupaten/Kota</option>
                                 @foreach ($kabupatens as $kabupaten)
-                                    <option value="{{ $kabupaten->id }}" {{ (old('kabupaten_id', $jemaah->kabupaten_id) == $kabupaten->id) ? 'selected' : '' }}>
-                                        {{ $kabupaten->kabupaten }}
-                                    </option>
+                                    <option value="{{ $kabupaten->id }}" @selected(old('kabupaten_id', $jemaah->kabupaten_id) == $kabupaten->id)>{{ $kabupaten->kabupaten }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="kecamatan" class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="{{ old('kecamatan', $jemaah->kecamatan) }}" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="kelurahan" class="form-label fw-semibold">Desa/Kelurahan <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="{{ old('kelurahan', $jemaah->kelurahan) }}" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="kode_pos" class="form-label fw-semibold">Kode Pos</label>
-                            <input type="text" class="form-control" id="kode_pos" name="kode_pos" value="{{ old('kode_pos', $jemaah->kode_pos) }}">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="alamat" class="form-label fw-semibold">Detail Alamat <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="alamat" name="alamat" rows="3" required>{{ old('alamat', $jemaah->alamat) }}</textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Passport Information Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header bg-gradient-warning text-white py-3">
-                        <h5 class="mb-0">
-                            <i class="fas fa-passport me-2"></i>
-                            Informasi Paspor
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="nomor_paspor" class="form-label fw-semibold">Nomor Paspor</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-passport"></i></span>
-                                <input type="text" class="form-control" id="nomor_paspor" name="nomor_paspor" value="{{ old('nomor_paspor', $jemaah->nomor_paspor) }}">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="nama_sesuai_paspor" class="form-label fw-semibold">Nama Sesuai Paspor</label>
-                            <input type="text" class="form-control" id="nama_sesuai_paspor" name="nama_sesuai_paspor" value="{{ old('nama_sesuai_paspor', $jemaah->nama_sesuai_paspor) }}">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="tempat_dikeluarkan" class="form-label fw-semibold">Tempat Dikeluarkan (Kota/Kabupaten)</label>
-                            <input type="text" class="form-control" id="tempat_dikeluarkan" name="tempat_dikeluarkan" value="{{ old('tempat_dikeluarkan', $jemaah->tempat_dikeluarkan) }}">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="tanggal_dikeluarkan" class="form-label fw-semibold">Tanggal Dikeluarkan</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control" id="tanggal_dikeluarkan" name="tanggal_dikeluarkan" value="{{ old('tanggal_dikeluarkan', $jemaah->tanggal_dikeluarkan) }}">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="tanggal_kadaluarsa" class="form-label fw-semibold">Tanggal Kadaluarsa</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
-                                <input type="date" class="form-control" id="tanggal_kadaluarsa" name="tanggal_kadaluarsa" value="{{ old('tanggal_kadaluarsa', $jemaah->tanggal_kadaluarsa) }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Emergency Contact Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header bg-gradient-danger text-white py-3">
-                        <h5 class="mb-0">
-                            <i class="fas fa-heartbeat me-2"></i>
-                            Kontak Darurat
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="nama_keluarga_terdekat" class="form-label fw-semibold">Nama Keluarga Terdekat <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama_keluarga_terdekat" name="nama_keluarga_terdekat" value="{{ old('nama_keluarga_terdekat', $jemaah->nama_keluarga_terdekat) }}" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="kontak_keluarga_terdekat" class="form-label fw-semibold">Kontak Keluarga Terdekat <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control" id="kontak_keluarga_terdekat" name="kontak_keluarga_terdekat" value="{{ old('kontak_keluarga_terdekat', $jemaah->kontak_keluarga_terdekat) }}" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Form Actions -->
-        <div class="d-flex justify-content-between mt-4 pt-3">
-            <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" class="btn btn-outline-secondary btn-lg px-5">
-                <i class="fas fa-arrow-left me-2"></i>Kembali
-            </a>
-            <div>
-                {{-- <button type="reset" class="btn btn-light btn-lg me-2">
-                    <i class="fas fa-redo me-2"></i>Reset
-                </button> --}}
-                <button type="submit" class="btn btn-primary btn-lg px-5">
-                    <i class="fas fa-save me-2"></i>Simpan Perubahan
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+                        <x-form-input label="Kecamatan" name="kecamatan" :value="$jemaah->kecamatan" required />
+                        <x-form-input label="Desa/Kelurahan" name="kelurahan" :value="$jemaah->kelurahan" required />
+                        <x-form-input label="Kode Pos" name="kode_pos" :value="$jemaah->kode_pos" />
+                        <x-form-textarea label="Detail Alamat" name="alamat" :value="$jemaah->alamat" :rows="3" required />
+                    </x-card>
 
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-id-card"></i> Informasi Paspor
+                        </h3>
+                        <x-form-input label="Nomor Paspor" name="nomor_paspor" :value="$jemaah->nomor_paspor" />
+                        <x-form-input label="Nama Sesuai Paspor" name="nama_sesuai_paspor" :value="$jemaah->nama_sesuai_paspor" />
+                        <x-form-input label="Tempat Dikeluarkan (Kota/Kabupaten)" name="tempat_dikeluarkan" :value="$jemaah->tempat_dikeluarkan" />
+                        <x-form-input label="Tanggal Dikeluarkan" name="tanggal_dikeluarkan" type="date" :value="$jemaah->tanggal_dikeluarkan" />
+                        <x-form-input label="Tanggal Kadaluarsa" name="tanggal_kadaluarsa" type="date" :value="$jemaah->tanggal_kadaluarsa" />
+                    </x-card>
+
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-heart"></i> Kontak Darurat
+                        </h3>
+                        <x-form-input label="Nama Keluarga Terdekat" name="nama_keluarga_terdekat" :value="$jemaah->nama_keluarga_terdekat" required />
+                        <x-form-input label="Kontak Keluarga Terdekat" name="kontak_keluarga_terdekat" :value="$jemaah->kontak_keluarga_terdekat" required />
+                    </x-card>
+                </div>
+
+                <div class="mt-6 flex items-center justify-between">
+                    <x-button variant="secondary" :href="route('pemesanan.jemaah.list', $pemesanan->id)">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
+                    <x-button type="submit">
+                        <i class="bx bx-save"></i> Simpan Perubahan
+                    </x-button>
+                </div>
+            </form>
+        </div>
+    </section>
 @endsection
 
-
 @section('script')
-<script>
-    // MODIFIED: Add proper image preview functionality
-    function previewImage(input) {
-        const file = input.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('preview-image').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    $(document).ready(function() {
-        $('#foto').on('change', function() {
-            previewImage(this);
-        });
-        
-        // Ketika elemen provinsi berubah
-        $('#provinsi_id').change(function() {
-            // Ambil id provinsi yang dipilih
-            var selectedProvinsi = $(this).val();
-
-            // Lakukan request AJAX untuk mendapatkan data kabupaten berdasarkan provinsi
-            $.ajax({
-                url: '/get-kabupaten',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    provinsi_id: selectedProvinsi
-                },
-                success: function(data) {
-                    // Hapus opsi lama pada dropdown kabupaten
-                    $('#kabupaten_id').empty();
-
-                    // Tambahkan opsi default pada dropdown kabupaten
-                    $('#kabupaten_id').append('<option value="" disabled>Pilih Kabupaten</option>');
-
-                    // Tambahkan opsi kabupaten berdasarkan data yang diterima dari server
-                    $.each(data, function(key, value) {
-                        $('#kabupaten_id').append('<option value="' + value.id + '">' + value.kabupaten + '</option>');
-                    });
-
-                    // Set kabupaten yang sudah tersimpan jika ada
-                    var savedKabupaten = "{{ old('kabupaten_id', $jemaah->kabupaten_id) }}";
-                    if (savedKabupaten) {
-                        $('#kabupaten_id').val(savedKabupaten);
-                    }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    console.error('Error: ' + errorThrown);
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.previewImage = function (input) {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('preview-image').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
                 }
+            };
+
+            const provinsiSelect = document.getElementById('provinsi_id');
+            const kabupatenSelect = document.getElementById('kabupaten_id');
+            const savedKabupaten = "{{ old('kabupaten_id', $jemaah->kabupaten_id) }}";
+
+            provinsiSelect.addEventListener('change', function () {
+                fetch('/get-kabupaten', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({ provinsi_id: this.value }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        kabupatenSelect.innerHTML = '<option value="" disabled>Pilih Kabupaten</option>';
+                        data.forEach(function (kabupaten) {
+                            const option = document.createElement('option');
+                            option.value = kabupaten.id;
+                            option.textContent = kabupaten.kabupaten;
+                            kabupatenSelect.appendChild(option);
+                        });
+                        if (savedKabupaten) {
+                            kabupatenSelect.value = savedKabupaten;
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             });
         });
-
-        // Trigger change event pada provinsi jika ada nilai tersimpan
-        if ($('#provinsi_id').val()) {
-            $('#provinsi_id').trigger('change');
-        }
-    });
-</script>
+    </script>
 @endsection

@@ -1,93 +1,49 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
-                    <form action="/admin/permintaan-kamar" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="pemesanan_kamar_id" id="pemesanan_kamar_id"
-                            value="{{ $pemesananKamar->id ?? null }}">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="permintaan" class="form-label">Permintaan</label>
-                                    <select class="form-select @error('permintaan') is-invalid @enderror" id="permintaan"
-                                        name="permintaan">
-                                        <option value="" selected disabled>Pilih Permintaan</option>
-                                        @foreach ($permintaans as $permintaan)
-                                            <option value="{{ $permintaan->nama_ekstra }}" @selected($permintaan->nama_ekstra == old('permintaan'))>
-                                                {{ $permintaan->nama_ekstra }}
-                                            </option>
-                                        @endforeach
-                                        <option value="permintaan_khusus">Permintaan Tidak Tersedia</option>
-                                    </select>
-                                    @error('permintaan')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <!-- Field input text untuk permintaan khusus -->
-                                <div id="permintaanKhususField" style="display: none;">
-                                    <label for="permintaan_khusus" class="form-label">Permintaan Khusus</label>
-                                    <input type="text" class="form-control" id="permintaan_khusus"
-                                        name="permintaan_khusus" placeholder="Masukkan Permintaan Khusus">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="harga" class="form-label">Harga</label>
-                                    <input type="number" class="form-control @error('harga') is-invalid @enderror"
-                                        id="harga" name="harga" value="{{ old('harga') }}" placeholder="Total Harga">
-                                    @error('harga')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="keterangan" class="form-label">Keterangan</label>
-                                    <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan"
-                                        placeholder="Keterangan">{{ old('keterangan') }}</textarea>
-                                    @error('keterangan')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/{{ $pemesananKamar ? 'pemesanan-kamar/' . $pemesananKamar->id . '/' : '' }}permintaan-kamar"
-                                    class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <x-page-header :title="$title" />
+
+    <x-card class="lg:w-1/2">
+        <form action="/admin/permintaan-kamar" method="post">
+            @csrf
+            <input type="hidden" name="pemesanan_kamar_id" value="{{ $pemesananKamar->id ?? null }}">
+
+            <div class="mb-4">
+                <label for="permintaan" class="mb-1.5 block text-sm font-medium text-stone-700">Permintaan</label>
+                <select id="permintaan" name="permintaan"
+                    class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                    <option value="" selected disabled>Pilih Permintaan</option>
+                    @foreach ($permintaans as $permintaan)
+                        <option value="{{ $permintaan->nama_ekstra }}" @selected($permintaan->nama_ekstra == old('permintaan'))>{{ $permintaan->nama_ekstra }}</option>
+                    @endforeach
+                    <option value="permintaan_khusus">Permintaan Tidak Tersedia</option>
+                </select>
+                @error('permintaan')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
-    </div> <!-- row -->
+
+            <div id="permintaanKhususField" class="mb-4" style="display:none">
+                <label for="permintaan_khusus" class="mb-1.5 block text-sm font-medium text-stone-700">Permintaan Khusus</label>
+                <input type="text" id="permintaan_khusus" name="permintaan_khusus" placeholder="Masukkan Permintaan Khusus"
+                    class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+            </div>
+
+            <x-form-input label="Harga" name="harga" type="number" :value="old('harga')" placeholder="Total Harga" />
+            <x-form-textarea label="Keterangan" name="keterangan" :value="old('keterangan')" placeholder="Keterangan" />
+
+            <div class="flex justify-end gap-2">
+                <x-button variant="secondary" :href="'/admin/' . ($pemesananKamar ? 'pemesanan-kamar/' . $pemesananKamar->id . '/' : '') . 'permintaan-kamar'">Kembali</x-button>
+                <x-button type="submit">Simpan</x-button>
+            </div>
+        </form>
+    </x-card>
 @endsection
+
 @section('script')
     <script>
-        $(document).ready(function() {
-            $("#permintaan").change(function() {
-                if ($(this).val() === "permintaan_khusus") {
-                    $("#permintaanKhususField").show();
-                } else {
-                    $("#permintaanKhususField").hide();
-                }
-            });
+        document.getElementById('permintaan').addEventListener('change', function () {
+            document.getElementById('permintaanKhususField').style.display = this.value === 'permintaan_khusus' ? '' : 'none';
         });
     </script>
 @endsection

@@ -1,213 +1,97 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
-                    <form action="/admin/pemesanan-kamar/{{ $pemesananKamar->id }}" method="post"
-                        enctype="multipart/form-data">
-                        @method('put')
-                        @csrf
-                        <input type="hidden" name="id" id="id" value="{{ $pemesananKamar->id }}">
-                        <input type="hidden" name="pemesanan_id" id="pemesanan_id"
-                            value="{{ $pemesananKamar->pemesanan_id }}">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="tipe_kamar" class="form-label">Tipe Kamar</label>
-                                    <select class="form-select @error('tipe_kamar') is-invalid @enderror" id="tipe_kamar"
-                                        name="tipe_kamar">
-                                        <option value="" selected disabled>Pilih Tipe Kamar</option>
-                                        @foreach ($kamars as $kamar)
-                                            <option value="{{ $kamar->nama_ekstra }}"
-                                                data-harga="{{ $kamar->harga_default }}"
-                                                data-keterangan="{{ $kamar->keterangan }}" @selected($kamar->nama_ekstra == old('tipe_kamar', $pemesananKamar->tipe_kamar))>
-                                                {{ $kamar->nama_ekstra }} |
-                                                Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('tipe_kamar')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="jumlah_pengisi" class="form-label">Jumlah Pengisi</label>
-                                    <input type="number" class="form-control @error('jumlah_pengisi') is-invalid @enderror"
-                                        id="jumlah_pengisi" name="jumlah_pengisi"
-                                        value="{{ old('jumlah_pengisi', $pemesananKamar->jumlah_pengisi) }}"
-                                        placeholder="Jumlah Pengisi" max="4">
-                                    @error('jumlah_pengisi')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    <span id="keterangan_description" class="text-muted"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="harga" class="form-label">Harga</label>
-                                    <input type="number" class="form-control @error('harga') is-invalid @enderror"
-                                        id="harga" name="harga" value="{{ old('harga', $pemesananKamar->harga) }}"
-                                        placeholder="Total Harga">
-                                    @error('harga')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="keterangan" class="form-label">Keterangan</label>
-                                    <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan"
-                                        placeholder="Keterangan">{{ old('keterangan', $pemesananKamar->keterangan) }}</textarea>
-                                    @error('keterangan')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/{{ $pemesananKamar->pemesanan_id ? 'pemesanan/' . $pemesananKamar->pemesanan_id . '/' : '' }}pemesanan-kamar"
-                                    class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <x-page-header :title="$title" />
+
+    <x-card class="lg:w-1/2">
+        <form action="/admin/pemesanan-kamar/{{ $pemesananKamar->id }}" method="post">
+            @method('put')
+            @csrf
+            <input type="hidden" name="pemesanan_id" value="{{ $pemesananKamar->pemesanan_id }}">
+
+            <div class="mb-4">
+                <label for="tipe_kamar" class="mb-1.5 block text-sm font-medium text-stone-700">Tipe Kamar</label>
+                <select id="tipe_kamar" name="tipe_kamar"
+                    class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                    <option value="" selected disabled>Pilih Tipe Kamar</option>
+                    @foreach ($kamars as $kamar)
+                        <option value="{{ $kamar->nama_ekstra }}" data-harga="{{ $kamar->harga_default }}" data-keterangan="{{ $kamar->keterangan }}" @selected($kamar->nama_ekstra == old('tipe_kamar', $pemesananKamar->tipe_kamar))>
+                            {{ $kamar->nama_ekstra }} | Rp.{{ number_format($kamar->harga_default, 2, ',', '.') }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('tipe_kamar')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
-    </div> <!-- row -->
+
+            <x-form-input label="Jumlah Pengisi" name="jumlah_pengisi" type="number" :value="old('jumlah_pengisi', $pemesananKamar->jumlah_pengisi)" placeholder="Jumlah Pengisi" max="4" />
+            <p id="keterangan_description" class="-mt-3 mb-4 text-xs text-stone-500"></p>
+
+            <x-form-input label="Harga" name="harga" type="number" :value="old('harga', $pemesananKamar->harga)" placeholder="Total Harga" />
+            <x-form-textarea label="Keterangan" name="keterangan" :value="old('keterangan', $pemesananKamar->keterangan)" placeholder="Keterangan" />
+
+            <div class="flex justify-end gap-2">
+                <x-button variant="secondary" :href="'/admin/' . ($pemesananKamar->pemesanan_id ? 'pemesanan/' . $pemesananKamar->pemesanan_id . '/' : '') . 'pemesanan-kamar'">Kembali</x-button>
+                <x-button type="submit">Simpan</x-button>
+            </div>
+        </form>
+    </x-card>
 @endsection
+
 @section('script')
     <script>
-        $(document).ready(function() {
-            // Function to calculate and update the price based on room type and number of occupants
-            function updatePrice() {
-                var selectedRoom = $("#tipe_kamar option:selected");
-                var numberOfOccupants = $("#jumlah_pengisi").val();
+        (function () {
+            const tipeKamarSelect = document.getElementById('tipe_kamar');
+            const jumlahPengisiInput = document.getElementById('jumlah_pengisi');
+            const hargaInput = document.getElementById('harga');
+            const keteranganDescription = document.getElementById('keterangan_description');
 
-                // Check if both room type and number of occupants are selected
-                if (selectedRoom.val() !== "" && numberOfOccupants !== "") {
-                    var roomPrice = parseFloat(selectedRoom.data("harga"));
-                    var totalPrice = roomPrice * parseInt(numberOfOccupants);
+            const defaultOccupants = {
+                'tipe kamar quad gabung': null,
+                'tipe kamar quad keluarga': 4,
+                'tipe kamar quad keluarga isi 3 dan 1 bed kosong': 3,
+                'tipe kamar double gabung': 1,
+                'tipe kamar double keluarga': 2,
+                'tipe kamar single': 1,
+            };
 
-                    // Update the price input field
-                    $("#harga").val(totalPrice.toFixed(2));
-                }
-            }
-
-            // Attach the change event handlers
-            $("#tipe_kamar, #jumlah_pengisi").on('change input', function() {
-                updatePrice();
-            });
-
-            // Trigger the updatePrice function on page load
-            // updatePrice();
-        });
-
-        $(document).ready(function() {
-            // Function to calculate and update the price based on room type and number of occupants
             function updatePriceAndDescription() {
-                var selectedRoom = $("#tipe_kamar option:selected");
-                var numberOfOccupants = $("#jumlah_pengisi").val();
-                var keterangan = selectedRoom.data("keterangan");
+                const selected = tipeKamarSelect.options[tipeKamarSelect.selectedIndex];
 
-                // Check if both room type and number of occupants are selected
-                if (selectedRoom.val() !== "") {
-                    // Update the description below the jumlah_pengisi input field
-                    $("#keterangan_description").text(keterangan);
+                if (selected && selected.value !== '') {
+                    keteranganDescription.textContent = selected.getAttribute('data-keterangan') ?? '';
 
-                    // Update the price input field
-                    if (numberOfOccupants !== "") {
-                        var roomPrice = parseFloat(selectedRoom.data("harga"));
-                        var totalPrice = roomPrice * parseInt(numberOfOccupants);
-                        $("#harga").val(totalPrice.toFixed(2));
+                    const harga = parseFloat(selected.getAttribute('data-harga'));
+                    const jumlah = jumlahPengisiInput.value;
+                    if (jumlah !== '' && !isNaN(jumlah)) {
+                        hargaInput.value = (harga * parseInt(jumlah)).toFixed(2);
                     }
                 } else {
-                    // Clear the description and price when no room type is selected
-                    $("#keterangan_description").text("");
-                    $("#harga").val("");
+                    keteranganDescription.textContent = '';
+                    hargaInput.value = '';
                 }
             }
 
-            // Attach the change event handlers
-            $("#tipe_kamar, #jumlah_pengisi").on('change input', function() {
-                updatePriceAndDescription();
-            });
-
-            // Trigger the updatePriceAndDescription function on page load
-            // updatePriceAndDescription();
-        });
-
-        $(document).ready(function() {
-            // Function to calculate and update the price based on room type and number of occupants
-            function updatePriceAndDescription() {
-                var selectedRoom = $("#tipe_kamar option:selected");
-                var numberOfOccupantsInput = $("#jumlah_pengisi");
-
-                // Check if a room type is selected
-                if (selectedRoom.val() !== "") {
-                    // Set the default number of occupants based on room type
-                    switch (selectedRoom.val()) {
-                        case "tipe kamar quad gabung":
-                            numberOfOccupantsInput.val("").prop("readonly", false);
-                            break;
-                        case "tipe kamar quad keluarga":
-                            numberOfOccupantsInput.val(4).prop("readonly", true);
-                            break;
-                        case "tipe kamar quad keluarga isi 3 dan 1 bed kosong":
-                            numberOfOccupantsInput.val(3).prop("readonly", true);
-                            break;
-                        case "tipe kamar double gabung":
-                            numberOfOccupantsInput.val(1).prop("readonly", true);
-                            break;
-                        case "tipe kamar double keluarga":
-                            numberOfOccupantsInput.val(2).prop("readonly", true);
-                            break;
-                        case "tipe kamar single":
-                            numberOfOccupantsInput.val(1).prop("readonly", true);
-                            break;
-                            // Add more cases for other room types if needed
-                    }
-
-                    // Update the description below the jumlah_pengisi input field
-                    var keterangan = selectedRoom.data("keterangan");
-                    $("#keterangan_description").text(keterangan);
-
-                    // Update the price input field
-                    if (!isNaN(numberOfOccupantsInput.val())) {
-                        var roomPrice = parseFloat(selectedRoom.data("harga"));
-                        var totalPrice = roomPrice * parseInt(numberOfOccupantsInput.val());
-                        $("#harga").val(roomPrice);
+            // On edit, only recalculate on explicit user interaction so existing
+            // saved values (jumlah_pengisi/harga) are not overwritten on load.
+            tipeKamarSelect.addEventListener('change', function () {
+                const selected = tipeKamarSelect.options[tipeKamarSelect.selectedIndex];
+                if (selected && Object.prototype.hasOwnProperty.call(defaultOccupants, selected.value)) {
+                    const fixedOccupants = defaultOccupants[selected.value];
+                    if (fixedOccupants === null) {
+                        jumlahPengisiInput.value = '';
+                        jumlahPengisiInput.readOnly = false;
+                    } else {
+                        jumlahPengisiInput.value = fixedOccupants;
+                        jumlahPengisiInput.readOnly = true;
                     }
                 } else {
-                    // Clear the description, price, and enable jumlah_pengisi when no room type is selected
-                    $("#keterangan_description").text("");
-                    $("#harga").val("");
-                    numberOfOccupantsInput.val("").prop("readonly", false);
+                    jumlahPengisiInput.readOnly = false;
                 }
-            }
-
-            // Attach the change event handler for tipe_kamar
-            $("#tipe_kamar").on('change', function() {
                 updatePriceAndDescription();
             });
-
-            // Trigger the updatePriceAndDescription function on page load
-            // updatePriceAndDescription();
-        });
+            jumlahPengisiInput.addEventListener('input', updatePriceAndDescription);
+        })();
     </script>
 @endsection

@@ -1,162 +1,108 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/tagihan.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
     @php
         use Carbon\Carbon;
     @endphp
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body border rounded p-2">
-                    <div class="container-fluid">
-                        <div class="row justify-content-between">
-                            <div class="col-md-3 ps-0">
-                                <a href="#" class="noble-ui-logo d-block mt-3">
-                                    <img src="/assets/img/logos/logo.png" alt="" class="img-fluid"
-                                        style="height: 100px">
-                                </a>
-                                <p class="mt-1 mb-1"><b>PT. Haifa Nida Wisata Karawang</b></p>
-                                <p>Jl. RA. Kartini, No.1,<br>Kel. Karangpawitan, Kec. Karawang Barat. <br>Kab. Karawang, Jawa
-                                    Barat - 41315</p>
-                                <h5 class="mt-5 mb-2 text-muted">Tagihan Untuk :</h5>
-                                <p>
-                                    Sdr/i, {{ $pemesanan->user->name }}
-                                    <br>
-                                    {{ $pemesanan->user->member->alamat ?? null }}
-                                </p>
-                            </div>
-                            <div class="col-md-4 pe-0 text-end">
-                                <h4 class="fw-bolder text-uppercase text-end mt-4 mb-2">Faktur</h4>
-                                <h6 class="text-end mb-5 pb-4"># INV-{{ $pemesanan->id }}</h6>
-                                <p class="text-end mb-1"><b>Total Tagihan</b></p>
-                                <h4 class="text-end fw-normal">Rp.{{ number_format($balance, 2, ',', '.') }}</h4>
-                                <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Tanggal Faktur :</span>
-                                    {{ Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('LL') }}</h6>
-                                <h6 class="text-end fw-normal"><span class="text-muted">Tenggat Waktu Deposit :</span>
-                                    {{ Carbon::parse($pemesanan->tanggal_pesan)->addDays(1)->isoFormat('LL') }} 16:00 WIB</h6>
-                                <h6 class="text-end fw-normal"><span class="text-muted">Tenggat Waktu Pelunasan :</span>
-                                    {{ Carbon::parse($pemesanan->paket->tanggal_mulai)->subDays(30)->isoFormat('LL') }} 16:00 WIB</h6>
-                            </div>
-                        </div>
 
+    <section class="py-10">
+        <div class="mx-auto max-w-5xl px-4">
+            <div class="rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm md:p-10">
+                <div class="flex flex-wrap justify-between gap-8">
+                    <div>
+                        <img src="/assets/img/logos/logo.png" alt="Logo" class="h-20">
+                        <p class="mt-3 font-semibold text-stone-800">PT. Haifa Nida Wisata Karawang</p>
+                        <p class="mt-1 text-sm text-stone-500">Jl. RA. Kartini, No.1,<br>Kel. Karangpawitan, Kec. Karawang Barat.<br>Kab. Karawang, Jawa Barat &ndash; 41315</p>
+                        <h5 class="mt-6 text-sm font-semibold uppercase tracking-wide text-stone-400">Tagihan Untuk :</h5>
+                        <p class="mt-1 text-sm text-stone-700">
+                            Sdr/i, {{ $pemesanan->user->name }}<br>
+                            {{ $pemesanan->user->member->alamat ?? null }}
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="font-display text-xl font-bold uppercase text-maroon-900">Faktur</h4>
+                        <p class="mt-1 text-sm text-stone-500"># INV-{{ $pemesanan->id }}</p>
+                        <p class="mt-6 text-sm text-stone-500">Total Tagihan</p>
+                        <p class="font-display text-2xl font-semibold text-maroon-800">Rp.{{ number_format($balance, 2, ',', '.') }}</p>
+                        <p class="mt-3 text-sm text-stone-500">Tanggal Faktur: <span class="text-stone-800">{{ Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('LL') }}</span></p>
+                        <p class="text-sm text-stone-500">Tenggat Waktu Deposit: <span class="text-stone-800">{{ Carbon::parse($pemesanan->tanggal_pesan)->addDays(1)->isoFormat('LL') }} 16:00 WIB</span></p>
+                        <p class="text-sm text-stone-500">Tenggat Waktu Pelunasan: <span class="text-stone-800">{{ Carbon::parse($pemesanan->paket->tanggal_mulai)->subDays(30)->isoFormat('LL') }} 16:00 WIB</span></p>
+                    </div>
+                </div>
 
-                    </div>
-                    <div class="container-fluid mt-5 d-flex justify-content-center w-100">
-                        <div class="table-responsive w-100">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Deskripsi</th>
-                                        <th class="text-end">Jumlah</th>
-                                        <th class="text-end">Biaya satuan</th>
-                                        <th class="text-end">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $total = 0;
-                                    @endphp
-                                    @foreach ($tagihans as $tagihan)
-                                        <tr class="text-end">
-                                            <td class="text-start">{{ $loop->iteration }}</td>
-                                            <td class="text-start">{{ $tagihan['deskripsi'] }}</td>
-                                            <td>{{ $tagihan['jumlah'] . ' ' . $tagihan['satuan'] }}</td>
-                                            <td>Rp.{{ number_format($tagihan['biaya_satuan'], 2, ',', '.') }}</td>
-                                            <td>Rp.{{ number_format($tagihan['total'], 2, ',', '.') }}</td>
-                                        </tr>
-                                        @php
-                                            $total += $tagihan['total'];
-                                        @endphp
-                                    @endforeach
-                                </tbody>
-                            </table>
+                <div class="mt-8 overflow-x-auto rounded-xl border border-cream-200">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                            <tr>
+                                <th class="px-4 py-3">#</th>
+                                <th class="px-4 py-3">Deskripsi</th>
+                                <th class="px-4 py-3 text-right">Jumlah</th>
+                                <th class="px-4 py-3 text-right">Biaya Satuan</th>
+                                <th class="px-4 py-3 text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-cream-200">
+                            @php $total = 0; @endphp
+                            @foreach ($tagihans as $tagihan)
+                                <tr>
+                                    <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                    <td class="px-4 py-3">{{ $tagihan['deskripsi'] }}</td>
+                                    <td class="px-4 py-3 text-right">{{ $tagihan['jumlah'] . ' ' . $tagihan['satuan'] }}</td>
+                                    <td class="px-4 py-3 text-right">Rp.{{ number_format($tagihan['biaya_satuan'], 2, ',', '.') }}</td>
+                                    <td class="px-4 py-3 text-right">Rp.{{ number_format($tagihan['total'], 2, ',', '.') }}</td>
+                                </tr>
+                                @php $total += $tagihan['total']; @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-8 grid gap-8 md:grid-cols-2">
+                    <div class="order-2 md:order-1">
+                        <h3 class="font-display mb-2 text-base font-semibold text-maroon-900">Informasi No. Rekening</h3>
+                        <div class="space-y-2 text-sm text-stone-600">
+                            <p><span class="font-medium text-stone-800">Bank Mandiri</span><br>1320014831409 a/n Haifa Nida Wisata Karawang</p>
+                            <p><span class="font-medium text-stone-800">Bank BCA</span><br>1092826656 a/n Haifa Nida Wisata Karawang</p>
+                            <p><span class="font-medium text-stone-800">Bank BJB</span><br>0000410697000 a/n Haifa nida wisata karawang, PT</p>
+                            <p><span class="font-medium text-stone-800">Bank CIMB Niaga</span><br>860018161900 a/n Haifa Nida Wisata Karawang</p>
                         </div>
                     </div>
-                    <div class="container-fluid mt-3 w-100">
-                        <div class="row">
-                            <div class="col-md-6 order-2 order-md-1 mt-4 mt-md-0">
-                                <h3>Informasi No. Rekening</h3>
-                                <h6>Bank Mandiri</h6>
-                                <span class="">1320014831409 a/n Haifa Nida Wisata Karawang</span>
-                                <h6>Bank BCA</h6>
-                                <span class="">1092826656 a/n Haifa Nida Wisata Karawang</span>
-                                <h6>Bank BJB</h6>
-                                <span class="">0000410697000 a/n Haifa nida wisata karawang, PT</span>
-                                <h6>Bank CIMB Niaga</h6>
-                                <span class="">860018161900 a/n Haifa Nida Wisata Karawang</span>
-                            </div>
-                            <div class="col-md-6 ms-auto order-1 order-md-2 mt-4 mt-md-0">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>Sub Total</td>
-                                                <td class="text-end">Rp.{{ number_format($total, 2, ',', '.') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><s>TAX (11%)</s></td>
-                                                @php
-                                                    $tax = ($total * 11) / 100;
-                                                @endphp
-                                                <td class="text-end">
-                                                    <s>Rp.{{ number_format($tax, 2, ',', '.') }}</s>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-bold-800">Total</td>
-                                                @php
-                                                    // $total += $tax;
-                                                @endphp
-                                                <td class="text-bold-800 text-end">
-                                                    Rp.{{ number_format($total, 2, ',', '.') }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>pembayaran dilakukan</td>
-                                                <td class="text-danger text-end">(-)
-                                                    Rp.{{ number_format($pembayaran, 2, ',', '.') }}
-                                                </td>
-                                            </tr>
-                                            <tr class="bg-light">
-                                                <td class="text-bold-800">Balance / Sisa Tagihan yang harus dibayarkan</td>
-                                                @php
-                                                    $total -= $pembayaran;
-                                                @endphp
-                                                <td class="text-bold-800 text-end">
-                                                    Rp.{{ number_format($total, 2, ',', '.') }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="order-1 md:order-2">
+                        <table class="w-full text-sm">
+                            <tbody class="divide-y divide-cream-200">
+                                <tr>
+                                    <td class="py-2 text-stone-600">Sub Total</td>
+                                    <td class="py-2 text-right text-stone-800">Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-stone-400 line-through">TAX (11%)</td>
+                                    @php $tax = ($total * 11) / 100; @endphp
+                                    <td class="py-2 text-right text-stone-400 line-through">Rp.{{ number_format($tax, 2, ',', '.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 font-semibold text-stone-800">Total</td>
+                                    <td class="py-2 text-right font-semibold text-stone-800">Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-stone-600">Pembayaran dilakukan</td>
+                                    <td class="py-2 text-right text-red-600">(-) Rp.{{ number_format($pembayaran, 2, ',', '.') }}</td>
+                                </tr>
+                                <tr class="bg-cream-100">
+                                    <td class="px-2 py-2.5 font-semibold text-maroon-900">Balance / Sisa Tagihan</td>
+                                    @php $total -= $pembayaran; @endphp
+                                    <td class="px-2 py-2.5 text-right font-semibold text-maroon-900">Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="container-fluid w-100">
-                        {{-- <a href="javascript:;" class="btn btn-haifa float-end mt-4 ms-2"><i data-feather="send"
-                                class="me-3 icon-md"></i>Kirim Tagihan</a>
-                        <a href="javascript:;" class="btn btn-outline-haifa float-end mt-4 ms-2"><i data-feather="printer"
-                                class="me-2 icon-md"></i>Cetak</a> --}}
-                        <a href="{{ route('pemesanan.detail', $pemesanan->id) }}" class="btn btn-secondary float-end mt-4 ms-2"><i
-                                data-feather="arrow-left" class="icon-sm me-2"></i>Kembali</a>
-                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <x-button variant="secondary" :href="route('pemesanan.detail', $pemesanan->id)">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-
+    </section>
 @endsection

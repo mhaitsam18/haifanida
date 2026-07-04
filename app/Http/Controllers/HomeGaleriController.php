@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Galeri;
-use App\Models\Paket;
 use Illuminate\Http\Request;
 
 class HomeGaleriController extends Controller
@@ -16,8 +15,7 @@ class HomeGaleriController extends Controller
         return view('home.galeri.index', [
             'title' => 'Galeri',
             'page' => 'galeri',
-            'galeries' => Paket::all(),
-            'galeries' => Galeri::all(),
+            'galeries' => Galeri::latest()->get(),
         ]);
     }
 

@@ -1,101 +1,38 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
+    <x-page-header :title="$title" />
+
+    <x-card>
+        <form action="/admin/isu-perjalanan/{{ $isuPerjalanan->id }}" method="post">
+            @method('put')
+            @csrf
+            <input type="hidden" name="grup_id" value="{{ $isuPerjalanan->grup_id }}">
+
+            <div class="grid gap-x-6 md:grid-cols-2">
+                <div>
+                    <x-form-input label="Masalah" name="masalah" :value="old('masalah', $isuPerjalanan->masalah)" placeholder="Masalah" required />
+                    <x-form-input label="Solusi" name="solusi" :value="old('solusi', $isuPerjalanan->solusi)" placeholder="Solusi" />
+                </div>
+                <div>
+                    <x-form-input label="Waktu Pelaporan" name="waktu_pelaporan" type="datetime-local" :value="old('waktu_pelaporan', $isuPerjalanan->waktu_pelaporan)" />
+                    <x-form-input label="Waktu Penyelesaian" name="waktu_penyelesaian" type="datetime-local" :value="old('waktu_penyelesaian', $isuPerjalanan->waktu_penyelesaian)" />
+                    <div class="mb-4">
+                        <label class="inline-flex items-center gap-2 text-sm font-medium text-stone-700">
+                            <input type="checkbox" value="1" name="status" class="rounded border-cream-300 text-maroon-700 focus:ring-maroon-300" @checked(old('status', $isuPerjalanan->status))>
+                            Dalam Penanganan?
+                        </label>
+                        @error('status')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
-                    <form action="/admin/isu-perjalanan/{{ $isuPerjalanan->id }}" method="post"
-                        enctype="multipart/form-data">
-                        @method('put')
-                        @csrf
-                        <input type="hidden" name="id" id="id" value="{{ $isuPerjalanan->id }}">
-                        <input type="hidden" name="grup_id" id="grup_id" value="{{ $isuPerjalanan->grup_id }}">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="masalah" class="form-label">Masalah</label>
-                                    <input type="text" class="form-control  @error('masalah') is-invalid @enderror"
-                                        id="masalah" name="masalah" value="{{ old('masalah', $isuPerjalanan->masalah) }}"
-                                        placeholder="Nama Agenda">
-                                    @error('masalah')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="solusi" class="form-label">Solusi</label>
-                                    <input type="text" class="form-control  @error('solusi') is-invalid @enderror"
-                                        id="solusi" name="solusi" value="{{ old('solusi', $isuPerjalanan->solusi) }}"
-                                        placeholder="Solusi">
-                                    @error('solusi')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="waktu_pelaporan" class="form-label">Waktu Pelaporan</label>
-                                    <input type="datetime-local"
-                                        class="form-control  @error('waktu_pelaporan') is-invalid @enderror"
-                                        id="waktu_pelaporan" name="waktu_pelaporan"
-                                        value="{{ old('waktu_pelaporan', $isuPerjalanan->waktu_pelaporan) }}"
-                                        placeholder="Waktu Pelaporan">
-                                    @error('waktu_pelaporan')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="waktu_penyelesaian" class="form-label">Waktu Penyelesaian</label>
-                                    <input type="datetime-local"
-                                        class="form-control  @error('waktu_penyelesaian') is-invalid @enderror"
-                                        id="waktu_penyelesaian" name="waktu_penyelesaian"
-                                        value="{{ old('waktu_penyelesaian', $isuPerjalanan->waktu_penyelesaian) }}"
-                                        placeholder="Waktu Penyelesaian">
-                                    @error('waktu_penyelesaian')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('status') is-invalid @enderror"
-                                            type="checkbox" value="1" id="status" name="status"
-                                            @checked(old('status', $isuPerjalanan->status))>
-                                        <label class="form-check-label" for="status">
-                                            Dalam Penanganan?
-                                        </label>
-                                    </div>
-                                    @error('status')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/grup/{{ $isuPerjalanan->grup_id }}/isu-perjalanan"
-                                    class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
-        </div>
-    </div> <!-- row -->
+
+            <div class="flex justify-end gap-2">
+                <x-button variant="secondary" :href="'/admin/grup/' . $isuPerjalanan->grup_id . '/isu-perjalanan'">Kembali</x-button>
+                <x-button type="submit">Simpan</x-button>
+            </div>
+        </form>
+    </x-card>
 @endsection

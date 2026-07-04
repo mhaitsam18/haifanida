@@ -1,195 +1,115 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
-                    <form action="/admin/kantor" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="nama_kantor" class="form-label">Nama Kantor</label>
-                                    <input type="text" class="form-control  @error('nama_kantor') is-invalid @enderror"
-                                        id="nama_kantor" name="nama_kantor" value="{{ old('nama_kantor') }}"
-                                        placeholder="Nama Kantor">
-                                    @error('nama_kantor')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nama_ketua" class="form-label">Nama Ketua/Pimpinan</label>
-                                    <input type="text" class="form-control  @error('nama_ketua') is-invalid @enderror"
-                                        id="nama_ketua" name="nama_ketua" value="{{ old('nama_ketua') }}"
-                                        placeholder="Nama Ketua/Pimpinan">
-                                    @error('nama_ketua')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="kontak_kantor" class="form-label">Kontak Kantor</label>
-                                    <input type="text" class="form-control  @error('kontak_kantor') is-invalid @enderror"
-                                        id="kontak_kantor" name="kontak_kantor" value="{{ old('kontak_kantor') }}"
-                                        placeholder="Kontak Kantor">
-                                    @error('kontak_kantor')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="provinsi_id" class="form-label">Provinsi</label>
-                                    <select class="form-select @error('provinsi_id') is-invalid @enderror" id="provinsi_id"
-                                        name="provinsi_id">
-                                        <option value="" selected disabled>Pilih Provinsi</option>
-                                        @foreach ($provinsis as $provinsi)
-                                            <option value="{{ $provinsi->id }}" @selected($provinsi->id == old('provinsi_id'))>
-                                                {{ $provinsi->provinsi }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('provinsi_id')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="kabupaten_id" class="form-label">Kabupaten / Kota</label>
-                                    <select class="form-select @error('kabupaten_id') is-invalid @enderror"
-                                        id="kabupaten_id" name="kabupaten_id">
-                                        <option value="" selected disabled>Pilih Kabupaten</option>
-                                        @if (old('kabupaten_id'))
-                                            @foreach ($kabupatens as $kabupaten)
-                                                <option value="{{ $kabupaten->id }}" @selected($kabupaten->id == old('kabupaten_id'))>
-                                                    {{ $kabupaten->kabupaten }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    @error('kabupaten_id')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="alamat_kantor" class="form-label">Detail Alamat</label>
-                                    <textarea class="form-control  @error('alamat_kantor') is-invalid @enderror" id="alamat_kantor" name="alamat_kantor"
-                                        placeholder="Alamat Kantor">{{ old('alamat_kantor') }}</textarea>
-                                    @error('alamat_kantor')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="kode_pos" class="form-label">Kode Pos</label>
-                                    <input type="number" class="form-control  @error('kode_pos') is-invalid @enderror"
-                                        id="kode_pos" name="kode_pos" value="{{ old('kode_pos') }}"
-                                        placeholder="Kode Pos">
-                                    @error('kode_pos')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="jenis_kantor" class="form-label">Jenis Kantor</label>
-                                    <select class="form-select  @error('jenis_kantor') is-invalid @enderror"
-                                        id="jenis_kantor" name="jenis_kantor" value="{{ old('jenis_kantor') }}"
-                                        placeholder="Jenis Kantor">
-                                        <option value="" selected disabled>Pilih Jenis Kantor</option>
-                                        <option value="pusat" @selected(old('jenis_kantor') == 'pusat')>Pusat</option>
-                                        <option value="perwakilan" @selected(old('jenis_kantor') == 'perwakilan')>Perwakilan</option>
-                                        <option value="cabang" @selected(old('jenis_kantor') == 'cabang')>Cabang</option>
-                                        <option value="agen" @selected(old('jenis_kantor') == 'agen')>Agen</option>
-                                    </select>
-                                    @error('jenis_kantor')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="foto_kantor" class="form-label">Foto Kantor</label>
-                                    <input type="file" class="form-control  @error('foto_kantor') is-invalid @enderror"
-                                        id="foto_kantor" name="foto_kantor">
-                                    @error('foto_kantor')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/kantor" class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                            <div class="col-lg-4">
-                                <img src="" alt="" class="img-thumbnail img-fluid img-preview">
-                            </div>
-                        </div>
-                    </form>
+    <x-page-header :title="$title" />
+
+    <div class="grid gap-6 lg:grid-cols-3">
+        <x-card class="lg:col-span-2">
+            <form action="/admin/kantor" method="post" enctype="multipart/form-data">
+                @csrf
+                <x-form-input label="Nama Kantor" name="nama_kantor" :value="old('nama_kantor')" placeholder="Nama Kantor" />
+                <x-form-input label="Nama Ketua/Pimpinan" name="nama_ketua" :value="old('nama_ketua')" placeholder="Nama Ketua/Pimpinan" />
+                <x-form-input label="Kontak Kantor" name="kontak_kantor" :value="old('kontak_kantor')" placeholder="Kontak Kantor" />
+
+                <div class="mb-4">
+                    <label for="provinsi_id" class="mb-1.5 block text-sm font-medium text-stone-700">Provinsi</label>
+                    <select id="provinsi_id" name="provinsi_id"
+                        class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                        <option value="" selected disabled>Pilih Provinsi</option>
+                        @foreach ($provinsis as $provinsi)
+                            <option value="{{ $provinsi->id }}" @selected($provinsi->id == old('provinsi_id'))>{{ $provinsi->provinsi }}</option>
+                        @endforeach
+                    </select>
+                    @error('provinsi_id')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
-            </div>
-        </div>
-    </div> <!-- row -->
+
+                <div class="mb-4">
+                    <label for="kabupaten_id" class="mb-1.5 block text-sm font-medium text-stone-700">Kabupaten / Kota</label>
+                    <select id="kabupaten_id" name="kabupaten_id"
+                        class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                        <option value="" selected disabled>Pilih Kabupaten</option>
+                        @if (old('kabupaten_id'))
+                            @foreach ($kabupatens as $kabupaten)
+                                <option value="{{ $kabupaten->id }}" @selected($kabupaten->id == old('kabupaten_id'))>{{ $kabupaten->kabupaten }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    @error('kabupaten_id')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <x-form-textarea label="Detail Alamat" name="alamat_kantor" :value="old('alamat_kantor')" placeholder="Alamat Kantor" />
+                <x-form-input label="Kode Pos" name="kode_pos" type="number" :value="old('kode_pos')" placeholder="Kode Pos" />
+
+                <div class="mb-4">
+                    <label for="jenis_kantor" class="mb-1.5 block text-sm font-medium text-stone-700">Jenis Kantor</label>
+                    <select id="jenis_kantor" name="jenis_kantor"
+                        class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                        <option value="" selected disabled>Pilih Jenis Kantor</option>
+                        <option value="pusat" @selected(old('jenis_kantor') == 'pusat')>Pusat</option>
+                        <option value="perwakilan" @selected(old('jenis_kantor') == 'perwakilan')>Perwakilan</option>
+                        <option value="cabang" @selected(old('jenis_kantor') == 'cabang')>Cabang</option>
+                        <option value="agen" @selected(old('jenis_kantor') == 'agen')>Agen</option>
+                    </select>
+                    @error('jenis_kantor')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="foto_kantor" class="mb-1.5 block text-sm font-medium text-stone-700">Foto Kantor</label>
+                    <input type="file" id="foto_kantor" name="foto_kantor"
+                        class="block w-full text-sm text-stone-600 file:mr-3 file:rounded-lg file:border-0 file:bg-maroon-100 file:px-3 file:py-2 file:text-xs file:font-medium file:text-maroon-800 hover:file:bg-maroon-200">
+                    @error('foto_kantor')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <x-button variant="secondary" href="/admin/kantor">Kembali</x-button>
+                    <x-button type="submit">Simpan</x-button>
+                </div>
+            </form>
+        </x-card>
+
+        <x-card title="Pratinjau Foto">
+            <img src="" alt="" class="img-preview aspect-4/3 w-full rounded-lg object-cover">
+        </x-card>
+    </div>
 @endsection
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('#foto_kantor').on('change', function() {
-                const file = $(this).prop('files')[0];
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('foto_kantor').addEventListener('change', function () {
+                const file = this.files[0];
+                if (!file) return;
                 const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('.img-preview').attr('src', e.target.result);
-                };
-
+                reader.onload = e => document.querySelector('.img-preview').src = e.target.result;
                 reader.readAsDataURL(file);
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#provinsi_id').change(function() {
-                var selectedProvinsi = $(this).val();
-                $.ajax({
-                    url: '/get-kabupaten',
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        provinsi_id: selectedProvinsi,
-                    },
-                    success: function(data) {
-                        $('#kabupaten_id').empty();
-                        $('#kabupaten_id').append(
-                            '<option value="" selected disabled>Pilih Kabupaten</option>');
-                        $.each(data, function(key, value) {
-                            $('#kabupaten_id').append('<option value="' + value.id +
-                                '">' +
-                                value.kabupaten + '</option>');
+
+            document.getElementById('provinsi_id').addEventListener('change', function () {
+                fetch('/get-kabupaten', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                    body: JSON.stringify({ provinsi_id: this.value }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const kabupatenSelect = document.getElementById('kabupaten_id');
+                        kabupatenSelect.innerHTML = '<option value="" selected disabled>Pilih Kabupaten</option>';
+                        data.forEach(kabupaten => {
+                            const option = document.createElement('option');
+                            option.value = kabupaten.id;
+                            option.textContent = kabupaten.kabupaten;
+                            kabupatenSelect.appendChild(option);
                         });
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        console.error('Error: ' + errorThrown);
-                    }
-                });
+                    })
+                    .catch(error => console.error('Error:', error));
             });
         });
     </script>

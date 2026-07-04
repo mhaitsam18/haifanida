@@ -15,6 +15,9 @@ class HomeKajianController extends Controller
         return view('home.kajian.index', [
             'title' => 'Kajian',
             'page' => 'kajian',
+            'kajians' => Kajian::where('published', true)
+                ->latest('tanggal_publikasi')
+                ->paginate(9),
         ]);
     }
 

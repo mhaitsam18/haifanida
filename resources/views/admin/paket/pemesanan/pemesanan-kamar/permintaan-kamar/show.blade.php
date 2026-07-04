@@ -1,27 +1,18 @@
-@extends('admin.layouts.main')
-@section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-0">{{ $title }}</h6>
-                        <div class="dropdown mb-2">
-                        </div>
-                    </div>
+@extends('admin.layouts.app')
 
-                </div>
-            </div>
-        </div>
-    </div> <!-- row -->
+@section('content')
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button :href="'/admin/permintaan-kamar/' . $permintaanKamar->id . '/edit'"><i class="bx bx-edit"></i> Edit</x-button>
+            <x-button variant="secondary" :href="'/admin/' . ($permintaanKamar->pemesanan_kamar_id ? 'pemesanan-kamar/' . $permintaanKamar->pemesanan_kamar_id . '/' : '') . 'permintaan-kamar'"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-card>
+        <ul class="space-y-1.5 text-sm text-stone-700">
+            <li><span class="text-stone-500">Permintaan:</span> {{ $permintaanKamar->permintaan }}</li>
+            <li><span class="text-stone-500">Tambahan Harga:</span> Rp.{{ number_format($permintaanKamar->harga, 2, ',', '.') }}</li>
+            <li><span class="text-stone-500">Keterangan:</span> {{ $permintaanKamar->keterangan ?? '-' }}</li>
+        </ul>
+    </x-card>
 @endsection

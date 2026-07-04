@@ -1,102 +1,62 @@
-@extends('admin.layouts.main')
-@section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-0">{{ $title }}</h6>
-                        <div class="dropdown mb-2">
-                            <button class="btn p-0" type="button" id="tambah" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/penerbangan/create"><i
-                                        data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="/admin/paket/{{ $paket->id }}/penerbangan/create" class="btn btn-sm btn-langit mb-3"><i
-                            data-feather="plus" class="icon-sm me-2"></i> Tambah
-                        Data
-                        Penerbangan</a>
-                    <a href="/admin/paket/{{ $paket->id }}" class="btn btn-sm btn-secondary mb-3"><i
-                            data-feather="arrow-left" class="icon-sm me-2"></i> Kembali</a>
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0" id="dataTableExample">
-                            <thead>
-                                <tr>
-                                    <th class="pt-0">#</th>
-                                    <th class="pt-0">Nama Maskapai</th>
-                                    <th class="pt-0">Nomor Penerbangan</th>
-                                    <th class="pt-0">PNR</th>
-                                    <th class="pt-0">Kelas</th>
-                                    <th class="pt-0">Kuota</th>
-                                    <th class="pt-0">Keterangan</th>
-                                    <th class="pt-0">Harga Tiket</th>
-                                    <th class="pt-0">Bandara Asal</th>
-                                    <th class="pt-0">Bandara Tujuan</th>
-                                    <th class="pt-0">Waktu Keberangkatan</th>
-                                    <th class="pt-0">Waktu Kedatangan</th>
-                                    <th class="pt-0">Status Penerbangan</th>
-                                    <th class="pt-0">Tipe Penerbangan</th>
-                                    <th class="pt-0">Gate Penerbangan</th>
-                                    <th class="pt-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($penerbangans as $penerbangan)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $penerbangan->maskapai->nama_maskapai }}</td>
-                                        <td>{{ $penerbangan->nomor_penerbangan }}</td>
-                                        <td>{{ $penerbangan->nomor_pnr }}</td>
-                                        <td>{{ $penerbangan->kelas }}</td>
-                                        <td>{{ $penerbangan->kuota }}</td>
-                                        <td>{{ $penerbangan->keterangan_penerbangan }}</td>
-                                        <td>Rp.{{ number_format($penerbangan->total_harga, 2, ',', '.') }}</td>
-                                        <td>{{ $penerbangan->bandara_asal }}</td>
-                                        <td>{{ $penerbangan->bandara_tujuan }}</td>
-                                        <td>{{ Carbon::parse($penerbangan->waktu_keberangkatan)->isoFormat('LL') }}
-                                        </td>
-                                        <td>{{ Carbon::parse($penerbangan->waktu_kedatangan)->isoFormat('LL') }}
-                                        </td>
-                                        <td>{{ $penerbangan->status_penerbangan }}</td>
-                                        <td>{{ $penerbangan->tipe_penerbangan }}</td>
-                                        <td>{{ $penerbangan->gate_penerbangan }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center ">
-                                                {{-- <a href="/admin/penerbangan/{{ $penerbangan->id }}"
-                                                            class="badge bg-haifa d-inline-block ms-1">Detail</a> --}}
-                                                <a href="/admin/penerbangan/{{ $penerbangan->id }}/edit"
-                                                    class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                <form action="/admin/penerbangan/{{ $penerbangan->id }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+@extends('admin.layouts.app')
 
-    </div> <!-- row -->
+@section('content')
+    @php use Carbon\Carbon; @endphp
+
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button :href="'/admin/paket/' . $paket->id . '/penerbangan/create'"><i class="bx bx-plus"></i> Tambah</x-button>
+            <x-button variant="secondary" :href="'/admin/paket/' . $paket->id"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-data-table searchPlaceholder="Cari penerbangan...">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                <tr>
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">Maskapai</th>
+                    <th class="px-4 py-3">No. Penerbangan</th>
+                    <th class="px-4 py-3">PNR</th>
+                    <th class="px-4 py-3">Kelas</th>
+                    <th class="px-4 py-3">Kuota</th>
+                    <th class="px-4 py-3">Harga Tiket</th>
+                    <th class="px-4 py-3">Asal</th>
+                    <th class="px-4 py-3">Tujuan</th>
+                    <th class="px-4 py-3">Berangkat</th>
+                    <th class="px-4 py-3">Tiba</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3">Tipe</th>
+                    <th class="px-4 py-3">Gate</th>
+                    <th class="px-4 py-3">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-cream-200">
+                @foreach ($penerbangans as $penerbangan)
+                    <tr x-show="q === '' || $el.innerText.toLowerCase().includes(q.toLowerCase())">
+                        <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-3 font-medium text-stone-800">{{ $penerbangan->maskapai->nama_maskapai }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->nomor_penerbangan }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->nomor_pnr }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->kelas }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->kuota }}</td>
+                        <td class="px-4 py-3">Rp.{{ number_format($penerbangan->total_harga, 2, ',', '.') }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->bandara_asal }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->bandara_tujuan }}</td>
+                        <td class="px-4 py-3">{{ Carbon::parse($penerbangan->waktu_keberangkatan)->isoFormat('LL') }}</td>
+                        <td class="px-4 py-3">{{ Carbon::parse($penerbangan->waktu_kedatangan)->isoFormat('LL') }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->status_penerbangan }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->tipe_penerbangan }}</td>
+                        <td class="px-4 py-3">{{ $penerbangan->gate_penerbangan }}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-2">
+                                <a href="/admin/penerbangan/{{ $penerbangan->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                <x-delete-form :action="'/admin/penerbangan/' . $penerbangan->id" />
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </x-data-table>
 @endsection

@@ -1,345 +1,56 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
     @php
         use Carbon\Carbon;
+        use Illuminate\Support\Str;
     @endphp
-    <div class="inner-banner">
-        <div class="container">
-            <div class="inner-title text-center">
-                <h3>{{ $title }}</h3>
-                <ul>
-                    <li>
-                        <a href="/home">Home</a>
-                    </li>
-                    <li>
-                        <i class='bx bx-chevrons-right'></i>
-                    </li>
-                    <li>{{ $title }}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="inner-shape">
-            <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
-        </div>
-    </div>
-    <div class="blog-style-area pt-100 pb-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="blog-style-card">
-                                <div class="blog-style-img">
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-style-img1.jpg" alt="Images"
-                                            loading="lazy">
-                                    </a>
-                                    <div class="blog-style-tag">
-                                        <h3>04</h3>
-                                        <span>Nov</span>
+
+    <x-page-banner :title="$title" />
+
+    <section class="py-16">
+        <div class="mx-auto max-w-6xl px-4">
+            @if ($artikels->isEmpty())
+                <p class="py-16 text-center text-stone-500">Belum ada artikel yang dipublikasikan saat ini.</p>
+            @else
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    @foreach ($artikels as $artikel)
+                        <a href="{{ route('home.artikel.show', $artikel) }}" class="group flex flex-col overflow-hidden rounded-2xl border border-cream-200 bg-cream-50 shadow-sm transition hover:shadow-lg">
+                            <div class="relative aspect-4/3 overflow-hidden bg-cream-200">
+                                @if ($artikel->gambar_sampul)
+                                    <img src="{{ asset('storage/' . $artikel->gambar_sampul) }}" alt="{{ $artikel->judul }}" loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                                @else
+                                    <div class="flex h-full w-full items-center justify-center text-stone-400"><i class="bx bx-news text-3xl"></i></div>
+                                @endif
+                                @if ($artikel->tanggal_publikasi)
+                                    <div class="absolute left-3 top-3 rounded-lg bg-maroon-900/90 px-2.5 py-1.5 text-center text-cream-50 backdrop-blur">
+                                        <div class="font-display text-lg leading-none font-semibold">{{ Carbon::parse($artikel->tanggal_publikasi)->format('d') }}</div>
+                                        <div class="text-[10px] uppercase tracking-wide">{{ Carbon::parse($artikel->tanggal_publikasi)->format('M') }}</div>
                                     </div>
-                                </div>
-                                <div class="content">
-                                    <ul>
-                                        <li><i class='bx bxs-user'></i> By Admin</li>
-                                        <li><i class='bx bx-show-alt'></i>322 View</li>
-                                        <li><i class='bx bx-purchase-tag-alt'></i>Business</li>
-                                    </ul>
-                                    <h3><a href="blog-details.html">10 Ways To Get Efficient Result and Benefits</a></h3>
-                                    <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                        auctor, nisi elit consequat ipsum. Proin gravida nibh vel velit auctor aliquet.
-                                        Aenean sollicitudin, lorem quis bibendum auctor, Proin gravida nibh vel vewwlit nisi
-                                        elit consequat ipsum.</p>
-                                    <a href="blog-details.html" class="default-btn btn-bg-two border-radius-50">Learn More
-                                        <i class='bx bx-chevron-right'></i></a>
-                                </div>
+                                @endif
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="blog-style-card">
-                                <div class="blog-style-img">
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-style-img2.jpg" alt="Images"
-                                            loading="lazy">
-                                    </a>
-                                    <div class="blog-style-tag">
-                                        <h3>06</h3>
-                                        <span>Nov</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <ul>
-                                        <li><i class='bx bxs-user'></i> By Admin</li>
-                                        <li><i class='bx bx-show-alt'></i>322 View</li>
-                                        <li><i class='bx bx-purchase-tag-alt'></i>Digital</li>
-                                    </ul>
-                                    <h3><a href="blog-details.html">New Device Invention for Digital Platform</a></h3>
-                                    <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                        auctor, nisi elit consequat ipsum. Proin gravida nibh vel velit auctor aliquet.
-                                        Aenean sollicitudin, lorem quis bibendum auctor, Proin gravida nibh vel vewwlit nisi
-                                        elit consequat ipsum.</p>
-                                    <a href="blog-details.html" class="default-btn btn-bg-two border-radius-50">Learn More
-                                        <i class='bx bx-chevron-right'></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="blog-style-card">
-                                <div class="blog-style-img">
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-style-img3.jpg" alt="Images"
-                                            loading="lazy">
-                                    </a>
-                                    <div class="blog-style-tag">
-                                        <h3>07</h3>
-                                        <span>Nov</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <ul>
-                                        <li><i class='bx bxs-user'></i> By Admin</li>
-                                        <li><i class='bx bx-show-alt'></i>122 View</li>
-                                        <li><i class='bx bx-purchase-tag-alt'></i>App</li>
-                                    </ul>
-                                    <h3><a href="blog-details.html">5 App that Really Hack and Help you to Make Your Phone
-                                            More Easy</a></h3>
-                                    <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                        auctor, nisi elit consequat ipsum. Proin gravida nibh vel velit auctor aliquet.
-                                        Aenean sollicitudin, lorem quis bibendum auctor, Proin gravida nibh vel vewwlit nisi
-                                        elit consequat ipsum.</p>
-                                    <a href="blog-details.html" class="default-btn btn-bg-two border-radius-50">Learn More
-                                        <i class='bx bx-chevron-right'></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="blog-style-card">
-                                <div class="blog-style-img">
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-style-img4.jpg" alt="Images"
-                                            loading="lazy">
-                                    </a>
-                                    <div class="blog-style-tag">
-                                        <h3>14</h3>
-                                        <span>Nov</span>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <ul>
-                                        <li><i class='bx bxs-user'></i> By Admin</li>
-                                        <li><i class='bx bx-show-alt'></i>222 View</li>
-                                        <li><i class='bx bx-purchase-tag-alt'></i>Product</li>
-                                    </ul>
-                                    <h3><a href="blog-details.html">Product Idea Solution for new Generation</a></h3>
-                                    <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum
-                                        auctor, nisi elit consequat ipsum. Proin gravida nibh vel velit auctor aliquet.
-                                        Aenean sollicitudin, lorem quis bibendum auctor, Proin gravida nibh vel vewwlit nisi
-                                        elit consequat ipsum.</p>
-                                    <a href="blog-details.html" class="default-btn btn-bg-two border-radius-50">Learn More
-                                        <i class='bx bx-chevron-right'></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 text-center">
-                            <div class="pagination-area">
-                                <a href="blog-1.html" class="prev page-numbers">
-                                    <i class='bx bx-left-arrow-alt'></i>
-                                </a>
-                                <span class="page-numbers current" aria-current="page">1</span>
-                                <a href="blog-1.html" class="page-numbers">2</a>
-                                <a href="blog-1.html" class="page-numbers">3</a>
-                                <a href="blog-1.html" class="next page-numbers">
-                                    <i class='bx bx-right-arrow-alt'></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="side-bar-area">
-                        <div class="search-widget">
-                            <form class="search-form">
-                                <input type="search" class="form-control" placeholder="Search...">
-                                <button type="submit">
-                                    <i class="bx bx-search"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div class="side-bar-widget">
-                            <h3 class="title">Blog Categories</h3>
-                            <div class="side-bar-categories">
-                                <ul>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">IT Services<span>[70]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Business<span>[24]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Creative Invention<span>[08]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Technology <span>[17]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">IT Consulting <span>[20]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Marketing Growth <span>[13]</span></a>
-                                    </li>
+                            <div class="flex flex-1 flex-col p-5">
+                                <ul class="flex flex-wrap items-center gap-3 text-xs text-stone-500">
+                                    <li class="flex items-center gap-1"><i class="bx bxs-user"></i> {{ $artikel->author?->user?->name ?? 'Admin' }}</li>
+                                    <li class="flex items-center gap-1"><i class="bx bx-show-alt"></i> {{ $artikel->jumlah_pembaca }} Dibaca</li>
+                                    @if ($artikel->kategori)
+                                        <li class="flex items-center gap-1"><i class="bx bx-purchase-tag-alt"></i> {{ $artikel->kategori }}</li>
+                                    @endif
                                 </ul>
+                                <h3 class="font-display mt-2 text-lg font-semibold text-maroon-900">{{ $artikel->judul }}</h3>
+                                <p class="mt-2 line-clamp-3 text-sm text-stone-600">{{ Str::limit(strip_tags($artikel->isi_artikel), 140) }}</p>
+                                <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-maroon-700 group-hover:text-maroon-900">
+                                    Baca Selengkapnya <i class="bx bx-chevron-right"></i>
+                                </span>
                             </div>
-                        </div>
-                        <div class="side-bar-widget">
-                            <h3 class="title">Latest Blog</h3>
-                            <div class="widget-popular-post">
-                                <article class="item">
-                                    <a href="news-details.html" class="thumb">
-                                        <span class="full-image cover bg1" role="img"></span>
-                                    </a>
-                                    <div class="info">
-                                        <h4 class="title-text">
-                                            <a href="news-details.html">
-                                                10 Ways to Get Efficient Result & Benefits
-                                            </a>
-                                        </h4>
-                                        <p>Nov 05, 2020</p>
-                                    </div>
-                                </article>
-                                <article class="item">
-                                    <a href="news-details.html" class="thumb">
-                                        <span class="full-image cover bg2" role="img"></span>
-                                    </a>
-                                    <div class="info">
-                                        <h4 class="title-text">
-                                            <a href="news-details.html">
-                                                New Device Invention for Digital Platform
-                                            </a>
-                                        </h4>
-                                        <p>13 October, 2020</p>
-                                    </div>
-                                </article>
-                                <article class="item">
-                                    <a href="news-details.html" class="thumb">
-                                        <span class="full-image cover bg3" role="img"></span>
-                                    </a>
-                                    <div class="info">
-                                        <h4 class="title-text">
-                                            <a href="news-details.html">
-                                                Idea For New 5 App Design
-                                            </a>
-                                        </h4>
-                                        <p>17 October, 2020</p>
-                                    </div>
-                                </article>
-                                <article class="item">
-                                    <a href="news-details.html" class="thumb">
-                                        <span class="full-image cover bg4" role="img"></span>
-                                    </a>
-                                    <div class="info">
-                                        <h4 class="title-text">
-                                            <a href="news-details.html">
-                                                Product Idea Solution For New Generation
-                                            </a>
-                                        </h4>
-                                        <p>17 October, 2020</p>
-                                    </div>
-                                </article>
-                            </div>
-                        </div>
-                        <div class="side-bar-widget">
-                            <h3 class="title">Tag Cloud</h3>
-                            <ul class="side-bar-widget-tag">
-                                <li><a href="blog-details.html">Android</a></li>
-                                <li><a href="blog-details.html">Creative</a></li>
-                                <li><a href="blog-details.html">App</a></li>
-                                <li><a href="blog-details.html">IOS</a></li>
-                                <li><a href="blog-details.html">Business</a></li>
-                                <li><a href="blog-details.html">Consulting</a></li>
-                            </ul>
-                        </div>
-                        <div class="side-bar-widget">
-                            <h3 class="title">Gallery</h3>
-                            <ul class="blog-gallery">
-                                <li>
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-small-img1.jpg" alt="image"
-                                            loading="lazy">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-small-img2.jpg" alt="image"
-                                            loading="lazy">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-small-img3.jpg" alt="image"
-                                            loading="lazy">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-small-img4.jpg" alt="image"
-                                            loading="lazy">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-small-img5.jpg" alt="image"
-                                            loading="lazy">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html">
-                                        <img src="/assets-techex-demo/images/blog/blog-small-img6.jpg" alt="image"
-                                            loading="lazy">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="side-bar-widget">
-                            <h3 class="title">Archive</h3>
-                            <div class="side-bar-categories">
-                                <ul>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Design<span>[70]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Business<span>[24]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Development<span>[08]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Technology <span>[17]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Startup <span>[20]</span></a>
-                                    </li>
-                                    <li>
-                                        <div class="line-circle"></div>
-                                        <a href="blog-details.html">Marketing Growth <span>[13]</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                        </a>
+                    @endforeach
                 </div>
-            </div>
+
+                <div class="mt-10">
+                    {{ $artikels->links() }}
+                </div>
+            @endif
         </div>
-    </div>
+    </section>
 @endsection

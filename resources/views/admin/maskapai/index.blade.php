@@ -1,82 +1,49 @@
-@extends('admin.layouts.main')
-@section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-0">{{ $title }}</h6>
-                        <div class="dropdown mb-2">
-                            <button class="btn p-0" type="button" id="tambah" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/maskapai/create"><i
-                                        data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="btn btn-sm btn-haifa my-2" href="/admin/maskapai/create"><i data-feather="plus"
-                            class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0" id="dataTableExample">
-                            <thead>
-                                <tr>
-                                    <th class="pt-0">#</th>
-                                    <th class="pt-0">Kode Maskapai</th>
-                                    <th class="pt-0">Nama Maskapai</th>
-                                    <th class="pt-0">Negara Asal</th>
-                                    <th class="pt-0">Deskripsi</th>
-                                    <th class="pt-0">Logo</th>
-                                    <th class="pt-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($maskapais as $maskapai)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $maskapai->kode_maskapai }}</td>
-                                        <td>{{ $maskapai->nama_maskapai }}</td>
-                                        <td>{{ $maskapai->negara_asal }}</td>
-                                        <td>{{ $maskapai->deskripsi }}</td>
-                                        <td>
-                                            @if (Storage::disk('public')->exists($maskapai->logo))
-                                                <img src="{{ asset('storage/' . $maskapai->logo) }}" alt="">
-                                            @else
-                                                <img src="{{ asset('storage/image-not-found-scaled.png') }}"
-                                                    alt="Image Not Found">
-                                            @endif
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <a href="/admin/maskapai/{{ $maskapai->id }}/edit"
-                                                    class="badge bg-success d-inline-block">Edit</a>
-                                                <form action="/admin/maskapai/{{ $maskapai->id }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-2 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+@extends('admin.layouts.app')
 
-    </div> <!-- row -->
+@section('content')
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button href="/admin/maskapai/create"><i class="bx bx-plus"></i> Tambah</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-data-table searchPlaceholder="Cari maskapai...">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                <tr>
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">Kode</th>
+                    <th class="px-4 py-3">Nama Maskapai</th>
+                    <th class="px-4 py-3">Negara Asal</th>
+                    <th class="px-4 py-3">Deskripsi</th>
+                    <th class="px-4 py-3">Logo</th>
+                    <th class="px-4 py-3">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-cream-200">
+                @foreach ($maskapais as $maskapai)
+                    <tr x-show="q === '' || $el.innerText.toLowerCase().includes(q.toLowerCase())">
+                        <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-3">{{ $maskapai->kode_maskapai }}</td>
+                        <td class="px-4 py-3 font-medium text-stone-800">{{ $maskapai->nama_maskapai }}</td>
+                        <td class="px-4 py-3">{{ $maskapai->negara_asal }}</td>
+                        <td class="px-4 py-3 text-stone-500">{{ $maskapai->deskripsi }}</td>
+                        <td class="px-4 py-3">
+                            @if ($maskapai->logo && \Illuminate\Support\Facades\Storage::disk('public')->exists($maskapai->logo))
+                                <img src="{{ asset('storage/' . $maskapai->logo) }}" alt="{{ $maskapai->nama_maskapai }}" class="h-12 w-12 rounded-lg object-contain">
+                            @else
+                                <span class="text-xs text-stone-400">&mdash;</span>
+                            @endif
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-2">
+                                <a href="/admin/maskapai/{{ $maskapai->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                <x-delete-form :action="'/admin/maskapai/' . $maskapai->id" />
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </x-data-table>
 @endsection

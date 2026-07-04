@@ -1,60 +1,36 @@
-@extends('admin.layouts.main')
-@section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
-                    <a href="/admin/kamar/{{ $kamar->id }}/kamar-jemaah/create" class="btn btn-sm btn-langit mb-3"><i
-                            data-feather="plus" class="icon-sm me-2"></i> Tambah Data Penghuni</a>
-                    <a href="/admin/penginapan/{{ $kamar->paket_hotel_id }}" class="btn btn-sm btn-secondary mb-3"><i
-                            data-feather="arrow-left" class="icon-sm me-2"></i> Kembali</a>
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0" id="dataTableExample">
-                            <thead>
-                                <tr>
-                                    <th class="pt-0">#</th>
-                                    <th class="pt-0">Nama Jema'ah</th>
-                                    <th class="pt-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($kamar->KamarJemaahs as $tamu)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $tamu->jemaah->nama_lengkap }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center ">
-                                                <a href="/admin/kamar-jemaah/{{ $tamu->id }}/edit"
-                                                    class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                <form action="/admin/kamar-jemaah/{{ $tamu->id }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+@extends('admin.layouts.app')
 
-                </div>
-            </div>
-        </div>
-    </div> <!-- row -->
+@section('content')
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button :href="'/admin/kamar/' . $kamar->id . '/kamar-jemaah/create'"><i class="bx bx-plus"></i> Tambah Penghuni</x-button>
+            <x-button variant="secondary" :href="'/admin/penginapan/' . $kamar->paket_hotel_id"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-data-table searchPlaceholder="Cari jemaah...">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                <tr>
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">Nama Jema'ah</th>
+                    <th class="px-4 py-3">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-cream-200">
+                @foreach ($kamar->KamarJemaahs as $tamu)
+                    <tr x-show="q === '' || $el.innerText.toLowerCase().includes(q.toLowerCase())">
+                        <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-3 font-medium text-stone-800">{{ $tamu->jemaah->nama_lengkap }}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-2">
+                                <a href="/admin/kamar-jemaah/{{ $tamu->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                <x-delete-form :action="'/admin/kamar-jemaah/' . $tamu->id" />
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </x-data-table>
 @endsection

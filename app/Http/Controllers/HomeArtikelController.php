@@ -15,6 +15,9 @@ class HomeArtikelController extends Controller
         return view('home.artikel.index', [
             'title' => 'Artikel',
             'page' => 'artikel',
+            'artikels' => Artikel::where('published', true)
+                ->latest('tanggal_publikasi')
+                ->paginate(9),
         ]);
     }
 

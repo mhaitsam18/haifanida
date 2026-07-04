@@ -1,259 +1,76 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="inner-banner">
-        <div class="container">
-            <div class="inner-title text-center">
-                <h3>{{ $title }}</h3>
-                <ul>
-                    <li>
-                        <a href="/home">Home</a>
-                    </li>
-                    <li>
-                        <i class='bx bx-chevrons-right'></i>
-                    </li>
-                    <li>{{ $title }}</li>
-                </ul>
+    <x-page-banner :title="$title" />
+
+    <section class="py-16">
+        <div class="mx-auto max-w-4xl px-4">
+            <div class="prose max-w-none prose-headings:font-display prose-headings:text-maroon-800 prose-p:text-stone-600 prose-strong:text-maroon-800">
+                <h3>Panduan Umroh</h3>
+                <p>Perjalanan umroh adalah ibadah yang membutuhkan persiapan fisik, mental, dan spiritual. Kami menyediakan panduan lengkap untuk memastikan perjalanan Anda berjalan lancar dan khusyuk. Mulai dari pengurusan dokumen hingga tata cara ibadah, kami akan memandu Anda di setiap langkah.</p>
+                <p>Pastikan Anda memahami syarat dan ketentuan perjalanan, termasuk jadwal keberangkatan, akomodasi, dan peraturan selama di Tanah Suci. Kami juga menyediakan pembimbing berpengalaman untuk membantu menjalankan ibadah sesuai tuntunan syariat.</p>
             </div>
-        </div>
-        {{-- <div class="inner-shape">
-            <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
-        </div> --}}
-    </div>
-    <div class="terms-conditions-area pt-100 pb-70">
-        <div class="container">
-            <div class="section-title text-center">
-                <h2>{{ $title }}</h2>
-            </div>
-            {{-- <div class="row pt-45">
-                <div class="col-lg-12">
-                    <div class="terms-conditions-img">
-                        <img src="/assets-techex-demo/images/terms-condition-img.jpg" alt="Images" loading="lazy">
+
+            <div class="my-10 rounded-2xl border border-cream-200 bg-cream-50 p-6 md:p-8">
+                <div class="grid gap-8 md:grid-cols-3 md:items-center">
+                    <div class="md:col-span-2">
+                        <h3 class="font-display text-xl font-semibold text-maroon-900">5 Pasti Umroh dari Kementerian Agama</h3>
+                        <p class="mt-2 text-sm text-stone-600">PT. Haifa Nida Wisata Karawang berkomitmen memenuhi seluruh standar <strong class="text-maroon-800">5 Pasti Umrah</strong> dari Kementerian Agama Republik Indonesia:</p>
+                        <ul class="mt-4 space-y-2 text-sm text-stone-600">
+                            <li><strong class="text-maroon-800">1. Pasti Travel Berizin</strong> &ndash; Terdaftar resmi di Kemenag RI dan <a href="https://validation.timsertifikasi.org/search?certnumber=TiMS%2FPPIU2234126" target="_blank" rel="noopener noreferrer" class="text-maroon-700 underline hover:text-maroon-900">terakreditasi A.</a></li>
+                            <li><strong class="text-maroon-800">2. Pasti Jadwalnya</strong> &ndash; Keberangkatan dan kepulangan sesuai jadwal resmi yang disampaikan secara tertulis.</li>
+                            <li><strong class="text-maroon-800">3. Pasti Terbangnya</strong> &ndash; Menggunakan maskapai resmi, tiket dikeluarkan sebelum keberangkatan.</li>
+                            <li><strong class="text-maroon-800">4. Pasti Visanya</strong> &ndash; Visa resmi terbit sebelum keberangkatan.</li>
+                            <li><strong class="text-maroon-800">5. Pasti Layanannya</strong> &ndash; Layanan hotel, transportasi, konsumsi, manasik, dan pembimbing sesuai standar.</li>
+                        </ul>
                     </div>
-                    <div class="single-content">
-                        <h3>Legal Disclaimer</h3>
-                        <p>
-                            Maecenas non sem ex. Nullam ac augue vel turpis fringilla maximus. Vivamus commodo laoreet augue
-                            non porta. Nam egestas dui turpis, non pulvinar nisi
-                            rhoncus eu. Phasellus et sollicitudin nulla, at efficitur nunc. Quisque et neque commodo,
-                            blandit lacus malesuada, scelerisque ante. Suspendisse lacinia
-                            tristique justo, vitae ornare ipsum interdum sed. Vestibulum porttitor urna eget nunc porttitor
-                            rutrum. Aliquam tempor sapien orci, quis mollis velit laoreet
-                            sit amet. Morbi luctus magna tellus, quis accumsan nisi cursus id. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Sed varius convallis massa, sed
-                            ultrices dolor fermentum id. Nunc vel ex sed sapien hendrerit consequat pharetra a metus.
-                        </p>
-                        <p>
-                            Vestibulum eu aliquet justo. Aenean at mauris leo. Etiam placerat ac turpis ac feugiat.
-                            Pellentesque habitant morbi tristique senectus et netus et
-                            malesuada fames ac turpis egestas. Fusce velit nibh, consequat sed mi in, consectetur posuere
-                            erat. Ut mauris arcu, finibus quis lectus et, hendrerit
-                            rutrum erat. Integer varius pharetra arcu, et rhoncus leo commodo sed. Nullam sollicitudin
-                            pulvinar pharetra. In ut lacinia sem.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>01. Credit Reporting Terms of Service</h3>
-                        <p>
-                            Maecenas non sem ex. Nullam ac augue vel turpis fringilla maximus. Vivamus commodo laoreet augue
-                            non porta. Nam egestas dui turpis, non pulvinar nisi
-                            rhoncus eu. Phasellus et sollicitudin nulla, at efficitur nunc. Quisque et neque commodo,
-                            blandit lacus malesuada, scelerisque ante. Suspendisse lacinia
-                            tristique justo, vitae ornare ipsum interdum sed. Vestibulum porttitor urna eget nunc porttitor
-                            rutrum. Aliquam tempor sapien orci, quis mollis velit laoreet
-                            sit amet. Morbi luctus magna tellus, quis accumsan nisi cursus id. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Sed varius convallis massa, sed
-                            ultrices dolor fermentum id. Nunc vel ex sed sapien hendrerit consequat pharetra a metus.
-                        </p>
-                        <p>
-                            Vestibulum eu aliquet justo. Aenean at mauris leo. Etiam placerat ac turpis ac feugiat.
-                            Pellentesque habitant morbi tristique senectus et netus et
-                            malesuada fames ac turpis egestas. Fusce velit nibh, consequat sed mi in, consectetur posuere
-                            erat. Ut mauris arcu, finibus quis lectus et, hendrerit
-                            rutrum erat. Integer varius pharetra arcu, et rhoncus leo commodo sed. Nullam sollicitudin
-                            pulvinar pharetra. In ut lacinia sem.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>02. Ownership of Site Agreement to Terms of Use</h3>
-                        <p>
-                            Maecenas non sem ex. Nullam ac augue vel turpis fringilla maximus. Vivamus commodo laoreet augue
-                            non porta. Nam egestas dui turpis, non pulvinar nisi
-                            rhoncus eu. Phasellus et sollicitudin nulla, at efficitur nunc. Quisque et neque commodo,
-                            blandit lacus malesuada, scelerisque ante. Suspendisse lacinia
-                            tristique justo, vitae ornare ipsum interdum sed. Vestibulum porttitor urna eget nunc porttitor
-                            rutrum. Aliquam tempor sapien orci, quis mollis velit laoreet
-                            sit amet. Morbi luctus magna tellus, quis accumsan nisi cursus id. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Sed varius convallis massa, sed
-                            ultrices dolor fermentum id. Nunc vel ex sed sapien hendrerit consequat pharetra a metus.
-                        </p>
-                        <p>
-                            Vestibulum eu aliquet justo. Aenean at mauris leo. Etiam placerat ac turpis ac feugiat.
-                            Pellentesque habitant morbi tristique senectus et netus et
-                            malesuada fames ac turpis egestas. Fusce velit nibh, consequat sed mi in, consectetur posuere
-                            erat. Ut mauris arcu, finibus quis lectus et, hendrerit
-                            rutrum erat. Integer varius pharetra arcu, et rhoncus leo commodo sed. Nullam sollicitudin
-                            pulvinar pharetra. In ut lacinia sem.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>03. Provision of Services</h3>
-                        <p>
-                            Maecenas non sem ex. Nullam ac augue vel turpis fringilla maximus. Vivamus commodo laoreet augue
-                            non porta. Nam egestas dui turpis, non pulvinar nisi
-                            rhoncus eu. Phasellus et sollicitudin nulla, at efficitur nunc. Quisque et neque commodo,
-                            blandit lacus malesuada, scelerisque ante. Suspendisse lacinia
-                            tristique justo, vitae ornare ipsum interdum sed. Vestibulum porttitor urna eget nunc porttitor
-                            rutrum. Aliquam tempor sapien orci, quis mollis velit laoreet
-                            sit amet. Morbi luctus magna tellus, quis accumsan nisi cursus id. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Sed varius convallis massa, sed
-                            ultrices dolor fermentum id. Nunc vel ex sed sapien hendrerit consequat pharetra a metus.
-                        </p>
-                        <p>
-                            Vestibulum eu aliquet justo. Aenean at mauris leo. Etiam placerat ac turpis ac feugiat.
-                            Pellentesque habitant morbi tristique senectus et netus et
-                            malesuada fames ac turpis egestas. Fusce velit nibh, consequat sed mi in, consectetur posuere
-                            erat. Ut mauris arcu, finibus quis lectus et, hendrerit
-                            rutrum erat. Integer varius pharetra arcu, et rhoncus leo commodo sed. Nullam sollicitudin
-                            pulvinar pharetra. In ut lacinia sem.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>04. Limitation of Liability</h3>
-                        <p>
-                            Maecenas non sem ex. Nullam ac augue vel turpis fringilla maximus. Vivamus commodo laoreet augue
-                            non porta. Nam egestas dui turpis, non pulvinar nisi
-                            rhoncus eu. Phasellus et sollicitudin nulla, at efficitur nunc. Quisque et neque commodo,
-                            blandit lacus malesuada, scelerisque ante. Suspendisse lacinia
-                            tristique justo, vitae ornare ipsum interdum sed. Vestibulum porttitor urna eget nunc porttitor
-                            rutrum. Aliquam tempor sapien orci, quis mollis velit laoreet
-                            sit amet. Morbi luctus magna tellus, quis accumsan nisi cursus id. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Sed varius convallis massa, sed
-                            ultrices dolor fermentum id. Nunc vel ex sed sapien hendrerit consequat pharetra a metus.
-                        </p>
-                        <p>
-                            Vestibulum eu aliquet justo. Aenean at mauris leo. Etiam placerat ac turpis ac feugiat.
-                            Pellentesque habitant morbi tristique senectus et netus et
-                            malesuada fames ac turpis egestas. Fusce velit nibh, consequat sed mi in, consectetur posuere
-                            erat. Ut mauris arcu, finibus quis lectus et, hendrerit
-                            rutrum erat. Integer varius pharetra arcu, et rhoncus leo commodo sed. Nullam sollicitudin
-                            pulvinar pharetra. In ut lacinia sem.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>05. Accounts, Passwords and Security</h3>
-                        <p>
-                            Maecenas non sem ex. Nullam ac augue vel turpis fringilla maximus. Vivamus commodo laoreet augue
-                            non porta. Nam egestas dui turpis, non pulvinar nisi
-                            rhoncus eu. Phasellus et sollicitudin nulla, at efficitur nunc. Quisque et neque commodo,
-                            blandit lacus malesuada, scelerisque ante. Suspendisse lacinia
-                            tristique justo, vitae ornare ipsum interdum sed. Vestibulum porttitor urna eget nunc porttitor
-                            rutrum. Aliquam tempor sapien orci, quis mollis velit laoreet
-                            sit amet. Morbi luctus magna tellus, quis accumsan nisi cursus id. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Sed varius convallis massa, sed
-                            ultrices dolor fermentum id. Nunc vel ex sed sapien hendrerit consequat pharetra a metus.
-                        </p>
-                        <p>
-                            Vestibulum eu aliquet justo. Aenean at mauris leo. Etiam placerat ac turpis ac feugiat.
-                            Pellentesque habitant morbi tristique senectus et netus et
-                            malesuada fames ac turpis egestas. Fusce velit nibh, consequat sed mi in, consectetur posuere
-                            erat. Ut mauris arcu, finibus quis lectus et, hendrerit
-                            rutrum erat. Integer varius pharetra arcu, et rhoncus leo commodo sed. Nullam sollicitudin
-                            pulvinar pharetra. In ut lacinia sem.
-                        </p>
+                    <div class="text-center">
+                        <img src="{{ asset('assets/img/logos/logo-pastiumrah.png') }}" alt="5 Pasti Umrah" class="mx-auto max-w-36">
                     </div>
                 </div>
-            </div>  --}}
-            <div class="row pt-45">
-                <div class="col-lg-12">
-                    <div class="single-content">
-                        <h3>Panduan Umroh</h3>
-                        <p>
-                            Perjalanan umroh adalah ibadah yang membutuhkan persiapan fisik, mental, dan spiritual. Kami menyediakan panduan lengkap untuk memastikan perjalanan Anda berjalan lancar dan khusyuk. Mulai dari pengurusan dokumen hingga tata cara ibadah, kami akan memandu Anda di setiap langkah.
-                        </p>
-                        <p>
-                            Pastikan Anda memahami syarat dan ketentuan perjalanan, termasuk jadwal keberangkatan, akomodasi, dan peraturan selama di Tanah Suci. Kami juga menyediakan pembimbing berpengalaman untuk membantu menjalankan ibadah sesuai tuntunan syariat.
-                        </p>
-                    </div>
+            </div>
 
-                    <!-- 5 Pasti Umroh -->
-                    <div class="single-content">
-                        <h3>5 Pasti Umroh dari Kementerian Agama</h3>
-                        <div class="row align-items-start">
-                            <!-- Teks 5 Pasti Umrah -->
-                            <div class="col-md-8">
-                                <p>PT. Haifa Nida Wisata Karawang berkomitmen memenuhi seluruh standar <strong>5 Pasti Umrah</strong> dari Kementerian Agama Republik Indonesia:</p>
-                                <ul>
-                                    <li><strong>1. Pasti Travel Berizin</strong> – Terdaftar resmi di Kemenag RI dan <a href="https://validation.timsertifikasi.org/search?certnumber=TiMS%2FPPIU2234126" target="_blank" rel="noopener noreferrer">terakreditasi A.</a></li>
-                                    <li><strong>2. Pasti Jadwalnya</strong> – Keberangkatan dan kepulangan sesuai jadwal resmi yang disampaikan secara tertulis.</li>
-                                    <li><strong>3. Pasti Terbangnya</strong> – Menggunakan maskapai resmi, tiket dikeluarkan sebelum keberangkatan.</li>
-                                    <li><strong>4. Pasti Visanya</strong> – Visa resmi terbit sebelum keberangkatan.</li>
-                                    <li><strong>5. Pasti Layanannya</strong> – Layanan hotel, transportasi, konsumsi, manasik, dan pembimbing sesuai standar.</li>
-                                </ul>
-                            </div>
-
-                            <!-- Logo di sebelah kanan -->
-                            <div class="col-md-4 text-center">
-                                <img src="{{ asset('assets/img/logos/logo-pastiumrah.png') }}" alt="5 Pasti Umrah"
-                                    style="max-width: 100%; height: auto;">
-                            </div>
+            <div class="space-y-10">
+                @foreach ([
+                    ['no' => '01', 'title' => 'Persiapan Dokumen Perjalanan', 'body' => [
+                        'Sebelum berangkat, pastikan Anda memiliki paspor yang berlaku minimal 6 bulan, kartu identitas, dan bukti vaksin meningitis. Kami akan membantu memverifikasi dokumen dan mengurus visa umroh agar prosesnya cepat dan mudah.',
+                        'Selain itu, siapkan salinan dokumen penting dan simpan dalam tempat yang aman. Kami juga merekomendasikan untuk membawa kartu kesehatan atau catatan medis jika Anda memiliki kondisi kesehatan tertentu.',
+                    ]],
+                    ['no' => '02', 'title' => 'Persiapan Fisik dan Mental', 'body' => [
+                        'Perjalanan umroh membutuhkan stamina yang baik karena melibatkan aktivitas fisik seperti tawaf dan sai. Lakukan olahraga ringan seperti berjalan kaki beberapa minggu sebelum keberangkatan untuk membangun kekuatan fisik.',
+                        'Persiapan mental juga penting. Pelajari tata cara umroh, niat, dan doa-doa yang diperlukan. Kami menyediakan sesi manasik umroh untuk membantu Anda memahami setiap langkah ibadah dengan baik.',
+                    ]],
+                    ['no' => '03', 'title' => 'Tata Cara Ibadah Umroh', 'body' => [
+                        'Ibadah umroh terdiri dari beberapa tahapan utama: ihram, tawaf, sai, dan tahallul. Setiap tahapan memiliki aturan dan doa khusus yang harus diikuti. Pembimbing kami akan mendampingi Anda untuk memastikan semua rukun umroh dilakukan dengan benar.',
+                        'Selama di Tanah Suci, jaga kekhusyukan dan hindari perbuatan yang dapat membatalkan ibadah. Kami juga akan memberikan panduan tentang adab di Masjidil Haram dan Masjid Nabawi.',
+                    ], 'link' => ['url' => '/buku-manasik', 'label' => 'Download buku Manasik di sini']],
+                    ['no' => '04', 'title' => 'Pengelolaan Keuangan Selama Perjalanan', 'body' => [
+                        'Siapkan dana yang cukup untuk kebutuhan pribadi seperti makanan tambahan, oleh-oleh, atau keperluan darurat. Kami merekomendasikan membawa mata uang Riyal Saudi dalam jumlah yang wajar dan kartu pembayaran internasional.',
+                        'Hindari membawa uang tunai dalam jumlah besar untuk alasan keamanan. Tim kami akan memberikan saran tentang tempat penukaran uang yang terpercaya di Makkah dan Madinah.',
+                    ]],
+                    ['no' => '05', 'title' => 'Keamanan dan Keselamatan', 'body' => [
+                        'Kami bekerja sama dengan penyedia layanan terpercaya untuk memastikan keamanan jamaah selama perjalanan. Selalu ikuti instruksi pembimbing dan hindari berpisah dari rombongan tanpa pemberitahuan.',
+                        'Simpan nomor kontak darurat tim kami dan pihak berwenang setempat. Pastikan Anda juga membawa perlengkapan pribadi seperti masker, hand sanitizer, dan obat-obatan pribadi untuk menjaga kesehatan.',
+                    ]],
+                ] as $step)
+                    <div class="flex gap-5">
+                        <div class="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-maroon-700 text-lg font-semibold text-cream-50">
+                            {{ $step['no'] }}
+                        </div>
+                        <div>
+                            <h4 class="font-display text-lg font-semibold text-maroon-900">{{ $step['title'] }}</h4>
+                            @foreach ($step['body'] as $paragraph)
+                                <p class="mt-2 text-sm leading-relaxed text-stone-600">{{ $paragraph }}</p>
+                            @endforeach
+                            @isset($step['link'])
+                                <a href="{{ $step['link']['url'] }}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-maroon-700 underline hover:text-maroon-900">
+                                    {{ $step['link']['label'] }}
+                                </a>
+                            @endisset
                         </div>
                     </div>
-
-
-                    <div class="single-content">
-                        <h3>01. Persiapan Dokumen Perjalanan</h3>
-                        <p>
-                            Sebelum berangkat, pastikan Anda memiliki paspor yang berlaku minimal 6 bulan, kartu identitas, dan bukti vaksin meningitis. Kami akan membantu memverifikasi dokumen dan mengurus visa umroh agar prosesnya cepat dan mudah.
-                        </p>
-                        <p>
-                            Selain itu, siapkan salinan dokumen penting dan simpan dalam tempat yang aman. Kami juga merekomendasikan untuk membawa kartu kesehatan atau catatan medis jika Anda memiliki kondisi kesehatan tertentu.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>02. Persiapan Fisik dan Mental</h3>
-                        <p>
-                            Perjalanan umroh membutuhkan stamina yang baik karena melibatkan aktivitas fisik seperti tawaf dan sai. Lakukan olahraga ringan seperti berjalan kaki beberapa minggu sebelum keberangkatan untuk membangun kekuatan fisik.
-                        </p>
-                        <p>
-                            Persiapan mental juga penting. Pelajari tata cara umroh, niat, dan doa-doa yang diperlukan. Kami menyediakan sesi manasik umroh untuk membantu Anda memahami setiap langkah ibadah dengan baik.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>03. Tata Cara Ibadah Umroh</h3>
-                        <p>
-                            Ibadah umroh terdiri dari beberapa tahapan utama: ihram, tawaf, sai, dan tahallul. Setiap tahapan memiliki aturan dan doa khusus yang harus diikuti. Pembimbing kami akan mendampingi Anda untuk memastikan semua rukun umroh dilakukan dengan benar.
-                        </p>
-                        <p>
-                            Selama di Tanah Suci, jaga kekhusyukan dan hindari perbuatan yang dapat membatalkan ibadah. Kami juga akan memberikan panduan tentang adab di Masjidil Haram dan Masjid Nabawi.
-                        </p>
-                        <a href="/buku-manasik" target="_blank" rel="noopener noreferrer">Download buku Manasik di sini</a>
-                    </div>
-                    <div class="single-content">
-                        <h3>04. Pengelolaan Keuangan Selama Perjalanan</h3>
-                        <p>
-                            Siapkan dana yang cukup untuk kebutuhan pribadi seperti makanan tambahan, oleh-oleh, atau keperluan darurat. Kami merekomendasikan membawa mata uang Riyal Saudi dalam jumlah yang wajar dan kartu pembayaran internasional.
-                        </p>
-                        <p>
-                            Hindari membawa uang tunai dalam jumlah besar untuk alasan keamanan. Tim kami akan memberikan saran tentang tempat penukaran uang yang terpercaya di Makkah dan Madinah.
-                        </p>
-                    </div>
-                    <div class="single-content">
-                        <h3>05. Keamanan dan Keselamatan</h3>
-                        <p>
-                            Kami bekerja sama dengan penyedia layanan terpercaya untuk memastikan keamanan jamaah selama perjalanan. Selalu ikuti instruksi pembimbing dan hindari berpisah dari rombongan tanpa pemberitahuan.
-                        </p>
-                        <p>
-                            Simpan nomor kontak darurat tim kami dan pihak berwenang setempat. Pastikan Anda juga membawa perlengkapan pribadi seperti masker, hand sanitizer, dan obat-obatan pribadi untuk menjaga kesehatan.
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-    </div>
-
-</div>
+    </section>
 @endsection

@@ -1,189 +1,121 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/jemaah.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-@php
-    use Carbon\Carbon;
-    $jumlahJemaahTerdaftar = $jemaahs->count();
-    $batasJemaah = $pemesanan->jumlah_orang;
-    $sisaSlot = $batasJemaah - $jumlahJemaahTerdaftar;
-    $sudahPenuh = $sisaSlot <= 0;
-@endphp
+    @php
+        use Carbon\Carbon;
+        $jumlahJemaahTerdaftar = $jemaahs->count();
+        $batasJemaah = $pemesanan->jumlah_orang;
+        $sisaSlot = $batasJemaah - $jumlahJemaahTerdaftar;
+        $sudahPenuh = $sisaSlot <= 0;
+    @endphp
 
-<div class="container py-5">
-
-    <!-- Header Section -->
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-6">
-            <h2 class="fw-bold text-primary">DATA JEMAAH</h2>
-            <p class="text-muted mb-0">
-                <i class="fas fa-users me-2"></i>
-                {{ $jumlahJemaahTerdaftar }} dari {{ $batasJemaah }} jemaah terdaftar
-                @if($sisaSlot > 0)
-                    <span class="badge bg-success ms-2">{{ $sisaSlot }} slot tersisa</span>
-                @else
-                    <span class="badge bg-danger ms-2">Slot penuh</span>
-                @endif
-            </p>
-        </div>
-        <div class="col-md-6 text-end">
-            @if(!$sudahPenuh)
-                <a href="{{ route('pemesanan.jemaah.create', $pemesanan->id) }}" class="btn btn-primary me-2 px-4 py-2">
-                    <i class="fas fa-plus-circle me-2"></i> Tambah
-                </a>
-            @else
-                <button class="btn btn-secondary me-2 px-4 py-2" disabled>
-                    <i class="fas fa-plus-circle me-2"></i> Slot Penuh
-                </button>
-            @endif
-            <a href="{{ route('pemesanan.detail', $pemesanan->id) }}" class="btn btn-outline-secondary px-4 py-2">
-                <i class="fas fa-arrow-left me-2"></i> Kembali
-            </a>
-        </div>
-    </div>
-
-    <!-- Alerts -->
-    @if($sisaSlot <= 2 && $sisaSlot > 0)
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <i class="fas fa-info-circle me-2"></i>
-            <strong>Pengingat:</strong> Tersisa {{ $sisaSlot }} slot jemaah lagi yang belum ditambahkan.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @elseif($sudahPenuh)
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <i class="fas fa-info-circle me-2"></i>
-            <strong>Informasi:</strong> Semua slot jemaah sudah terisi penuh ({{ $batasJemaah }} jemaah).
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    <!-- Card Container -->
-    <div class="card shadow border-0">
-        <div class="card-header bg-light border-0 py-3">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h4 class="mb-0 text-secondary fw-semibold">Data Jemaah Keberangkatan {{ $paket->nama_paket }}</h4>
+    <section class="py-10">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h2 class="font-display text-2xl font-semibold text-maroon-900">Data Jemaah</h2>
+                    <p class="mt-1 flex items-center gap-2 text-sm text-stone-500">
+                        <i class="bx bx-group"></i> {{ $jumlahJemaahTerdaftar }} dari {{ $batasJemaah }} jemaah terdaftar
+                        @if ($sisaSlot > 0)
+                            <x-badge variant="success">{{ $sisaSlot }} slot tersisa</x-badge>
+                        @else
+                            <x-badge variant="danger">Slot penuh</x-badge>
+                        @endif
+                    </p>
                 </div>
-                <div class="col-md-4 text-end">
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-primary" role="progressbar" 
-                            style="width: {{ ($jumlahJemaahTerdaftar / $batasJemaah) * 100 }}%" 
-                            aria-valuenow="{{ $jumlahJemaahTerdaftar }}" 
-                            aria-valuemin="0" 
-                            aria-valuemax="{{ $batasJemaah }}">
-                        </div>
-                    </div>
-                    <small class="text-muted">{{ number_format(($jumlahJemaahTerdaftar / $batasJemaah) * 100, 1) }}% terisi</small>
+                <div class="flex gap-2">
+                    @if (!$sudahPenuh)
+                        <x-button :href="route('pemesanan.jemaah.create', $pemesanan->id)">
+                            <i class="bx bx-plus-circle"></i> Tambah
+                        </x-button>
+                    @else
+                        <button class="cursor-not-allowed rounded-lg bg-stone-200 px-4 py-2 text-sm font-semibold text-stone-500" disabled>
+                            <i class="bx bx-plus-circle"></i> Slot Penuh
+                        </button>
+                    @endif
+                    <x-button variant="secondary" :href="route('pemesanan.detail', $pemesanan->id)">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
                 </div>
             </div>
-        </div>
 
-        <div class="card-body p-0">
-            @if($jemaahs->count() > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped mb-0">
-                        <thead class="table-light">
-                            <tr class="align-middle">
-                                <th class="px-4 py-3" width="5%">#</th>
-                                <th class="px-4 py-3" width="20%">Nama Lengkap</th>
-                                <th class="px-4 py-3" width="20%">Email</th>
-                                <th class="px-4 py-3" width="15%">Nomor Ponsel</th>
-                                <th class="px-4 py-3" width="10%">Foto</th>
-                                <th class="px-4 py-3" width="20%">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($jemaahs as $jemaah)
-                                <tr class="align-middle">
-                                    <td class="px-4">{{ $loop->iteration }}</td>
-                                    <td class="px-4 fw-bold" style="color: #4e73df;">
-                                        {{ $jemaah->nama_lengkap }}
-                                        @if($jemaah->is_pemesan)
-                                            <span class="badge bg-info ms-2">Pemesan</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-4">{{ $jemaah->email }}</td>
-                                    <td class="px-4">{{ $jemaah->nomor_telepon }}</td>
-                                    <td class="px-4">
-                                        @if($jemaah->foto)
-                                            <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto"
-                                                class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
-                                        @else
-                                            <span class="text-muted">Tidak ada foto</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-4 print-hilang">
-                                        <div class="d-flex gap-2">
-                                            <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" 
-                                                class="btn btn-sm btn-success px-3 py-2">
-                                                <i class="fas fa-folder me-1"></i> Berkas
-                                            </a>
-                                            <a href="{{ route('pemesanan.jemaah.edit', [$pemesanan->id, $jemaah->id]) }}" 
-                                                class="btn btn-sm btn-warning px-3 py-2">
-                                                <i class="fas fa-edit me-1"></i> Edit
-                                            </a>
-                                            <form action="{{ route('jemaah.destroy', $jemaah->id) }}" method="POST" 
-                                                class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data jemaah ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger px-3 py-2 tombol-hapus">
-                                                    <i class="fas fa-trash me-1"></i> Hapus
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            @if ($sisaSlot <= 2 && $sisaSlot > 0)
+                <div class="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                    <i class="bx bx-info-circle"></i> <strong>Pengingat:</strong> Tersisa {{ $sisaSlot }} slot jemaah lagi yang belum ditambahkan.
                 </div>
-            @else
-                <div class="text-center py-5">
-                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
-                    <h5 class="text-muted">Belum ada jemaah yang terdaftar</h5>
-                    <p class="text-muted">Silakan tambahkan data jemaah untuk paket {{ $paket->nama_paket }}</p>
+            @elseif ($sudahPenuh)
+                <div class="mb-6 rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-800">
+                    <i class="bx bx-info-circle"></i> <strong>Informasi:</strong> Semua slot jemaah sudah terisi penuh ({{ $batasJemaah }} jemaah).
                 </div>
             @endif
-        </div>
-    </div>
 
-    <!-- Pagination -->
-        <div class="mt-3 d-flex justify-content-end">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-</div>
+            <div class="rounded-2xl border border-cream-200 bg-cream-50 shadow-sm">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cream-200 p-4">
+                    <h4 class="font-medium text-stone-700">Data Jemaah Keberangkatan {{ $paket->nama_paket }}</h4>
+                    <div class="w-40">
+                        <div class="h-2 rounded-full bg-cream-200">
+                            <div class="h-2 rounded-full bg-maroon-700" style="width: {{ ($jumlahJemaahTerdaftar / $batasJemaah) * 100 }}%"></div>
+                        </div>
+                        <small class="text-xs text-stone-500">{{ number_format(($jumlahJemaahTerdaftar / $batasJemaah) * 100, 1) }}% terisi</small>
+                    </div>
+                </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteButtons = document.querySelectorAll('.tombol-hapus');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const form = this.closest('form');
-                const confirmation = confirm(
-                    'Apakah Anda yakin ingin menghapus data jemaah ini?\n' +
-                    'Slot akan tersedia kembali setelah dihapus.'
-                );
-                if (confirmation) {
-                    form.submit();
-                }
-            });
-        });
-    });
-</script>
+                @if ($jemaahs->count() > 0)
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                                <tr>
+                                    <th class="px-4 py-3">#</th>
+                                    <th class="px-4 py-3">Nama Lengkap</th>
+                                    <th class="px-4 py-3">Email</th>
+                                    <th class="px-4 py-3">Nomor Ponsel</th>
+                                    <th class="px-4 py-3">Foto</th>
+                                    <th class="px-4 py-3">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-cream-200">
+                                @foreach ($jemaahs as $jemaah)
+                                    <tr>
+                                        <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                        <td class="px-4 py-3 font-medium text-maroon-800">
+                                            {{ $jemaah->nama_lengkap }}
+                                            @if ($jemaah->is_pemesan)
+                                                <x-badge variant="info">Pemesan</x-badge>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3 text-stone-600">{{ $jemaah->email }}</td>
+                                        <td class="px-4 py-3 text-stone-600">{{ $jemaah->nomor_telepon }}</td>
+                                        <td class="px-4 py-3">
+                                            @if ($jemaah->foto)
+                                                <img src="{{ asset('storage/' . $jemaah->foto) }}" alt="Foto" class="h-16 w-16 rounded-lg object-cover">
+                                            @else
+                                                <span class="text-xs text-stone-400">Tidak ada foto</span>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex flex-wrap gap-2">
+                                                <x-button :href="route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id])" class="bg-emerald-700! px-3! py-1.5! text-xs hover:bg-emerald-800!">
+                                                    <i class="bx bx-folder"></i> Berkas
+                                                </x-button>
+                                                <x-button :href="route('pemesanan.jemaah.edit', [$pemesanan->id, $jemaah->id])" class="bg-amber-600! px-3! py-1.5! text-xs hover:bg-amber-700!">
+                                                    <i class="bx bx-edit"></i> Edit
+                                                </x-button>
+                                                <x-delete-form :action="route('jemaah.destroy-2', $jemaah->id)" label="Apakah Anda yakin ingin menghapus data jemaah ini? Slot akan tersedia kembali setelah dihapus." />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="py-16 text-center text-stone-500">
+                        <i class="bx bx-group text-3xl"></i>
+                        <h5 class="mt-2 font-medium">Belum ada jemaah yang terdaftar</h5>
+                        <p class="mt-1 text-sm">Silakan tambahkan data jemaah untuk paket {{ $paket->nama_paket }}</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
 @endsection

@@ -1,124 +1,64 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="inner-banner">
-        <div class="container">
-            <div class="inner-title text-center">
-                <h3>{{ $title }}</h3>
-                <ul>
-                    <li>
-                        <a href="/home">Home</a>
-                    </li>
-                    <li>
-                        <i class='bx bx-chevrons-right'></i>
-                    </li>
-                    <li>{{ $title }}</li>
-                </ul>
+    <x-page-banner :title="$title" />
+
+    <section class="py-16">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10 text-center">
+                <span class="text-sm font-semibold uppercase tracking-widest text-maroon-700">Kantor Pusat</span>
+                <h2 class="font-display mt-2 text-3xl font-semibold text-maroon-900">PT. Haifa Nida Wisata Karawang</h2>
+                <p class="mx-auto mt-4 max-w-2xl text-stone-600">Kantor resmi kami melayani konsultasi, pendaftaran, dan pengurusan dokumen perjalanan umroh &amp; haji secara langsung. Silakan berkunjung pada jam operasional atau hubungi kami terlebih dahulu untuk membuat janji.</p>
             </div>
-        </div>
-        <div class="inner-shape">
-            <img src="/assets-techex-demo/images/shape/inner-shape.png" alt="Images">
-        </div>
-    </div>
-    <section class="content-area pt-30 pb-70">
-        <div class="container">
-            <div class="section-title text-center">
-                <span class="sp-color2">Our Services</span>
-                <h2>We Provide a Wide Variety of It Services</h2>
-                <p class="margin-auto">
-                    Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id
-                    elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam
-                    nec
-                </p>
-            </div>
-            <div class="row pt-45">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-consultant"></i>
-                        <h3><a href="service-details.html">IT Consulting</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
+
+            <div class="grid gap-8 lg:grid-cols-5">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm">
+                        <div class="flex gap-3">
+                            <i class="bx bxs-map mt-0.5 text-xl text-maroon-700"></i>
+                            <div>
+                                <h4 class="font-medium text-stone-800">Alamat</h4>
+                                <a href="https://maps.app.goo.gl/Xrx19pdcp5CvsVoc6" target="_blank" rel="noopener noreferrer" class="text-sm text-stone-600 hover:text-maroon-700">
+                                    Jl. Ra. Kartini No.1, Karangpawitan, Kec. Karawang Barat, Karawang, Jawa Barat 41315
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm">
+                        <div class="flex gap-3">
+                            <i class="bx bx-time-five mt-0.5 text-xl text-maroon-700"></i>
+                            <div>
+                                <h4 class="font-medium text-stone-800">Jam Operasional</h4>
+                                <p class="mt-1 text-sm text-stone-600">Senin &ndash; Jumat: 08.00 &ndash; 17.00 WIB</p>
+                                <p class="text-sm text-stone-600">Sabtu: 08.00 &ndash; 13.00 WIB</p>
+                                <p class="text-sm text-stone-600">Minggu &amp; hari libur nasional: Tutup</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm">
+                        <div class="flex gap-3">
+                            <i class="bx bx-phone-call mt-0.5 text-xl text-maroon-700"></i>
+                            <div>
+                                <h4 class="font-medium text-stone-800">Customer Service</h4>
+                                <a href="https://wa.me/6282299198002" target="_blank" class="text-sm text-stone-600 hover:text-maroon-700">+62 (822) 9919-8002</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm">
+                        <div class="flex gap-3">
+                            <i class="bx bx-shield-quarter mt-0.5 text-xl text-maroon-700"></i>
+                            <div>
+                                <h4 class="font-medium text-stone-800">Legalitas</h4>
+                                <p class="mt-1 text-sm text-stone-600">Terdaftar resmi di Kemenag RI dan <a href="https://validation.timsertifikasi.org/search?certnumber=TiMS%2FPPIU2234126" target="_blank" rel="noopener noreferrer" class="text-maroon-700 underline hover:text-maroon-900">terakreditasi A</a> sebagai Penyelenggara Perjalanan Ibadah Umrah (PPIU).</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-consulting"></i>
-                        <h3><a href="service-details.html">Cloud Computing</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-web-development"></i>
-                        <h3><a href="service-details.html">Web Development</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el. </p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-stats"></i>
-                        <h3><a href="service-details.html">Business Reform</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-structure"></i>
-                        <h3><a href="service-details.html">Infrastructure</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-data-analytics"></i>
-                        <h3><a href="service-details.html">Data Analysis</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-computer"></i>
-                        <h3><a href="service-details.html">Manage IT Service</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="services-card services-style-bg">
-                        <i class="flaticon-cyber-security"></i>
-                        <h3><a href="service-details.html">Business Security</a></h3>
-                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendauctor nisi
-                            el.</p>
-                        <a href="service-details.html" class="learn-btn">Learn More <i class='bx bx-chevron-right'></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-12 col-md-12 text-center">
-                    <div class="pagination-area">
-                        <a href="services-2.html" class="prev page-numbers">
-                            <i class='bx bx-left-arrow-alt'></i>
-                        </a>
-                        <span class="page-numbers current" aria-current="page">1</span>
-                        <a href="services-2.html" class="page-numbers">2</a>
-                        <a href="services-2.html" class="page-numbers">3</a>
-                        <a href="services-2.html" class="next page-numbers">
-                            <i class='bx bx-right-arrow-alt'></i>
-                        </a>
-                    </div>
+
+                <div class="overflow-hidden rounded-2xl border border-cream-200 shadow-sm lg:col-span-3">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4070.1583314211575!2d107.29679825896102!3d-6.299718274308804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e697761e03cf5ab%3A0x707fddda5f250f94!2sPT.%20Haifa%20Nida%20Wisata%20%7C%20Travel%20Umroh%20Karawang%20Pertama%20%7C%20Biro%20Umrah%20%7C%20Muslim%20Tour%20Umroh%20Resmi%20Terbaik%20Terpercaya!5e0!3m2!1sid!2sid!4v1746594252410!5m2!1sid!2sid"
+                        width="100%" height="100%" style="border:0; min-height: 420px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

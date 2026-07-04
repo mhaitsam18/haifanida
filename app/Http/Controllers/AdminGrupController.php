@@ -83,6 +83,7 @@ class AdminGrupController extends Controller
             'page' => 'grup',
             'grup' => $grup,
             'pakets' => Paket::all(),
+            'agens' => Agen::all(),
         ]);
     }
 

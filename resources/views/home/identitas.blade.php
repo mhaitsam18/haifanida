@@ -1,561 +1,276 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/identitas.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-<div class="container py-4 mb-5">
-    <!-- Form Header -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h2 class="fw-bold mb-0 text-primary"><i class="fas fa-user-circle me-2"></i>Identitas dan Berkas</h2>
-                    <p class="text-muted">Lengkapi data profil Anda dengan informasi yang benar</p>
-                </div>
+    <section class="py-12">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-8">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">
+                    <i class="bx bx-user-circle align-middle text-maroon-700"></i> Identitas dan Berkas
+                </h2>
+                <p class="mt-1 text-sm text-stone-500">Lengkapi data profil Anda dengan informasi yang benar</p>
             </div>
-        </div>
-    </div>
 
-    <!-- Main Form -->
-    <form action="{{ route('member.identitas.update') }}" method="POST" enctype="multipart/form-data">
-        @method('PUT')
-        @csrf
-        <div class="row g-4">
-            <!-- Autentikasi Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3 h-100">
-                    <div class="card-header bg-gradient-primary text-white py-3">
-                        <h5 class="mb-0"><i class="fas fa-lock me-2"></i>Autentikasi</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="name" class="form-label required-field">Nama Lengkap (Sesuai KTP)</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" name="name" value="{{ old('name', $member->user->name) }}"
-                                    placeholder="Masukkan nama lengkap" required>
-                            </div>
-                            @error('name')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label required-field">Email</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" name="email" value="{{ old('email', $member->user->email) }}"
-                                    placeholder="nama@email.com" required>
-                            </div>
-                            @error('email')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                            <div id="email-availability" class="mt-1"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="username" class="form-label required-field">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                                <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                    id="username" name="username"
-                                    value="{{ old('username', $member->user->username) }}"
-                                    placeholder="Masukkan username" required>
-                            </div>
-                            @error('username')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                            <div id="username-availability" class="mt-1"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phone_number" class="form-label required-field">Nomor Ponsel</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
-                                    id="phone_number" name="phone_number"
-                                    value="{{ old('phone_number', $member->user->phone_number) }}"
-                                    placeholder="Contoh: 08123456789" required>
-                            </div>
-                            @error('phone_number')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required-field">Foto Jemaah</label>
-                            <div class="text-center mb-3">
+            <form action="{{ route('member.identitas.update') }}" method="POST" enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-lock-alt"></i> Autentikasi
+                        </h3>
+                        <x-form-input label="Nama Lengkap (Sesuai KTP)" name="name" :value="$member->user->name" required />
+                        <x-form-input label="Email" name="email" type="email" :value="$member->user->email" required />
+                        <div id="email-availability" class="-mt-3 mb-3 text-xs"></div>
+                        <x-form-input label="Username" name="username" :value="$member->user->username" required />
+                        <div id="username-availability" class="-mt-3 mb-3 text-xs"></div>
+                        <x-form-input label="Nomor Ponsel" name="phone_number" :value="$member->user->phone_number" required />
+
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Foto Jemaah <span class="text-maroon-700">*</span></label>
+                            <div class="mb-3 text-center">
                                 <img id="preview-image" src="{{ $member->foto ? asset('storage/' . $member->foto) : asset('storage/jemaah-foto/pas-foto.jpg') }}"
-                                    class="img-thumbnail" style="height: 150px; width: auto;">
+                                    class="mx-auto h-36 w-auto rounded-lg border border-cream-200">
                             </div>
-                            <div class="position-relative">
-                                <input type="file" class="form-control @error('foto') is-invalid @enderror"
-                                    id="foto" name="foto" accept="image/*" onchange="previewImage(this)">
-                                <label for="foto" class="btn btn-primary w-100 mt-2">
-                                    <i class="fas fa-upload me-2"></i>Pilih Foto Jemaah
-                                </label>
-                                @error('foto')
-                                    <div class="text-danger fs-6">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <label for="foto" class="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-maroon-700 py-2.5 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
+                                <i class="bx bx-upload"></i> Pilih Foto Jemaah
+                            </label>
+                            <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(this)" class="hidden">
+                            @error('foto')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </x-card>
 
-            <!-- Biodata Member Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3 h-100">
-                    <div class="card-header bg-gradient-info text-white py-3">
-                        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Biodata Member</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="nomor_ktp" class="form-label required-field">Nomor KTP</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                <input type="text" class="form-control @error('nomor_ktp') is-invalid @enderror"
-                                    id="nomor_ktp" name="nomor_ktp"
-                                    value="{{ old('nomor_ktp', $member->nomor_ktp) }}"
-                                    placeholder="16 digit nomor KTP" required>
-                            </div>
-                            @error('nomor_ktp')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        {{-- <div class="mb-3">
-                            <label for="nama_sesuai_paspor" class="form-label">Nama Sesuai Paspor</label>
-                            <input type="text" class="form-control @error('nama_sesuai_paspor') is-invalid @enderror"
-                                id="nama_sesuai_paspor" name="nama_sesuai_paspor"
-                                value="{{ old('nama_sesuai_paspor', $member->nama_sesuai_paspor) }}"
-                                placeholder="Nama sesuai paspor">
-                            @error('nama_sesuai_paspor')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
-                        <div class="mb-3">
-                            <label for="tempat_lahir" class="form-label required-field">Kota Tempat Lahir</label>
-                            <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror"
-                                id="tempat_lahir" name="tempat_lahir"
-                                value="{{ old('tempat_lahir', $member->tempat_lahir) }}"
-                                placeholder="Masukkan kota tempat lahir" required>
-                            @error('tempat_lahir')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal_lahir" class="form-label required-field">Tanggal Lahir</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror"
-                                    id="tanggal_lahir" name="tanggal_lahir"
-                                    value="{{ old('tanggal_lahir', $member->tanggal_lahir) }}"
-                                    required>
-                            </div>
-                            @error('tanggal_lahir')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required-field">Jenis Kelamin</label>
-                            <div class="d-flex gap-4">
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-user"></i> Biodata Member
+                        </h3>
+                        <x-form-input label="Nomor KTP" name="nomor_ktp" :value="$member->nomor_ktp" required />
+                        <x-form-input label="Kota Tempat Lahir" name="tempat_lahir" :value="$member->tempat_lahir" required />
+                        <x-form-input label="Tanggal Lahir" name="tanggal_lahir" type="date" :value="$member->tanggal_lahir" required />
+
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Jenis Kelamin <span class="text-maroon-700">*</span></label>
+                            <div class="flex gap-4">
                                 @foreach (['Laki-laki' => 'male', 'Perempuan' => 'female'] as $label => $icon)
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('jenis_kelamin') is-invalid @enderror"
-                                            type="radio" name="jenis_kelamin" id="jk_{{ strtolower($label) }}"
-                                            value="{{ $label }}"
+                                    <label class="flex items-center gap-2 text-sm text-stone-700">
+                                        <input type="radio" name="jenis_kelamin" value="{{ $label }}"
+                                            class="text-maroon-700 focus:ring-maroon-400"
                                             @checked(old('jenis_kelamin', $member->jenis_kelamin) == $label)>
-                                        <label class="form-check-label" for="jk_{{ strtolower($label) }}">
-                                            <i class="fas fa-{{ $icon }} me-1 {{ $label == 'Laki-laki' ? 'text-primary' : 'text-danger' }}"></i>
-                                            {{ $label }}
-                                        </label>
-                                    </div>
+                                        {{ $label }}
+                                    </label>
                                 @endforeach
-                                @error('jenis_kelamin')
-                                    <div class="text-danger fs-6">{{ $message }}</div>
-                                @enderror
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required-field">Golongan Darah</label>
-                            <div class="d-flex flex-wrap gap-2">
-                                @foreach (['A', 'B', 'AB', 'O'] as $bloodType)
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('golongan_darah') is-invalid @enderror"
-                                            type="radio" name="golongan_darah" id="gol_{{ strtolower($bloodType) }}"
-                                            value="{{ $bloodType }}"
-                                            @checked(old('golongan_darah', $member->golongan_darah) == $bloodType)>
-                                        <label class="form-check-label" for="gol_{{ strtolower($bloodType) }}">{{ $bloodType }}</label>
-                                    </div>
-                                @endforeach
-                                @error('golongan_darah')
-                                    <div class="text-danger fs-6">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required-field">Kewarganegaraan</label>
-                            <div class="d-flex gap-4">
-                                @foreach (['WNI' => 'flag', 'WNA' => 'globe'] as $citizenship => $icon)
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('kewarganegaraan') is-invalid @enderror"
-                                            type="radio" name="kewarganegaraan" id="{{ strtolower($citizenship) }}"
-                                            value="{{ $citizenship }}"
-                                            @checked(old('kewarganegaraan', $member->kewarganegaraan) == $citizenship)>
-                                        <label class="form-check-label" for="{{ strtolower($citizenship) }}">
-                                            <i class="fas fa-{{ $icon }} me-1 {{ $citizenship == 'WNI' ? 'text-danger' : 'text-primary' }}"></i>
-                                            {{ $citizenship }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                                @error('kewarganegaraan')
-                                    <div class="text-danger fs-6">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label required-field">Tingkat Pendidikan</label>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @foreach (['SD' => 'SD/MI/Sederajat', 'SLTP' => 'SMP/MTs/Sederajat', 'SLTA' => 'SMA/SMK/MA/Sederajat', 'D1/D2/D3' => 'D1/D2/D3'] as $value => $label)
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input @error('tingkat_pendidikan') is-invalid @enderror"
-                                                type="radio" name="tingkat_pendidikan" id="{{ strtolower($value) }}"
-                                                value="{{ $value }}"
-                                                @checked(old('tingkat_pendidikan', $member->tingkat_pendidikan) == $value)>
-                                            <label class="form-check-label" for="{{ strtolower($value) }}">{{ $label }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="col-md-6">
-                                    @foreach (['D4/S1' => 'D4/S1', 'S2' => 'S2', 'S3' => 'S3'] as $value => $label)
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input @error('tingkat_pendidikan') is-invalid @enderror"
-                                                type="radio" name="tingkat_pendidikan" id="{{ strtolower($value) }}"
-                                                value="{{ $value }}"
-                                                @checked(old('tingkat_pendidikan', $member->tingkat_pendidikan) == $value)>
-                                            <label class="form-check-label" for="{{ strtolower($value) }}">{{ $label }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                @error('tingkat_pendidikan')
-                                    <div class="text-danger fs-6">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pekerjaan" class="form-label required-field">Pekerjaan</label>
-                            <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror"
-                                id="pekerjaan" name="pekerjaan"
-                                value="{{ old('pekerjaan', $member->pekerjaan) }}"
-                                placeholder="Masukkan pekerjaan" required>
-                            @error('pekerjaan')
-                                <div class="text-danger fs-6">{{ $message }}</div>
+                            @error('jenis_kelamin')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Alamat Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3 h-100">
-                    <div class="card-header bg-gradient-success text-white py-3">
-                        <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Alamat Lengkap</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="provinsi_id" class="form-label required-field">Provinsi</label>
-                            <select class="form-select @error('provinsi_id') is-invalid @enderror" id="provinsi_id" name="provinsi_id" required>
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Golongan Darah <span class="text-maroon-700">*</span></label>
+                            <div class="flex flex-wrap gap-4">
+                                @foreach (['A', 'B', 'AB', 'O'] as $bloodType)
+                                    <label class="flex items-center gap-2 text-sm text-stone-700">
+                                        <input type="radio" name="golongan_darah" value="{{ $bloodType }}"
+                                            class="text-maroon-700 focus:ring-maroon-400"
+                                            @checked(old('golongan_darah', $member->golongan_darah) == $bloodType)>
+                                        {{ $bloodType }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('golongan_darah')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Kewarganegaraan <span class="text-maroon-700">*</span></label>
+                            <div class="flex gap-4">
+                                @foreach (['WNI', 'WNA'] as $citizenship)
+                                    <label class="flex items-center gap-2 text-sm text-stone-700">
+                                        <input type="radio" name="kewarganegaraan" value="{{ $citizenship }}"
+                                            class="text-maroon-700 focus:ring-maroon-400"
+                                            @checked(old('kewarganegaraan', $member->kewarganegaraan) == $citizenship)>
+                                        {{ $citizenship }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('kewarganegaraan')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">Tingkat Pendidikan <span class="text-maroon-700">*</span></label>
+                            <div class="grid grid-cols-2 gap-2">
+                                @foreach ([
+                                    'SD' => 'SD/MI/Sederajat', 'SLTP' => 'SMP/MTs/Sederajat', 'SLTA' => 'SMA/SMK/MA/Sederajat', 'D1/D2/D3' => 'D1/D2/D3',
+                                    'D4/S1' => 'D4/S1', 'S2' => 'S2', 'S3' => 'S3',
+                                ] as $value => $label)
+                                    <label class="flex items-center gap-2 text-sm text-stone-700">
+                                        <input type="radio" name="tingkat_pendidikan" value="{{ $value }}"
+                                            class="text-maroon-700 focus:ring-maroon-400"
+                                            @checked(old('tingkat_pendidikan', $member->tingkat_pendidikan) == $value)>
+                                        {{ $label }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('tingkat_pendidikan')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <x-form-input label="Pekerjaan" name="pekerjaan" :value="$member->pekerjaan" required />
+                    </x-card>
+
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-map"></i> Alamat Lengkap
+                        </h3>
+                        <div class="mb-4">
+                            <label for="provinsi_id" class="mb-1.5 block text-sm font-medium text-stone-700">Provinsi <span class="text-maroon-700">*</span></label>
+                            <select id="provinsi_id" name="provinsi_id" required
+                                class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                                 <option value="" selected disabled>Pilih Provinsi</option>
                                 @foreach ($provinsis as $provinsi)
-                                    <option value="{{ $provinsi->id }}" @selected($provinsi->id == old('provinsi_id', $member->provinsi_id))>
-                                        {{ $provinsi->provinsi }}</option>
+                                    <option value="{{ $provinsi->id }}" @selected($provinsi->id == old('provinsi_id', $member->provinsi_id))>{{ $provinsi->provinsi }}</option>
                                 @endforeach
                             </select>
                             @error('provinsi_id')
-                                <div class="text-danger fs-6">{{ $message }}</div>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="kabupaten_id" class="form-label required-field">Kabupaten/Kota</label>
-                            <select class="form-select @error('kabupaten_id') is-invalid @enderror" id="kabupaten_id" name="kabupaten_id" required>
+                        <div class="mb-4">
+                            <label for="kabupaten_id" class="mb-1.5 block text-sm font-medium text-stone-700">Kabupaten/Kota <span class="text-maroon-700">*</span></label>
+                            <select id="kabupaten_id" name="kabupaten_id" required
+                                class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                                 <option value="" selected disabled>Pilih Kabupaten</option>
                                 @foreach ($kabupatens as $kabupaten)
-                                    <option value="{{ $kabupaten->id }}" @selected($kabupaten->id == old('kabupaten_id', $member->kabupaten_id))>
-                                        {{ $kabupaten->kabupaten }}</option>
+                                    <option value="{{ $kabupaten->id }}" @selected($kabupaten->id == old('kabupaten_id', $member->kabupaten_id))>{{ $kabupaten->kabupaten }}</option>
                                 @endforeach
                             </select>
                             @error('kabupaten_id')
-                                <div class="text-danger fs-6">{{ $message }}</div>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="kecamatan" class="form-label required-field">Kecamatan</label>
-                            <input type="text" class="form-control @error('kecamatan') is-invalid @enderror"
-                                id="kecamatan" name="kecamatan"
-                                value="{{ old('kecamatan', $member->kecamatan) }}"
-                                placeholder="Masukkan kecamatan" required>
-                            @error('kecamatan')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="kelurahan" class="form-label required-field">Desa/Kelurahan</label>
-                            <input type="text" class="form-control @error('kelurahan') is-invalid @enderror"
-                                id="kelurahan" name="kelurahan"
-                                value="{{ old('kelurahan', $member->kelurahan) }}"
-                                placeholder="Masukkan desa/kelurahan" required>
-                            @error('kelurahan')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="kode_pos" class="form-label required-field">Kode Pos</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
-                                <input type="text" class="form-control @error('kode_pos') is-invalid @enderror"
-                                    id="kode_pos" name="kode_pos" value="{{ old('kode_pos', $member->kode_pos) }}"
-                                    placeholder="Masukkan kode pos" required>
-                            </div>
-                            @error('kode_pos')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="alamat" class="form-label required-field">Detail Alamat</label>
-                            <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat"
-                                rows="3" placeholder="Contoh: Jl. Raya Bogor No. 123, RT 01/RW 02" required>{{ old('alamat', $member->alamat) }}</textarea>
-                            @error('alamat')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <x-form-input label="Kecamatan" name="kecamatan" :value="$member->kecamatan" required />
+                        <x-form-input label="Desa/Kelurahan" name="kelurahan" :value="$member->kelurahan" required />
+                        <x-form-input label="Kode Pos" name="kode_pos" :value="$member->kode_pos" required />
+                        <x-form-textarea label="Detail Alamat" name="alamat" :value="$member->alamat" :rows="3" required placeholder="Contoh: Jl. Raya Bogor No. 123, RT 01/RW 02" />
+                    </x-card>
 
-            <!-- Paspor dan Informasi Tambahan Card -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm border-0 rounded-3 h-100">
-                    <div class="card-header bg-gradient-warning text-white py-3">
-                        <h5 class="mb-0"><i class="fas fa-passport me-2"></i>Data Paspor dan Informasi Tambahan</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="nomor_paspor" class="form-label">Nomor Paspor</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-passport"></i></span>
-                                <input type="text" class="form-control @error('nomor_paspor') is-invalid @enderror"
-                                    id="nomor_paspor" name="nomor_paspor"
-                                    value="{{ old('nomor_paspor', $member->nomor_paspor) }}"
-                                    placeholder="Masukkan nomor paspor">
-                            </div>
-                            @error('nomor_paspor')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="nama_sesuai_paspor" class="form-label">Nama Sesuai Paspor</label>
-                            <input type="text" class="form-control @error('nama_sesuai_paspor') is-invalid @enderror"
-                                id="nama_sesuai_paspor" name="nama_sesuai_paspor"
-                                value="{{ old('nama_sesuai_paspor', $member->nama_sesuai_paspor) }}"
-                                placeholder="Nama sesuai paspor">
-                            @error('nama_sesuai_paspor')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="tempat_dikeluarkan" class="form-label">Tempat Dikeluarkan (Kota/Kabupaten)</label>
-                            <input type="text" class="form-control @error('tempat_dikeluarkan') is-invalid @enderror"
-                                id="tempat_dikeluarkan" name="tempat_dikeluarkan"
-                                value="{{ old('tempat_dikeluarkan', $member->tempat_dikeluarkan) }}"
-                                placeholder="Masukkan tempat dikeluarkan">
-                            @error('tempat_dikeluarkan')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal_dikeluarkan" class="form-label">Tanggal Dikeluarkan</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="date" class="form-control @error('tanggal_dikeluarkan') is-invalid @enderror"
-                                    id="tanggal_dikeluarkan" name="tanggal_dikeluarkan"
-                                    value="{{ old('tanggal_dikeluarkan', $member->tanggal_dikeluarkan) }}"
-                                    placeholder="Tanggal dikeluarkan">
-                            </div>
-                            @error('tanggal_dikeluarkan')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="tanggal_kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
-                                <input type="date" class="form-control @error('tanggal_kadaluarsa') is-invalid @enderror"
-                                    id="tanggal_kadaluarsa" name="tanggal_kadaluarsa"
-                                    value="{{ old('tanggal_kadaluarsa', $member->tanggal_kadaluarsa) }}"
-                                    placeholder="Tanggal kadaluarsa">
-                            </div>
-                            @error('tanggal_kadaluarsa')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <hr class="my-4">
-                        <h6 class="mb-3 text-primary">Informasi Tambahan</h6>
-                        <div class="mb-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input @error('pernah_umroh') is-invalid @enderror"
-                                    type="checkbox" value="1" id="pernah_umroh" name="pernah_umroh"
+                    <x-card>
+                        <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                            <i class="bx bx-id-card"></i> Data Paspor dan Informasi Tambahan
+                        </h3>
+                        <x-form-input label="Nomor Paspor" name="nomor_paspor" :value="$member->nomor_paspor" />
+                        <x-form-input label="Nama Sesuai Paspor" name="nama_sesuai_paspor" :value="$member->nama_sesuai_paspor" />
+                        <x-form-input label="Tempat Dikeluarkan (Kota/Kabupaten)" name="tempat_dikeluarkan" :value="$member->tempat_dikeluarkan" />
+                        <x-form-input label="Tanggal Dikeluarkan" name="tanggal_dikeluarkan" type="date" :value="$member->tanggal_dikeluarkan" />
+                        <x-form-input label="Tanggal Kadaluarsa" name="tanggal_kadaluarsa" type="date" :value="$member->tanggal_kadaluarsa" />
+
+                        <hr class="my-4 border-cream-200">
+                        <h4 class="mb-3 text-sm font-semibold text-maroon-800">Informasi Tambahan</h4>
+                        <div class="mb-4 flex flex-wrap gap-4">
+                            <label class="flex items-center gap-2 text-sm text-stone-700">
+                                <input type="checkbox" value="1" name="pernah_umroh" class="rounded text-maroon-700 focus:ring-maroon-400"
                                     @checked(old('pernah_umroh', $member->pernah_umroh))>
-                                <label class="form-check-label" for="pernah_umroh">
-                                    <i class="fas fa-kaaba me-1"></i>Pernah Umroh?
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input @error('pernah_haji') is-invalid @enderror"
-                                    type="checkbox" value="1" id="pernah_haji" name="pernah_haji"
+                                <i class="bx bx-cube-alt"></i> Pernah Umroh?
+                            </label>
+                            <label class="flex items-center gap-2 text-sm text-stone-700">
+                                <input type="checkbox" value="1" name="pernah_haji" class="rounded text-maroon-700 focus:ring-maroon-400"
                                     @checked(old('pernah_haji', $member->pernah_haji))>
-                                <label class="form-check-label" for="pernah_haji">
-                                    <i class="fas fa-mosque me-1"></i>Pernah Haji?
-                                </label>
-                            </div>
-                            @error('pernah_umroh')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                            @error('pernah_haji')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
+                                <i class="bx bxs-building-house"></i> Pernah Haji?
+                            </label>
                         </div>
-                        <div class="mb-3">
-                            <label for="nama_keluarga_terdekat" class="form-label required-field">Nama Keluarga Terdekat</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
-                                <input type="text" class="form-control @error('nama_keluarga_terdekat') is-invalid @enderror"
-                                    id="nama_keluarga_terdekat" name="nama_keluarga_terdekat"
-                                    value="{{ old('nama_keluarga_terdekat', $member->nama_keluarga_terdekat) }}"
-                                    placeholder="Masukkan nama keluarga terdekat" required>
-                            </div>
-                            @error('nama_keluarga_terdekat')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="kontak_keluarga_terdekat" class="form-label required-field">Kontak Keluarga Terdekat</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                <input type="text" class="form-control @error('kontak_keluarga_terdekat') is-invalid @enderror"
-                                    id="kontak_keluarga_terdekat" name="kontak_keluarga_terdekat"
-                                    value="{{ old('kontak_keluarga_terdekat', $member->kontak_keluarga_terdekat) }}"
-                                    placeholder="Masukkan nomor telepon keluarga terdekat" required>
-                            </div>
-                            @error('kontak_keluarga_terdekat')
-                                <div class="text-danger fs-6">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        @error('pernah_umroh')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                        @error('pernah_haji')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
 
-        <!-- Form Actions -->
-        <div class="d-flex justify-content-between mt-4 pt-3">
-            <a href="{{ route('member.profile', ['mode' => 'show']) }}" class="btn btn-outline-secondary btn-lg px-5">
-                <i class="fas fa-arrow-left me-2"></i>Kembali
-            </a>
-            <div>
-                {{-- <button type="reset" class="btn btn-light btn-lg me-2">
-                    <i class="fas fa-redo me-2"></i>Reset
-                </button> --}}
-                <button type="submit" class="btn btn-primary btn-lg px-5">
-                    <i class="fas fa-save me-2"></i>Simpan Data
-                </button>
-            </div>
+                        <x-form-input label="Nama Keluarga Terdekat" name="nama_keluarga_terdekat" :value="$member->nama_keluarga_terdekat" required />
+                        <x-form-input label="Kontak Keluarga Terdekat" name="kontak_keluarga_terdekat" :value="$member->kontak_keluarga_terdekat" required />
+                    </x-card>
+                </div>
+
+                <div class="mt-6 flex items-center justify-between">
+                    <x-button variant="secondary" :href="route('member.profile', ['mode' => 'show'])">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
+                    <x-button type="submit">
+                        <i class="bx bx-save"></i> Simpan Data
+                    </x-button>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
+    </section>
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function() {
-        // AJAX untuk mengambil data kabupaten berdasarkan provinsi
-        $('#provinsi_id').change(function() {
-            var selectedProvinsi = $(this).val();
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const provinsiSelect = document.getElementById('provinsi_id');
+            const kabupatenSelect = document.getElementById('kabupaten_id');
+            const savedKabupaten = "{{ old('kabupaten_id', $member->kabupaten_id ?? '') }}";
 
-            $.ajax({
-                url: '/get-kabupaten',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    provinsi_id: selectedProvinsi
-                },
-                success: function(data) {
-                    $('#kabupaten_id').empty();
-                    $('#kabupaten_id').append('<option value="" selected disabled>Pilih Kabupaten</option>');
-                    $.each(data, function(key, value) {
-                        $('#kabupaten_id').append('<option value="' + value.id + '">' + value.kabupaten + '</option>');
-                    });
-
-                    // If there's a saved kabupaten value, set it
-                    var savedKabupaten = "{{ old('kabupaten_id', $member->kabupaten_id ?? '') }}";
-                    if (savedKabupaten) {
-                        $('#kabupaten_id').val(savedKabupaten);
-                    }
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    console.error('Error: ' + errorThrown);
-                }
+            provinsiSelect.addEventListener('change', function () {
+                fetch('/get-kabupaten', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({ provinsi_id: this.value }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        kabupatenSelect.innerHTML = '<option value="" selected disabled>Pilih Kabupaten</option>';
+                        data.forEach(function (kabupaten) {
+                            const option = document.createElement('option');
+                            option.value = kabupaten.id;
+                            option.textContent = kabupaten.kabupaten;
+                            kabupatenSelect.appendChild(option);
+                        });
+                        if (savedKabupaten) {
+                            kabupatenSelect.value = savedKabupaten;
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             });
-        });
 
-        // Trigger provinsi change if there's a selected value
-        if ($('#provinsi_id').val()) {
-            $('#provinsi_id').trigger('change');
-        }
+            window.previewImage = function (input) {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('preview-image').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
 
-        // Image preview
-        window.previewImage = function(input) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview-image').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+            function checkAvailability(inputId, resultId, urlPrefix, label) {
+                const input = document.getElementById(inputId);
+                input.addEventListener('blur', function () {
+                    if (!this.value) return;
+                    fetch(urlPrefix + '/' + encodeURIComponent(this.value), {
+                        headers: { 'Accept': 'application/json' },
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const available = data.status === 'available';
+                            const el = document.getElementById(resultId);
+                            el.textContent = available ? label + ' tersedia' : label + ' sudah digunakan';
+                            el.style.color = available ? '#15803d' : '#dc2626';
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
             }
-        };
 
-        // Email availability check
-        $('#email').on('blur', function() {
-            var email = $(this).val();
-            $.ajax({
-                url: '/check-email',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    email: email
-                },
-                success: function(response) {
-                    $('#email-availability').text(response.message).css('color', response.available ? 'green' : 'red');
-                }
-            });
+            checkAvailability('email', 'email-availability', '/check-email', 'Email');
+            checkAvailability('username', 'username-availability', '/check-username', 'Username');
         });
-
-        // Username availability check
-        $('#username').on('blur', function() {
-            var username = $(this).val();
-            $.ajax({
-                url: '/check-username',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    username: username
-                },
-                success: function(response) {
-                    $('#username-availability').text(response.message).css('color', response.available ? 'green' : 'red');
-                }
-            });
-        });
-    });
-</script>
+    </script>
 @endsection

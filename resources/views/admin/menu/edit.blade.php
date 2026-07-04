@@ -1,123 +1,44 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
-                    <form action="/admin/menu/{{ $menu->id }}" method="post">
-                        @method('put')
-                        @csrf
-                        <input type="hidden" name="id" id="id" value="{{ $menu->id }}">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="menu" class="form-label">Menu</label>
-                                    <input type="text" class="form-control  @error('menu') is-invalid @enderror"
-                                        id="menu" name="menu" value="{{ old('menu', $menu->menu) }}"
-                                        placeholder="Menu">
-                                    @error('menu')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="parent_id" class="form-label">Parent</label>
-                                    <select class="form-select  @error('parent_id') is-invalid @enderror" id="parent_id"
-                                        name="parent_id">
-                                        <option value="" selected>Pilih Parent</option>
-                                        @foreach ($parents as $parent)
-                                            <option value="{{ $parent->id }}" @selected(old('parent_id', $menu->parent_id) == $parent->id)>
-                                                {{ $parent->order . ' | ' . $parent->menu }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('parent_id')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('has_dropdown') is-invalid @enderror"
-                                            type="checkbox" value="1" id="has_dropdown" name="has_dropdown"
-                                            @checked(old('has_dropdown', $menu->has_dropdown))>
-                                        <label class="form-check-label" for="has_dropdown">
-                                            Ada Dropdown?
-                                        </label>
-                                    </div>
-                                    @error('has_dropdown')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('is_active') is-invalid @enderror"
-                                            type="checkbox" value="1" id="is_active" name="is_active"
-                                            @checked(old('is_active', $menu->is_active))>
-                                        <label class="form-check-label" for="is_active">
-                                            Apakah Aktif?
-                                        </label>
-                                    </div>
-                                    @error('is_active')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="url" class="form-label">URL</label>
-                                    <input type="text" class="form-control  @error('url') is-invalid @enderror"
-                                        id="url" name="url" value="{{ old('url', $menu->url) }}"
-                                        placeholder="URL">
-                                    @error('url')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="icon" class="form-label">Ikon</label>
-                                    <input type="text" class="form-control  @error('icon') is-invalid @enderror"
-                                        id="icon" name="icon" value="{{ old('icon', $menu->icon) }}"
-                                        placeholder="Ikon">
-                                    @error('icon')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="order" class="form-label">Nomor Urut</label>
-                                    <input type="number" class="form-control  @error('order') is-invalid @enderror"
-                                        id="order" name="order" value="{{ old('order', $menu->order) }}"
-                                        placeholder="Nomor Urut">
-                                    @error('order')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/menu" class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <x-page-header :title="$title" />
+
+    <x-card class="lg:w-2/3">
+        <form action="/admin/menu/{{ $menu->id }}" method="post">
+            @method('put')
+            @csrf
+            <x-form-input label="Menu" name="menu" :value="old('menu', $menu->menu)" placeholder="Menu" />
+
+            <div class="mb-4">
+                <label for="parent_id" class="mb-1.5 block text-sm font-medium text-stone-700">Parent</label>
+                <select id="parent_id" name="parent_id"
+                    class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                    <option value="" selected>Pilih Parent</option>
+                    @foreach ($parents as $parent)
+                        <option value="{{ $parent->id }}" @selected(old('parent_id', $menu->parent_id) == $parent->id)>{{ $parent->order . ' | ' . $parent->menu }}</option>
+                    @endforeach
+                </select>
             </div>
-        </div>
-    </div> <!-- row -->
+
+            <div class="mb-4 flex flex-wrap gap-4">
+                <label class="flex items-center gap-2 text-sm text-stone-700">
+                    <input type="checkbox" value="1" name="has_dropdown" class="rounded text-maroon-700 focus:ring-maroon-400" @checked(old('has_dropdown', $menu->has_dropdown))>
+                    Ada Dropdown?
+                </label>
+                <label class="flex items-center gap-2 text-sm text-stone-700">
+                    <input type="checkbox" value="1" name="is_active" class="rounded text-maroon-700 focus:ring-maroon-400" @checked(old('is_active', $menu->is_active))>
+                    Apakah Aktif?
+                </label>
+            </div>
+
+            <x-form-input label="URL" name="url" :value="old('url', $menu->url)" placeholder="URL" />
+            <x-form-input label="Ikon" name="icon" :value="old('icon', $menu->icon)" placeholder="Ikon" />
+            <x-form-input label="Nomor Urut" name="order" type="number" :value="old('order', $menu->order)" placeholder="Nomor Urut" />
+
+            <div class="flex justify-end gap-2">
+                <x-button variant="secondary" href="/admin/menu">Kembali</x-button>
+                <x-button type="submit">Simpan</x-button>
+            </div>
+        </form>
+    </x-card>
 @endsection

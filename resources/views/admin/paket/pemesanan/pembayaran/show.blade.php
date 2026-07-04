@@ -1,78 +1,44 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-0">{{ $title }}</h6>
-                        <div class="dropdown mb-2">
-                            <button class="btn p-0" type="button" id="tambah" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/permintaan-kamar/create"><i
-                                        data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="btn btn-sm btn-haifa my-2"
-                        href="/admin/{{ $pemesananKamar ? 'pemesanan-kamar/' . $pemesananKamar->id . '/' : '' }}permintaan-kamar/create"><i
-                            data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                    @if ($pemesananKamar)
-                        <a class="btn btn-sm btn-secondary my-2"
-                            href="/admin/pemesanan/{{ $pemesananKamar->pemesanan_id }}/pemesanan-kamar/">
-                            <span class="">Kembali</span>
+    @php use Carbon\Carbon; @endphp
+
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button :href="'/admin/pembayaran/' . $pembayaran->id . '/edit'"><i class="bx bx-edit"></i> Edit</x-button>
+            <x-button variant="secondary" :href="'/admin/' . ($pembayaran->pemesanan_id ? 'pemesanan/' . $pembayaran->pemesanan_id . '/' : '') . 'pembayaran'"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-card>
+        <div class="grid gap-6 md:grid-cols-3">
+            <div class="md:col-span-2">
+                <ul class="space-y-1.5 text-sm text-stone-700">
+                    <li><span class="text-stone-500">Pemesanan:</span> {{ $pembayaran->pemesanan->user->name ?? '-' }} &mdash; {{ $pembayaran->pemesanan->paket->nama_paket ?? '-' }}</li>
+                    <li><span class="text-stone-500">Jumlah Pembayaran:</span> Rp.{{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}</li>
+                    <li><span class="text-stone-500">Metode Pembayaran:</span> {{ $pembayaran->metode_pembayaran }}</li>
+                    <li><span class="text-stone-500">Tanggal Pembayaran:</span> {{ Carbon::parse($pembayaran->tanggal_pembayaran)->isoFormat('LL') }}</li>
+                    <li class="flex items-center gap-2">
+                        <span class="text-stone-500">Status Pembayaran:</span>
+                        <x-badge :variant="$pembayaran->status_pembayaran == 'diterima' ? 'success' : ($pembayaran->status_pembayaran == 'ditolak' ? 'danger' : 'warning')">{{ $pembayaran->status_pembayaran }}</x-badge>
+                    </li>
+                    <li><span class="text-stone-500">Keterangan:</span> {{ $pembayaran->keterangan ?? '-' }}</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-display mb-2 text-sm font-semibold text-maroon-900">Bukti Pembayaran</h4>
+                @if ($pembayaran->bukti_pembayaran)
+                    @if (str_ends_with(strtolower($pembayaran->bukti_pembayaran), '.pdf'))
+                        <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" target="_blank" class="inline-flex items-center gap-1.5 rounded-md bg-maroon-50 px-3 py-1.5 text-xs font-medium text-maroon-700 hover:bg-maroon-100"><i class="bx bx-file"></i> Lihat Bukti (PDF)</a>
+                    @else
+                        <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" target="_blank">
+                            <img src="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" alt="Bukti Pembayaran" class="w-full rounded-lg border border-cream-200 object-cover">
                         </a>
                     @endif
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0" id="dataTableExample">
-                            <thead>
-                                <tr>
-                                    <th class="pt-0">#</th>
-                                    <th class="pt-0">Permintaan</th>
-                                    <th class="pt-0">Tambahan Harga</th>
-                                    <th class="pt-0">Keterangan</th>
-                                    <th class="pt-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($pemesananKamar->permintaans as $permintaan)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $permintaan->permintaan }}</td>
-                                        <td>Rp.{{ number_format($permintaan->harga, 2, ',', '.') }}</td>
-                                        <td>{{ $permintaan->keterangan }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center ">
-                                                <a href="/admin/permintaan-kamar/{{ $permintaan->id }}/edit"
-                                                    class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                <form action="/admin/permintaan-kamar/{{ $permintaan->id }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                @else
+                    <p class="text-sm text-stone-500">Bukti pembayaran belum tersedia</p>
+                @endif
             </div>
         </div>
-    </div> <!-- row -->
+    </x-card>
 @endsection

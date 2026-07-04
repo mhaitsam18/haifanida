@@ -1,25 +1,17 @@
-@extends('admin.layouts.main')
-@section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
+@extends('admin.layouts.app')
 
-                </div>
-            </div>
-        </div>
-    </div> <!-- row -->
+@section('content')
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button variant="secondary" href="javascript:history.back()"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-card class="lg:w-2/3">
+        <ul class="space-y-1.5 text-sm text-stone-700">
+            <li><span class="text-stone-500">Nama Jema'ah:</span> {{ $bus->jemaah->nama_lengkap }}</li>
+            <li><span class="text-stone-500">Nomor Kursi:</span> {{ $bus->nomor_kursi }}</li>
+            <li><span class="text-stone-500">Nomor Rombongan:</span> {{ $bus->bus->nomor_rombongan }}</li>
+        </ul>
+    </x-card>
 @endsection

@@ -1,338 +1,239 @@
-@extends('admin.layouts.main')
-@section('style')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
+@extends('admin.layouts.app')
+
 @section('content')
     @php
         use Carbon\Carbon;
     @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                        <div class="dropdown mb-2">
-                            <button class="btn p-0" type="button" id="lihat" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="lihat">
-                                <a class="dropdown-item d-flex align-items-center"
-                                    href="/admin/paket/{{ $grup->paket_id }}/jemaah?grup_id={{ $grup->id }}"><i
-                                        data-feather="eye" class="icon-sm me-2"></i> <span class="">Lihat
-                                        Jema'ah</span></a>
-                                <a class="dropdown-item d-flex align-items-center"
-                                    href="/admin/grup/{{ $grup->id }}/isu-perjalanan"><i data-feather="eye"
-                                        class="icon-sm me-2"></i> <span class="">Lihat Isu Perjalanan</span></a>
-                                <a class="dropdown-item d-flex align-items-center"
-                                    href="/admin/grup/{{ $grup->id }}/jadwal"><i data-feather="eye"
-                                        class="icon-sm me-2"></i> <span class="">Lihat Jadwal</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="d-flex align-items-start mb-3">
-                                <img src="{{ asset('storage/' . $grup->paket->gambar) }}" class="wd-100 wd-sm-200 me-3"
-                                    alt="grup">
-                                <div class="mb-2">
-                                    <h5 class="mb-2">Detail Grup</h5>
-                                    <div class="row">
-                                        <div class="col">
-                                            <ul>
-                                                <li>Nama Paket : {{ $grup->paket->nama_paket }}</li>
-                                                <li>Nama Grup : {{ $grup->nama_grup }}</li>
-                                                <li>Nama Agen : {{ $grup->agen->user->name ?? '' }}</li>
-                                                <li>Ketua Grup : {{ $grup->ketua_grup }}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col">
-                                            <ul>
-                                                <li>Kuota Grup : {{ $grup->kuota_grup }}</li>
-                                                <li>Status Grup : {{ $grup->status_grup }}</li>
-                                                <li>Keterangan Grup : {{ $grup->keterangan_grup }}</li>
-                                            </ul>
-                                            <a href="/admin/paket/{{ $grup->paket_id }}/jemaah?grup_id={{ $grup->id }}"
-                                                class="btn btn-sm btn-haifa mb-1"><i data-feather="eye"
-                                                    class="icon-sm me-2"></i>Lihat Data Jema'ah</a>
-                                            <a href="/admin/grup/{{ $grup->id }}/tagihan"
-                                                class="btn btn-sm btn-success mb-1"><i data-feather="file-text"
-                                                    class="icon-sm me-2"></i>Lihat Tagihan Grup</a>
-                                            <a href="/admin/paket/{{ $grup->paket_id }}/grup"
-                                                class="btn btn-sm btn-secondary mb-1"><i data-feather="arrow-left"
-                                                    class="icon-sm me-2"></i>Kembali</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <h4 class="mb-2">Isu Perjalanan</h4>
-                            <a href="/admin/grup/{{ $grup->id }}/isu-perjalanan/create"
-                                class="btn btn-sm btn-langit mb-3"><i data-feather="plus" class="icon-sm me-2"></i> Buat
-                                Isu</a>
-                            <div class="table-responsive">
-                                {{-- id="dataTableExample" --}}
-                                <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="pt-0">#</th>
-                                            <th class="pt-0">Masalah</th>
-                                            <th class="pt-0">Solusi</th>
-                                            <th class="pt-0">Waktu Pelaporan</th>
-                                            <th class="pt-0">Waktu Penyelesaian</th>
-                                            <th class="pt-0">Status</th>
-                                            <th class="pt-0">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($grup->IsuPerjalanans->count() > 0)
-                                            @foreach ($grup->IsuPerjalanans as $isu)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $isu->masalah }}</td>
-                                                    <td>{{ $isu->solusi }}</td>
-                                                    <td>{{ Carbon::parse($isu->waktu_pelaporan)->isoFormat('LLL') }}</td>
-                                                    <td>{{ Carbon::parse($isu->waktu_penyelesaian)->isoFormat('LLL') }}
-                                                    </td>
-                                                    <td>{{ $isu->status ? 'Dalam Penanganan' : 'Sudah Selesai' }}</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center ">
-                                                            <a href="/admin/isu-perjalanan/{{ $isu->id }}/edit"
-                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                            <form action="/admin/isu-perjalanan/{{ $isu->id }}"
-                                                                method="post">
-                                                                @method('delete')
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="9">
-                                                    Isu Perjalanan belum Tersedia
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <h4 class="mb-2">Jadwal</h4>
-                            <a href="/admin/grup/{{ $grup->id }}/jadwal/create" class="btn btn-sm btn-langit mb-3"><i
-                                    data-feather="plus" class="icon-sm me-2"></i> Tambah
-                                Jadwal</a>
-                            <div class="table-responsive">
-                                {{-- id="dataTableExample" --}}
-                                <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="pt-0">#</th>
-                                            <th class="pt-0">Nama Agenda</th>
-                                            <th class="pt-0">Lokasi</th>
-                                            <th class="pt-0">Waktu Mulai</th>
-                                            <th class="pt-0">Waktu Selesai</th>
-                                            <th class="pt-0">Keterangan</th>
-                                            <th class="pt-0">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($grup->jadwals->count() > 0)
-                                            @foreach ($grup->jadwals as $jadwal)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $jadwal->nama_agenda }}</td>
-                                                    <td>{{ $jadwal->lokasi }}</td>
-                                                    <td>{{ Carbon::parse($jadwal->waktu_mulai)->isoFormat('LLL') }}</td>
-                                                    <td>{{ Carbon::parse($jadwal->waktu_selesai)->isoFormat('LLL') }}</td>
-                                                    <td>{{ $jadwal->keterangan }}</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center ">
-                                                            <a href="/admin/jadwal/{{ $jadwal->id }}/edit"
-                                                                class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                            <form action="/admin/jadwal/{{ $jadwal->id }}"
-                                                                method="post">
-                                                                @method('delete')
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="9">
-                                                    Jadwal belum Tersedia
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <h4>Masukkan Jema'ah</h4>
-                        </div>
-                        <div class="col-md-5 mt-4">
-                            <h6 class="mb-2">Data Jema'ah</h6>
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="pt-0">#</th>
-                                            <th class="pt-0">Nama Lengkap</th>
-                                            <th class="pt-0">Pilih</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($jemaahs->count() > 0)
-                                            @foreach ($jemaahs as $jemaah)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $jemaah->nama_lengkap }}</td>
-                                                    <td>
-                                                        <input type="checkbox" value="{{ $jemaah->id }}"
-                                                            name="jemaah_ids[]">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="9">
-                                                    jemaah Tidak Tersedia
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-md-1 mt-4 text-center">
-                            <div class="mt-5 row">
-                                <div class="mb-3">
-                                    <button type="button" id="pindah-ke-grup" class="btn btn-sm btn-info">
-                                        <i data-feather="arrow-right" class="icon-sm"></i>
-                                    </button>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="button" id="kembali-ke-jemaah" class="btn btn-sm btn-info">
-                                        <i data-feather="arrow-left" class="icon-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mt-4">
-                            <h6 class="mb-2">Data Anggota Grup</h6>
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="pt-0">#</th>
-                                            <th class="pt-0">Nama Lengkap</th>
-                                            <th class="pt-0">Pilih</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if ($anggotas->count() > 0)
-                                            @foreach ($anggotas as $anggota)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $anggota->nama_lengkap }}</td>
-                                                    <td>
-                                                        <input type="checkbox" value="{{ $anggota->id }}"
-                                                            name="anggota_ids[]">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="9">
-                                                    Anggota Tidak Tersedia
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <a href="/admin/paket/{{ $grup->paket_id }}/jemaah?grup_id={{ $grup->id }}" class="inline-flex items-center gap-1.5 rounded-lg border border-cream-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 hover:bg-cream-50"><i class="bx bx-show"></i> Jema'ah</a>
+            <a href="/admin/grup/{{ $grup->id }}/isu-perjalanan" class="inline-flex items-center gap-1.5 rounded-lg border border-cream-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 hover:bg-cream-50"><i class="bx bx-error-circle"></i> Isu Perjalanan</a>
+            <a href="/admin/grup/{{ $grup->id }}/jadwal" class="inline-flex items-center gap-1.5 rounded-lg border border-cream-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 hover:bg-cream-50"><i class="bx bx-calendar"></i> Jadwal</a>
+            <x-button variant="secondary" :href="'/admin/paket/' . $grup->paket_id . '/grup'"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-card class="mb-6">
+        <div class="flex flex-col gap-6 md:flex-row md:items-start">
+            <img src="{{ asset('storage/' . $grup->paket->gambar) }}" class="h-40 w-32 shrink-0 rounded-lg object-cover" alt="grup">
+            <div class="grid flex-1 gap-6 md:grid-cols-2">
+                <ul class="space-y-1.5 text-sm text-stone-700">
+                    <li><span class="text-stone-500">Nama Paket:</span> {{ $grup->paket->nama_paket }}</li>
+                    <li><span class="text-stone-500">Nama Grup:</span> {{ $grup->nama_grup }}</li>
+                    <li><span class="text-stone-500">Nama Agen:</span> {{ $grup->agen->user->name ?? '' }}</li>
+                    <li><span class="text-stone-500">Ketua Grup:</span> {{ $grup->ketua_grup }}</li>
+                    <li><span class="text-stone-500">Kuota Grup:</span> {{ $grup->kuota_grup }}</li>
+                    <li><span class="text-stone-500">Status Grup:</span> {{ $grup->status_grup }}</li>
+                    <li><span class="text-stone-500">Keterangan Grup:</span> {{ $grup->keterangan_grup }}</li>
+                </ul>
+                <div class="flex flex-col items-start gap-2">
+                    <a href="/admin/paket/{{ $grup->paket_id }}/jemaah?grup_id={{ $grup->id }}" class="inline-flex items-center gap-1.5 rounded-md bg-maroon-50 px-3 py-1.5 text-xs font-medium text-maroon-700 hover:bg-maroon-100"><i class="bx bx-show"></i> Lihat Data Jema'ah</a>
+                    <a href="/admin/grup/{{ $grup->id }}/tagihan" class="inline-flex items-center gap-1.5 rounded-md bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 hover:bg-emerald-100"><i class="bx bx-file"></i> Lihat Tagihan Grup</a>
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </x-card>
+
+    <x-card class="mb-6">
+        <div class="mb-3 flex items-center justify-between">
+            <h4 class="font-display text-sm font-semibold text-maroon-900">Isu Perjalanan</h4>
+            <x-button class="px-3! py-1.5! text-xs!" :href="'/admin/grup/' . $grup->id . '/isu-perjalanan/create'"><i class="bx bx-plus"></i> Buat Isu</x-button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                    <tr>
+                        <th class="px-3 py-2">#</th>
+                        <th class="px-3 py-2">Masalah</th>
+                        <th class="px-3 py-2">Solusi</th>
+                        <th class="px-3 py-2">Waktu Pelaporan</th>
+                        <th class="px-3 py-2">Waktu Penyelesaian</th>
+                        <th class="px-3 py-2">Status</th>
+                        <th class="px-3 py-2">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-cream-200">
+                    @forelse ($grup->IsuPerjalanans as $isu)
+                        <tr>
+                            <td class="px-3 py-2">{{ $loop->iteration }}</td>
+                            <td class="px-3 py-2">{{ $isu->masalah }}</td>
+                            <td class="px-3 py-2">{{ $isu->solusi }}</td>
+                            <td class="px-3 py-2">{{ Carbon::parse($isu->waktu_pelaporan)->isoFormat('LLL') }}</td>
+                            <td class="px-3 py-2">{{ Carbon::parse($isu->waktu_penyelesaian)->isoFormat('LLL') }}</td>
+                            <td class="px-3 py-2"><x-badge :variant="$isu->status ? 'warning' : 'success'">{{ $isu->status ? 'Dalam Penanganan' : 'Sudah Selesai' }}</x-badge></td>
+                            <td class="px-3 py-2">
+                                <div class="flex items-center gap-2">
+                                    <a href="/admin/isu-perjalanan/{{ $isu->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                    <x-delete-form :action="'/admin/isu-perjalanan/' . $isu->id" />
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-3 py-2 text-stone-500">Isu Perjalanan belum tersedia</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </x-card>
+
+    <x-card class="mb-6">
+        <div class="mb-3 flex items-center justify-between">
+            <h4 class="font-display text-sm font-semibold text-maroon-900">Jadwal</h4>
+            <x-button class="px-3! py-1.5! text-xs!" :href="'/admin/grup/' . $grup->id . '/jadwal/create'"><i class="bx bx-plus"></i> Tambah Jadwal</x-button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                    <tr>
+                        <th class="px-3 py-2">#</th>
+                        <th class="px-3 py-2">Nama Agenda</th>
+                        <th class="px-3 py-2">Lokasi</th>
+                        <th class="px-3 py-2">Waktu Mulai</th>
+                        <th class="px-3 py-2">Waktu Selesai</th>
+                        <th class="px-3 py-2">Keterangan</th>
+                        <th class="px-3 py-2">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-cream-200">
+                    @forelse ($grup->jadwals as $jadwal)
+                        <tr>
+                            <td class="px-3 py-2">{{ $loop->iteration }}</td>
+                            <td class="px-3 py-2">{{ $jadwal->nama_agenda }}</td>
+                            <td class="px-3 py-2">{{ $jadwal->lokasi }}</td>
+                            <td class="px-3 py-2">{{ Carbon::parse($jadwal->waktu_mulai)->isoFormat('LLL') }}</td>
+                            <td class="px-3 py-2">{{ Carbon::parse($jadwal->waktu_selesai)->isoFormat('LLL') }}</td>
+                            <td class="px-3 py-2">{{ $jadwal->keterangan }}</td>
+                            <td class="px-3 py-2">
+                                <div class="flex items-center gap-2">
+                                    <a href="/admin/jadwal/{{ $jadwal->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                    <x-delete-form :action="'/admin/jadwal/' . $jadwal->id" />
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-3 py-2 text-stone-500">Jadwal belum tersedia</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </x-card>
+
+    <x-card>
+        <h4 class="font-display mb-4 text-sm font-semibold text-maroon-900">Masukkan Jema'ah</h4>
+        <div class="grid items-start gap-4 md:grid-cols-[1fr_auto_1fr]">
+            <div>
+                <h6 class="mb-2 text-sm font-semibold text-stone-700">Data Jema'ah</h6>
+                <div class="overflow-x-auto rounded-lg border border-cream-200">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                            <tr>
+                                <th class="px-3 py-2">#</th>
+                                <th class="px-3 py-2">Nama Lengkap</th>
+                                <th class="px-3 py-2">Pilih</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-cream-200">
+                            @forelse ($jemaahs as $jemaah)
+                                <tr>
+                                    <td class="px-3 py-2">{{ $loop->iteration }}</td>
+                                    <td class="px-3 py-2">{{ $jemaah->nama_lengkap }}</td>
+                                    <td class="px-3 py-2">
+                                        <input type="checkbox" value="{{ $jemaah->id }}" name="jemaah_ids[]">
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-3 py-2 text-stone-500">Jema'ah tidak tersedia</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="flex flex-row items-center justify-center gap-2 py-4 md:flex-col">
+                <button type="button" id="pindah-ke-grup" class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-maroon-50 text-maroon-700 hover:bg-maroon-100">
+                    <i class="bx bx-right-arrow-alt text-lg"></i>
+                </button>
+                <button type="button" id="kembali-ke-jemaah" class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-maroon-50 text-maroon-700 hover:bg-maroon-100">
+                    <i class="bx bx-left-arrow-alt text-lg"></i>
+                </button>
+            </div>
+            <div>
+                <h6 class="mb-2 text-sm font-semibold text-stone-700">Data Anggota Grup</h6>
+                <div class="overflow-x-auto rounded-lg border border-cream-200">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                            <tr>
+                                <th class="px-3 py-2">#</th>
+                                <th class="px-3 py-2">Nama Lengkap</th>
+                                <th class="px-3 py-2">Pilih</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-cream-200">
+                            @forelse ($anggotas as $anggota)
+                                <tr>
+                                    <td class="px-3 py-2">{{ $loop->iteration }}</td>
+                                    <td class="px-3 py-2">{{ $anggota->nama_lengkap }}</td>
+                                    <td class="px-3 py-2">
+                                        <input type="checkbox" value="{{ $anggota->id }}" name="anggota_ids[]">
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-3 py-2 text-stone-500">Anggota tidak tersedia</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </x-card>
 @endsection
+
 @section('script')
     <script>
-        $(document).ready(function() {
-            // Jika tombol panah ke kanan diklik
-            $('#pindah-ke-grup').click(function() {
-                var selectedJemaahs = $('input[name="jemaah_ids[]"]:checked').map(function() {
-                    return this.value;
-                }).get();
-                var token = $('meta[name="csrf-token"]').attr('content');
+        document.getElementById('pindah-ke-grup').addEventListener('click', function () {
+            const jemaahIds = Array.from(document.querySelectorAll('input[name="jemaah_ids[]"]:checked')).map(cb => cb.value);
 
-                // Kirim data ke server
-                $.post('/admin/grup/pindah-ke-grup', {
-                    jemaah_ids: selectedJemaahs,
-                    _token: token,
-                    grup_id: {{ $grup->id }}
-                }, function(response) {
+            fetch('{{ route('admin.grup.pindah-ke-grup') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({ jemaah_ids: jemaahIds, grup_id: {{ $grup->id }} }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
                     location.reload();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: response.message,
-                    });
-                }).fail(function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Terjadi kesalahan saat memindahkan data ke grup.',
-                    });
-                });
-            });
+                })
+                .catch(() => alert('Terjadi kesalahan saat memindahkan data ke grup.'));
+        });
 
-            // Jika tombol panah ke kiri diklik
-            $('#kembali-ke-jemaah').click(function() {
-                var selectedAnggotas = $('input[name="anggota_ids[]"]:checked').map(function() {
-                    return this.value;
-                }).get();
-                var token = $('meta[name="csrf-token"]').attr('content');
+        document.getElementById('kembali-ke-jemaah').addEventListener('click', function () {
+            const anggotaIds = Array.from(document.querySelectorAll('input[name="anggota_ids[]"]:checked')).map(cb => cb.value);
 
-                // Kirim data ke server
-                $.post('/admin/grup/kembali-ke-jemaah', {
-                    anggota_ids: selectedAnggotas,
-                    _token: token
-                }, function(response) {
+            fetch('{{ route('admin.grup.kembali-ke-jemaah') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({ anggota_ids: anggotaIds }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
                     location.reload();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: response.message,
-                    });
-                }).fail(function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Terjadi kesalahan saat mengembalikan data ke jemaah.',
-                    });
-                });
-            });
+                })
+                .catch(() => alert('Terjadi kesalahan saat mengembalikan data ke jemaah.'));
         });
     </script>
 @endsection

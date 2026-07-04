@@ -1,363 +1,229 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/detail-pemesanan.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-@php
-    use Carbon\Carbon;
-@endphp
+    @php
+        use Carbon\Carbon;
+        $statusVariant = match (true) {
+            $pemesanan->status == 'Tertunda' => 'neutral',
+            in_array($pemesanan->status, ['diterima', 'dikonfirmasi']) => 'success',
+            in_array($pemesanan->status, ['ditolak', 'dibatalkan']) => 'danger',
+            default => 'neutral',
+        };
+    @endphp
 
-<div class="container-fluid py-5">
-    <!-- Header Section -->
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-6">
-            <h2 class="fw-bold text-primary mb-2">{{ $title }}</h2>
-        </div>
-        <div class="col-md-6 text-end">
-            <!-- ORIGINAL -->
-            <!--
-            <a href="{{ route('member.perjalanan-saya', $pemesanan->id) }}" 
-               class="btn btn-outline-secondary px-4 py-2">
-                <i class="fas fa-arrow-left me-2"></i>Kembali
-            </a>
-            -->
-            <!-- MODIFIED -->
-            <a href="{{ $pemesanan->paket->tanggal_selesai >= Carbon::now() ? route('member.daftar-keberangkatan') : route('member.riwayat-perjalanan') }}" 
-               class="btn btn-outline-secondary px-4 py-2 btn-kembali">
-                <i class="fas fa-arrow-left me-2"></i>Kembali
-            </a>
-            <!-- END MODIFIED -->
-        </div>
-    </div>
+    <section class="py-10">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">{{ $title }}</h2>
+                <x-button variant="secondary" :href="$pemesanan->paket->tanggal_selesai >= Carbon::now() ? route('member.daftar-keberangkatan') : route('member.riwayat-perjalanan')">
+                    <i class="bx bx-arrow-back"></i> Kembali
+                </x-button>
+            </div>
 
-    <!-- Contact Section -->
-    <div class="alert alert-contact mb-4">
-        <div class="d-flex align-items-center">
-            <i class="fas fa-headset contact-icon"></i>
-            <div class="flex-grow-1">
-                <p class="contact-text">Butuh bantuan atau ingin mengubah pesanan Anda?</p>
-                <p class="mb-2 text-muted small">Hubungi admin kami untuk bantuan cepat dan mudah</p>
-                <a href="https://wa.me/6282299198002?text=Halo%20Admin,%20saya%20ingin%20menanyakan%20atau%20mengubah%20pemesanan%20(ID:%20{{ $pemesanan->id }})" 
-                   class="btn btn-contact" target="_blank">
-                    <i class="fab fa-whatsapp me-2"></i>Hubungi Admin
+            <div class="mb-6 flex flex-wrap items-center gap-4 rounded-2xl border border-cream-200 bg-cream-50 p-5">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-maroon-100 text-2xl text-maroon-700">
+                    <i class="bx bx-headphone"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-stone-800">Butuh bantuan atau ingin mengubah pesanan Anda?</p>
+                    <p class="text-sm text-stone-500">Hubungi admin kami untuk bantuan cepat dan mudah</p>
+                </div>
+                <a href="https://wa.me/6282299198002?text=Halo%20Admin,%20saya%20ingin%20menanyakan%20atau%20mengubah%20pemesanan%20(ID:%20{{ $pemesanan->id }})"
+                    target="_blank" class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+                    <i class="bx bxl-whatsapp text-lg"></i> Hubungi Admin
                 </a>
             </div>
-        </div>
-    </div>
 
-    <!-- Success Alert -->
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+            @if (session('success'))
+                <div class="mb-6 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('success') }}</div>
+            @endif
 
-    <!-- Main Content Card -->
-    <div class="card shadow border-0">
-        <div class="card-header bg-light py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-0 text-secondary fw-semibold">Detail Pemesanan</h4>
-                <div class="d-flex align-items-center">
-                    <span class="text-muted me-2">Status Pemesanan :</span>
-                    @php
-                        $status = $pemesanan->status;
-                        $badgeClass = '';
-                        if ($status == 'Tertunda') {
-                            $badgeClass = 'bg-secondary';
-                        } elseif (in_array($status, ['diterima', 'dikonfirmasi'])) {
-                            $badgeClass = 'bg-success';
-                        } elseif (in_array($status, ['ditolak', 'dibatalkan'])) {
-                            $badgeClass = 'bg-danger';
-                        }
-                    @endphp
-                    <span class="badge {{ $badgeClass }} px-3 py-2">{{ ucfirst($status) }}</span>
+            <div class="rounded-2xl border border-cream-200 bg-cream-50 shadow-sm">
+                <div class="flex items-center justify-between border-b border-cream-200 p-5">
+                    <h4 class="font-medium text-stone-700">Detail Pemesanan</h4>
+                    <div class="flex items-center gap-2 text-sm">
+                        <span class="text-stone-500">Status Pemesanan:</span>
+                        <x-badge :variant="$statusVariant">{{ ucfirst($pemesanan->status) }}</x-badge>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="card-body p-4">
-            <!-- Pemesanan Detail Section -->
-            <div class="row mb-4">
-                <div class="col-md-3 mb-3 mb-md-0">
-                    <img src="{{ asset('storage/' . $pemesanan->paket->gambar) }}" 
-                         class="img-fluid shadow-sm" alt="{{ $pemesanan->paket->nama_paket }}">
-                </div>
-                <div class="col-md-9">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <h6 class="text-muted mb-3 fw-semibold">Informasi Paket</h6>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2">
-                                        <span class="fw-bold">Nama Paket:</span> 
-                                        <span class="ms-2">{{ $pemesanan->paket->nama_paket }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="fw-bold">Tanggal Pemesanan:</span>
-                                        <span class="ms-2">{{ Carbon::parse($pemesanan->tanggal_pesan)->format('d/m/Y') }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="fw-bold">Jumlah Pesanan:</span> 
-                                        <span class="ms-2">{{ $pemesanan->jumlah_orang }} pax</span>
-                                    </li>
-                                    {{-- <li class="mb-2">
-                                        <span class="fw-bold">Total Harga:</span> 
-                                        <span class="ms-2 text-success">Rp {{ number_format($pemesanan->harga, 2, ',', '.') }}</span>
-                                    </li> --}}
+
+                <div class="p-5 md:p-6">
+                    <div class="grid gap-6 md:grid-cols-4">
+                        <img src="{{ asset('storage/' . $pemesanan->paket->gambar) }}" alt="{{ $pemesanan->paket->nama_paket }}" class="aspect-square w-full rounded-xl object-cover md:col-span-1">
+
+                        <div class="md:col-span-3 grid gap-6 sm:grid-cols-2">
+                            <div>
+                                <h6 class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-400">Informasi Paket</h6>
+                                <ul class="space-y-1.5 text-sm text-stone-700">
+                                    <li><span class="font-medium">Nama Paket:</span> {{ $pemesanan->paket->nama_paket }}</li>
+                                    <li><span class="font-medium">Tanggal Pemesanan:</span> {{ Carbon::parse($pemesanan->tanggal_pesan)->format('d/m/Y') }}</li>
+                                    <li><span class="font-medium">Jumlah Pesanan:</span> {{ $pemesanan->jumlah_orang }} pax</li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-4">
-                                <h6 class="text-muted mb-3 fw-semibold">Informasi Pembayaran</h6>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2">
-                                        <span class="fw-bold">Tanggal Pelunasan:</span>
-                                        <span class="ms-2">{{ $pemesanan->tanggal_pelunasan ? Carbon::parse($pemesanan->tanggal_pelunasan)->format('d/m/Y') : '-' }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="fw-bold">Metode Pembayaran:</span>
-                                        <span class="ms-2">{{ $pemesanan->metode_pembayaran ?: '-' }}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="fw-bold">Status Pelunasan:</span>
-                                        <span class="ms-2 badge {{ $pemesanan->is_pembayaran_lunas ? 'bg-success' : 'bg-warning' }} px-3 py-2">
-                                            <i class="fas {{ $pemesanan->is_pembayaran_lunas ? 'fa-check-circle' : 'fa-clock' }} me-1"></i>
+                            <div>
+                                <h6 class="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-400">Informasi Pembayaran</h6>
+                                <ul class="space-y-1.5 text-sm text-stone-700">
+                                    <li><span class="font-medium">Tanggal Pelunasan:</span> {{ $pemesanan->tanggal_pelunasan ? Carbon::parse($pemesanan->tanggal_pelunasan)->format('d/m/Y') : '-' }}</li>
+                                    <li><span class="font-medium">Metode Pembayaran:</span> {{ $pemesanan->metode_pembayaran ?: '-' }}</li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="font-medium">Status Pelunasan:</span>
+                                        <x-badge :variant="$pemesanan->is_pembayaran_lunas ? 'success' : 'warning'">
                                             {{ $pemesanan->is_pembayaran_lunas ? 'Lunas' : 'Belum Lunas' }}
-                                        </span>
+                                        </x-badge>
                                     </li>
                                 </ul>
-                            </div>
-                            <div class="d-flex gap-2">
-                                @if(in_array($pemesanan->status, ['dikonfirmasi', 'diterima']))
-                                    <a href="{{ route('pemesanan.jemaah.list', $pemesanan->id) }}" 
-                                       class="btn btn-primary">
-                                        <i class="fas fa-users me-2"></i>Data Jema'ah
-                                    </a>
-                                @else
-                                    <a href="javascript:void(0);" 
-                                       class="btn btn-primary" 
-                                       onclick="showJemaahInfo()">
-                                        <i class="fas fa-users me-2"></i>Data Jema'ah
-                                    </a>
-                                @endif
-                                <a href="{{ route('member.tagihan', $pemesanan->id) }}" 
-                                   class="btn btn-success">
-                                    <i class="fas fa-file-invoice me-2"></i>Lihat Tagihan
-                                </a>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    @if (in_array($pemesanan->status, ['dikonfirmasi', 'diterima']))
+                                        <x-button :href="route('pemesanan.jemaah.list', $pemesanan->id)">
+                                            <i class="bx bx-group"></i> Data Jema'ah
+                                        </x-button>
+                                    @else
+                                        <button type="button" onclick="showJemaahInfo()" class="inline-flex items-center gap-2 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
+                                            <i class="bx bx-group"></i> Data Jema'ah
+                                        </button>
+                                    @endif
+                                    <x-button variant="secondary" :href="route('member.tagihan', $pemesanan->id)" class="bg-emerald-100! text-emerald-800! hover:bg-emerald-200!">
+                                        <i class="bx bx-receipt"></i> Lihat Tagihan
+                                    </x-button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Pemesanan Kamar Section -->
-            <!-- MODIFIED -->
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0 fw-bold"><i class="fas fa-home me-2"></i>Pemesanan Kamar</h5>
-                    {{-- <a href="/pemesanan-kamar" 
-                       class="btn btn-sm btn-primary px-3 py-2">
-                        <i class="fas fa-plus me-2"></i>Tambah Kamar
-                    </a> --}}
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped mb-0">
-                        <thead class="table-light">
-                            <tr class="align-middle">
-                                <th class="px-4 py-3" width="5%">#</th>
-                                <th class="px-4 py-3">Tipe Kamar</th>
-                                <th class="px-4 py-3">Jumlah Pengisi</th>
-                                <th class="px-4 py-3">Harga</th>
-                                {{-- <th class="px-4 py-3">Keterangan</th> --}}
-                                {{-- <th class="px-4 py-3" width="20%">Aksi</th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($pemesanan->pemesananKamars->count() > 0)
-                                @foreach ($pemesanan->pemesananKamars as $kamar)
-                                    <tr class="align-middle">
-                                        <td class="px-4">{{ $loop->iteration }}</td>
-                                        <td class="px-4">{{ $kamar->tipe_kamar }}</td>
-                                        <td class="px-4">{{ $kamar->jumlah_pengisi }}</td>
-                                        <td class="px-4">Rp {{ number_format($kamar->harga, 2, ',', '.') }}</td>
-                                        {{-- <td class="px-4">{{ $kamar->keterangan ?: '-' }}</td> --}}
-                                        {{-- <td class="px-4">
-                                            <div class="d-flex gap-2">
-                                                <a href="/data-permintaan" 
-                                                   class="btn btn-sm btn-outline-primary btn-icon-only" title="Permintaan Kamar">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="/pemesanan-kamar/edit/{{ $kamar->id }}" 
-                                                   class="btn btn-sm btn-outline-warning btn-icon-only" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="/hapus-pemesanan-kamar/{{ $kamar->id }}" 
-                                                      method="POST" class="d-inline" 
-                                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus pemesanan kamar ini?');">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" 
-                                                            class="btn btn-sm btn-outline-danger btn-icon-only" 
-                                                            title="Hapus">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td> --}}
+                    <div class="mt-8">
+                        <h5 class="font-display mb-3 flex items-center gap-2 font-semibold text-maroon-900">
+                            <i class="bx bx-building-house"></i> Pemesanan Kamar
+                        </h5>
+                        <div class="overflow-x-auto rounded-xl border border-cream-200">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                                    <tr>
+                                        <th class="px-4 py-3">#</th>
+                                        <th class="px-4 py-3">Tipe Kamar</th>
+                                        <th class="px-4 py-3">Jumlah Pengisi</th>
+                                        <th class="px-4 py-3">Harga</th>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="6" class="text-center py-5 text-muted">
-                                        <i class="fas fa-info-circle fa-2x mb-3"></i>
-                                        <p class="mb-0">Belum ada pemesanan kamar</p>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- END MODIFIED -->
+                                </thead>
+                                <tbody class="divide-y divide-cream-200">
+                                    @if ($pemesanan->pemesananKamars->count() > 0)
+                                        @foreach ($pemesanan->pemesananKamars as $kamar)
+                                            <tr>
+                                                <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                                <td class="px-4 py-3">{{ $kamar->tipe_kamar }}</td>
+                                                <td class="px-4 py-3">{{ $kamar->jumlah_pengisi }}</td>
+                                                <td class="px-4 py-3">Rp {{ number_format($kamar->harga, 2, ',', '.') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="4" class="px-4 py-10 text-center text-stone-500">
+                                                <i class="bx bx-info-circle text-2xl"></i>
+                                                <p class="mt-1">Belum ada pemesanan kamar</p>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-            <!-- Pemesanan Ekstra Section -->
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0 fw-bold"><i class="fas fa-plus-circle me-2"></i>Pemesanan Ekstra</h5>
-                    {{-- <a href="{{ route('pemesanan-ekstra.create', $pemesanan->id) }}" 
-                       class="btn btn-sm btn-primary px-3 py-2">
-                        <i class="fas fa-plus me-2"></i>Tambah Ekstra
-                    </a> --}}
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped mb-0">
-                        <thead class="table-light">
-                            <tr class="align-middle">
-                                <th class="px-4 py-3" width="5%">#</th>
-                                <th class="px-4 py-3">Ekstra</th>
-                                <th class="px-4 py-3">Jumlah</th>
-                                <th class="px-4 py-3">Total Harga</th>
-                                {{-- <th class="px-4 py-3">Keterangan</th>
-                                <th class="px-4 py-3" width="20%">Aksi</th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($pemesanan->pemesananEkstras as $index => $pemesananEkstra)
-                                <tr class="align-middle">
-                                    <td class="px-4">{{ $index + 1 }}</td>
-                                    <td class="px-4">{{ $pemesananEkstra->ekstra }}</td>
-                                    <td class="px-4">{{ $pemesananEkstra->jumlah }}</td>
-                                    <td class="px-4">Rp {{ number_format($pemesananEkstra->total_harga, 2, ',', '.') }}</td>
-                                    {{-- <td class="px-4">{{ $pemesananEkstra->keterangan ?? '-' }}</td>
-                                    <td class="px-4">
-                                        <div class="d-flex gap-2">
-                                            <a href="{{ route('pemesanan-ekstra.edit', $pemesananEkstra) }}" 
-                                               class="btn btn-sm btn-outline-warning px-3 py-2" title="Edit Data">
-                                                <i class="fas fa-edit me-1"></i>Edit
-                                            </a>
-                                            <form action="{{ route('pemesanan-ekstra.destroy', $pemesananEkstra) }}" 
-                                                  method="POST" class="d-inline" 
-                                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus pemesanan ekstra ini?');">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" 
-                                                        class="btn btn-sm btn-outline-danger px-3 py-2" 
-                                                        title="Hapus Data">
-                                                    <i class="fas fa-trash me-1"></i>Hapus
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td> --}}
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center py-5 text-muted">
-                                        <i class="fas fa-info-circle fa-2x mb-3"></i>
-                                        <p class="mb-0">Tidak ada pemesanan ekstra</p>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Pembayaran Section -->
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3 pembayaran-header">
-                    <h5 class="mb-0 fw-bold"><i class="fas fa-credit-card me-2"></i>Pembayaran</h5>
-                    <a href="{{ route('pembayaran.create', $pemesanan->id) }}" 
-                       class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Tambah Pembayaran
-                    </a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped mb-0">
-                        <thead class="table-light">
-                            <tr class="align-middle">
-                                <th class="px-4 py-3" width="5%">#</th>
-                                <th class="px-4 py-3">Jumlah Pembayaran</th>
-                                <th class="px-4 py-3">Metode Pembayaran</th>
-                                <th class="px-4 py-3">Tanggal Pembayaran</th>
-                                <th class="px-4 py-3">Bukti Pembayaran</th>
-                                <th class="px-4 py-3">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($pemesanan->pembayarans->count() > 0)
-                                @foreach ($pemesanan->pembayarans as $pembayaran)
-                                    <tr class="align-middle">
-                                        <td class="px-4">{{ $loop->iteration }}</td>
-                                        <td class="px-4">Rp {{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}</td>
-                                        <td class="px-4">{{ $pembayaran->metode_pembayaran }}</td>
-                                        <td class="px-4">{{ Carbon::parse($pembayaran->tanggal_pembayaran)->format('d/m/Y') }}</td>
-                                        <td class="px-4">
-                                            <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" 
-                                               class="btn btn-sm btn-outline-info px-3 py-2" target="_blank">
-                                                <i class="fas fa-file me-1"></i>Lihat Bukti
-                                            </a>
-                                        </td>
-                                        <td class="px-4">
-                                            @if($pembayaran->status_pembayaran == 'diterima')
-                                                <span class="badge bg-success text-white px-3 py-2">
-                                                    <i class="fas fa-check-circle me-1"></i>Diterima
-                                                </span>
-                                            @elseif($pembayaran->status_pembayaran == 'ditolak')
-                                                <span class="badge bg-danger text-white px-3 py-2">
-                                                    <i class="fas fa-times-circle me-1"></i>Ditolak
-                                                </span>
-                                            @else
-                                                <span class="badge bg-warning text-dark px-3 py-2">
-                                                    <i class="fas fa-clock me-1"></i>Tertunda
-                                                </span>
-                                            @endif
-                                        </td>
+                    <div class="mt-8">
+                        <h5 class="font-display mb-3 flex items-center gap-2 font-semibold text-maroon-900">
+                            <i class="bx bx-plus-circle"></i> Pemesanan Ekstra
+                        </h5>
+                        <div class="overflow-x-auto rounded-xl border border-cream-200">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                                    <tr>
+                                        <th class="px-4 py-3">#</th>
+                                        <th class="px-4 py-3">Ekstra</th>
+                                        <th class="px-4 py-3">Jumlah</th>
+                                        <th class="px-4 py-3">Total Harga</th>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="6" class="text-center py-5 text-muted">
-                                        <i class="fas fa-info-circle fa-2x mb-3"></i>
-                                        <p class="mb-0">Belum ada riwayat pembayaran</p>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                </thead>
+                                <tbody class="divide-y divide-cream-200">
+                                    @forelse ($pemesanan->pemesananEkstras as $index => $pemesananEkstra)
+                                        <tr>
+                                            <td class="px-4 py-3">{{ $index + 1 }}</td>
+                                            <td class="px-4 py-3">{{ $pemesananEkstra->ekstra }}</td>
+                                            <td class="px-4 py-3">{{ $pemesananEkstra->jumlah }}</td>
+                                            <td class="px-4 py-3">Rp {{ number_format($pemesananEkstra->total_harga, 2, ',', '.') }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="px-4 py-10 text-center text-stone-500">
+                                                <i class="bx bx-info-circle text-2xl"></i>
+                                                <p class="mt-1">Tidak ada pemesanan ekstra</p>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-            <!-- Status Info -->
-            <div class="alert alert-info mt-4 shadow-sm">
-                <div class="d-flex align-items-start">
-                    <i class="fas fa-info-circle me-2 mt-1 fa-lg"></i>
-                    <div>
-                        <h6 class="alert-heading mb-2 fw-semibold">Status Pembayaran</h6>
-                        <ul class="mb-0 small">
+                    <div class="mt-8">
+                        <div class="mb-3 flex items-center justify-between">
+                            <h5 class="font-display flex items-center gap-2 font-semibold text-maroon-900">
+                                <i class="bx bx-credit-card"></i> Pembayaran
+                            </h5>
+                            <x-button :href="route('pembayaran.create', $pemesanan->id)">
+                                <i class="bx bx-plus"></i> Tambah Pembayaran
+                            </x-button>
+                        </div>
+                        <div class="overflow-x-auto rounded-xl border border-cream-200">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                                    <tr>
+                                        <th class="px-4 py-3">#</th>
+                                        <th class="px-4 py-3">Jumlah</th>
+                                        <th class="px-4 py-3">Metode</th>
+                                        <th class="px-4 py-3">Tanggal</th>
+                                        <th class="px-4 py-3">Bukti</th>
+                                        <th class="px-4 py-3">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-cream-200">
+                                    @if ($pemesanan->pembayarans->count() > 0)
+                                        @foreach ($pemesanan->pembayarans as $pembayaran)
+                                            <tr>
+                                                <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                                                <td class="px-4 py-3">Rp {{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}</td>
+                                                <td class="px-4 py-3">{{ $pembayaran->metode_pembayaran }}</td>
+                                                <td class="px-4 py-3">{{ Carbon::parse($pembayaran->tanggal_pembayaran)->format('d/m/Y') }}</td>
+                                                <td class="px-4 py-3">
+                                                    <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" target="_blank"
+                                                        class="inline-flex items-center gap-1 rounded-lg border border-cream-300 px-2.5 py-1 text-xs font-medium text-stone-700 hover:bg-cream-100">
+                                                        <i class="bx bx-file"></i> Lihat Bukti
+                                                    </a>
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    @if ($pembayaran->status_pembayaran == 'diterima')
+                                                        <x-badge variant="success">Diterima</x-badge>
+                                                    @elseif ($pembayaran->status_pembayaran == 'ditolak')
+                                                        <x-badge variant="danger">Ditolak</x-badge>
+                                                    @else
+                                                        <x-badge variant="warning">Tertunda</x-badge>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="6" class="px-4 py-10 text-center text-stone-500">
+                                                <i class="bx bx-info-circle text-2xl"></i>
+                                                <p class="mt-1">Belum ada riwayat pembayaran</p>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-800">
+                        <h4 class="mb-1.5 font-semibold"><i class="bx bx-info-circle"></i> Status Pembayaran</h4>
+                        <ul class="list-disc space-y-1 pl-5">
                             <li><strong>Tertunda:</strong> Pembayaran sedang menunggu verifikasi</li>
                             <li><strong>Diterima:</strong> Pembayaran telah diverifikasi dan diterima</li>
                             <li><strong>Ditolak:</strong> Pembayaran tidak memenuhi kriteria</li>
@@ -366,21 +232,13 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
+    </section>
 @endsection
 
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function showJemaahInfo() {
-        Swal.fire({
-            icon: 'info',
-            title: 'Informasi',
-            text: 'Data jemaah dapat diisi setelah status pemesanan Dikonfirmasi.\nHarap menunggu konfirmasi dari admin atau menghubungi admin untuk bantuan lebih lanjut.',
-            confirmButtonText: 'Mengerti'
-        });
-    }
-</script>
+    <script>
+        function showJemaahInfo() {
+            alert('Data jemaah dapat diisi setelah status pemesanan Dikonfirmasi.\nHarap menunggu konfirmasi dari admin atau menghubungi admin untuk bantuan lebih lanjut.');
+        }
+    </script>
 @endsection

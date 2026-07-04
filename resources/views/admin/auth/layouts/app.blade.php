@@ -4,23 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Haifa Nida Admin | {{ $title }}</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="icon" type="image/png" href="/assets/img/logos/logo.png">
-    <title>{{ $title }}</title>
 
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @yield('style')
 </head>
 
-<body class="flex min-h-screen items-center justify-center bg-cream-100 px-4 text-stone-800">
-    <div class="w-full max-w-md text-center">
-        <img src="/assets/img/logos/logo.png" alt="Haifa Nida Wisata" class="mx-auto mb-6 h-16 w-auto">
-        <i class="bx bx-wrench text-5xl text-maroon-700"></i>
-        <h1 class="font-display mt-3 text-xl font-semibold text-maroon-900">{{ $judul }}</h1>
-        <p class="mt-2 text-sm text-stone-500">{{ $pesan }}</p>
+<body class="min-h-screen bg-maroon-950 text-stone-800">
+    <x-alert-flash />
+
+    <div class="flex min-h-screen items-center justify-center px-4 py-10">
+        @yield('content')
     </div>
+
+    @yield('script')
 </body>
 
 </html>

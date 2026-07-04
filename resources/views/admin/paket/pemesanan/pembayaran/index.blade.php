@@ -1,87 +1,53 @@
-@extends('admin.layouts.main')
-@section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-0">{{ $title }}</h6>
-                        <div class="dropdown mb-2">
-                            <button class="btn p-0" type="button" id="tambah" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="tambah">
-                                <a class="dropdown-item d-flex align-items-center" href="/admin/pembayaran/create"><i
-                                        data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="btn btn-sm btn-haifa my-2"
-                        href="/admin/{{ $pemesanan ? 'pemesanan/' . $pemesanan->id . '/' : '' }}pembayaran/create"><i
-                            data-feather="plus" class="icon-sm me-2"></i> <span class="">Tambah</span></a>
-                    @if ($pemesanan)
-                        <a class="btn btn-sm btn-secondary my-2" href="/admin/pemesanan/{{ $pemesanan->id }}">
-                            <span class="">Kembali</span>
-                        </a>
-                    @endif
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0" id="dataTableExample">
-                            <thead>
-                                <tr>
-                                    <th class="pt-0">#</th>
-                                    <th class="pt-0">Jumlah Pembayaran</th>
-                                    <th class="pt-0">Metode Pembayaran</th>
-                                    <th class="pt-0">Tanggal Pembayaran</th>
-                                    <th class="pt-0">Bukti Pembayaran</th>
-                                    <th class="pt-0">Status Pembayran</th>
-                                    <th class="pt-0">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($pembayarans as $pembayaran)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>Rp.{{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}
-                                        </td>
-                                        <td>{{ $pembayaran->metode_pembayaran }}</td>
-                                        <td>{{ Carbon::parse($pembayaran->tanggal_pembayaran)->isoFormat('LL') }}
-                                        </td>
-                                        <td>
-                                            <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}"
-                                                class="btn btn-sm btn-link">Lihat Bukti</a>
-                                        </td>
-                                        <td>{{ $pembayaran->status_pembayaran }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center ">
-                                                <a href="/admin/pembayaran/{{ $pembayaran->id }}/edit"
-                                                    class="badge bg-success d-inline-block ms-1">Edit</a>
-                                                <form action="/admin/pembayaran/{{ $pembayaran->id }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="badge bg-danger d-inline-block ms-1 mb-1 badge-a tombol-hapus">Hapus</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+@extends('admin.layouts.app')
 
-    </div> <!-- row -->
+@section('content')
+    @php use Carbon\Carbon; @endphp
+
+    <x-page-header :title="$title">
+        <x-slot:actions>
+            <x-button :href="'/admin/' . ($pemesanan ? 'pemesanan/' . $pemesanan->id . '/' : '') . 'pembayaran/create'"><i class="bx bx-plus"></i> Tambah</x-button>
+            @if ($pemesanan)
+                <x-button variant="secondary" :href="'/admin/pemesanan/' . $pemesanan->id"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+            @endif
+        </x-slot:actions>
+    </x-page-header>
+
+    <x-data-table searchPlaceholder="Cari pembayaran...">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                <tr>
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">Jumlah Pembayaran</th>
+                    <th class="px-4 py-3">Metode Pembayaran</th>
+                    <th class="px-4 py-3">Tanggal Pembayaran</th>
+                    <th class="px-4 py-3">Bukti Pembayaran</th>
+                    <th class="px-4 py-3">Status Pembayaran</th>
+                    <th class="px-4 py-3">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-cream-200">
+                @foreach ($pembayarans as $pembayaran)
+                    <tr x-show="q === '' || $el.innerText.toLowerCase().includes(q.toLowerCase())">
+                        <td class="px-4 py-3">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-3 font-medium text-stone-800">Rp.{{ number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') }}</td>
+                        <td class="px-4 py-3">{{ $pembayaran->metode_pembayaran }}</td>
+                        <td class="px-4 py-3">{{ Carbon::parse($pembayaran->tanggal_pembayaran)->isoFormat('LL') }}</td>
+                        <td class="px-4 py-3">
+                            <a href="{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}" target="_blank" class="text-maroon-700 hover:underline">Lihat Bukti</a>
+                        </td>
+                        <td class="px-4 py-3">
+                            <x-badge :variant="$pembayaran->status_pembayaran == 'diterima' ? 'success' : ($pembayaran->status_pembayaran == 'ditolak' ? 'danger' : 'warning')">{{ $pembayaran->status_pembayaran }}</x-badge>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center gap-2">
+                                <a href="/admin/pembayaran/{{ $pembayaran->id }}" class="rounded-md bg-maroon-50 px-2.5 py-1 text-xs font-medium text-maroon-700 hover:bg-maroon-100">Detail</a>
+                                <a href="/admin/pembayaran/{{ $pembayaran->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                <x-delete-form :action="'/admin/pembayaran/' . $pembayaran->id" />
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </x-data-table>
 @endsection

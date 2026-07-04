@@ -1,146 +1,87 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/pembayaran/add-pembayaran.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-    <div class="container py-4 mb-5">
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+    <section class="py-10">
+        <div class="mx-auto max-w-4xl px-4">
+            @if (session('error'))
+                <div class="mb-6 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ session('error') }}</div>
+            @endif
+            @if (session('success'))
+                <div class="mb-6 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('success') }}</div>
+            @endif
 
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-8 text-center">
-                <h2 class="fw-bold mb-0 text-primary">Tambah Pembayaran</h2>
-                <p class="text-muted">Silakan isi informasi pembayaran dengan benar</p>
+            <div class="mb-8 text-center">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">Tambah Pembayaran</h2>
+                <p class="mt-1 text-sm text-stone-500">Silakan isi informasi pembayaran dengan benar</p>
             </div>
+
+            <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="pemesanan_id" value="{{ $pemesanan->id }}">
+
+                <x-card>
+                    <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                        <i class="bx bx-credit-card"></i> Data Pembayaran
+                    </h3>
+
+                    <x-form-input label="Jumlah Pembayaran" name="jumlah_pembayaran" type="number" required placeholder="Masukkan jumlah pembayaran" />
+
+                    <div class="mb-4">
+                        <label for="metode_pembayaran" class="mb-1.5 block text-sm font-medium text-stone-700">Metode Pembayaran <span class="text-maroon-700">*</span></label>
+                        <select id="metode_pembayaran" name="metode_pembayaran" required
+                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                            <option value="" selected disabled>Pilih Metode Pembayaran</option>
+                            <option value="QRIS" @selected(old('metode_pembayaran') == 'QRIS')>QRIS</option>
+                            <option value="Transfer Bank" @selected(old('metode_pembayaran') == 'Transfer Bank')>Transfer Bank</option>
+                            <option value="Cash" @selected(old('metode_pembayaran') == 'Cash')>Cash / Tunai</option>
+                        </select>
+                        @error('metode_pembayaran')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <x-form-input label="Tanggal Pembayaran" name="tanggal_pembayaran" type="date" required />
+
+                    <div class="mb-4">
+                        <label for="bukti_pembayaran" class="mb-1.5 block text-sm font-medium text-stone-700">Bukti Pembayaran <span class="text-maroon-700">*</span></label>
+                        <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" required
+                            class="block w-full text-sm text-stone-600 file:mr-3 file:rounded-lg file:border-0 file:bg-maroon-100 file:px-3 file:py-2 file:text-xs file:font-medium file:text-maroon-800 hover:file:bg-maroon-200">
+                        @error('bukti_pembayaran')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <x-form-textarea label="Keterangan / Catatan" name="keterangan" :rows="3" placeholder="Masukkan keterangan atau catatan tambahan (opsional)" />
+
+                    <div class="grid gap-8 border-t border-cream-200 pt-6 md:grid-cols-2">
+                        <div>
+                            <h3 class="font-display mb-2 text-base font-semibold text-maroon-900">Informasi No. Rekening</h3>
+                            <div class="space-y-2 text-sm text-stone-600">
+                                <p><span class="font-medium text-stone-800">Bank Mandiri</span><br>1320014831409 a/n Haifa Nida Wisata Karawang</p>
+                                <p><span class="font-medium text-stone-800">Bank BCA</span><br>1092826656 a/n Haifa Nida Wisata Karawang</p>
+                                <p><span class="font-medium text-stone-800">Bank BJB</span><br>0000410697000 a/n Haifa nida wisata karawang, PT</p>
+                                <p><span class="font-medium text-stone-800">Bank CIMB Niaga</span><br>860018161900 a/n Haifa Nida Wisata Karawang</p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="font-display mb-2 text-base font-semibold text-maroon-900">Informasi QRIS</h3>
+                            <img class="mx-auto mb-2 w-1/2" src="{{ asset('assets/img/logos/Logo_QRIS.svg.png') }}" alt="QRIS">
+                            <p class="text-sm font-medium text-stone-800">HAIFA NIDA WISATA</p>
+                            <p class="text-xs text-stone-500">NMID: ID1024345420797</p>
+                            <img class="mx-auto mt-2 w-1/2" src="{{ asset('assets/img/logos/haifa_nida_wisata_qris_regenerated.png') }}" alt="QRIS Code">
+                        </div>
+                    </div>
+                </x-card>
+
+                <div class="mt-6 flex items-center justify-between">
+                    <x-button variant="secondary" :href="route('pemesanan.detail', $pemesanan->id)">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
+                    <x-button type="submit">
+                        <i class="bx bx-save"></i> Simpan Data
+                    </x-button>
+                </div>
+            </form>
         </div>
-
-        <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="hidden" name="pemesanan_id" value="{{ $pemesanan->id }}">
-
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card shadow-sm border-0 rounded-3">
-                        <div class="card-header bg-gradient-primary text-white py-2">
-                            <h5 class="mb-0">
-                                <i class="fas fa-money-check-alt me-2"></i>
-                                Data Pembayaran
-                            </h5>
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="mb-3">
-                                <label for="jumlah_pembayaran" class="form-label fw-semibold">Jumlah Pembayaran <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control @error('jumlah_pembayaran') is-invalid @enderror"
-                                       id="jumlah_pembayaran" name="jumlah_pembayaran"
-                                       value="{{ old('jumlah_pembayaran') }}"
-                                       required placeholder="Masukkan jumlah pembayaran">
-                                @error('jumlah_pembayaran')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="metode_pembayaran" class="form-label fw-semibold">Metode Pembayaran <span class="text-danger">*</span></label>
-                                <select class="form-select @error('metode_pembayaran') is-invalid @enderror"
-                                        id="metode_pembayaran" name="metode_pembayaran" required>
-                                    <option value="" selected disabled>Pilih Metode Pembayaran</option>
-                                    <option value="QRIS" @selected(old('metode_pembayaran') == 'QRIS')>QRIS</option>
-                                    <option value="Transfer Bank" @selected(old('metode_pembayaran') == 'Transfer Bank')>Transfer Bank</option>
-                                    <option value="Cash" @selected(old('metode_pembayaran') == 'Cash')>Cash / Tunai</option>
-                                    {{-- <option value="Kartu Kredit" @selected(old('metode_pembayaran') == 'Kartu Kredit')>Kartu Kredit</option>
-                                    <option value="Kartu Debit" @selected(old('metode_pembayaran') == 'Kartu Debit')>Kartu Debit</option> --}}
-                                </select>
-                                @error('metode_pembayaran')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="tanggal_pembayaran" class="form-label fw-semibold">Tanggal Pembayaran <span class="text-danger">*</span></label>
-                                <input type="date" class="form-control @error('tanggal_pembayaran') is-invalid @enderror"
-                                       id="tanggal_pembayaran" name="tanggal_pembayaran"
-                                       value="{{ old('tanggal_pembayaran') }}"
-                                       required>
-                                @error('tanggal_pembayaran')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="bukti_pembayaran" class="form-label fw-semibold">Bukti Pembayaran <span class="text-danger">*</span></label>
-                                <input type="file" class="form-control @error('bukti_pembayaran') is-invalid @enderror"
-                                       id="bukti_pembayaran" name="bukti_pembayaran"
-                                       required>
-                                @error('bukti_pembayaran')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="keterangan" class="form-label fw-semibold">Keterangan / Catatan</label>
-                                <textarea class="form-control @error('keterangan') is-invalid @enderror"
-                                          id="keterangan" name="keterangan" rows="3"
-                                          placeholder="Masukkan keterangan atau catatan tambahan (opsional)">{{ old('keterangan') }}</textarea>
-                                @error('keterangan')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mt-4 mt-md-0">
-                                    <h3>Informasi No. Rekening:</h3>
-                                    <h6>Bank Mandiri</h6>
-                                    <span class="">1320014831409 a/n Haifa Nida Wisata Karawang</span>
-                                    <h6>Bank BCA</h6>
-                                    <span class="">1092826656 a/n Haifa Nida Wisata Karawang</span>
-                                    <h6>Bank BJB</h6>
-                                    <span class="">0000410697000 a/n Haifa nida wisata karawang, PT</span>
-                                    <h6>Bank CIMB Niaga</h6>
-                                    <span class="">860018161900 a/n Haifa Nida Wisata Karawang</span>
-                                </div>
-                                <div class="col-md-5 mt-4 mt-md-0 ms-auto">
-                                    <h3>Informasi QRIS:</h3>
-                                    <div class="text-center pe-5">
-                                        <img class="mb-3 w-50" src="{{ asset('assets/img/logos/Logo_QRIS.svg.png') }}" alt="">
-                                        <h6>HAIFA NIDA WISATA</h6>
-                                        <span class="">NMID: ID1024345420797</span>
-                                        <h6>A01</h6>
-                                        <img class="w-50" src="{{ asset('assets/img/logos/haifa_nida_wisata_qris_regenerated.png') }}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row justify-content-center mt-3">
-                <div class="col-md-8 d-flex justify-content-between">
-                    <a href="{{ route('pemesanan.detail', $pemesanan->id) }}"
-                       class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-1"></i> Kembali
-                    </a>
-                    <div>
-                        {{-- <button type="reset" class="btn btn-light me-2">
-                            <i class="fas fa-redo me-1"></i> Reset
-                        </button> --}}
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-1"></i> Simpan Data
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+    </section>
 @endsection

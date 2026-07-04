@@ -1,112 +1,48 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.app')
+
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-            {{-- <h4 class="mb-3 mb-md-0">{{ $title }}</h4> --}}
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-xl-12 stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <h6 class="card-title mb-2">{{ $title }}</h6>
-                    </div>
-                    <form action="/admin/maskapai/{{ $maskapai->id }}" method="post" enctype="multipart/form-data">
-                        @method('put')
-                        @csrf
-                        <input type="hidden" name="id" id="id" value="{{ $maskapai->id }}">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="kode_maskapai" class="form-label">Kode Maskapai</label>
-                                    <input type="text" class="form-control  @error('kode_maskapai') is-invalid @enderror"
-                                        id="kode_maskapai" name="kode_maskapai"
-                                        value="{{ old('kode_maskapai', $maskapai->kode_maskapai) }}"
-                                        placeholder="Kode Maskapai">
-                                    @error('kode_maskapai')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nama_maskapai" class="form-label">Nama Maskapai</label>
-                                    <input type="text" class="form-control  @error('nama_maskapai') is-invalid @enderror"
-                                        id="nama_maskapai" name="nama_maskapai"
-                                        value="{{ old('nama_maskapai', $maskapai->nama_maskapai) }}"
-                                        placeholder="Nama Maskapai">
-                                    @error('nama_maskapai')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="negara_asal" class="form-label">Negara Asal</label>
-                                    <input type="text" class="form-control  @error('negara_asal') is-invalid @enderror"
-                                        id="negara_asal" name="negara_asal"
-                                        value="{{ old('negara_asal', $maskapai->negara_asal) }}" placeholder="Negara Asal">
-                                    @error('negara_asal')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="deskripsi" class="form-label">Deskripsi</label>
-                                    <textarea class="form-control  @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi"
-                                        placeholder="Deskripsi">{{ old('deskripsi', $maskapai->deskripsi) }}</textarea>
-                                    @error('deskripsi')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="logo" class="form-label">Logo</label>
-                                    <input type="file" class="form-control  @error('logo') is-invalid @enderror"
-                                        id="logo" name="logo" value="{{ old('logo', $maskapai->logo) }}"
-                                        placeholder="Logo">
-                                    @error('logo')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-haifa float-end m-2">Simpan</button>
-                                <a href="/admin/maskapai" class="btn btn-secondary float-end m-2">Kembali</a>
-                            </div>
-                            <div class="col-lg-4">
-                                <img src="{{ asset('storage/' . $maskapai->logo) }}" alt=""
-                                    class="img-thumbnail img-fluid img-preview">
-                            </div>
-                        </div>
-                    </form>
+    <x-page-header :title="$title" />
+
+    <div class="grid gap-6 lg:grid-cols-3">
+        <x-card class="lg:col-span-2">
+            <form action="/admin/maskapai/{{ $maskapai->id }}" method="post" enctype="multipart/form-data">
+                @method('put')
+                @csrf
+                <x-form-input label="Kode Maskapai" name="kode_maskapai" :value="old('kode_maskapai', $maskapai->kode_maskapai)" placeholder="Kode Maskapai" />
+                <x-form-input label="Nama Maskapai" name="nama_maskapai" :value="old('nama_maskapai', $maskapai->nama_maskapai)" placeholder="Nama Maskapai" />
+                <x-form-input label="Negara Asal" name="negara_asal" :value="old('negara_asal', $maskapai->negara_asal)" placeholder="Negara Asal" />
+                <x-form-textarea label="Deskripsi" name="deskripsi" :value="old('deskripsi', $maskapai->deskripsi)" placeholder="Deskripsi" />
+
+                <div class="mb-4">
+                    <label for="logo" class="mb-1.5 block text-sm font-medium text-stone-700">Logo</label>
+                    <input type="file" id="logo" name="logo"
+                        class="block w-full text-sm text-stone-600 file:mr-3 file:rounded-lg file:border-0 file:bg-maroon-100 file:px-3 file:py-2 file:text-xs file:font-medium file:text-maroon-800 hover:file:bg-maroon-200">
+                    @error('logo')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
-            </div>
-        </div>
-    </div> <!-- row -->
+
+                <div class="flex justify-end gap-2">
+                    <x-button variant="secondary" href="/admin/maskapai">Kembali</x-button>
+                    <x-button type="submit">Simpan</x-button>
+                </div>
+            </form>
+        </x-card>
+
+        <x-card title="Pratinjau Logo">
+            <img src="{{ $maskapai->logo ? asset('storage/' . $maskapai->logo) : '' }}" alt="" class="img-preview aspect-4/3 w-full rounded-lg object-contain">
+        </x-card>
+    </div>
 @endsection
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            $('#logo').on('change', function() {
-                const file = $(this).prop('files')[0];
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('.img-preview').attr('src', e.target.result);
-                };
-
-                reader.readAsDataURL(file);
-            });
+        document.getElementById('logo').addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => document.querySelector('.img-preview').src = e.target.result;
+            reader.readAsDataURL(file);
         });
     </script>
 @endsection

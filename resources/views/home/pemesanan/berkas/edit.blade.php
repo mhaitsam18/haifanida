@@ -1,133 +1,93 @@
-@extends('layouts.main')
-
-@section('style')
-    <link rel="stylesheet" href="{{ asset('assets/css/berkas/edit-berkas.css') }}">
-@endsection
+@extends('layouts.app')
 
 @section('content')
-@php
-    use Carbon\Carbon;
-@endphp
+    @php
+        use Carbon\Carbon;
+        use Illuminate\Support\Str;
+    @endphp
 
-<div class="container py-5">
-    <!-- Header Section -->
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-8">
-            <h2 class="fw-bold text-primary mb-2">Edit Berkas Jemaah</h2>
-            <h5 class="fw-bold" style="color: #4e73df;">{{ $jemaah->nama_lengkap }}</h5>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" 
-               class="btn btn-outline-secondary px-4 py-2">
-                <i class="fas fa-arrow-left me-2"></i> Kembali
-            </a>
-        </div>
-    </div>
+    <section class="py-10">
+        <div class="mx-auto max-w-4xl px-4">
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h2 class="font-display text-2xl font-semibold text-maroon-900">Edit Berkas Jemaah</h2>
+                    <p class="mt-1 font-medium text-maroon-700">{{ $jemaah->nama_lengkap }}</p>
+                </div>
+                <x-button variant="secondary" :href="route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id])">
+                    <i class="bx bx-arrow-back"></i> Kembali
+                </x-button>
+            </div>
 
-    <!-- Error Alert -->
-    @if($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+            @if ($errors->any())
+                <div class="mb-6 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    <!-- Card Container -->
-    <div class="card shadow border-0">
-        <div class="card-header bg-light border-0 py-3">
-            <h4 class="mb-0 text-secondary fw-semibold">Edit Berkas: {{ $berkasJemaah->berkas->nama_berkas }}</h4>
-        </div>
-        <div class="card-body">
-            <form action="{{ route('pemesanan.jemaah.berkas.update', [$pemesanan->id, $jemaah->id, $berkasJemaah->id]) }}" 
-                  method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                
-                <div class="row">
-                    <div class="col-lg-6">
-                        <!-- Nama Berkas (Read Only) -->
-                        <div class="mb-3">
-                            <label for="nama_berkas" class="form-label">Nama Berkas</label>
-                            <input type="text" class="form-control" id="nama_berkas" 
-                                   value="{{ $berkasJemaah->berkas->nama_berkas }}" readonly>
-                        </div>
+            <x-card :title="'Edit Berkas: ' . $berkasJemaah->berkas->nama_berkas">
+                <form action="{{ route('pemesanan.jemaah.berkas.update', [$pemesanan->id, $jemaah->id, $berkasJemaah->id]) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
-                        <!-- File Upload -->
-                        <div class="mb-3">
-                            <label for="file_path" class="form-label">File Berkas<span class="text-danger">*</span></label>
-                            <input type="file" class="form-control @error('file_path') is-invalid @enderror" 
-                                   id="file_path" name="file_path" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx">
-                            <div class="form-text">
-                                Format yang diizinkan: JPG, JPEG, PNG, GIF, PDF, DOC, DOCX. Maksimal 3MB.
+                    <div class="grid gap-6 lg:grid-cols-2">
+                        <div>
+                            <x-form-input label="Nama Berkas" name="nama_berkas" :value="$berkasJemaah->berkas->nama_berkas" readonly disabled />
+
+                            <div class="mb-4">
+                                <label for="file_path" class="mb-1.5 block text-sm font-medium text-stone-700">File Berkas <span class="text-maroon-700">*</span></label>
+                                <input type="file" id="file_path" name="file_path" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx"
+                                    class="block w-full text-sm text-stone-600 file:mr-3 file:rounded-lg file:border-0 file:bg-maroon-100 file:px-3 file:py-2 file:text-xs file:font-medium file:text-maroon-800 hover:file:bg-maroon-200">
+                                <p class="mt-1 text-xs text-stone-500">Format yang diizinkan: JPG, JPEG, PNG, GIF, PDF, DOC, DOCX. Maksimal 3MB.</p>
+                                @error('file_path')
+                                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
-                            @error('file_path')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+
+                            <div class="flex justify-end gap-2">
+                                <x-button variant="secondary" :href="route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id])">
+                                    <i class="bx bx-x"></i> Batal
+                                </x-button>
+                                <x-button type="submit">
+                                    <i class="bx bx-save"></i> Simpan Perubahan
+                                </x-button>
+                            </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="d-flex gap-2 justify-content-end">
-                            <a href="{{ route('pemesanan.jemaah.berkas', [$pemesanan->id, $jemaah->id]) }}" 
-                               class="btn btn-outline-secondary px-3 py-2">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                            <button type="submit" class="btn btn-primary px-3 py-2">
-                                <i class="fas fa-save me-1"></i> Simpan Perubahan
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <!-- Current File Preview -->
-                        <div class="mb-3">
-                            <label class="form-label">File Saat Ini</label>
-                            @if($berkasJemaah->file_path)
+                        <div>
+                            <label class="mb-1.5 block text-sm font-medium text-stone-700">File Saat Ini</label>
+                            @if ($berkasJemaah->file_path)
                                 @php
                                     $fileExtension = pathinfo($berkasJemaah->file_path, PATHINFO_EXTENSION);
                                     $fileName = basename($berkasJemaah->file_path);
                                 @endphp
-                                <div class="border rounded p-3 bg-light">
-                                    <div class="d-flex align-items-center mb-3">
-                                        @if(strtolower($fileExtension) == 'pdf')
-                                            <i class="fas fa-file-pdf text-danger me-2 fa-2x"></i>
-                                        @elseif(in_array(strtolower($fileExtension), ['doc', 'docx']))
-                                            <i class="fas fa-file-word text-primary me-2 fa-2x"></i>
-                                        @else
-                                            <i class="fas fa-file text-secondary me-2 fa-2x"></i>
-                                        @endif
-                                        <div>
-                                            <div class="small fw-semibold">{{ strtoupper($fileExtension) }} File</div>
-                                            <div class="small text-muted">{{ substr($fileName, 0, 20) }}...</div>
+                                <div class="rounded-xl border border-cream-200 bg-cream-100 p-4 text-center">
+                                    <div class="mb-3 flex items-center justify-center gap-2">
+                                        <i class="bx {{ strtolower($fileExtension) == 'pdf' ? 'bxs-file-pdf text-red-600' : 'bxs-file text-stone-500' }} text-2xl"></i>
+                                        <div class="text-left">
+                                            <div class="text-xs font-semibold">{{ strtoupper($fileExtension) }} File</div>
+                                            <div class="text-xs text-stone-500">{{ Str::limit($fileName, 20) }}</div>
                                         </div>
                                     </div>
-                                    <div class="text-center">
-                                        <a href="{{ route('pemesanan.jemaah.berkas.preview', [$pemesanan->id, $jemaah->id, $berkasJemaah->id]) }}" 
-                                           target="_blank" class="btn btn-sm btn-outline-primary px-3 py-2">
-                                            <i class="fas fa-eye me-1"></i> Lihat
-                                        </a>
-                                    </div>
-                                    <div class="mt-2 text-center">
-                                        <small class="text-muted">
-                                            Diupload: {{ Carbon::parse($berkasJemaah->updated_at)->format('d/m/Y H:i') }}
-                                        </small>
-                                    </div>
+                                    <a href="{{ route('pemesanan.jemaah.berkas.preview', [$pemesanan->id, $jemaah->id, $berkasJemaah->id]) }}" target="_blank"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-cream-300 bg-cream-50 px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-cream-200">
+                                        <i class="bx bx-show"></i> Lihat
+                                    </a>
+                                    <p class="mt-2 text-xs text-stone-500">Diupload: {{ Carbon::parse($berkasJemaah->updated_at)->format('d/m/Y H:i') }}</p>
                                 </div>
                             @else
-                                <div class="border rounded p-3 bg-light text-center">
-                                    <i class="fas fa-file-slash fa-3x text-muted mb-2"></i>
-                                    <p class="text-muted mb-0">Tidak ada file</p>
+                                <div class="rounded-xl border border-cream-200 bg-cream-100 p-6 text-center text-stone-500">
+                                    <i class="bx bx-file-blank text-3xl"></i>
+                                    <p class="mt-1 text-sm">Tidak ada file</p>
                                 </div>
                             @endif
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </x-card>
         </div>
-    </div>
-</div>
-
+    </section>
 @endsection

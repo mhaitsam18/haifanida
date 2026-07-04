@@ -1,175 +1,133 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
-<div class="container py-4 mb-5">
-    <div class="row justify-content-center mb-3">
-        <div class="col-md-8 text-center">
-            <h2 class="fw-bold mb-0 text-primary">Tambah Pemesanan Ekstra</h2>
-            <p class="text-muted">Silakan pilih layanan tambahan yang diinginkan</p>
-        </div>
-    </div>
-
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <form action="{{ route('pemesanan-ekstra.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="pemesanan_id" id="pemesanan_id" value="{{ $pemesanan_id }}">
-
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-header bg-gradient-primary text-white py-2">
-                        <h5 class="mb-0">
-                            <i class="fas fa-concierge-bell me-2"></i>Data Pemesanan Ekstra
-                        </h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="mb-3">
-                            <label for="jenis_ekstra" class="form-label fw-semibold">Ekstra / Tambahan <span class="text-danger">*</span></label>
-                            <select class="form-select @error('jenis_ekstra') is-invalid @enderror" id="jenis_ekstra" name="jenis_ekstra" required>
-                                <option selected disabled value="">Pilih Jenis Ekstra</option>
-                                @foreach ($ekstras as $ekstra)
-                                    <option value="{{ $ekstra->id }}"
-                                        data-harga="{{ $ekstra->harga_default }}"
-                                        data-keterangan="{{ $ekstra->keterangan ?? $ekstra->deskripsi ?? '' }}"
-                                        data-nama="{{ $ekstra->nama_ekstra }}"
-                                        @selected($ekstra->id == old('jenis_ekstra'))>
-                                        {{ $ekstra->nama_ekstra }} | Rp {{ number_format($ekstra->harga_default, 0, ',', '.') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('jenis_ekstra')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            @if($ekstras->isEmpty())
-                                <div class="alert alert-warning mt-2">Tidak ada layanan ekstra tersedia.</div>
-                            @endif
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="harga_satuan" class="form-label fw-semibold">Harga Satuan</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-tags"></i></span>
-                                <input type="text" class="form-control" id="harga_satuan" readonly>
-                                <input type="hidden" name="harga_satuan" id="harga_satuan_hidden">
-                            </div>
-                            <small class="text-muted">Harga per unit layanan</small>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jumlah" class="form-label fw-semibold">Jumlah <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah" name="jumlah" min="1" value="{{ old('jumlah', 1) }}" required>
-                            </div>
-                            <small id="keterangan_description" class="text-muted"></small>
-                            @error('jumlah')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="total_harga" class="form-label fw-semibold">Total Harga <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
-                                <input type="text" class="form-control" id="total_harga" readonly>
-                                <input type="hidden" name="total_harga" id="total_harga_hidden" required>
-                            </div>
-                            @error('total_harga')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="keterangan" class="form-label fw-semibold">Keterangan / Catatan</label>
-                            <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan" rows="3" placeholder="Masukkan keterangan atau catatan tambahan (opsional)">{{ old('keterangan') }}</textarea>
-                            @error('keterangan')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
+    <section class="py-10">
+        <div class="mx-auto max-w-2xl px-4">
+            <div class="mb-8 text-center">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">Tambah Pemesanan Ekstra</h2>
+                <p class="mt-1 text-sm text-stone-500">Silakan pilih layanan tambahan yang diinginkan</p>
             </div>
-        </div>
 
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-8 d-flex justify-content-between">
-                <a href="{{ route('pemesanan.detail', $pemesanan_id) }}" class="btn btn-outline-secondary px-4 py-2">
-    <i class="fas fa-arrow-left me-2"></i> Kembali
-</a>
-                <div>
-                    {{-- <button type="reset" class="btn btn-light me-2" onclick="resetForm()">
-                        <i class="fas fa-redo me-1"></i>Reset
-                    </button> --}}
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-1"></i>Simpan Data
-                    </button>
+            @if (session('error'))
+                <div class="mb-6 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ session('error') }}</div>
+            @endif
+            @if (session('success'))
+                <div class="mb-6 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('success') }}</div>
+            @endif
+
+            <form action="{{ route('pemesanan-ekstra.store.pemesanan-id') }}" method="POST">
+                @csrf
+                <input type="hidden" name="pemesanan_id" id="pemesanan_id" value="{{ $pemesanan_id }}">
+
+                <x-card>
+                    <h3 class="font-display mb-4 flex items-center gap-2 text-lg font-semibold text-maroon-900">
+                        <i class="bx bx-bell"></i> Data Pemesanan Ekstra
+                    </h3>
+
+                    <div class="mb-4">
+                        <label for="jenis_ekstra" class="mb-1.5 block text-sm font-medium text-stone-700">Ekstra / Tambahan <span class="text-maroon-700">*</span></label>
+                        <select id="jenis_ekstra" name="jenis_ekstra" required
+                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                            <option selected disabled value="">Pilih Jenis Ekstra</option>
+                            @foreach ($ekstras as $ekstra)
+                                <option value="{{ $ekstra->id }}"
+                                    data-harga="{{ $ekstra->harga_default }}"
+                                    data-keterangan="{{ $ekstra->keterangan ?? $ekstra->deskripsi ?? '' }}"
+                                    @selected($ekstra->id == old('jenis_ekstra'))>
+                                    {{ $ekstra->nama_ekstra }} | Rp {{ number_format($ekstra->harga_default, 0, ',', '.') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('jenis_ekstra')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                        @if ($ekstras->isEmpty())
+                            <p class="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">Tidak ada layanan ekstra tersedia.</p>
+                        @endif
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="harga_satuan" class="mb-1.5 block text-sm font-medium text-stone-700">Harga Satuan</label>
+                        <input type="text" id="harga_satuan" readonly
+                            class="w-full rounded-lg border border-cream-300 bg-cream-100 px-3 py-2 text-sm text-stone-600">
+                        <input type="hidden" name="harga_satuan" id="harga_satuan_hidden">
+                        <p class="mt-1 text-xs text-stone-500">Harga per unit layanan</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="jumlah" class="mb-1.5 block text-sm font-medium text-stone-700">Jumlah <span class="text-maroon-700">*</span></label>
+                        <input type="number" id="jumlah" name="jumlah" min="1" value="{{ old('jumlah', 1) }}" required
+                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                        <p id="keterangan_description" class="mt-1 text-xs text-stone-500"></p>
+                        @error('jumlah')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="total_harga" class="mb-1.5 block text-sm font-medium text-stone-700">Total Harga <span class="text-maroon-700">*</span></label>
+                        <input type="text" id="total_harga" readonly
+                            class="w-full rounded-lg border border-cream-300 bg-cream-100 px-3 py-2 text-sm text-stone-600">
+                        <input type="hidden" name="total_harga" id="total_harga_hidden" required>
+                        @error('total_harga')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <x-form-textarea label="Keterangan / Catatan" name="keterangan" :rows="3" placeholder="Masukkan keterangan atau catatan tambahan (opsional)" />
+                </x-card>
+
+                <div class="mt-6 flex items-center justify-between">
+                    <x-button variant="secondary" :href="route('pemesanan.detail', $pemesanan_id)">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
+                    <x-button type="submit">
+                        <i class="bx bx-save"></i> Simpan Data
+                    </x-button>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
-</div>
+    </section>
 @endsection
 
 @section('script')
-<script>
-    $(document).ready(function() {
-        // Function to update unit price, description, and total price
-        function updatePriceAndDescription() {
-            var selectedEkstra = $("#jenis_ekstra option:selected");
-            var numberOfItems = $("#jumlah").val();
-            var hargaSatuan = parseFloat(selectedEkstra.data("harga"));
-            var keterangan = selectedEkstra.data("keterangan");
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const jenisEkstra = document.getElementById('jenis_ekstra');
+            const jumlah = document.getElementById('jumlah');
 
-            // Update unit price, description, and hidden fields
-            if (selectedEkstra.val() !== "") {
-                $("#harga_satuan").val(hargaSatuan ? "Rp " + hargaSatuan.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : "");
-                $("#harga_satuan_hidden").val(hargaSatuan || "");
-                $("#keterangan_description").text(keterangan || "");
-            } else {
-                $("#harga_satuan").val("");
-                $("#harga_satuan_hidden").val("");
-                $("#keterangan_description").text("");
-                $("#total_harga").val("");
-                $("#total_harga_hidden").val("");
-                return;
+            function updatePriceAndDescription() {
+                const selectedOption = jenisEkstra.options[jenisEkstra.selectedIndex];
+                const hargaSatuan = parseFloat(selectedOption?.getAttribute('data-harga'));
+                const keterangan = selectedOption?.getAttribute('data-keterangan');
+
+                if (jenisEkstra.value !== '') {
+                    document.getElementById('harga_satuan').value = hargaSatuan ? 'Rp ' + hargaSatuan.toLocaleString('id-ID') : '';
+                    document.getElementById('harga_satuan_hidden').value = hargaSatuan || '';
+                    document.getElementById('keterangan_description').textContent = keterangan || '';
+                } else {
+                    document.getElementById('harga_satuan').value = '';
+                    document.getElementById('harga_satuan_hidden').value = '';
+                    document.getElementById('keterangan_description').textContent = '';
+                    document.getElementById('total_harga').value = '';
+                    document.getElementById('total_harga_hidden').value = '';
+                    return;
+                }
+
+                const numberOfItems = parseInt(jumlah.value, 10);
+                if (numberOfItems > 0) {
+                    const totalPrice = hargaSatuan * numberOfItems;
+                    document.getElementById('total_harga').value = totalPrice ? 'Rp ' + totalPrice.toLocaleString('id-ID') : '';
+                    document.getElementById('total_harga_hidden').value = totalPrice || '';
+                } else {
+                    document.getElementById('total_harga').value = '';
+                    document.getElementById('total_harga_hidden').value = '';
+                }
             }
 
-            // Update total price if quantity is provided
-            if (numberOfItems !== "" && numberOfItems > 0) {
-                var totalPrice = hargaSatuan * parseInt(numberOfItems);
-                $("#total_harga").val(totalPrice ? "Rp " + totalPrice.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : "");
-                $("#total_harga_hidden").val(totalPrice || "");
-            } else {
-                $("#total_harga").val("");
-                $("#total_harga_hidden").val("");
-            }
-        }
-
-        // // Reset form function
-        // function resetForm() {
-        //     $("#jenis_ekstra").val("");
-        //     $("#jumlah").val(1);
-        //     $("#harga_satuan").val("");
-        //     $("#harga_satuan_hidden").val("");
-        //     $("#total_harga").val("");
-        //     $("#total_harga_hidden").val("");
-        //     $("#keterangan").val("");
-        //     $("#keterangan_description").text("");
-        // }
-
-        // Attach event handlers for dropdown and quantity input
-        $("#jenis_ekstra, #jumlah").on('change input', function() {
+            jenisEkstra.addEventListener('change', updatePriceAndDescription);
+            jumlah.addEventListener('input', updatePriceAndDescription);
             updatePriceAndDescription();
         });
-
-        // Trigger update on page load
-        updatePriceAndDescription();
-    });
-</script>
+    </script>
 @endsection

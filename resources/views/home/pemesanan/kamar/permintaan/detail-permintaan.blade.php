@@ -1,137 +1,51 @@
-<!-- resources/views/home/pemesanan/kamar/detail-kamar.blade.php -->
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('content')
-@php
-    use Carbon\Carbon;
-@endphp
+    <section class="py-10">
+        <div class="mx-auto max-w-5xl px-4">
+            <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">Permintaan Kamar</h2>
+                <div class="flex gap-2">
+                    <x-button href="/tambah-permintaan">
+                        <i class="bx bx-plus-circle"></i> Tambah
+                    </x-button>
+                    <x-button variant="secondary" href="{{ url()->previous() }}">
+                        <i class="bx bx-arrow-back"></i> Kembali
+                    </x-button>
+                </div>
+            </div>
 
-<div class="container py-4">
-    <!-- Header Section with improved spacing and alignment -->
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-6">
-            <h2 class="fw-bold text-primary">PERMINTAAN KAMAR</h2>
-        </div>
-        <div class="col-md-6 text-end">
-            <a href="/tambah-permintaan" class="btn btn-primary me-2">
-                <i class="fas fa-plus-circle me-1"></i> Tambah
-            </a>
-            <a href="" class="btn btn-secondary">
-                <i class="fas fa-arrow-left me-1"></i> Kembali
-            </a>
-        </div>
-    </div>
-
-    <!-- Card container for better visual appearance -->
-    <div class="card shadow-sm">
-        <div class="card-body p-0">
-            <!-- Responsive table with better spacing -->
-            <div class="table-responsive">
-                <table class="table table-hover table-striped mb-0">
-                    <thead class="table-light">
-                        <tr class="align-middle">
-                            <th class="px-3 py-3" width="5%">#</th>
-                            <th class="px-3 py-3" width="35%">PERMINTAAN <i class="fas fa-sort ms-1"></i></th>
-                            <th class="px-3 py-3" width="25%">TAMBAHAN HARGA <i class="fas fa-sort ms-1"></i></th>
-                            <th class="px-3 py-3" width="20%">KETERANGAN <i class="fas fa-sort ms-1"></i></th>
-                            <th class="px-3 py-3" width="15%">AKSI</th>
+            <div class="overflow-x-auto rounded-2xl border border-cream-200 bg-cream-50 shadow-sm">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
+                        <tr>
+                            <th class="px-4 py-3">#</th>
+                            <th class="px-4 py-3">Permintaan</th>
+                            <th class="px-4 py-3">Tambahan Harga</th>
+                            <th class="px-4 py-3">Keterangan</th>
+                            <th class="px-4 py-3">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="align-middle">
-                            <td class="px-3 py-3">1</td>
-                            <td class="px-3 py-3">Kamar View Kakbah</td>
-                            <td class="px-3 py-3">Rp.5.000.000,00</td>
-                            <td class="px-3 py-3"></td>
-                            <td class="px-3 py-3">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-success btn-sm">
-                                        <i class="fas fa-edit me-1"></i> Edit
-                                    </a>
-                                    <button class="btn btn-danger btn-sm ms-1">
-                                        <i class="fas fa-trash me-1"></i> Hapus
+                    <tbody class="divide-y divide-cream-200">
+                        <tr>
+                            <td class="px-4 py-3">1</td>
+                            <td class="px-4 py-3">Kamar View Kakbah</td>
+                            <td class="px-4 py-3">Rp 5.000.000</td>
+                            <td class="px-4 py-3 text-stone-500">&mdash;</td>
+                            <td class="px-4 py-3">
+                                <div class="flex gap-2">
+                                    <x-button variant="secondary" href="#" class="px-3! py-1.5! text-xs">
+                                        <i class="bx bx-edit"></i> Edit
+                                    </x-button>
+                                    <button class="rounded-md bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 hover:bg-red-100">
+                                        <i class="bx bx-trash"></i> Hapus
                                     </button>
                                 </div>
                             </td>
                         </tr>
-                        <!-- You can add more rows here as needed -->
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
-
-    <!-- Pagination -->
-    <div class="mt-3 d-flex justify-content-between align-items-center">
-        <div class="text-muted">
-            Showing 1 to 1 of 1 entries
-        </div>
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-@endsection
-
-@section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-<style>
-    .table th, .table td {
-        vertical-align: middle;
-    }
-    
-    .btn-group .btn {
-        border-radius: 4px;
-    }
-    
-    .page-item.active .page-link {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-    }
-    
-    .page-link {
-        color: #0d6efd;
-    }
-    
-    .page-link:hover {
-        color: #0a58ca;
-    }
-    
-    .form-select:focus, .form-control:focus {
-        border-color: #86b7fe;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    }
-</style>
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Search functionality
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
-        
-        searchButton.addEventListener('click', function() {
-            alert('Pencarian: ' + searchInput.value);
-            // Implementasi pencarian akan disesuaikan dengan backend
-        });
-        
-        // Entries select change
-        const entriesSelect = document.getElementById('entries-select');
-        
-        entriesSelect.addEventListener('change', function() {
-            alert('Menampilkan ' + this.value + ' data per halaman');
-            // Implementasi perubahan jumlah entries akan disesuaikan dengan backend
-        });
-    });
-</script>
+    </section>
 @endsection

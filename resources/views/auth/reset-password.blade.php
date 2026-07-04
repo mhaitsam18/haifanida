@@ -1,107 +1,34 @@
-@extends('layouts.main')
-@section('style')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        .btn-google {
-            background-color: #4285F4;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+@extends('layouts.app')
 
-        .btn-google:hover {
-            background-color: #357AE8;
-        }
-    </style>
-@endsection
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
+    <section class="py-16">
+        <div class="mx-auto grid max-w-5xl gap-10 px-4 lg:grid-cols-2 lg:items-center">
+            <div class="hidden overflow-hidden rounded-2xl lg:block">
+                <img src="/assets/img/mekkah/aviator70.jpg" alt="Haifa Nida Wisata" class="aspect-3/4 w-full object-cover">
+            </div>
 
+            <div class="rounded-2xl border border-cream-200 bg-cream-50 p-8 shadow-sm">
+                <h2 class="font-display text-2xl font-semibold text-maroon-900">Atur Ulang Kata Sandi</h2>
 
-    <div class="user-area pt-100 pb-70">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="user-img">
-                        <img src="/assets/img/mekkah/aviator70.jpg" alt="Images" loading="lazy">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="user-form">
-                        <div class="contact-form">
-                            <h2>Atur Ulang Kata Sandi</h2>
-                            @if (session()->has('loginError'))
-                                <div class="alert alert-danger mb-3 mx-auto" role="alert">
-                                    {{ session('loginError') }}
-                                </div>
-                            @endif
-                            @if (session()->has('success'))
-                                <div class="alert alert-success mb-3 mx-auto" role="alert">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-                            @if (session()->has('status'))
-                                <div class="alert alert-info mb-3 mx-auto" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-                            <form action="/reset-password/{{ $user->id }}" method="post">
-                                @csrf
-                                <input type="hidden" name="token" value="{{ $token }}">
-                                <div class="row">
-                                    <div class="col-lg-12 ">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                                name="email" id="email" required data-error="Masukkan Email Anda"
-                                                placeholder="Email" value="{{ old('email', $email) }}" readonly>
-                                            @error('email')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password"
-                                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                                id="password" required data-error="Masukkan Kata Sandi Anda"
-                                                placeholder="Kata Sandi">
-                                            @error('password')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password"
-                                                class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                name="password_confirmation" id="password_confirmation" required
-                                                data-error="Masukkan Konfirmasi Kata Sandi Anda"
-                                                placeholder="Konfirmasi Kata Sandi">
-                                            @error('password_confirmation')
-                                                <div class="text-danger fs-6">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 ">
-                                        <button type="submit" class="default-btn btn-bg-two">
-                                            Reset Password
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                @if (session()->has('loginError'))
+                    <div class="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ session('loginError') }}</div>
+                @endif
+                @if (session()->has('success'))
+                    <div class="mt-4 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('success') }}</div>
+                @endif
+                @if (session()->has('status'))
+                    <div class="mt-4 rounded-lg bg-sky-50 px-4 py-3 text-sm text-sky-700">{{ session('status') }}</div>
+                @endif
+
+                <form action="/reset-password/{{ $user->id }}" method="post" class="mt-6">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
+                    <x-form-input name="email" placeholder="Email" :value="old('email', $email)" required readonly />
+                    <x-form-input name="password" type="password" placeholder="Kata Sandi" required />
+                    <x-form-input name="password_confirmation" type="password" placeholder="Konfirmasi Kata Sandi" required />
+                    <x-button type="submit" class="w-full justify-center">Reset Password</x-button>
+                </form>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

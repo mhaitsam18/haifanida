@@ -1,58 +1,28 @@
-@extends('admin.auth.layouts.main')
+@extends('admin.auth.layouts.app')
 
 @section('content')
-    @php
-        use Carbon\Carbon;
-    @endphp
-    <div class="row w-100 mx-0 auth-page">
-        <div class="col-md-8 col-xl-6 mx-auto">
-            <div class="card d-flex align-items-center">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="px-4 py-5">
-                            <a href="#" class="noble-ui-logo d-block mb-2">Haifa
-                                Nida<span>Admin</span></a>
-                            <h5 class="text-muted fw-normal mb-4">Kami akan mengirim link atur ulang kata sandi ke email
-                                Anda..</h5>
-                            <p></p>
-                            @if (session()->has('loginError'))
-                                <div class="alert alert-danger mb-3 mx-auto" role="alert">
-                                    {{ session('loginError') }}
-                                </div>
-                            @endif
-                            @if (session()->has('success'))
-                                <div class="alert alert-success mb-3 mx-auto" role="alert">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-                            @if (session()->has('status'))
-                                <div class="alert alert-info mb-3 mx-auto" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-                            <form action="/forgot-password" method="post" class="forms-sample">
-                                @csrf
-                                <input type="hidden" name="role" value="admin">
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" id="email" placeholder="Email" value="{{ old('email') }}">
-                                    @error('email')
-                                        <div class="text-danger fs-6">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-haifa me-2 mb-2 mb-md-0 text-white">Kirim</button>
-                                </div>
-                                <a href="/login-admin" class="d-block mt-3 text-muted">Kembali ke Halaman Log
-                                    in?</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="w-full max-w-md rounded-2xl border border-cream-200 bg-cream-50 p-8 shadow-xl">
+        <div class="mb-6 text-center">
+            <h2 class="font-display text-xl font-semibold text-maroon-900">Haifa Nida <span class="text-maroon-500">Admin</span></h2>
+            <p class="mt-1 text-sm text-stone-500">Kami akan mengirim link atur ulang kata sandi ke email Anda.</p>
         </div>
+
+        @if (session()->has('loginError'))
+            <div class="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{{ session('loginError') }}</div>
+        @endif
+        @if (session()->has('success'))
+            <div class="mb-4 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">{{ session('success') }}</div>
+        @endif
+        @if (session()->has('status'))
+            <div class="mb-4 rounded-lg bg-sky-50 px-4 py-3 text-sm text-sky-700">{{ session('status') }}</div>
+        @endif
+
+        <form action="/forgot-password" method="post">
+            @csrf
+            <input type="hidden" name="role" value="admin">
+            <x-form-input label="Email" name="email" type="email" :value="old('email')" placeholder="Email" required />
+            <x-button type="submit" class="w-full justify-center">Kirim</x-button>
+            <a href="/login-admin" class="mt-4 block text-center text-sm text-stone-500 hover:text-stone-700">Kembali ke Halaman Log in?</a>
+        </form>
     </div>
 @endsection

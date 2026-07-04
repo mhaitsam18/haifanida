@@ -111,7 +111,9 @@ Route::get('/wisata-halal', [HomeController::class, 'wisataHalal'])->name('home.
 
 Route::get('/galeri', [HomeGaleriController::class, 'index'])->name('home.galeri');
 Route::get('/artikel', [HomeArtikelController::class, 'index'])->name('home.artikel');
+Route::get('/artikel/{artikel}', [HomeArtikelController::class, 'show'])->name('home.artikel.show');
 Route::get('/kajian', [HomeKajianController::class, 'index'])->name('home.kajian');
+Route::get('/kajian/{kajian}', [HomeKajianController::class, 'show'])->name('home.kajian.show');
 
 Route::get('/profil', [HomeController::class, 'profil'])->name('home.profil');
 Route::get('/sejarah', [HomeController::class, 'sejarah'])->name('home.sejarah');
@@ -235,15 +237,6 @@ Route::middleware('auth')->group(function () {
             });
             Route::middleware('adminkantor')->group(function () {
                 Route::get('/kantor-saya', [AdminKantorController::class, 'kantorSaya'])->name('kantor-saya');
-                Route::middleware('pusat')->group(function () {
-                    Route::get('/', [AdminController::class, 'pusat'])->name('pusat');
-                });
-                Route::middleware('perwakilan')->group(function () {
-                    Route::get('/', [AdminController::class, 'perwakilan'])->name('perwakilan');
-                });
-                Route::middleware('cabang')->group(function () {
-                    Route::get('/', [AdminController::class, 'cabang'])->name('cabang');
-                });
 
 
                 Route::prefix('paket/{paket}')->group(function () {
@@ -468,7 +461,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/index', [MemberController::class, 'index'])->name('member.home');
             // MODIFIED--
             Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile');
-            Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+            Route::get('/perjalanan-saya', [MemberController::class, 'riwayatPerjalanan'])->name('member.perjalanan-saya');
             Route::get('/tagihan/{id}', [MemberTagihanController::class, 'index'])->name('member.tagihan');
             Route::get('/identitas', [MemberController::class, 'identitas'])->name('member.identitas');
             Route::put('/identitas', [MemberController::class, 'updateIdentitas'])->name('member.identitas.update');
@@ -542,7 +535,7 @@ Route::middleware('auth')->group(function () {
             });
 
 
-            Route::get('/perjalanan-saya', [MemberController::class, 'perjalananSaya'])->name('member.perjalanan-saya');
+            Route::get('/perjalanan-saya', [MemberController::class, 'riwayatPerjalanan'])->name('member.perjalanan-saya');
             Route::post('/member/profile/update-photo', [MemberController::class, 'updatePhoto'])->name('member.profile.update-photo');
             Route::put('/member/profile', [MemberController::class, 'updateProfile'])->name('member.profile.update');
 

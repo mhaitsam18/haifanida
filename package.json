@@ -5,6 +5,7 @@
     "build": "vite build"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.1.2",
     "laravel-vite-plugin": "^3.1.0",
@@ -23,7 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "@alpinejs/collapse": "^3.15.12",
-    "alpinejs": "^3.15.12",
-    "bootstrap": "^5.3.2"
+    "alpinejs": "^3.15.12"
   }
 }
