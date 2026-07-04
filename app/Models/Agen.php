@@ -39,6 +39,6 @@ class Agen extends Model
 
     public function poins()
     {
-        return $this->hasMany(Poin::class);
+        return $this->hasMany(Poin::class, 'user_id', 'user_id');
     }
 }

@@ -14,8 +14,13 @@ class Poin extends Model
         'id'
     ];
 
-    public function agen()
+    public function user()
     {
-        return $this->belongsTo(Agen::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function referensi()
+    {
+        return $this->morphTo();
     }
 }

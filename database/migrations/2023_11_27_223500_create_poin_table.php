@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('poin', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agen_id')->nullable()
-                ->constrained('agen')
+            $table->foreignId('user_id')->nullable()
+                ->constrained('users')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
+            $table->enum('tipe', ['komisi_agen', 'bonus_referral', 'penyesuaian'])->default('komisi_agen');
+            $table->nullableMorphs('referensi');
             $table->integer('jumlah_poin')->default(0);
             $table->string('keterangan')->nullable();
             $table->timestamps();
