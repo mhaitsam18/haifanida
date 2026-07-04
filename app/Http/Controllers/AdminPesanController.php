@@ -28,7 +28,7 @@ class AdminPesanController extends Controller
             'email_pengirim' => 'required|email',
             'pesan' => 'required|string',
         ]);
-        Mail::to($request->email_pengirim)->send(new SendingEmail("Haifa Nida Menjawab : " . $request->subjek, $request->pesan));
+        Mail::to($request->email_pengirim)->queue(new SendingEmail("Haifa Nida Menjawab : " . $request->subjek, $request->pesan));
         return back()->with('success', 'Email berhasil dikirim');
     }
 

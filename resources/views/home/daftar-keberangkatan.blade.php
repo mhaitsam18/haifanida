@@ -15,8 +15,6 @@
 
     @php
         use Carbon\Carbon;
-        use App\Models\Berkas;
-        $requiredBerkas = Berkas::all();
     @endphp
 
     @if($pemesanan && count($pemesanan) > 0)

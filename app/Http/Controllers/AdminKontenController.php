@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Konten;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AdminKontenController extends Controller
 {
@@ -47,6 +48,7 @@ class AdminKontenController extends Controller
             $validateData['gambar'] = $path;
         }
         Konten::create($validateData);
+        Cache::forget('konten.all');
         return redirect('/admin/konten')->with('success', 'Data Konten berhasil ditambahkan');
     }
 
@@ -93,6 +95,7 @@ class AdminKontenController extends Controller
             $validateData['gambar'] = $konten->gambar;
         }
         $konten->update($validateData);
+        Cache::forget('konten.all');
         return redirect('/admin/konten')->with('success', 'Data Konten berhasil diperbarui');
     }
 
@@ -102,6 +105,7 @@ class AdminKontenController extends Controller
     public function destroy(Konten $konten)
     {
         $konten->delete();
+        Cache::forget('konten.all');
         return redirect('/admin/konten')->with('success', 'Data Konten berhasil dihapus');
     }
 }

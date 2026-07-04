@@ -124,7 +124,7 @@ class AuthController extends Controller
 
         if (!$request->has('google_id')) {
             $verificationLink = $this->generateVerificationLink($user);
-            Mail::to($user->email)->send(new VerificationEmail($verificationLink));
+            Mail::to($user->email)->queue(new VerificationEmail($verificationLink));
             return redirect('/login')->with('success', 'Email verifikasi telah dikirim. Silakan cek email Anda!');
         }
 

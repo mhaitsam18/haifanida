@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Konten;
 use App\Models\Pesan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
+    private function allKontens()
+    {
+        return Cache::remember('konten.all', now()->addHours(6), fn () => Konten::all());
+    }
+
     public function index()
     {
         return view('home.index', [
             'title' => 'Beranda',
             'page' => 'beranda',
-            'kontens' => Konten::all(),
+            'kontens' => $this->allKontens(),
             'beranda1' => Konten::find(1),
             'beranda2' => Konten::find(2),
             'beranda3' => Konten::find(3),
@@ -26,7 +32,7 @@ class HomeController extends Controller
         return view('home.umroh', [
             'title' => 'Umroh',
             'page' => 'umroh',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
     public function haji()
@@ -34,7 +40,7 @@ class HomeController extends Controller
         return view('home.haji', [
             'title' => 'Haji',
             'page' => 'haji',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
     public function wisataHalal()
@@ -42,7 +48,7 @@ class HomeController extends Controller
         return view('home.wisata-halal', [
             'title' => 'Wisata Halal',
             'page' => 'wisata-halal',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
 
@@ -51,7 +57,7 @@ class HomeController extends Controller
         return view('home.profil', [
             'title' => 'Profil Perusahaan',
             'page' => 'profil',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
 
@@ -60,7 +66,7 @@ class HomeController extends Controller
         return view('home.sejarah', [
             'title' => 'Sejarah Perusahaan',
             'page' => 'sejarah',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
 
@@ -78,7 +84,7 @@ class HomeController extends Controller
         return view('home.kantor-kami', [
             'title' => 'Kantor Kami',
             'page' => 'kantor-kami',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
     public function kirimPesan(Request $request)
@@ -100,7 +106,7 @@ class HomeController extends Controller
         return view('home.kontak-kami', [
             'title' => 'Kontak Kami',
             'page' => 'kontak-kami',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
 
@@ -109,7 +115,7 @@ class HomeController extends Controller
         return view('home.faq', [
             'title' => 'FAQ',
             'page' => 'faq',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
 
@@ -118,7 +124,7 @@ class HomeController extends Controller
         return view('home.panduan', [
             'title' => 'Panduan',
             'page' => 'panduan',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
     public function syaratKetentuan()
@@ -126,7 +132,7 @@ class HomeController extends Controller
         return view('home.syarat-ketentuan', [
             'title' => 'Syarat & Ketentuan',
             'page' => 'syarat-ketentuan',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
     public function kebijakanPrivasi()
@@ -134,7 +140,7 @@ class HomeController extends Controller
         return view('home.kebijakan-privasi', [
             'title' => 'Kebijakan Privasi',
             'page' => 'kebijakan-privasi',
-            'kontens' => Konten::all()
+            'kontens' => $this->allKontens()
         ]);
     }
 

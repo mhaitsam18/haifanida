@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Berkas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AdminBerkasController extends Controller
 {
@@ -41,6 +42,7 @@ class AdminBerkasController extends Controller
         berkas::create([
             'nama_berkas' => $request->nama_berkas,
         ]);
+        Cache::forget('berkas.all');
         return redirect('/admin/berkas')->with('success', 'Data berkas berhasil ditambahkan');
     }
 
@@ -79,6 +81,7 @@ class AdminBerkasController extends Controller
         $berkas->update([
             'nama_berkas' => $request->nama_berkas,
         ]);
+        Cache::forget('berkas.all');
         return redirect('/admin/berkas')->with('success', 'Data berkas berhasil diubah');
     }
 
@@ -88,6 +91,7 @@ class AdminBerkasController extends Controller
     public function destroy(Berkas $berkas)
     {
         $berkas->delete();
+        Cache::forget('berkas.all');
         return redirect('/admin/berkas')->with('success', 'Data berkas berhasil dihapus');
     }
 }

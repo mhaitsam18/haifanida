@@ -11,8 +11,10 @@ use App\Models\Member;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\User;
+use App\Models\Berkas;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 // --MODIFIED
 
@@ -118,14 +120,16 @@ class MemberController extends Controller
 
         // Get upcoming trips where end date is in the future
         $pemesanan = $user->pemesanans()
-            ->with('paket')
+            ->with(['paket', 'jemaahs.berkasJemaahs'])
             ->whereHas('paket', function($query) {
                 $query->where('tanggal_selesai', '>=', Carbon::now());
             })
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('home.daftar-keberangkatan', compact('user', 'title', 'pemesanan'));
+        $requiredBerkas = Cache::remember('berkas.all', now()->addHours(6), fn () => Berkas::all());
+
+        return view('home.daftar-keberangkatan', compact('user', 'title', 'pemesanan', 'requiredBerkas'));
     }
 
     // Riwayat perjalanan - menampilkan perjalanan yang sudah selesai
