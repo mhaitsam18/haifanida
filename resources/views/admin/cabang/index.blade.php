@@ -35,11 +35,11 @@
                                 <tr>
                                     <th class="pt-0">#</th>
                                     <th class="pt-0">Nama Cabang</th>
-                                    <th class="pt-0">Nama cabang</th>
+                                    <th class="pt-0">Perwakilan Induk</th>
                                     <th class="pt-0">Nama Ketua</th>
                                     <th class="pt-0">Kontak</th>
                                     <th class="pt-0">Surat Izin</th>
-                                    <th class="pt-0">Kantor</th>
+                                    <th class="pt-0">Kabupaten / Kota</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -47,18 +47,12 @@
                                 @foreach ($cabangs as $cabang)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $cabang->nama_cabang }}</td>
-                                        <td>{{ $cabang->perwakilan->nama_perwakilan ?? 'Pusat' }}</td>
+                                        <td>{{ $cabang->nama_kantor }}</td>
+                                        <td>{{ $cabang->indukKantor->nama_kantor ?? 'Pusat' }}</td>
                                         <td>{{ $cabang->nama_ketua }}</td>
-                                        <td>{{ $cabang->kontak }}</td>
-                                        <td><a href="{{ asset('storage/' . $cabang->surat_izin) }}"
-                                                class="badge bg-info">Lihat Surat Izin</a></td>
-                                        <td>
-                                            <a href="/admin/kantor/{{ $cabang->kantor_id }}/edit">
-                                                <img src="{{ asset('storage/' . $cabang->kantor->foto_kantor) }}"
-                                                    alt="">
-                                            </a>
-                                        </td>
+                                        <td>{{ $cabang->kontak_kantor }}</td>
+                                        <td>{{ $cabang->surat_izin ?? '-' }}</td>
+                                        <td>{{ $cabang->kabupaten->kabupaten ?? '-' }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/cabang/{{ $cabang->id }}/edit"

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cabang;
 use App\Models\Kabupaten;
 use App\Models\Kantor;
-use App\Models\Perwakilan;
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
 
@@ -19,7 +17,7 @@ class AdminCabangController extends Controller
         return view('admin.cabang.index', [
             'title' => 'Data cabang',
             'page' => 'cabang',
-            'cabangs' => Cabang::with(['perwakilan', 'kantor'])->paginate(200),
+            'cabangs' => Kantor::where('jenis_kantor', 'cabang')->with(['kabupaten', 'indukKantor'])->paginate(200),
         ]);
     }
 
@@ -33,8 +31,7 @@ class AdminCabangController extends Controller
             'page' => 'cabang',
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::with('kabupaten')->get(),
-            'perwakilans' => Perwakilan::all(),
+            'perwakilans' => Kantor::where('jenis_kantor', 'perwakilan')->get(),
         ]);
     }
 
@@ -44,36 +41,28 @@ class AdminCabangController extends Controller
     public function store(Request $request)
     {
         $validateCabang = $request->validate([
-            'kantor_id' => 'required',
-            'perwakilan_id' => 'nullable',
-            'nama_cabang' => 'required',
+            'induk_kantor_id' => 'nullable',
+            'nama_kantor' => 'required',
             'nama_ketua' => 'required',
-            'kontak' => 'nullable',
-            'surat_izin' => 'nullable'
+            'kontak_kantor' => 'nullable',
+            'alamat_kantor' => 'required',
+            'kabupaten_id' => 'required',
+            'kecamatan' => 'nullable',
+            'kode_pos' => 'nullable',
+            'surat_izin' => 'nullable',
         ]);
-        if (!$request->kantor_id) {
-            $validateKantor = $request->validate([
-                'nama_kantor' => 'required',
-                'nama_ketua' => 'required',
-                'kontak_kantor' => 'nullable',
-                'alamat_kantor' => 'required',
-                'kabupaten_id' => 'required',
-                'kecamatan' => 'nullable',
-                'kode_pos' => 'nullable',
-                'jenis_kantor' => 'nullable',
-            ]);
-            $kantor = Kantor::create($validateKantor);
-            $validateCabang['kantor_id'] = $kantor->id;
-        }
-        Cabang::create($validateCabang);
+        $validateCabang['jenis_kantor'] = 'cabang';
+        Kantor::create($validateCabang);
         return redirect('/admin/cabang')->with('success', 'Data cabang berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Cabang $cabang)
+    public function show(Kantor $cabang)
     {
+        abort_unless($cabang->jenis_kantor === 'cabang', 404);
+
         return view('admin.cabang.show', [
             'title' => 'Detail Cabang',
             'page' => 'cabang',
@@ -84,46 +73,38 @@ class AdminCabangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cabang $cabang)
+    public function edit(Kantor $cabang)
     {
+        abort_unless($cabang->jenis_kantor === 'cabang', 404);
+
         return view('admin.cabang.edit', [
             'title' => 'Edit cabang',
             'page' => 'cabang',
             'cabang' => $cabang,
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::with('kabupaten')->get(),
-            'perwakilans' => Perwakilan::all(),
+            'perwakilans' => Kantor::where('jenis_kantor', 'perwakilan')->get(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cabang $cabang)
+    public function update(Request $request, Kantor $cabang)
     {
+        abort_unless($cabang->jenis_kantor === 'cabang', 404);
+
         $validateCabang = $request->validate([
-            'kantor_id' => 'required',
-            'perwakilan_id' => 'nullable',
-            'nama_cabang' => 'required',
+            'induk_kantor_id' => 'nullable',
+            'nama_kantor' => 'required',
             'nama_ketua' => 'required',
-            'kontak' => 'nullable',
-            'surat_izin' => 'nullable'
+            'kontak_kantor' => 'nullable',
+            'alamat_kantor' => 'required',
+            'kabupaten_id' => 'required',
+            'kecamatan' => 'nullable',
+            'kode_pos' => 'nullable',
+            'surat_izin' => 'nullable',
         ]);
-        if (!$request->kantor_id) {
-            $validateKantor = $request->validate([
-                'nama_kantor' => 'required',
-                'nama_ketua' => 'required',
-                'kontak_kantor' => 'nullable',
-                'alamat_kantor' => 'required',
-                'kabupaten_id' => 'required',
-                'kecamatan' => 'nullable',
-                'kode_pos' => 'nullable',
-                'jenis_kantor' => 'nullable',
-            ]);
-            $kantor = Kantor::create($validateKantor);
-            $validateCabang['kantor_id'] = $kantor->id;
-        }
         $cabang->update($validateCabang);
         return redirect('/admin/cabang')->with('success', 'Data Cabang berhasil diperbarui');
     }
@@ -131,8 +112,10 @@ class AdminCabangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cabang $cabang)
+    public function destroy(Kantor $cabang)
     {
+        abort_unless($cabang->jenis_kantor === 'cabang', 404);
+
         $cabang->delete();
         return redirect('/admin/cabang')->with('success', 'Data cabang berhasil dihapus');
     }

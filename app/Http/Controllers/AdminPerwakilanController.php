@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Kabupaten;
 use App\Models\Kantor;
-use App\Models\Perwakilan;
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,7 @@ class AdminPerwakilanController extends Controller
         return view('admin.perwakilan.index', [
             'title' => 'Data perwakilan',
             'page' => 'perwakilan',
-            'perwakilans' => Perwakilan::with('kantor')->paginate(200),
+            'perwakilans' => Kantor::where('jenis_kantor', 'perwakilan')->with('kabupaten')->paginate(200),
         ]);
     }
 
@@ -32,7 +31,6 @@ class AdminPerwakilanController extends Controller
             'page' => 'perwakilan',
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::with('kabupaten')->get(),
         ]);
     }
 
@@ -42,35 +40,27 @@ class AdminPerwakilanController extends Controller
     public function store(Request $request)
     {
         $validatePerwakilan = $request->validate([
-            'kantor_id' => 'required',
-            'nama_perwakilan' => 'required',
+            'nama_kantor' => 'required',
             'nama_ketua' => 'required',
-            'kontak' => 'nullable',
-            'surat_izin' => 'nullable'
+            'kontak_kantor' => 'nullable',
+            'alamat_kantor' => 'required',
+            'kabupaten_id' => 'required',
+            'kecamatan' => 'nullable',
+            'kode_pos' => 'nullable',
+            'surat_izin' => 'nullable',
         ]);
-        if (!$request->kantor_id) {
-            $validateKantor = $request->validate([
-                'nama_kantor' => 'required',
-                'nama_ketua' => 'required',
-                'kontak_kantor' => 'nullable',
-                'alamat_kantor' => 'required',
-                'kabupaten_id' => 'required',
-                'kecamatan' => 'nullable',
-                'kode_pos' => 'nullable',
-                'jenis_kantor' => 'nullable',
-            ]);
-            $kantor = Kantor::create($validateKantor);
-            $validatePerwakilan['kantor_id'] = $kantor->id;
-        }
-        Perwakilan::create($validatePerwakilan);
+        $validatePerwakilan['jenis_kantor'] = 'perwakilan';
+        Kantor::create($validatePerwakilan);
         return redirect('/admin/perwakilan')->with('success', 'Data Perwakilan berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Perwakilan $perwakilan)
+    public function show(Kantor $perwakilan)
     {
+        abort_unless($perwakilan->jenis_kantor === 'perwakilan', 404);
+
         return view('admin.perwakilan.show', [
             'title' => 'Detail perwakilan',
             'page' => 'perwakilan',
@@ -81,44 +71,36 @@ class AdminPerwakilanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Perwakilan $perwakilan)
+    public function edit(Kantor $perwakilan)
     {
+        abort_unless($perwakilan->jenis_kantor === 'perwakilan', 404);
+
         return view('admin.perwakilan.edit', [
             'title' => 'Edit perwakilan',
             'page' => 'perwakilan',
             'perwakilan' => $perwakilan,
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
-            'kantors' => Kantor::with('kabupaten')->get(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Perwakilan $perwakilan)
+    public function update(Request $request, Kantor $perwakilan)
     {
+        abort_unless($perwakilan->jenis_kantor === 'perwakilan', 404);
+
         $validatePerwakilan = $request->validate([
-            'kantor_id' => 'required',
-            'nama_perwakilan' => 'required',
+            'nama_kantor' => 'required',
             'nama_ketua' => 'required',
-            'kontak' => 'nullable',
-            'surat_izin' => 'nullable'
+            'kontak_kantor' => 'nullable',
+            'alamat_kantor' => 'required',
+            'kabupaten_id' => 'required',
+            'kecamatan' => 'nullable',
+            'kode_pos' => 'nullable',
+            'surat_izin' => 'nullable',
         ]);
-        if (!$request->kantor_id) {
-            $validateKantor = $request->validate([
-                'nama_kantor' => 'required',
-                'nama_ketua' => 'required',
-                'kontak_kantor' => 'nullable',
-                'alamat_kantor' => 'required',
-                'kabupaten_id' => 'required',
-                'kecamatan' => 'nullable',
-                'kode_pos' => 'nullable',
-                'jenis_kantor' => 'nullable',
-            ]);
-            $kantor = Kantor::create($validateKantor);
-            $validatePerwakilan['kantor_id'] = $kantor->id;
-        }
         $perwakilan->update($validatePerwakilan);
         return redirect('/admin/perwakilan')->with('success', 'Data Perwakilan berhasil diperbarui');
     }
@@ -126,8 +108,10 @@ class AdminPerwakilanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Perwakilan $perwakilan)
+    public function destroy(Kantor $perwakilan)
     {
+        abort_unless($perwakilan->jenis_kantor === 'perwakilan', 404);
+
         $perwakilan->delete();
         return redirect('/admin/perwakilan')->with('success', 'Data perwakilan berhasil dihapus');
     }

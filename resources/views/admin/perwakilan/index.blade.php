@@ -38,7 +38,7 @@
                                     <th class="pt-0">Nama Ketua</th>
                                     <th class="pt-0">Kontak</th>
                                     <th class="pt-0">Surat Izin</th>
-                                    <th class="pt-0">Kantor</th>
+                                    <th class="pt-0">Kabupaten / Kota</th>
                                     <th class="pt-0">Aksi</th>
                                 </tr>
                             </thead>
@@ -46,17 +46,11 @@
                                 @foreach ($perwakilans as $perwakilan)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $perwakilan->nama_perwakilan }}</td>
+                                        <td>{{ $perwakilan->nama_kantor }}</td>
                                         <td>{{ $perwakilan->nama_ketua }}</td>
-                                        <td>{{ $perwakilan->kontak }}</td>
-                                        <td><a href="{{ asset('storage/' . $perwakilan->surat_izin) }}"
-                                                class="badge bg-info">Lihat Surat Izin</a></td>
-                                        <td>
-                                            <a href="/admin/kantor/{{ $perwakilan->kantor_id }}/edit">
-                                                <img src="{{ asset('storage/' . $perwakilan->kantor->foto_kantor) }}"
-                                                    alt="">
-                                            </a>
-                                        </td>
+                                        <td>{{ $perwakilan->kontak_kantor }}</td>
+                                        <td>{{ $perwakilan->surat_izin ?? '-' }}</td>
+                                        <td>{{ $perwakilan->kabupaten->kabupaten ?? '-' }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <a href="/admin/perwakilan/{{ $perwakilan->id }}/edit"

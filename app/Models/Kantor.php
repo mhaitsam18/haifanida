@@ -35,14 +35,13 @@ class Kantor extends Model
         return $this->hasMany(Agen::class);
     }
 
-
-    public function perwakilans()
+    public function indukKantor()
     {
-        return $this->hasMany(Perwakilan::class);
+        return $this->belongsTo(Kantor::class, 'induk_kantor_id');
     }
 
-    public function cabangs()
+    public function subKantor()
     {
-        return $this->hasMany(Cabang::class);
+        return $this->hasMany(Kantor::class, 'induk_kantor_id');
     }
 }
