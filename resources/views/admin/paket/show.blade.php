@@ -39,6 +39,14 @@
                         <li>Jenis Paket : {{ $paket->jenis_paket }}</li>
                         <li>Durasi : {{ $paket->durasi }} Hari</li>
                         <li>Harga : Rp.{{ number_format($paket->harga, 2, ',', '.') }}</li>
+                        <li>
+                            Kuota Jemaah :
+                            @if ($paket->kuota_jemaah !== null)
+                                <x-badge :variant="$jemaahs->count() >= $paket->kuota_jemaah ? 'danger' : 'success'">{{ $jemaahs->count() }} / {{ $paket->kuota_jemaah }} terisi</x-badge>
+                            @else
+                                <x-badge variant="info">Tidak dibatasi</x-badge>
+                            @endif
+                        </li>
                     </ul>
                     <ul class="space-y-1 text-sm text-stone-600">
                         <li>Tempat Keberangkatan : {{ $paket->tempat_keberangkatan }}</li>

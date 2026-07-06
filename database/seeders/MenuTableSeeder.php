@@ -40,6 +40,16 @@ class MenuTableSeeder extends Seeder
                 'url' => '/home',
                 'icon' => 'fa-solid fa-globe',
             ],
+            "Laporan Keuangan" => [
+                'parent_id' => 1,
+                'url' => '/admin/laporan-keuangan',
+                'icon' => 'fa-solid fa-file-invoice-dollar',
+            ],
+            "Manajemen Poin Agen" => [
+                'parent_id' => 1,
+                'url' => '/admin/poin',
+                'icon' => 'fa-solid fa-coins',
+            ],
             "Autentikasi & Otorisasi" => [
                 'parent_id' => 2,
                 'icon' => 'fa-solid fa-face-smile',

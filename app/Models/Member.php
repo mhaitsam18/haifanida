@@ -30,6 +30,11 @@ class Member extends Model
         return $this->belongsTo(Kabupaten::class);
     }
 
+    public function referrer()
+    {
+        return $this->belongsTo(Agen::class, 'referred_by');
+    }
+
     // public function pemesanans()
     // {
     //     return $this->hasMany(Pemesanan::class);

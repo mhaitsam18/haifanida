@@ -40,6 +40,18 @@
                         </td>
                         <td class="px-4 py-3">
                             <div class="flex items-center gap-2">
+                                @if ($pembayaran->status_pembayaran === 'tertunda')
+                                    <form action="{{ route('admin.pembayaran.verify', $pembayaran->id) }}" method="post" x-data
+                                        @submit.prevent="if (confirm('Verifikasi pembayaran ini?')) $el.submit()">
+                                        @csrf
+                                        <button type="submit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Verifikasi</button>
+                                    </form>
+                                    <form action="{{ route('admin.pembayaran.reject', $pembayaran->id) }}" method="post" x-data
+                                        @submit.prevent="if (confirm('Tolak pembayaran ini?')) $el.submit()">
+                                        @csrf
+                                        <button type="submit" class="rounded-md bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 hover:bg-red-100">Tolak</button>
+                                    </form>
+                                @endif
                                 <a href="/admin/pembayaran/{{ $pembayaran->id }}" class="rounded-md bg-maroon-50 px-2.5 py-1 text-xs font-medium text-maroon-700 hover:bg-maroon-100">Detail</a>
                                 <a href="/admin/pembayaran/{{ $pembayaran->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
                                 <x-delete-form :action="'/admin/pembayaran/' . $pembayaran->id" />

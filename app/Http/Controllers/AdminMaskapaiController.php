@@ -20,18 +20,6 @@ class AdminMaskapaiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-        return view('admin.maskapai.create', [
-            'title' => 'Tambah Maskapai',
-            'page' => 'maskapai',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -59,18 +47,6 @@ class AdminMaskapaiController extends Controller
     {
         return view('admin.maskapai.show', [
             'title' => 'Detail Maskapai',
-            'page' => 'maskapai',
-            'maskapai' => $maskapai,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Maskapai $maskapai)
-    {
-        return view('admin.maskapai.edit', [
-            'title' => 'Edit Maskapai',
             'page' => 'maskapai',
             'maskapai' => $maskapai,
         ]);

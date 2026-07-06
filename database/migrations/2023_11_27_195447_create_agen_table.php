@@ -21,6 +21,7 @@ return new class extends Migration
                 ->constrained('kantor')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->string('kode_referral')->nullable()->unique();
             $table->softDeletes();
             $table->timestamps();
         });

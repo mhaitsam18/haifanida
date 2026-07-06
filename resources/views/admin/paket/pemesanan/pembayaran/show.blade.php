@@ -5,6 +5,22 @@
 
     <x-page-header :title="$title">
         <x-slot:actions>
+            @if ($pembayaran->status_pembayaran === 'tertunda')
+                <form action="{{ route('admin.pembayaran.verify', $pembayaran->id) }}" method="post" x-data
+                    @submit.prevent="if (confirm('Verifikasi pembayaran ini sebagai diterima?')) $el.submit()">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800">
+                        <i class="bx bx-check"></i> Verifikasi
+                    </button>
+                </form>
+                <form action="{{ route('admin.pembayaran.reject', $pembayaran->id) }}" method="post" x-data
+                    @submit.prevent="if (confirm('Tolak pembayaran ini?')) $el.submit()">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+                        <i class="bx bx-x"></i> Tolak
+                    </button>
+                </form>
+            @endif
             <x-button :href="'/admin/pembayaran/' . $pembayaran->id . '/edit'"><i class="bx bx-edit"></i> Edit</x-button>
             <x-button variant="secondary" :href="'/admin/' . ($pembayaran->pemesanan_id ? 'pemesanan/' . $pembayaran->pemesanan_id . '/' : '') . 'pembayaran'"><i class="bx bx-arrow-back"></i> Kembali</x-button>
         </x-slot:actions>
@@ -23,6 +39,9 @@
                         <x-badge :variant="$pembayaran->status_pembayaran == 'diterima' ? 'success' : ($pembayaran->status_pembayaran == 'ditolak' ? 'danger' : 'warning')">{{ $pembayaran->status_pembayaran }}</x-badge>
                     </li>
                     <li><span class="text-stone-500">Keterangan:</span> {{ $pembayaran->keterangan ?? '-' }}</li>
+                    @if ($pembayaran->diverifikasiOleh)
+                        <li><span class="text-stone-500">Diverifikasi Oleh:</span> {{ $pembayaran->diverifikasiOleh->name }}</li>
+                    @endif
                 </ul>
             </div>
             <div>

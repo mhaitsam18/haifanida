@@ -8,6 +8,7 @@ use App\Models\Kabupaten;
 use App\Models\Paket;
 use App\Models\Pemesanan;
 use App\Models\Provinsi;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class AdminJemaahController extends Controller
@@ -42,61 +43,48 @@ class AdminJemaahController extends Controller
         }
 
         $jemaahs = $jemaahs->paginate(200)->withQueryString();
+        $jemaahs->load(['grup.paket.grups', 'pemesanan.paket.pemesanans']);
 
-        return view('admin.paket.jemaah.index', [
-            'title' => 'Data jemaah',
-            'page' => 'jemaah',
-            'paket' => $paket,
-            'jemaahs' => $jemaahs
-        ]);
-    }
+        // Data untuk modal "Tambah" (mengikuti perilaku create() sebelumnya: hanya terisi
+        // kalau halaman diakses dengan query string ?pemesanan_id= atau ?grup_id=).
+        $createPemesanan = $request->pemesanan_id ? Pemesanan::find($request->pemesanan_id) : null;
+        $createGrup = $request->grup_id ? Grup::find($request->grup_id) : null;
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request, Paket $paket = null)
-    {
-        $pemesanan = null;
-        $grup = null;
+        $createMahramCandidates = Jemaah::query();
+        if ($paket && (!$request->pemesanan_id && !$request->grup_id)) {
+            $createMahramCandidates->whereHas('pemesanan', function ($query) use ($paket) {
+                $query->where('paket_id', $paket->id);
+            })->orWhereHas('grup', function ($query) use ($paket) {
+                $query->where('paket_id', $paket->id);
+            });
+        }
         if ($request->pemesanan_id) {
-            $pemesanan = Pemesanan::find($request->pemesanan_id);
+            $createMahramCandidates->where('pemesanan_id', $request->pemesanan_id);
         }
         if ($request->grup_id) {
-            $grup = Grup::find($request->grup_id);
+            $createMahramCandidates->where('grup_id', $request->grup_id);
         }
 
-        $jemaahs = Jemaah::query();
-
-
-
-
-        if ($paket &&  (!$request->pemesanan_id && !$request->grup_id)) {
-            $jemaahs->whereHas('pemesanan', function ($query) use ($paket) {
+        $editMahramCandidates = Jemaah::query();
+        if ($paket) {
+            $editMahramCandidates->whereHas('pemesanan', function ($query) use ($paket) {
                 $query->where('paket_id', $paket->id);
             })->orWhereHas('grup', function ($query) use ($paket) {
                 $query->where('paket_id', $paket->id);
             });
         }
 
-        if ($request->pemesanan_id) {
-            $jemaahs->where('pemesanan_id', $request->pemesanan_id);
-        }
-        if ($request->grup_id) {
-            $jemaahs->where('grup_id', $request->grup_id);
-        }
-
-        $jemaahs = $jemaahs->get();
-
-        return view('admin.paket.jemaah.create', [
+        return view('admin.paket.jemaah.index', [
             'title' => 'Data jemaah',
             'page' => 'jemaah',
             'paket' => $paket,
             'jemaahs' => $jemaahs,
-            'pemesanans' => $pemesanan ? $pemesanan->paket->pemesanans : [],
-            'grups' => $grup ? $grup->paket->grups : [],
+            'createPemesanans' => $createPemesanan ? $createPemesanan->paket->pemesanans : [],
+            'createGrups' => $createGrup ? $createGrup->paket->grups : [],
+            'createMahramCandidates' => $createMahramCandidates->get(),
+            'editMahramCandidates' => $editMahramCandidates->get(),
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi_id')) ? Kabupaten::where('provinsi_id', old('provinsi_id'))->get() : Kabupaten::all(),
+            'kabupatens' => Kabupaten::all(),
         ]);
     }
 
@@ -105,7 +93,7 @@ class AdminJemaahController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'pemesanan_id' => 'required|string',
             'grup_id' => 'nullable|string',
             'mahram_id' => 'nullable|string',
@@ -140,6 +128,12 @@ class AdminJemaahController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
 
+        $validator->after(function ($validator) use ($request) {
+            $this->validateKuotaGrup($validator, $request->grup_id);
+        });
+
+        $validateData = $validator->validate();
+
         if ($request->hasFile('foto')) {
             $validateData['foto'] = $request->file('foto')->store('jemaah-foto');
         }
@@ -147,6 +141,31 @@ class AdminJemaahController extends Controller
         Jemaah::create($validateData);
 
         return back()->with('success', 'Data jemaah berhasil ditambahkan');
+    }
+
+    /**
+     * Tolak jika grup sudah penuh (jumlah jemaah >= kuota_grup),
+     * dikecualikan satu jemaah yang sedang diedit (bila ada).
+     */
+    private function validateKuotaGrup($validator, $grupId, $excludeJemaahId = null)
+    {
+        if (! $grupId) {
+            return;
+        }
+
+        $grup = Grup::find($grupId);
+
+        if (! $grup || $grup->kuota_grup === null) {
+            return;
+        }
+
+        $jumlahJemaah = Jemaah::where('grup_id', $grupId)
+            ->when($excludeJemaahId, fn ($query) => $query->where('id', '!=', $excludeJemaahId))
+            ->count();
+
+        if ($jumlahJemaah >= $grup->kuota_grup) {
+            $validator->errors()->add('grup_id', "Grup {$grup->nama_grup} sudah penuh ({$jumlahJemaah}/{$grup->kuota_grup}).");
+        }
     }
 
     /**
@@ -164,56 +183,13 @@ class AdminJemaahController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Paket $paket = null, Jemaah $jemaah)
-    {
-        $pemesanan = optional($jemaah->pemesanan);
-        $grup = optional($jemaah->grup);
-
-
-        $jemaahs = Jemaah::query();
-
-
-        if ($paket) {
-            $jemaahs->whereHas('pemesanan', function ($query) use ($paket) {
-                $query->where('paket_id', $paket->id);
-            })->orWhereHas('grup', function ($query) use ($paket) {
-                $query->where('paket_id', $paket->id);
-            });
-        }
-
-        // if ($request->pemesanan_id) {
-        //     $jemaahs->where('pemesanan_id', $request->pemesanan_id);
-        // }
-
-        // if ($request->grup_id) {
-        //     $jemaahs->where('grup_id', $request->grup_id);
-        // }
-
-        $jemaahs = $jemaahs->get();
-
-        return view('admin.paket.jemaah.edit', [
-            'title' => 'Edit jemaah',
-            'page' => 'jemaah',
-            'jemaah' => $jemaah,
-            'paket' => $paket,
-            'jemaahs' => $jemaahs,
-            'pemesanans' => $pemesanan->paket->pemesanans ?? [],
-            'grups' => $grup->paket->grups ?? [],
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi_id', $jemaah->provinsi_id)) ? Kabupaten::where('provinsi_id', old('provinsi_id', $jemaah->provinsi_id))->get() : Kabupaten::all(),
-        ]);
-    }
-
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Jemaah $jemaah)
     {
-        $validateData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'pemesanan_id' => 'required|string',
             'grup_id' => 'nullable|string',
             'mahram_id' => 'nullable|string',
@@ -247,6 +223,12 @@ class AdminJemaahController extends Controller
             'kontak_keluarga_terdekat' => 'nullable|string',
             'is_active' => 'nullable|boolean',
         ]);
+
+        $validator->after(function ($validator) use ($request, $jemaah) {
+            $this->validateKuotaGrup($validator, $request->grup_id, $jemaah->id);
+        });
+
+        $validateData = $validator->validate();
 
         if ($request->hasFile('foto')) {
             $validateData['foto'] = $request->file('foto')->store('jemaah-foto');

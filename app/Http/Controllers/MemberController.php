@@ -12,6 +12,7 @@ use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\User;
 use App\Models\Berkas;
+use App\Services\TagihanCalculator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
@@ -22,9 +23,31 @@ class MemberController extends Controller
 {
     public function index()
     {
-        return view('home.index', [
-            'title' => 'Beranda | Haifa Nida Wisata',
-            'page' => 'beranda',
+        $user = Auth::user();
+        $title = 'Dashboard Saya | Haifa Nida Wisata';
+
+        $keberangkatanTerdekat = $user->pemesanans()
+            ->with('paket')
+            ->whereHas('paket', function ($query) {
+                $query->where('tanggal_mulai', '>=', Carbon::now());
+            })
+            ->get()
+            ->sortBy(fn ($pemesanan) => $pemesanan->paket->tanggal_mulai)
+            ->first();
+
+        $calculator = app(TagihanCalculator::class);
+        $pemesananAktif = $user->pemesanans()
+            ->whereNotIn('status', ['ditolak', 'dibatalkan'])
+            ->with(['paket', 'pemesananKamars.permintaans', 'pemesananEkstras'])
+            ->get();
+
+        $totalSaldoTertunggak = $pemesananAktif->sum(fn ($pemesanan) => $calculator->calculate($pemesanan)['balance']);
+
+        return view('home.dashboard', [
+            'title' => $title,
+            'user' => $user,
+            'keberangkatanTerdekat' => $keberangkatanTerdekat,
+            'totalSaldoTertunggak' => $totalSaldoTertunggak,
         ]);
     }
 

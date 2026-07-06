@@ -3,63 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poin;
-use Illuminate\Http\Request;
 
 class AgenPoinController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Riwayat poin milik agen yang sedang login.
      */
     public function index()
     {
-        //
+        $poins = Poin::where('user_id', auth()->id())
+            ->latest()
+            ->paginate(20);
+
+        return view('agen.poin.index', [
+            'title' => 'Riwayat Poin',
+            'page' => 'poin',
+            'poins' => $poins,
+            'totalPoin' => Poin::where('user_id', auth()->id())->sum('jumlah_poin'),
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Detail satu baris poin milik sendiri.
      */
     public function show(Poin $poin)
     {
-        //
-    }
+        abort_unless($poin->user_id === auth()->id(), 403);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Poin $poin)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Poin $poin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Poin $poin)
-    {
-        //
+        return view('agen.poin.show', [
+            'title' => 'Detail Poin',
+            'page' => 'poin',
+            'poin' => $poin,
+        ]);
     }
 }

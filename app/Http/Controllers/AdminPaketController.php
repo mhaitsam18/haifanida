@@ -14,23 +14,14 @@ class AdminPaketController extends Controller
      */
     public function index()
     {
+        $kantor = Kantor::find(auth()->user()->admin->kantor_id);
+
         return view('admin.paket.index', [
             'title' => 'Data paket',
             'page' => 'paket',
             'pakets' => Paket::latest()->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $kantor = Kantor::find(auth()->user()->admin->kantor_id);
-        return view('admin.paket.create', [
-            'title' => 'Tambah Paket',
-            'page' => 'paket',
             'kantor' => $kantor,
+            'kantors' => Kantor::all(),
         ]);
     }
 
@@ -46,6 +37,7 @@ class AdminPaketController extends Controller
             'jenis_paket' => 'required|in:haji,umroh,wisata_halal',
             'durasi' => 'required|numeric',
             'harga' => 'required|numeric',
+            'kuota_jemaah' => 'nullable|integer|min:1',
             'fasilitas' => 'required|string',
             'deskripsi' => 'required|string',
             'tempat_keberangkatan' => 'required|string',
@@ -107,19 +99,6 @@ class AdminPaketController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Paket $paket)
-    {
-        return view('admin.paket.edit', [
-            'title' => 'Edit Paket',
-            'page' => 'paket',
-            'paket' => $paket,
-            'kantors' => Kantor::all(),
-        ]);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Paket $paket)
@@ -131,6 +110,7 @@ class AdminPaketController extends Controller
             'jenis_paket' => 'required|in:haji,umroh,wisata_halal',
             'durasi' => 'required|numeric',
             'harga' => 'required|numeric',
+            'kuota_jemaah' => 'nullable|integer|min:1',
             'fasilitas' => 'required|string',
             'deskripsi' => 'required|string',
             'tempat_keberangkatan' => 'required|string',

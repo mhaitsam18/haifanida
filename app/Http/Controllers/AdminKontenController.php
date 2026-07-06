@@ -21,17 +21,6 @@ class AdminKontenController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.konten.create', [
-            'title' => 'Data konten',
-            'page' => 'konten',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -59,18 +48,6 @@ class AdminKontenController extends Controller
     {
         return view('admin.konten.show', [
             'title' => 'Detail Konten',
-            'page' => 'konten',
-            'konten' => $konten,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Konten $konten)
-    {
-        return view('admin.konten.edit', [
-            'title' => 'Ubah Konten',
             'page' => 'konten',
             'konten' => $konten,
         ]);

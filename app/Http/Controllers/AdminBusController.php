@@ -44,7 +44,7 @@ class AdminBusController extends Controller
             'nomor_rombongan' => 'required|string',
             'nomor_polisi' => 'nullable|string',
             'merek' => 'nullable|string',
-            'kapasitas' => 'nullable|string',
+            'kapasitas' => 'nullable|integer|min:1',
             'fasilitas' => 'nullable|string',
         ]);
 
@@ -87,7 +87,7 @@ class AdminBusController extends Controller
             'nomor_rombongan' => 'required|string',
             'nomor_polisi' => 'nullable|string',
             'merek' => 'nullable|string',
-            'kapasitas' => 'nullable|string',
+            'kapasitas' => 'nullable|integer|min:1',
             'fasilitas' => 'nullable|string',
         ]);
 

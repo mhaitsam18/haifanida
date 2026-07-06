@@ -22,17 +22,6 @@ class AdminAuthorController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.author.create', [
-            'title' => 'Tambah Author',
-            'page' => 'author',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -66,19 +55,6 @@ class AdminAuthorController extends Controller
 
         return view('admin.author.show', [
             'title' => 'Detail Author',
-            'page' => 'author',
-            'author' => $author,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Author $author)
-    {
-
-        return view('admin.author.edit', [
-            'title' => 'Edit Data Author',
             'page' => 'author',
             'author' => $author,
         ]);

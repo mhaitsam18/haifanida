@@ -19,18 +19,6 @@ class AdminPaketEkstraController extends Controller
             'page' => 'paket-ekstra',
             'paket' => $paket,
             'paketEkstras' => ($paket) ? $paket->paketEkstras()->with('ekstra')->paginate(200) : PaketEkstra::with('ekstra')->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.ekstra.create', [
-            'title' => 'Tambah Data Paket Ekstra',
-            'page' => 'paket-ekstra',
-            'paket' => $paket,
             'pakets' => Paket::all(),
             'ekstras' => Ekstra::all(),
         ]);
@@ -60,20 +48,6 @@ class AdminPaketEkstraController extends Controller
             'title' => 'Detail Paket Ekstra',
             'page' => 'paket-ekstra',
             'paketEkstra' => $paketEkstra,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PaketEkstra $paketEkstra)
-    {
-        return view('admin.paket.ekstra.edit', [
-            'title' => 'Edit Paket Ekstra',
-            'page' => 'paket-ekstra',
-            'paketEkstra' => $paketEkstra,
-            'pakets' => Paket::all(),
-            'ekstras' => Ekstra::all(),
         ]);
     }
 

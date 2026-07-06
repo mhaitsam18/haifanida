@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
+use App\Models\PemesananStatusHistory;
+use App\Models\Poin;
 use Illuminate\Http\Request;
 
 class AdminPembayaranController extends Controller
@@ -114,5 +117,144 @@ class AdminPembayaranController extends Controller
     {
         $pembayaran->delete();
         return back()->with('success', 'Pembayaran berhasil dihapus');
+    }
+
+    /**
+     * Verifikasi pembayaran: tandai diterima, catat siapa yang memverifikasi,
+     * dan tulis satu baris ke pemesanan_status_history.
+     */
+    public function verify(Pembayaran $pembayaran)
+    {
+        $pembayaran->update([
+            'status_pembayaran' => 'diterima',
+            'diverifikasi_oleh' => auth()->id(),
+        ]);
+
+        PemesananStatusHistory::create([
+            'pemesanan_id' => $pembayaran->pemesanan_id,
+            'status' => 'pembayaran_diterima',
+            'catatan' => 'Pembayaran Rp' . number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') . ' diverifikasi oleh ' . auth()->user()->name,
+            'changed_by' => auth()->id(),
+        ]);
+
+        $this->awardKomisiAgen($pembayaran);
+        $this->awardBonusReferral($pembayaran);
+
+        return back()->with('success', 'Pembayaran berhasil diverifikasi');
+    }
+
+    /**
+     * Beri poin komisi ke agen yang menaungi jemaah dari pemesanan ini
+     * (ditelusuri lewat pemesanan -> jemaah -> grup -> agen), bila ada.
+     * Rasio poin diatur di config('finance.komisi_agen_poin_per_rp').
+     */
+    private function awardKomisiAgen(Pembayaran $pembayaran): void
+    {
+        $pemesanan = $pembayaran->pemesanan;
+
+        if (! $pemesanan) {
+            return;
+        }
+
+        $grup = $pemesanan->jemaahs->pluck('grup')->filter()->first();
+        $agen = $grup?->agen;
+
+        if (! $agen || ! $agen->user_id) {
+            return;
+        }
+
+        $rate = (float) config('finance.komisi_agen_poin_per_rp', 100000);
+        $jumlahPoin = $rate > 0 ? intdiv((int) $pembayaran->jumlah_pembayaran, (int) $rate) : 0;
+
+        if ($jumlahPoin <= 0) {
+            return;
+        }
+
+        Poin::create([
+            'user_id' => $agen->user_id,
+            'tipe' => 'komisi_agen',
+            'referensi_type' => Pembayaran::class,
+            'referensi_id' => $pembayaran->id,
+            'jumlah_poin' => $jumlahPoin,
+            'keterangan' => 'Komisi dari pembayaran pemesanan #' . $pemesanan->id . ' (Rp' . number_format($pembayaran->jumlah_pembayaran, 0, ',', '.') . ')',
+        ]);
+    }
+
+    /**
+     * Beri poin bonus_referral ke agen perujuk saat pembayaran PERTAMA dari
+     * member yang direferensikannya berhasil diverifikasi. Nilai poin diatur
+     * di config('finance.bonus_referral_poin').
+     */
+    private function awardBonusReferral(Pembayaran $pembayaran): void
+    {
+        $pemesanan = $pembayaran->pemesanan;
+
+        if (! $pemesanan || ! $pemesanan->user_id) {
+            return;
+        }
+
+        $member = Member::where('user_id', $pemesanan->user_id)->first();
+
+        if (! $member || ! $member->referred_by) {
+            return;
+        }
+
+        $pemesananIds = Pemesanan::where('user_id', $member->user_id)->pluck('id');
+
+        $sudahPernahBayar = Pembayaran::whereIn('pemesanan_id', $pemesananIds)
+            ->where('status_pembayaran', 'diterima')
+            ->where('id', '!=', $pembayaran->id)
+            ->exists();
+
+        if ($sudahPernahBayar) {
+            return;
+        }
+
+        $agen = $member->referrer;
+
+        if (! $agen || ! $agen->user_id) {
+            return;
+        }
+
+        $poin = (int) config('finance.bonus_referral_poin', 10);
+
+        if ($poin <= 0) {
+            return;
+        }
+
+        Poin::create([
+            'user_id' => $agen->user_id,
+            'tipe' => 'bonus_referral',
+            'referensi_type' => Member::class,
+            'referensi_id' => $member->id,
+            'jumlah_poin' => $poin,
+            'keterangan' => 'Bonus referral: pembayaran pertama dari ' . ($member->nama_lengkap ?? 'member #' . $member->id),
+        ]);
+    }
+
+    /**
+     * Tolak pembayaran: tandai ditolak, catat siapa yang menolak,
+     * dan tulis satu baris ke pemesanan_status_history.
+     */
+    public function reject(Request $request, Pembayaran $pembayaran)
+    {
+        $validated = $request->validate([
+            'keterangan' => 'nullable|string',
+        ]);
+
+        $pembayaran->update([
+            'status_pembayaran' => 'ditolak',
+            'diverifikasi_oleh' => auth()->id(),
+            'keterangan' => $validated['keterangan'] ?? $pembayaran->keterangan,
+        ]);
+
+        PemesananStatusHistory::create([
+            'pemesanan_id' => $pembayaran->pemesanan_id,
+            'status' => 'pembayaran_ditolak',
+            'catatan' => 'Pembayaran Rp' . number_format($pembayaran->jumlah_pembayaran, 2, ',', '.') . ' ditolak oleh ' . auth()->user()->name . ($validated['keterangan'] ?? '' ? ': ' . $validated['keterangan'] : ''),
+            'changed_by' => auth()->id(),
+        ]);
+
+        return back()->with('success', 'Pembayaran berhasil ditolak');
     }
 }

@@ -19,18 +19,6 @@ class AdminPemesananKamarController extends Controller
             'page' => 'pemesanan-kamar',
             'pemesanan' => $pemesanan,
             'pemesananKamars' => ($pemesanan) ? $pemesanan->pemesananKamars()->paginate(200) : PemesananKamar::paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Pemesanan $pemesanan = null)
-    {
-        return view('admin.paket.pemesanan.pemesanan-kamar.create', [
-            'title' => 'Tambah Pemesanan Kamar',
-            'page' => 'pemesanan-kamar',
-            'pemesanan' => $pemesanan,
             'pemesanans' => Pemesanan::all(),
             'kamars' => Ekstra::where('jenis_ekstra', 'tipe kamar')->get(),
         ]);
@@ -62,20 +50,6 @@ class AdminPemesananKamarController extends Controller
             'title' => 'Detail Pemesanan Kamar',
             'page' => 'pemesanan-kamar',
             'pemesananKamar' => $pemesananKamar,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PemesananKamar $pemesananKamar)
-    {
-        return view('admin.paket.pemesanan.pemesanan-kamar.edit', [
-            'title' => 'Edit Pemesanan Kamar',
-            'page' => 'pemesanan-kamar',
-            'pemesananKamar' => $pemesananKamar,
-            'pemesanans' => Pemesanan::all(),
-            'kamars' => Ekstra::where('jenis_ekstra', 'tipe kamar')->get(),
         ]);
     }
 

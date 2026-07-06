@@ -5,7 +5,7 @@
         use Carbon\Carbon;
         $slides = [$beranda1, $beranda2, $beranda3];
         $startDate = Carbon::create(2007, 8, 2);
-        $experienceYears = Carbon::now()->diffInYears($startDate);
+        $experienceYears = now()->year - 2007;
     @endphp
 
     {{-- Hero --}}

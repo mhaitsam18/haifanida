@@ -89,7 +89,7 @@ class PemesananController extends Controller
     public function storePemesanan(Request $request)
     {
         // Validasi data umum pemesanan
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'paket_id' => 'required|integer|exists:paket,id',
             'user_id' => 'required|integer',
             'tanggal_pesan' => 'required|date',
@@ -97,6 +97,12 @@ class PemesananController extends Controller
             'metode_pembayaran' => 'nullable|string',
             'tanggal_pelunasan' => 'nullable|date',
         ]);
+
+        $validator->after(function ($validator) use ($request) {
+            $this->validateKuotaPaket($validator, $request->paket_id, (int) $request->jumlah_orang);
+        });
+
+        $validatedData = $validator->validate();
 
         // Ambil data paket untuk perhitungan total, misalnya
         $paket = Paket::findOrFail($validatedData['paket_id']);
@@ -167,6 +173,29 @@ class PemesananController extends Controller
 
         return redirect()->route('pemesanan.detail', $pemesanan->id)
             ->with('success', 'Silahkan tunggu pihak kami menghubungi anda untuk melakukan konfirmasi pemesanan.');
+    }
+
+    /**
+     * Tolak jika total jemaah (pemesanan aktif + pemesanan baru ini) akan
+     * melebihi kuota_jemaah paket. Pemesanan berstatus ditolak/dibatalkan
+     * tidak dihitung karena tidak lagi menempati kuota.
+     */
+    private function validateKuotaPaket($validator, $paketId, int $jumlahOrangBaru)
+    {
+        $paket = Paket::find($paketId);
+
+        if (! $paket || $paket->kuota_jemaah === null) {
+            return;
+        }
+
+        $jumlahTerpakai = Pemesanan::where('paket_id', $paketId)
+            ->whereNotIn('status', ['ditolak', 'dibatalkan'])
+            ->sum('jumlah_orang');
+
+        if ($jumlahTerpakai + $jumlahOrangBaru > $paket->kuota_jemaah) {
+            $sisaKuota = max(0, $paket->kuota_jemaah - $jumlahTerpakai);
+            $validator->errors()->add('jumlah_orang', "Kuota paket {$paket->nama_paket} tersisa {$sisaKuota} dari {$paket->kuota_jemaah}.");
+        }
     }
 
     public function detailPemesanan($id)

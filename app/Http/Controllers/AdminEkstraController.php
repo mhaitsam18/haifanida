@@ -20,17 +20,6 @@ class AdminEkstraController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.ekstra.create', [
-            'title' => 'Tambah ekstra',
-            'page' => 'ekstra',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -53,18 +42,6 @@ class AdminEkstraController extends Controller
     {
         return view('admin.ekstra.show', [
             'title' => 'Detail ekstra',
-            'page' => 'ekstra',
-            'ekstra' => $ekstra,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ekstra $ekstra)
-    {
-        return view('admin.ekstra.edit', [
-            'title' => 'Edit ekstra',
             'page' => 'ekstra',
             'ekstra' => $ekstra,
         ]);

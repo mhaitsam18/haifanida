@@ -7,6 +7,7 @@ use App\Models\Kantor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminAgenController extends Controller
 {
@@ -19,17 +20,6 @@ class AdminAgenController extends Controller
             'title' => 'Data Agen',
             'page' => 'agen',
             'agens' => Agen::with(['user', 'kantor'])->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.agen.create', [
-            'title' => 'Tambah Agen',
-            'page' => 'agen',
             'kantors' => Kantor::all(),
         ]);
     }
@@ -60,8 +50,21 @@ class AdminAgenController extends Controller
         Agen::create([
             'user_id' => $user->id,
             'kantor_id' => $validateAgen['kantor_id'],
+            'kode_referral' => $this->generateKodeReferral(),
         ]);
         return redirect('/admin/agen')->with('success', 'Data Agen berhasil ditambahkan');
+    }
+
+    /**
+     * Buat kode referral unik acak untuk agen baru.
+     */
+    private function generateKodeReferral(): string
+    {
+        do {
+            $kode = strtoupper(Str::random(8));
+        } while (Agen::where('kode_referral', $kode)->exists());
+
+        return $kode;
     }
 
     /**
@@ -73,19 +76,6 @@ class AdminAgenController extends Controller
             'title' => 'Detail Agen',
             'page' => 'agen',
             'agen' => $agen,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Agen $agen)
-    {
-        return view('admin.agen.edit', [
-            'title' => 'Edit Data Agen',
-            'page' => 'agen',
-            'agen' => $agen,
-            'kantors' => Kantor::all(),
         ]);
     }
 

@@ -20,19 +20,8 @@ class AdminMemberController extends Controller
             'title' => 'Data member',
             'page' => 'member',
             'members' => Member::with('user')->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.member.create', [
-            'title' => 'Tambah member',
-            'page' => 'member',
             'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi_id')) ? Kabupaten::where('provinsi_id', old('provinsi_id'))->get() : Kabupaten::all(),
+            'kabupatens' => Kabupaten::all(),
         ]);
     }
 

@@ -19,17 +19,6 @@ class AdminAdminController extends Controller
             'title' => 'Data Admin',
             'page' => 'admin',
             'admins' => Admin::with(['user', 'kantor'])->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.admin.create', [
-            'title' => 'Tambah Admin',
-            'page' => 'admin',
             'kantors' => Kantor::all(),
         ]);
     }
@@ -82,19 +71,6 @@ class AdminAdminController extends Controller
             'title' => 'Detail Admin',
             'page' => 'admin',
             'admin' => $admin,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Admin $admin)
-    {
-        return view('admin.admin.edit', [
-            'title' => 'Edit Data Admin',
-            'page' => 'admin',
-            'admin' => $admin,
-            'kantors' => Kantor::all(),
         ]);
     }
 

@@ -1,12 +1,57 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <x-page-header :title="$title">
-        <x-slot:actions>
-            <x-button :href="'/admin/jemaah/' . $jemaah->id . '/bus/create'"><i class="bx bx-plus"></i> Tambah</x-button>
-            <x-button variant="secondary" :href="'/admin/jemaah/' . $jemaah->id"><i class="bx bx-arrow-back"></i> Kembali</x-button>
-        </x-slot:actions>
-    </x-page-header>
+    <div x-data="modalForm()">
+        <x-page-header :title="$title">
+            <x-slot:actions>
+                <button type="button" @click="show()" class="inline-flex items-center gap-1.5 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
+                    <i class="bx bx-plus"></i> Tambah
+                </button>
+                <x-button variant="secondary" :href="'/admin/jemaah/' . $jemaah->id"><i class="bx bx-arrow-back"></i> Kembali</x-button>
+            </x-slot:actions>
+        </x-page-header>
+
+        <x-modal title="Tambah Data Penumpang">
+            <form action="/admin/bus-jemaah" method="post" @submit="submit">
+                @csrf
+
+                <div class="mb-4">
+                    <label for="bus_id" class="mb-1.5 block text-sm font-medium text-stone-700">Bus</label>
+                    <select id="bus_id" name="bus_id"
+                        class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                        <option value="" selected disabled>Pilih Bus</option>
+                        @foreach ($createBuses as $item_bus)
+                            <option value="{{ $item_bus->id }}">{{ $item_bus->nomor_rombongan }}</option>
+                        @endforeach
+                    </select>
+                    <x-form-error name="bus_id" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="jemaah_id" class="mb-1.5 block text-sm font-medium text-stone-700">Jemaah</label>
+                    <select id="jemaah_id" name="jemaah_id"
+                        class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                        <option value="" selected disabled>Pilih Jemaah</option>
+                        @foreach ($createJemaahs as $item_jemaah)
+                            <option value="{{ $item_jemaah->id }}" @selected($jemaah && $item_jemaah->id == $jemaah->id)>{{ $item_jemaah->nama_lengkap }}</option>
+                        @endforeach
+                    </select>
+                    <x-form-error name="jemaah_id" />
+                </div>
+
+                <x-form-input label="Nomor Kursi" name="nomor_kursi" placeholder="Nomor Kursi" />
+                <x-form-error name="nomor_kursi" />
+
+                <div class="flex justify-end gap-2">
+                    <x-button type="button" variant="secondary" @click="hide()">Batal</x-button>
+                    <x-button type="submit">
+                        <span x-show="!submitting">Simpan</span>
+                        <span x-show="submitting">Menyimpan...</span>
+                    </x-button>
+                </div>
+            </form>
+        </x-modal>
+    </div>
 
     <x-data-table searchPlaceholder="Cari penumpang...">
         <table class="w-full text-left text-sm">
@@ -27,10 +72,56 @@
                         <td class="px-4 py-3">{{ $penumpang->nomor_kursi }}</td>
                         <td class="px-4 py-3">{{ $penumpang->bus->nomor_rombongan }}</td>
                         <td class="px-4 py-3">
-                            <div class="flex items-center gap-2">
+                            @php
+                                $rowBuses = $editBuses[(int) $penumpang->bus->paket_id] ?? collect();
+                                $rowJemaahs = $editJemaahs[(int) $penumpang->bus->paket_id] ?? collect();
+                            @endphp
+                            <div class="flex items-center gap-2" x-data="modalForm()">
                                 <a href="/admin/bus/{{ $penumpang->bus_id }}" class="rounded-md bg-maroon-50 px-2.5 py-1 text-xs font-medium text-maroon-700 hover:bg-maroon-100">List Penumpang</a>
-                                <a href="/admin/bus-jemaah/{{ $penumpang->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
+                                <button type="button" @click="show()" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</button>
                                 <x-delete-form :action="'/admin/bus-jemaah/' . $penumpang->id" />
+
+                                <x-modal title="Edit Data Penumpang">
+                                    <form action="/admin/bus-jemaah/{{ $penumpang->id }}" method="post" @submit="submit">
+                                        @method('put')
+                                        @csrf
+
+                                        <div class="mb-4">
+                                            <label for="bus_id_{{ $penumpang->id }}" class="mb-1.5 block text-sm font-medium text-stone-700">Bus</label>
+                                            <select id="bus_id_{{ $penumpang->id }}" name="bus_id"
+                                                class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                                                <option value="" selected disabled>Pilih Bus</option>
+                                                @foreach ($rowBuses as $item_bus)
+                                                    <option value="{{ $item_bus->id }}" @selected($item_bus->id == $penumpang->bus_id)>{{ $item_bus->nomor_rombongan }}</option>
+                                                @endforeach
+                                            </select>
+                                            <x-form-error name="bus_id" />
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="jemaah_id_{{ $penumpang->id }}" class="mb-1.5 block text-sm font-medium text-stone-700">Jemaah</label>
+                                            <select id="jemaah_id_{{ $penumpang->id }}" name="jemaah_id"
+                                                class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                                                <option value="" selected disabled>Pilih Jemaah</option>
+                                                @foreach ($rowJemaahs as $item_jemaah)
+                                                    <option value="{{ $item_jemaah->id }}" @selected($item_jemaah->id == $penumpang->jemaah_id)>{{ $item_jemaah->nama_lengkap }}</option>
+                                                @endforeach
+                                            </select>
+                                            <x-form-error name="jemaah_id" />
+                                        </div>
+
+                                        <x-form-input label="Nomor Kursi" name="nomor_kursi" :value="$penumpang->nomor_kursi" placeholder="Nomor Kursi" />
+                                        <x-form-error name="nomor_kursi" />
+
+                                        <div class="flex justify-end gap-2">
+                                            <x-button type="button" variant="secondary" @click="hide()">Batal</x-button>
+                                            <x-button type="submit">
+                                                <span x-show="!submitting">Simpan</span>
+                                                <span x-show="submitting">Menyimpan...</span>
+                                            </x-button>
+                                        </div>
+                                    </form>
+                                </x-modal>
                             </div>
                         </td>
                     </tr>

@@ -19,18 +19,6 @@ class AdminPemesananController extends Controller
             'page' => 'pemesanan',
             'paket' => $paket,
             'pemesanans' => ($paket) ? $paket->pemesanans()->paginate(200) : Pemesanan::paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.pemesanan.create', [
-            'title' => 'Tambah Data Pemesanan',
-            'page' => 'pemesanan',
-            'paket' => $paket,
             'pakets' => Paket::all(),
             'users' => User::all(),
         ]);
@@ -75,20 +63,6 @@ class AdminPemesananController extends Controller
             'title' => 'Detail Pemesanan',
             'page' => 'pemesanan',
             'pemesanan' => $pemesanan,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pemesanan $pemesanan)
-    {
-        return view('admin.paket.pemesanan.edit', [
-            'title' => 'Edit Pemesanan',
-            'page' => 'pemesanan',
-            'pemesanan' => $pemesanan,
-            'pakets' => Paket::all(),
-            'users' => User::all(),
         ]);
     }
 

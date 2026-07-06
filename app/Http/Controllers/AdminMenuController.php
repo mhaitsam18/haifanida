@@ -20,18 +20,6 @@ class AdminMenuController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.menu.create', [
-            'title' => 'Tambah Menu',
-            'page' => 'menu',
-            'menus' => Menu::all(),
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -58,19 +46,6 @@ class AdminMenuController extends Controller
             'title' => 'Detail Menu',
             'page' => 'menu',
             'menu' => $menu,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Menu $menu)
-    {
-        return view('admin.menu.edit', [
-            'title' => 'Edit Menu',
-            'page' => 'menu',
-            'menu' => $menu,
-            'parents' => Menu::all(),
         ]);
     }
 

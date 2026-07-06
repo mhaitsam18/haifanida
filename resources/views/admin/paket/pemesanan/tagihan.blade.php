@@ -39,7 +39,6 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-cream-200">
-                    @php $total = 0; @endphp
                     @foreach ($tagihans as $tagihan)
                         <tr>
                             <td class="px-4 py-3">{{ $loop->iteration }}</td>
@@ -48,7 +47,6 @@
                             <td class="px-4 py-3 text-right">Rp.{{ number_format($tagihan['biaya_satuan'], 2, ',', '.') }}</td>
                             <td class="px-4 py-3 text-right">Rp.{{ number_format($tagihan['total'], 2, ',', '.') }}</td>
                         </tr>
-                        @php $total += $tagihan['total']; @endphp
                     @endforeach
                 </tbody>
             </table>
@@ -60,17 +58,15 @@
                     <tbody class="divide-y divide-cream-200">
                         <tr>
                             <td class="py-2 text-stone-600">Sub Total</td>
-                            <td class="py-2 text-right text-stone-800">Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                            <td class="py-2 text-right text-stone-800">Rp.{{ number_format($subtotal, 2, ',', '.') }}</td>
                         </tr>
                         <tr>
-                            <td class="py-2 text-stone-600">TAX (11%)</td>
-                            @php $tax = ($total * 11) / 100; @endphp
+                            <td class="py-2 text-stone-600">TAX ({{ rtrim(rtrim(number_format($tax_rate, 2), '0'), '.') }}%)</td>
                             <td class="py-2 text-right text-stone-800">Rp.{{ number_format($tax, 2, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <td class="py-2 font-semibold text-stone-800">Total</td>
-                            @php $total += $tax; @endphp
-                            <td class="py-2 text-right font-semibold text-stone-800">Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                            <td class="py-2 text-right font-semibold text-stone-800">Rp.{{ number_format($subtotal + $tax, 2, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <td class="py-2 text-stone-600">Pembayaran dilakukan</td>
@@ -78,8 +74,7 @@
                         </tr>
                         <tr class="bg-cream-100">
                             <td class="px-2 py-2.5 font-semibold text-maroon-900">Balance / Sisa Tagihan yang harus dibayarkan</td>
-                            @php $total -= $pembayaran; @endphp
-                            <td class="px-2 py-2.5 text-right font-semibold text-maroon-900">Rp.{{ number_format($total, 2, ',', '.') }}</td>
+                            <td class="px-2 py-2.5 text-right font-semibold text-maroon-900">Rp.{{ number_format($balance, 2, ',', '.') }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -88,7 +83,7 @@
 
         <div class="mt-8 flex flex-wrap justify-end gap-2">
             <x-button variant="secondary" :href="'/admin/pemesanan/' . $pemesanan->id"><i class="bx bx-arrow-back"></i> Kembali</x-button>
-            <x-button variant="outline" href="javascript:;"><i class="bx bx-printer"></i> Cetak</x-button>
+            <x-button variant="outline" :href="route('admin.pemesanan.cetak', $pemesanan->id)"><i class="bx bx-printer"></i> Cetak</x-button>
             <x-button href="javascript:;"><i class="bx bx-send"></i> Kirim Tagihan</x-button>
         </div>
     </x-card>

@@ -18,17 +18,6 @@ class AdminPerwakilanController extends Controller
             'title' => 'Data perwakilan',
             'page' => 'perwakilan',
             'perwakilans' => Kantor::where('jenis_kantor', 'perwakilan')->with('kabupaten')->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.perwakilan.create', [
-            'title' => 'Tambah Perwakilan',
-            'page' => 'perwakilan',
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
         ]);
@@ -65,22 +54,6 @@ class AdminPerwakilanController extends Controller
             'title' => 'Detail perwakilan',
             'page' => 'perwakilan',
             'perwakilan' => $perwakilan,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kantor $perwakilan)
-    {
-        abort_unless($perwakilan->jenis_kantor === 'perwakilan', 404);
-
-        return view('admin.perwakilan.edit', [
-            'title' => 'Edit perwakilan',
-            'page' => 'perwakilan',
-            'perwakilan' => $perwakilan,
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::all(),
         ]);
     }
 

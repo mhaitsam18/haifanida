@@ -48,6 +48,7 @@
                     <x-form-input label="Nomor Ponsel" name="phone_number" placeholder="Nomor Ponsel" :value="old('phone_number')" required />
                     <x-form-input label="Kata Sandi" name="password" type="password" placeholder="Kata Sandi" required />
                     <x-form-input label="Konfirmasi Kata Sandi" name="password_confirmation" type="password" placeholder="Konfirmasi Kata Sandi" required />
+                    <x-form-input label="Kode Referral (opsional)" name="kode_referral" placeholder="Kode Referral Agen" :value="old('kode_referral', request()->query('ref'))" />
 
                     <x-button type="submit" class="w-full justify-center">Daftar</x-button>
 

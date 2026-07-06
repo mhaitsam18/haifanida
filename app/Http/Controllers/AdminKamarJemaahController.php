@@ -6,6 +6,7 @@ use App\Models\Jemaah;
 use App\Models\Kamar;
 use App\Models\KamarJemaah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdminKamarJemaahController extends Controller
 {
@@ -70,13 +71,40 @@ class AdminKamarJemaahController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'kamar_id' => 'required|integer',
             'jemaah_id' => 'required|integer',
         ]);
 
+        $validator->after(function ($validator) use ($request) {
+            $this->validateKapasitas($validator, $request->kamar_id);
+        });
+
+        $validateData = $validator->validate();
+
         KamarJemaah::create($validateData);
         return back()->with('success', 'Data Penghuni berhasil ditambahkan');
+    }
+
+    /**
+     * Tolak jika kamar sudah penuh (jumlah penghuni >= kapasitas kamar),
+     * dikecualikan satu baris KamarJemaah yang sedang diedit (bila ada).
+     */
+    private function validateKapasitas($validator, $kamarId, $excludeKamarJemaahId = null)
+    {
+        $kamar = Kamar::find($kamarId);
+
+        if (! $kamar || $kamar->kapasitas === null) {
+            return;
+        }
+
+        $jumlahPenghuni = KamarJemaah::where('kamar_id', $kamarId)
+            ->when($excludeKamarJemaahId, fn ($query) => $query->where('id', '!=', $excludeKamarJemaahId))
+            ->count();
+
+        if ($jumlahPenghuni >= $kamar->kapasitas) {
+            $validator->errors()->add('kamar_id', "Kamar {$kamar->nomor_kamar} sudah penuh ({$jumlahPenghuni}/{$kamar->kapasitas}).");
+        }
     }
 
     /**
@@ -118,10 +146,16 @@ class AdminKamarJemaahController extends Controller
      */
     public function update(Request $request, KamarJemaah $kamarJemaah)
     {
-        $validateData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'kamar_id' => 'required|integer',
             'jemaah_id' => 'required|integer',
         ]);
+
+        $validator->after(function ($validator) use ($request, $kamarJemaah) {
+            $this->validateKapasitas($validator, $request->kamar_id, $kamarJemaah->id);
+        });
+
+        $validateData = $validator->validate();
 
         $kamarJemaah->update($validateData);
         return back()->with('success', 'Data Penghuni berhasil diperbarui');

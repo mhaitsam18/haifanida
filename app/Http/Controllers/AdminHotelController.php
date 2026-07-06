@@ -20,17 +20,6 @@ class AdminHotelController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.hotel.create', [
-            'title' => 'Tambah Hotel',
-            'page' => 'hotel',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -63,18 +52,6 @@ class AdminHotelController extends Controller
     {
         return view('admin.hotel.show', [
             'title' => 'Detail Hotel',
-            'page' => 'hotel',
-            'hotel' => $hotel,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Hotel $hotel)
-    {
-        return view('admin.hotel.edit', [
-            'title' => 'Edit Hotel',
             'page' => 'hotel',
             'hotel' => $hotel,
         ]);

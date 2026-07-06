@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jemaah;
 use App\Models\Paket;
 use App\Models\Pembayaran;
+use App\Models\Pemesanan;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -91,10 +92,7 @@ class AdminController extends Controller
         $jumlah_transaksi_bulan_ini = Pembayaran::whereMonth('tanggal_pembayaran', $currentMonth)
             ->whereYear('tanggal_pembayaran', $currentYear)
             ->sum('jumlah_pembayaran');
-        // Ambil jumlah pemasukan bulan ini
-        $jumlah_pemasukan_bulan_ini = Pembayaran::whereMonth('tanggal_pembayaran', $currentMonth)
-            ->whereYear('tanggal_pembayaran', $currentYear)
-            ->sum('jumlah_pembayaran');
+        $jumlah_pemasukan_bulan_ini = $jumlah_transaksi_bulan_ini;
 
         // Ambil jumlah pemasukan bulan sebelumnya
         $bulan_sebelumnya = ($currentMonth == 1) ? 12 : $currentMonth - 1;
@@ -129,7 +127,17 @@ class AdminController extends Controller
             ->groupBy('pemesanan.paket_id')
             ->get();
 
-        // dd($total_jemaah_per_paket_tahun_ini);
+        // Kuota jemaah terpakai vs kuota tersedia, untuk paket keberangkatan tahun ini yang membatasi kuota
+        $paketBerkuota = Paket::whereYear('tanggal_mulai', $currentYear)->whereNotNull('kuota_jemaah')->get(['id', 'kuota_jemaah']);
+        $totalKuotaJemaah = $paketBerkuota->sum('kuota_jemaah');
+        $totalJemaahTerisi = $total_jemaah_per_paket_tahun_ini->whereIn('paket_id', $paketBerkuota->pluck('id'))->sum('total_jemaah');
+
+        // Saldo tertunggak (ringkasan): total_harga pemesanan aktif dikurangi pembayaran yang sudah diterima
+        $pemesananAktifIds = Pemesanan::whereNotIn('status', ['ditolak', 'dibatalkan'])->pluck('id');
+        $totalTagihanAktif = Pemesanan::whereIn('id', $pemesananAktifIds)->sum('total_harga');
+        $totalSudahDibayar = Pembayaran::whereIn('pemesanan_id', $pemesananAktifIds)->where('status_pembayaran', 'diterima')->sum('jumlah_pembayaran');
+        $totalSaldoTertunggak = max(0, $totalTagihanAktif - $totalSudahDibayar);
+
         return view('admin.index', [
             'title' => 'Dashboard',
             'page' => 'index',
@@ -145,6 +153,9 @@ class AdminController extends Controller
             'jumlah_transaksi_per_bulan' => $jumlah_transaksi_per_bulan,
             'paket_tahun_ini' => $paket_tahun_ini,
             'total_jemaah_per_paket_tahun_ini' => $total_jemaah_per_paket_tahun_ini,
+            'totalKuotaJemaah' => $totalKuotaJemaah,
+            'totalJemaahTerisi' => $totalJemaahTerisi,
+            'totalSaldoTertunggak' => $totalSaldoTertunggak,
         ]);
     }
     public function profile()

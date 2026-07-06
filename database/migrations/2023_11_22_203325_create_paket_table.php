@@ -29,6 +29,9 @@ return new class extends Migration
             // Durasi paket wisata, misalnya berapa hari
             $table->integer('durasi')->nullable();
 
+            // Kuota maksimum jemaah untuk satu keberangkatan (null = tidak dibatasi)
+            $table->unsignedInteger('kuota_jemaah')->nullable();
+
             // Harga paket wisata
             $table->float('harga', 16, 2)->nullable();
 

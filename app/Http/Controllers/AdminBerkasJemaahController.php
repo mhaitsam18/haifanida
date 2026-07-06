@@ -21,19 +21,7 @@ class AdminBerkasJemaahController extends Controller
             'page' => 'berkas-jemaah',
             'berkasJemaahs' => $jemaah ? BerkasJemaah::with(['jemaah', 'berkas'])->where('jemaah_id', $jemaah->id)->paginate(200) : BerkasJemaah::with(['jemaah', 'berkas'])->paginate(200),
             'jemaah' => $jemaah,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Jemaah $jemaah = null)
-    {
-        return view('admin.paket.jemaah.berkas.create', [
-            'title' => 'Tambah Berkas',
-            'page' => 'berkas-jemaah',
             'berkass' => Berkas::all(),
-            'jemaah' => $jemaah,
         ]);
     }
 
@@ -82,19 +70,6 @@ class AdminBerkasJemaahController extends Controller
         return response($file, 200)->header('Content-Type', $mime);
     }
     // --MODIFIED
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(BerkasJemaah $berkasJemaah)
-    {
-        return view('admin.paket.jemaah.berkas.edit', [
-            'title' => 'Edit Data Berkas',
-            'page' => 'berkas-jemaah',
-            'berkasJemaah' => $berkasJemaah,
-            'berkass' => Berkas::all(),
-        ]);
-    }
-
     /**
      * Update the specified resource in storage.
      */

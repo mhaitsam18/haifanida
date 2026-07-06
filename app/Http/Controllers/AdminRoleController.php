@@ -21,17 +21,6 @@ class AdminRoleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.role.create', [
-            'title' => 'Tambah role',
-            'page' => 'role',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -55,18 +44,6 @@ class AdminRoleController extends Controller
             'page' => 'role',
             'role' => $role,
             'menus' => Menu::whereNull('parent_id')->get(),
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
-    {
-        return view('admin.role.edit', [
-            'title' => 'Edit role',
-            'page' => 'role',
-            'role' => $role,
         ]);
     }
 

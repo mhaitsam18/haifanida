@@ -21,17 +21,6 @@ class AdminBerkasController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.berkas.create', [
-            'title' => 'Tambah berkas',
-            'page' => 'berkas',
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -53,18 +42,6 @@ class AdminBerkasController extends Controller
     {
         return view('admin.berkas.show', [
             'title' => 'Detail berkas',
-            'page' => 'berkas',
-            'berkas' => $berkas,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Berkas $berkas)
-    {
-        return view('admin.berkas.edit', [
-            'title' => 'Edit berkas',
             'page' => 'berkas',
             'berkas' => $berkas,
         ]);

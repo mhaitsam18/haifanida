@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agen;
 use App\Models\Kabupaten;
 use App\Models\Member;
 use App\Models\Provinsi;
@@ -94,6 +95,7 @@ class AuthController extends Controller
             'google_id' => 'nullable',
             'google_token' => 'nullable',
             'avatar' => 'nullable',
+            'kode_referral' => 'nullable|string',
         ]);
 
         $userData = [
@@ -115,11 +117,16 @@ class AuthController extends Controller
 
         $user = User::create($userData);
 
+        $referrer = ! empty($validatedData['kode_referral'])
+            ? Agen::where('kode_referral', $validatedData['kode_referral'])->first()
+            : null;
+
         Member::create([
             'user_id' => $user->id,
             'nama_lengkap' => $validatedData['name'],
             'email' => $validatedData['email'],
             'nomor_telepon' => $validatedData['phone_number'],
+            'referred_by' => $referrer?->id,
         ]);
 
         if (!$request->has('google_id')) {

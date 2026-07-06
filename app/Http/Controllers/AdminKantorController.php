@@ -18,6 +18,8 @@ class AdminKantorController extends Controller
             'title' => 'Data Kantor',
             'page' => 'kantor',
             'kantors' => Kantor::with('kabupaten.provinsi')->paginate(200),
+            'provinsis' => Provinsi::all(),
+            'kabupatens' => Kabupaten::all(),
         ]);
     }
 
@@ -30,19 +32,6 @@ class AdminKantorController extends Controller
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::where('provinsi_id', old('provinsi_id', $kantor->kabupaten->provinsi_id))->get(),
             'kantor' => $kantor,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.kantor.create', [
-            'title' => 'Tambah kantor',
-            'page' => 'kantor',
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi_id')) ? Kabupaten::where('provinsi_id', old('provinsi_id'))->get() : Kabupaten::all(),
         ]);
     }
 
@@ -79,20 +68,6 @@ class AdminKantorController extends Controller
             'title' => 'Detail Kantor',
             'page' => 'kantor',
             'kantor' => $kantor,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kantor $kantor)
-    {
-        return view('admin.kantor.edit', [
-            'title' => 'Edit kantor',
-            'page' => 'kantor',
-            'kantor' => $kantor,
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::where('provinsi_id', old('provinsi_id', $kantor->kabupaten->provinsi_id))->get(),
         ]);
     }
 

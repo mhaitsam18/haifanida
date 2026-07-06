@@ -18,17 +18,6 @@ class AdminCabangController extends Controller
             'title' => 'Data cabang',
             'page' => 'cabang',
             'cabangs' => Kantor::where('jenis_kantor', 'cabang')->with(['kabupaten', 'indukKantor'])->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.cabang.create', [
-            'title' => 'Tambah cabang',
-            'page' => 'cabang',
             'provinsis' => Provinsi::all(),
             'kabupatens' => Kabupaten::all(),
             'perwakilans' => Kantor::where('jenis_kantor', 'perwakilan')->get(),
@@ -67,23 +56,6 @@ class AdminCabangController extends Controller
             'title' => 'Detail Cabang',
             'page' => 'cabang',
             'cabang' => $cabang,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kantor $cabang)
-    {
-        abort_unless($cabang->jenis_kantor === 'cabang', 404);
-
-        return view('admin.cabang.edit', [
-            'title' => 'Edit cabang',
-            'page' => 'cabang',
-            'cabang' => $cabang,
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => Kabupaten::all(),
-            'perwakilans' => Kantor::where('jenis_kantor', 'perwakilan')->get(),
         ]);
     }
 

@@ -41,4 +41,9 @@ class Agen extends Model
     {
         return $this->hasMany(Poin::class, 'user_id', 'user_id');
     }
+
+    public function referredMembers()
+    {
+        return $this->hasMany(Member::class, 'referred_by');
+    }
 }

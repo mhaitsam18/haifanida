@@ -23,7 +23,14 @@
                     <li><span class="text-stone-500">Nama Grup:</span> {{ $grup->nama_grup }}</li>
                     <li><span class="text-stone-500">Nama Agen:</span> {{ $grup->agen->user->name ?? '' }}</li>
                     <li><span class="text-stone-500">Ketua Grup:</span> {{ $grup->ketua_grup }}</li>
-                    <li><span class="text-stone-500">Kuota Grup:</span> {{ $grup->kuota_grup }}</li>
+                    <li>
+                        <span class="text-stone-500">Kuota Grup:</span>
+                        @if ($grup->kuota_grup !== null)
+                            <x-badge :variant="$anggotas->count() >= $grup->kuota_grup ? 'danger' : 'success'">{{ $anggotas->count() }} / {{ $grup->kuota_grup }} terisi</x-badge>
+                        @else
+                            <x-badge variant="info">Tidak dibatasi</x-badge>
+                        @endif
+                    </li>
                     <li><span class="text-stone-500">Status Grup:</span> {{ $grup->status_grup }}</li>
                     <li><span class="text-stone-500">Keterangan Grup:</span> {{ $grup->keterangan_grup }}</li>
                 </ul>

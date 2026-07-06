@@ -3,83 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grup;
-use App\Models\Pembayaran;
 use App\Models\Pemesanan;
-use Illuminate\Http\Request;
+use App\Services\TagihanCalculator;
 
 class MemberTagihanController extends Controller
 {
-    public function index($id)
+    public function index($id, TagihanCalculator $calculator)
     {
         $pemesanan = Pemesanan::where('id', $id)
+            ->where('user_id', auth()->id())
             ->with(['paket', 'pemesananKamars.permintaans', 'pemesananEkstras'])
-            ->first();
+            ->firstOrFail();
 
-        // if (!$p.maah) {
-        //     abort(404, 'Pemesanan tidak ditemukan');
-        // }
-
-        $tagihans = [
-            [
-                'deskripsi' => $pemesanan->paket->nama_paket,
-                'jumlah' => $pemesanan->jumlah_orang,
-                'biaya_satuan' => $pemesanan->paket->harga,
-                'satuan' => 'pax',
-                'total' => $pemesanan->paket->harga * $pemesanan->jumlah_orang,
-            ],
-        ];
-
-        foreach ($pemesanan->pemesananKamars as $pemesanan_kamar) {
-            $tagihans[] = [
-                'deskripsi' => $pemesanan_kamar->tipe_kamar,
-                'jumlah' => 1,
-                'biaya_satuan' => $pemesanan_kamar->harga,
-                'satuan' => 'pax',
-                'total' => $pemesanan_kamar->harga,
-            ];
-
-            foreach ($pemesanan_kamar->permintaans as $permintaan) {
-                $tagihans[] = [
-                    'deskripsi' => 'Tambahan : ' . $permintaan->permintaan,
-                    'jumlah' => 1,
-                    'biaya_satuan' => $permintaan->harga,
-                    'satuan' => '',
-                    'total' => $permintaan->harga,
-                ];
-            }
-        }
-
-        foreach ($pemesanan->pemesananEkstras as $pemesanan_ekstra) {
-            $tagihans[] = [
-                'deskripsi' => $pemesanan_ekstra->ekstra,
-                'jumlah' => $pemesanan_ekstra->jumlah,
-                'biaya_satuan' => $pemesanan_ekstra->total_harga / $pemesanan_ekstra->jumlah,
-                'satuan' => '',
-                'total' => $pemesanan_ekstra->total_harga,
-            ];
-        }
-
-        $pembayaran = Pembayaran::where('pemesanan_id', $pemesanan->id)
-            ->where('status_pembayaran', 'diterima')
-            ->sum('jumlah_pembayaran');
-
-        $totals = array_column($tagihans, 'total');
-        $balance = array_sum($totals);
-        // $tax = ($balance * 11) / 100;
-        // $balance += $tax;
-        $balance -= $pembayaran;
-
-        // Update is_pembayaran_lunas based on balance
-        $pemesanan->is_pembayaran_lunas = $balance <= 0;
-        $pemesanan->save();
+        $hasil = $calculator->calculate($pemesanan);
 
         return view('home.pemesanan.tagihan', [
             'title' => 'Data Pemesanan',
             'page' => 'pemesanan',
             'pemesanan' => $pemesanan,
-            'tagihans' => $tagihans,
-            'pembayaran' => $pembayaran ?? 0,
-            'balance' => $balance,
+            'tagihans' => $hasil['tagihans'],
+            'subtotal' => $hasil['subtotal'],
+            'tax_rate' => $hasil['tax_rate'],
+            'tax' => $hasil['tax'],
+            'pembayaran' => $hasil['pembayaran'],
+            'balance' => $hasil['balance'],
         ]);
     }
 
@@ -93,8 +40,27 @@ class MemberTagihanController extends Controller
         ]);
     }
 
-    public function cetak(Pemesanan $pemesanan)
+    /**
+     * Unduh rincian tagihan milik sendiri sebagai PDF.
+     */
+    public function cetak(Pemesanan $pemesanan, TagihanCalculator $calculator)
     {
-        // Implement print functionality if needed
+        if ($pemesanan->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $hasil = $calculator->calculate($pemesanan);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.tagihan', [
+            'pemesanan' => $pemesanan,
+            'tagihans' => $hasil['tagihans'],
+            'subtotal' => $hasil['subtotal'],
+            'tax_rate' => $hasil['tax_rate'],
+            'tax' => $hasil['tax'],
+            'pembayaran' => $hasil['pembayaran'],
+            'balance' => $hasil['balance'],
+        ]);
+
+        return $pdf->download('invoice-' . $pemesanan->id . '.pdf');
     }
 }

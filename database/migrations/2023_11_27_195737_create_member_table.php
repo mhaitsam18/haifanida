@@ -51,6 +51,10 @@ return new class extends Migration
             $table->string('nama_keluarga_terdekat')->nullable();
             $table->string('kontak_keluarga_terdekat')->nullable();
             $table->boolean('is_active')->default(1)->nullable();
+            $table->foreignId('referred_by')->nullable()
+                ->constrained('agen')
+                ->onUpdate('cascade')
+                ->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

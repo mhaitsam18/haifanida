@@ -59,6 +59,28 @@
         </x-card>
     </div>
 
+    <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <x-card>
+            <h3 class="mb-2 text-sm font-semibold text-stone-600">Kuota Jemaah Terpakai (Tahun Ini)</h3>
+            @if ($totalKuotaJemaah > 0)
+                <p class="text-2xl font-bold text-maroon-900">{{ $totalJemaahTerisi }} / {{ $totalKuotaJemaah }}</p>
+                <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-cream-200">
+                    <div class="h-full bg-maroon-700" style="width: {{ min(100, round($totalJemaahTerisi / $totalKuotaJemaah * 100)) }}%"></div>
+                </div>
+            @else
+                <p class="text-sm text-stone-500">Belum ada paket dengan kuota jemaah yang ditentukan tahun ini.</p>
+            @endif
+        </x-card>
+
+        <x-card>
+            <h3 class="mb-2 text-sm font-semibold text-stone-600">Total Saldo Tertunggak</h3>
+            <div class="flex items-end justify-between gap-3">
+                <p class="text-2xl font-bold text-maroon-900">Rp{{ number_format($totalSaldoTertunggak, 0, ',', '.') }}</p>
+                <a href="{{ route('admin.laporan-keuangan.index') }}" class="rounded-md bg-maroon-50 px-2.5 py-1.5 text-xs font-medium text-maroon-700 hover:bg-maroon-100">Lihat Laporan</a>
+            </div>
+        </x-card>
+    </div>
+
     <div class="mt-4">
         <x-card title="Jema'ah Per Keberangkatan">
             <div id="jemaahChart"></div>
