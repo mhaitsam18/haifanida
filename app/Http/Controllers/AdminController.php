@@ -190,10 +190,6 @@ class AdminController extends Controller
                 ->with('error', 'Terjadi kesalahan dalam pengisian formulir.')
                 ->withInput();
         }
-        $user = User::find($request->id);
-        if (!$user) {
-            return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
-        }
 
         $user->name = $request->input('name');
         $user->email = strtolower($request->input('email'));

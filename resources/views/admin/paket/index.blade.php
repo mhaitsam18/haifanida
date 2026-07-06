@@ -4,14 +4,14 @@
     <div x-data="modalForm()">
         <x-page-header :title="$title">
             <x-slot:actions>
-                <button type="button" @click="show()" class="inline-flex items-center gap-1.5 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
+                <button type="button" @click="show(); $nextTick(() => { initTinyMCE('fasilitas'); initTinyMCE('deskripsi'); })" class="inline-flex items-center gap-1.5 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
                     <i class="bx bx-plus"></i> Tambah
                 </button>
             </x-slot:actions>
         </x-page-header>
 
         <x-modal title="Tambah Paket" maxWidth="max-w-4xl">
-            <form action="/admin/paket" method="post" enctype="multipart/form-data" @submit="submit">
+            <form action="/admin/paket" method="post" enctype="multipart/form-data" @submit="if (typeof tinymce !== 'undefined') tinymce.triggerSave(); submit($event)">
                 @csrf
                 <input type="hidden" name="kantor_id" value="{{ $kantor->id ?? null }}">
 
@@ -121,11 +121,11 @@
                         <td class="px-4 py-3">
                             <div class="flex items-center gap-2" x-data="modalForm()">
                                 <a href="/admin/paket/{{ $paket->id }}" class="rounded-md bg-maroon-50 px-2.5 py-1 text-xs font-medium text-maroon-700 hover:bg-maroon-100">Detail</a>
-                                <button type="button" @click="show()" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</button>
+                                <button type="button" @click="show(); $nextTick(() => { initTinyMCE('fasilitas_{{ $paket->id }}'); initTinyMCE('deskripsi_{{ $paket->id }}'); })" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</button>
                                 <x-delete-form :action="'/admin/paket/' . $paket->id" />
 
                                 <x-modal title="Edit Paket" maxWidth="max-w-4xl">
-                                    <form action="/admin/paket/{{ $paket->id }}" method="post" enctype="multipart/form-data" @submit="submit">
+                                    <form action="/admin/paket/{{ $paket->id }}" method="post" enctype="multipart/form-data" @submit="if (typeof tinymce !== 'undefined') tinymce.triggerSave(); submit($event)">
                                         @method('put')
                                         @csrf
 
@@ -182,11 +182,17 @@
                                                 <x-form-input label="Tanggal Selesai" name="tanggal_selesai" type="date" :value="$paket->tanggal_selesai" />
                                                 <x-form-error name="tanggal_selesai" />
 
-                                                <x-form-textarea label="Fasilitas" name="fasilitas" :value="$paket->fasilitas" :rows="6" />
-                                                <x-form-error name="fasilitas" />
+                                                <div class="mb-4">
+                                                    <label for="fasilitas_{{ $paket->id }}" class="mb-1.5 block text-sm font-medium text-stone-700">Fasilitas</label>
+                                                    <textarea id="fasilitas_{{ $paket->id }}" name="fasilitas" rows="6" class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm">{{ $paket->fasilitas }}</textarea>
+                                                    <x-form-error name="fasilitas" />
+                                                </div>
 
-                                                <x-form-textarea label="Deskripsi" name="deskripsi" :value="$paket->deskripsi" :rows="6" />
-                                                <x-form-error name="deskripsi" />
+                                                <div class="mb-4">
+                                                    <label for="deskripsi_{{ $paket->id }}" class="mb-1.5 block text-sm font-medium text-stone-700">Deskripsi</label>
+                                                    <textarea id="deskripsi_{{ $paket->id }}" name="deskripsi" rows="6" class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm">{{ $paket->deskripsi }}</textarea>
+                                                    <x-form-error name="deskripsi" />
+                                                </div>
 
                                                 <div class="mb-4">
                                                     <label for="gambar_{{ $paket->id }}" class="mb-1.5 block text-sm font-medium text-stone-700">Gambar</label>
@@ -224,4 +230,21 @@
             </tbody>
         </table>
     </x-data-table>
+@endsection
+
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        function initTinyMCE(selectorId) {
+            if (typeof tinymce === 'undefined') return;
+            if (tinymce.get(selectorId)) return;
+            tinymce.init({
+                selector: '#' + selectorId,
+                height: 350,
+                plugins: 'advlist autolink lists link image charmap preview anchor searchreplace wordcount visualblocks visualchars code fullscreen',
+                toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+                license_key: 'gpl',
+            });
+        }
+    </script>
 @endsection

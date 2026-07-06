@@ -39,9 +39,7 @@ use App\Http\Controllers\AdminPerwakilanController;
 use App\Http\Controllers\AdminPesanController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminSertifikatJemaahController;
-use App\Http\Controllers\AdminSubMenuController;
 use App\Http\Controllers\AdminTagihanController;
-use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AgenController;
 use App\Http\Controllers\AgenGrupController;
 use App\Http\Controllers\AgenJemaahController;
@@ -61,8 +59,6 @@ use App\Http\Controllers\JemaahController;
 use App\Http\Controllers\KabupatenController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MenuRoleController;
-use App\Http\Controllers\ProvinsiController;
-use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\MemberTagihanController;
 use App\Http\Controllers\UmrohController;
@@ -191,9 +187,6 @@ Route::middleware('auth')->group(function () {
                 Route::resource('role', AdminRoleController::class)->except(['create', 'edit'])->parameters([
                     'role' => 'role'
                 ]);
-                Route::resource('user', AdminUserController::class)->parameters([
-                    'user' => 'user'
-                ]);
                 Route::resource('user-admin', AdminAdminController::class)->except(['create', 'edit'])->parameters([
                     'user-admin' => 'admin'
                 ]);
@@ -210,9 +203,6 @@ Route::middleware('auth')->group(function () {
                     'menu' => 'menu'
                 ]);
                 Route::post('/menu_roles/store', [MenuRoleController::class, 'store'])->name('menu_roles.store');
-                Route::resource('sub-menu', AdminSubMenuController::class)->parameters([
-                    'sub-menu' => 'sub_menu'
-                ]);
                 Route::resource('konten', AdminKontenController::class)->except(['create', 'edit'])->parameters([
                     'konten' => 'konten'
                 ]);
