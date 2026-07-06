@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ekstra;
 use App\Models\Paket;
 use App\Models\Pemesanan;
 use App\Models\User;
@@ -63,6 +64,8 @@ class AdminPemesananController extends Controller
             'title' => 'Detail Pemesanan',
             'page' => 'pemesanan',
             'pemesanan' => $pemesanan,
+            'kamars' => Ekstra::where('jenis_ekstra', 'tipe kamar')->get(),
+            'ekstras' => Ekstra::whereNotIn('jenis_ekstra', ['tipe kamar', 'permintaan kamar'])->get(),
         ]);
     }
 

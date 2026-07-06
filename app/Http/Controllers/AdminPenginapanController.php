@@ -19,19 +19,6 @@ class AdminPenginapanController extends Controller
             'page' => 'penginapan',
             'paket' => $paket,
             'penginapans' => ($paket) ? $paket->penginapans()->with('hotel')->paginate(200) : PaketHotel::with('hotel')->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.penginapan.create', [
-            'title' => 'Tambah Data Hotel / penginapan',
-            'page' => 'penginapan',
-            'paket' => $paket,
-            'pakets' => Paket::all(),
             'hotels' => Hotel::all(),
         ]);
     }
@@ -65,20 +52,6 @@ class AdminPenginapanController extends Controller
             'title' => 'Detail Hotel / Penginapan',
             'page' => 'penginapan',
             'penginapan' => $paketHotel,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PaketHotel $paketHotel)
-    {
-        return view('admin.paket.penginapan.edit', [
-            'title' => 'Edit Hotel / Penginapan',
-            'page' => 'penginapan',
-            'penginapan' => $paketHotel,
-            'pakets' => Paket::all(),
-            'hotels' => Hotel::all(),
         ]);
     }
 

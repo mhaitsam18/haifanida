@@ -19,19 +19,6 @@ class AdminPenerbanganController extends Controller
             'page' => 'penerbangan',
             'paket' => $paket,
             'penerbangans' => ($paket) ? $paket->penerbangans()->with('maskapai')->paginate(200) : PaketMaskapai::with('maskapai')->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.penerbangan.create', [
-            'title' => 'Tambah Data Maskapai / penerbangan',
-            'page' => 'penerbangan',
-            'paket' => $paket,
-            'pakets' => Paket::all(),
             'maskapais' => Maskapai::all(),
         ]);
     }
@@ -72,20 +59,6 @@ class AdminPenerbanganController extends Controller
             'title' => 'Detail Maskapai / penerbangan',
             'page' => 'penerbangan',
             'penerbangan' => $paketMaskapai,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PaketMaskapai $paketMaskapai)
-    {
-        return view('admin.paket.penerbangan.edit', [
-            'title' => 'Edit Maskapai / penerbangan',
-            'page' => 'penerbangan',
-            'penerbangan' => $paketMaskapai,
-            'pakets' => Paket::all(),
-            'maskapais' => Maskapai::all(),
         ]);
     }
 

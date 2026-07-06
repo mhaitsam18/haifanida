@@ -42,93 +42,231 @@
         </div>
     </x-card>
 
-    <x-card class="mb-6">
-        <div class="mb-3 flex items-center justify-between">
-            <h4 class="font-display text-sm font-semibold text-maroon-900">Isu Perjalanan</h4>
-            <x-button class="px-3! py-1.5! text-xs!" :href="'/admin/grup/' . $grup->id . '/isu-perjalanan/create'"><i class="bx bx-plus"></i> Buat Isu</x-button>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
-                    <tr>
-                        <th class="px-3 py-2">#</th>
-                        <th class="px-3 py-2">Masalah</th>
-                        <th class="px-3 py-2">Solusi</th>
-                        <th class="px-3 py-2">Waktu Pelaporan</th>
-                        <th class="px-3 py-2">Waktu Penyelesaian</th>
-                        <th class="px-3 py-2">Status</th>
-                        <th class="px-3 py-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-cream-200">
-                    @forelse ($grup->IsuPerjalanans as $isu)
+    <div x-data="modalForm()">
+        <x-card class="mb-6">
+            <div class="mb-3 flex items-center justify-between">
+                <h4 class="font-display text-sm font-semibold text-maroon-900">Isu Perjalanan</h4>
+                <button type="button" @click="show()" class="inline-flex items-center gap-1 rounded-lg bg-maroon-700 px-3 py-1.5 text-xs font-medium text-cream-50 hover:bg-maroon-800">
+                    <i class="bx bx-plus"></i> Buat Isu
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
                         <tr>
-                            <td class="px-3 py-2">{{ $loop->iteration }}</td>
-                            <td class="px-3 py-2">{{ $isu->masalah }}</td>
-                            <td class="px-3 py-2">{{ $isu->solusi }}</td>
-                            <td class="px-3 py-2">{{ Carbon::parse($isu->waktu_pelaporan)->isoFormat('LLL') }}</td>
-                            <td class="px-3 py-2">{{ Carbon::parse($isu->waktu_penyelesaian)->isoFormat('LLL') }}</td>
-                            <td class="px-3 py-2"><x-badge :variant="$isu->status ? 'warning' : 'success'">{{ $isu->status ? 'Dalam Penanganan' : 'Sudah Selesai' }}</x-badge></td>
-                            <td class="px-3 py-2">
-                                <div class="flex items-center gap-2">
-                                    <a href="/admin/isu-perjalanan/{{ $isu->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
-                                    <x-delete-form :action="'/admin/isu-perjalanan/' . $isu->id" />
-                                </div>
-                            </td>
+                            <th class="px-3 py-2">#</th>
+                            <th class="px-3 py-2">Masalah</th>
+                            <th class="px-3 py-2">Solusi</th>
+                            <th class="px-3 py-2">Waktu Pelaporan</th>
+                            <th class="px-3 py-2">Waktu Penyelesaian</th>
+                            <th class="px-3 py-2">Status</th>
+                            <th class="px-3 py-2">Aksi</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="px-3 py-2 text-stone-500">Isu Perjalanan belum tersedia</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </x-card>
+                    </thead>
+                    <tbody class="divide-y divide-cream-200">
+                        @forelse ($grup->IsuPerjalanans as $isu)
+                            <tr>
+                                <td class="px-3 py-2">{{ $loop->iteration }}</td>
+                                <td class="px-3 py-2">{{ $isu->masalah }}</td>
+                                <td class="px-3 py-2">{{ $isu->solusi }}</td>
+                                <td class="px-3 py-2">{{ Carbon::parse($isu->waktu_pelaporan)->isoFormat('LLL') }}</td>
+                                <td class="px-3 py-2">{{ Carbon::parse($isu->waktu_penyelesaian)->isoFormat('LLL') }}</td>
+                                <td class="px-3 py-2"><x-badge :variant="$isu->status ? 'warning' : 'success'">{{ $isu->status ? 'Dalam Penanganan' : 'Sudah Selesai' }}</x-badge></td>
+                                <td class="px-3 py-2">
+                                    <div class="flex items-center gap-2" x-data="modalForm()">
+                                        <button type="button" @click="show()" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</button>
+                                        <x-delete-form :action="'/admin/isu-perjalanan/' . $isu->id" />
 
-    <x-card class="mb-6">
-        <div class="mb-3 flex items-center justify-between">
-            <h4 class="font-display text-sm font-semibold text-maroon-900">Jadwal</h4>
-            <x-button class="px-3! py-1.5! text-xs!" :href="'/admin/grup/' . $grup->id . '/jadwal/create'"><i class="bx bx-plus"></i> Tambah Jadwal</x-button>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
-                    <tr>
-                        <th class="px-3 py-2">#</th>
-                        <th class="px-3 py-2">Nama Agenda</th>
-                        <th class="px-3 py-2">Lokasi</th>
-                        <th class="px-3 py-2">Waktu Mulai</th>
-                        <th class="px-3 py-2">Waktu Selesai</th>
-                        <th class="px-3 py-2">Keterangan</th>
-                        <th class="px-3 py-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-cream-200">
-                    @forelse ($grup->jadwals as $jadwal)
+                                        <x-modal title="Edit Isu Perjalanan" maxWidth="max-w-3xl">
+                                            <form action="/admin/isu-perjalanan/{{ $isu->id }}" method="post" @submit="submit">
+                                                @method('put')
+                                                @csrf
+                                                <input type="hidden" name="grup_id" value="{{ $isu->grup_id }}">
+
+                                                <div class="grid gap-x-6 md:grid-cols-2">
+                                                    <div>
+                                                        <x-form-input label="Masalah" name="masalah" :value="$isu->masalah" placeholder="Masalah" required />
+                                                        <x-form-error name="masalah" />
+                                                        <x-form-input label="Solusi" name="solusi" :value="$isu->solusi" placeholder="Solusi" />
+                                                        <x-form-error name="solusi" />
+                                                    </div>
+                                                    <div>
+                                                        <x-form-input label="Waktu Pelaporan" name="waktu_pelaporan" type="datetime-local" :value="$isu->waktu_pelaporan" />
+                                                        <x-form-input label="Waktu Penyelesaian" name="waktu_penyelesaian" type="datetime-local" :value="$isu->waktu_penyelesaian" />
+                                                        <div class="mb-4">
+                                                            <label class="inline-flex items-center gap-2 text-sm font-medium text-stone-700">
+                                                                <input type="checkbox" value="1" name="status" class="rounded border-cream-300 text-maroon-700 focus:ring-maroon-300" @checked($isu->status)>
+                                                                Dalam Penanganan?
+                                                            </label>
+                                                            <x-form-error name="status" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-4 flex justify-end gap-2">
+                                                    <x-button type="button" variant="secondary" @click="hide()">Batal</x-button>
+                                                    <x-button type="submit">
+                                                        <span x-show="!submitting">Simpan</span>
+                                                        <span x-show="submitting">Menyimpan...</span>
+                                                    </x-button>
+                                                </div>
+                                            </form>
+                                        </x-modal>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-3 py-2 text-stone-500">Isu Perjalanan belum tersedia</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </x-card>
+
+        <x-modal title="Buat Isu Perjalanan" maxWidth="max-w-3xl">
+            <form action="/admin/isu-perjalanan" method="post" @submit="submit">
+                @csrf
+                <input type="hidden" name="grup_id" value="{{ $grup->id }}">
+
+                <div class="grid gap-x-6 md:grid-cols-2">
+                    <div>
+                        <x-form-input label="Masalah" name="masalah" placeholder="Masalah" required />
+                        <x-form-error name="masalah" />
+                        <x-form-input label="Solusi" name="solusi" placeholder="Solusi" />
+                        <x-form-error name="solusi" />
+                    </div>
+                    <div>
+                        <x-form-input label="Waktu Pelaporan" name="waktu_pelaporan" type="datetime-local" />
+                        <x-form-input label="Waktu Penyelesaian" name="waktu_penyelesaian" type="datetime-local" />
+                        <div class="mb-4">
+                            <label class="inline-flex items-center gap-2 text-sm font-medium text-stone-700">
+                                <input type="checkbox" value="1" name="status" class="rounded border-cream-300 text-maroon-700 focus:ring-maroon-300">
+                                Dalam Penanganan?
+                            </label>
+                            <x-form-error name="status" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <x-button type="button" variant="secondary" @click="hide()">Batal</x-button>
+                    <x-button type="submit">
+                        <span x-show="!submitting">Simpan</span>
+                        <span x-show="submitting">Menyimpan...</span>
+                    </x-button>
+                </div>
+            </form>
+        </x-modal>
+    </div>
+
+    <div x-data="modalForm()">
+        <x-card class="mb-6">
+            <div class="mb-3 flex items-center justify-between">
+                <h4 class="font-display text-sm font-semibold text-maroon-900">Jadwal</h4>
+                <button type="button" @click="show()" class="inline-flex items-center gap-1 rounded-lg bg-maroon-700 px-3 py-1.5 text-xs font-medium text-cream-50 hover:bg-maroon-800">
+                    <i class="bx bx-plus"></i> Tambah Jadwal
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-cream-100 text-xs uppercase tracking-wide text-stone-500">
                         <tr>
-                            <td class="px-3 py-2">{{ $loop->iteration }}</td>
-                            <td class="px-3 py-2">{{ $jadwal->nama_agenda }}</td>
-                            <td class="px-3 py-2">{{ $jadwal->lokasi }}</td>
-                            <td class="px-3 py-2">{{ Carbon::parse($jadwal->waktu_mulai)->isoFormat('LLL') }}</td>
-                            <td class="px-3 py-2">{{ Carbon::parse($jadwal->waktu_selesai)->isoFormat('LLL') }}</td>
-                            <td class="px-3 py-2">{{ $jadwal->keterangan }}</td>
-                            <td class="px-3 py-2">
-                                <div class="flex items-center gap-2">
-                                    <a href="/admin/jadwal/{{ $jadwal->id }}/edit" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</a>
-                                    <x-delete-form :action="'/admin/jadwal/' . $jadwal->id" />
-                                </div>
-                            </td>
+                            <th class="px-3 py-2">#</th>
+                            <th class="px-3 py-2">Nama Agenda</th>
+                            <th class="px-3 py-2">Lokasi</th>
+                            <th class="px-3 py-2">Waktu Mulai</th>
+                            <th class="px-3 py-2">Waktu Selesai</th>
+                            <th class="px-3 py-2">Keterangan</th>
+                            <th class="px-3 py-2">Aksi</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="px-3 py-2 text-stone-500">Jadwal belum tersedia</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </x-card>
+                    </thead>
+                    <tbody class="divide-y divide-cream-200">
+                        @forelse ($grup->jadwals as $jadwal)
+                            <tr>
+                                <td class="px-3 py-2">{{ $loop->iteration }}</td>
+                                <td class="px-3 py-2">{{ $jadwal->nama_agenda }}</td>
+                                <td class="px-3 py-2">{{ $jadwal->lokasi }}</td>
+                                <td class="px-3 py-2">{{ Carbon::parse($jadwal->waktu_mulai)->isoFormat('LLL') }}</td>
+                                <td class="px-3 py-2">{{ Carbon::parse($jadwal->waktu_selesai)->isoFormat('LLL') }}</td>
+                                <td class="px-3 py-2">{{ $jadwal->keterangan }}</td>
+                                <td class="px-3 py-2">
+                                    <div class="flex items-center gap-2" x-data="modalForm()">
+                                        <button type="button" @click="show()" class="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100">Edit</button>
+                                        <x-delete-form :action="'/admin/jadwal/' . $jadwal->id" />
+
+                                        <x-modal title="Edit Jadwal" maxWidth="max-w-3xl">
+                                            <form action="/admin/jadwal/{{ $jadwal->id }}" method="post" @submit="submit">
+                                                @method('put')
+                                                @csrf
+                                                <input type="hidden" name="grup_id" value="{{ $jadwal->grup_id }}">
+
+                                                <div class="grid gap-x-6 md:grid-cols-2">
+                                                    <div>
+                                                        <x-form-input label="Nama Agenda" name="nama_agenda" :value="$jadwal->nama_agenda" placeholder="Nama Agenda" required />
+                                                        <x-form-error name="nama_agenda" />
+                                                        <x-form-input label="Lokasi" name="lokasi" :value="$jadwal->lokasi" placeholder="Lokasi" />
+                                                        <x-form-error name="lokasi" />
+                                                    </div>
+                                                    <div>
+                                                        <x-form-input label="Waktu Mulai" name="waktu_mulai" type="datetime-local" :value="$jadwal->waktu_mulai" />
+                                                        <x-form-input label="Waktu Selesai" name="waktu_selesai" type="datetime-local" :value="$jadwal->waktu_selesai" />
+                                                        <x-form-textarea label="Keterangan" name="keterangan" :value="$jadwal->keterangan" placeholder="Keterangan" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-4 flex justify-end gap-2">
+                                                    <x-button type="button" variant="secondary" @click="hide()">Batal</x-button>
+                                                    <x-button type="submit">
+                                                        <span x-show="!submitting">Simpan</span>
+                                                        <span x-show="submitting">Menyimpan...</span>
+                                                    </x-button>
+                                                </div>
+                                            </form>
+                                        </x-modal>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-3 py-2 text-stone-500">Jadwal belum tersedia</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </x-card>
+
+        <x-modal title="Tambah Jadwal" maxWidth="max-w-3xl">
+            <form action="/admin/jadwal" method="post" @submit="submit">
+                @csrf
+                <input type="hidden" name="grup_id" value="{{ $grup->id }}">
+
+                <div class="grid gap-x-6 md:grid-cols-2">
+                    <div>
+                        <x-form-input label="Nama Agenda" name="nama_agenda" placeholder="Nama Agenda" required />
+                        <x-form-error name="nama_agenda" />
+                        <x-form-input label="Lokasi" name="lokasi" placeholder="Lokasi" />
+                        <x-form-error name="lokasi" />
+                    </div>
+                    <div>
+                        <x-form-input label="Waktu Mulai" name="waktu_mulai" type="datetime-local" />
+                        <x-form-input label="Waktu Selesai" name="waktu_selesai" type="datetime-local" />
+                        <x-form-textarea label="Keterangan" name="keterangan" placeholder="Keterangan" />
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <x-button type="button" variant="secondary" @click="hide()">Batal</x-button>
+                    <x-button type="submit">
+                        <span x-show="!submitting">Simpan</span>
+                        <span x-show="submitting">Menyimpan...</span>
+                    </x-button>
+                </div>
+            </form>
+        </x-modal>
+    </div>
 
     <x-card>
         <h4 class="font-display mb-4 text-sm font-semibold text-maroon-900">Masukkan Jema'ah</h4>

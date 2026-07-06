@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jemaah;
 use App\Models\Kamar;
 use App\Models\PaketHotel;
 use Illuminate\Http\Request;
@@ -19,21 +20,6 @@ class AdminKamarController extends Controller
             'paketHotel' => $paketHotel,
             'penginapan' => $paketHotel,
             'kamars' => ($paketHotel) ? $paketHotel->kamars()->paginate(200) : Kamar::paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(PaketHotel $paketHotel = null)
-    {
-        return view('admin.paket.penginapan.kamar.create', [
-            'title' => 'Tambah Kamar',
-            'page' => 'kamar',
-            'paketHotel' => $paketHotel,
-            'penginapan' => $paketHotel,
-            'paketHotels' => PaketHotel::all(),
-            'penginapans' => PaketHotel::all(),
         ]);
     }
 
@@ -60,24 +46,24 @@ class AdminKamarController extends Controller
      */
     public function show(Kamar $kamar)
     {
+        $paket_id = $kamar->paketHotel->paket_id;
+        $pesertaJemaahs = Jemaah::whereHas('pemesanan', function ($query) use ($paket_id) {
+            $query->where('paket_id', $paket_id);
+        })->get();
+        $assignedJemaahIds = $kamar->KamarJemaahs()->pluck('jemaah_id');
+
         return view('admin.paket.penginapan.kamar.show', [
             'title' => 'Detail Kamar',
             'page' => 'kamar',
             'kamar' => $kamar,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kamar $kamar)
-    {
-        return view('admin.paket.penginapan.kamar.edit', [
-            'title' => 'Edit Kamar',
-            'page' => 'kamar',
-            'kamar' => $kamar,
-            'paketHotels' => PaketHotel::all(),
-            'penginapans' => PaketHotel::all(),
+            'createJemaahs' => $pesertaJemaahs->whereNotIn('id', $assignedJemaahIds),
+            'editJemaahsPerTamu' => $kamar->KamarJemaahs->mapWithKeys(function ($tamu) use ($pesertaJemaahs, $assignedJemaahIds) {
+                return [
+                    $tamu->id => $pesertaJemaahs->filter(function ($jemaah) use ($assignedJemaahIds, $tamu) {
+                        return !$assignedJemaahIds->contains($jemaah->id) || $jemaah->id == $tamu->jemaah_id;
+                    }),
+                ];
+            }),
         ]);
     }
 

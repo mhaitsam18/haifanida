@@ -21,7 +21,6 @@
                     </button>
                 </form>
             @endif
-            <x-button :href="'/admin/pembayaran/' . $pembayaran->id . '/edit'"><i class="bx bx-edit"></i> Edit</x-button>
             <x-button variant="secondary" :href="'/admin/' . ($pembayaran->pemesanan_id ? 'pemesanan/' . $pembayaran->pemesanan_id . '/' : '') . 'pembayaran'"><i class="bx bx-arrow-back"></i> Kembali</x-button>
         </x-slot:actions>
     </x-page-header>

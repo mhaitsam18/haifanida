@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agen;
+use App\Models\Ekstra;
+use App\Models\Hotel;
 use App\Models\Jemaah;
 use App\Models\Kantor;
+use App\Models\Maskapai;
 use App\Models\Paket;
 use Illuminate\Http\Request;
 
@@ -95,6 +99,10 @@ class AdminPaketController extends Controller
             'paket' => $paket,
             'jemaahs' => $jemaahs,
             'kantors' => Kantor::all(),
+            'ekstras' => Ekstra::all(),
+            'hotels' => Hotel::all(),
+            'maskapais' => Maskapai::all(),
+            'agens' => Agen::all(),
         ]);
     }
 

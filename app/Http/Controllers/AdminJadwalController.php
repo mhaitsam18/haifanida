@@ -22,19 +22,6 @@ class AdminJadwalController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Grup $grup = null)
-    {
-        return view('admin.paket.grup.jadwal.create', [
-            'title' => 'Buat Agenda',
-            'page' => 'jadwal',
-            'grup' => $grup,
-            'grups' => Grup::all(),
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -61,19 +48,6 @@ class AdminJadwalController extends Controller
             'title' => 'Detail Jadwal',
             'page' => 'jadwal',
             'jadwal' => $jadwal,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Jadwal $jadwal)
-    {
-        return view('admin.paket.grup.jadwal.edit', [
-            'title' => 'Edit Jadwal',
-            'page' => 'jadwal',
-            'jadwal' => $jadwal,
-            'grups' => Grup::all(),
         ]);
     }
 

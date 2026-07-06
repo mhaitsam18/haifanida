@@ -143,7 +143,7 @@
                                                         <option value="{{ $kantor->id }}" @selected($kantor->id == $admin->kantor_id)>{{ $kantor->nama_kantor }}</option>
                                                     @endforeach
                                                 </select>
-                                                <x-button variant="secondary" href="/admin/kantor/{{ $admin->kantor_id }}/edit" class="shrink-0">Edit Kantor</x-button>
+                                                <x-button variant="secondary" href="/admin/kantor" class="shrink-0">Edit Kantor</x-button>
                                             </div>
                                             <x-form-error name="kantor_id" />
                                         </div>

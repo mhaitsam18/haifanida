@@ -3,7 +3,6 @@
 @section('content')
     <x-page-header :title="$title">
         <x-slot:actions>
-            <x-button :href="'/admin/permintaan-kamar/' . $permintaanKamar->id . '/edit'"><i class="bx bx-edit"></i> Edit</x-button>
             <x-button variant="secondary" :href="'/admin/' . ($permintaanKamar->pemesanan_kamar_id ? 'pemesanan-kamar/' . $permintaanKamar->pemesanan_kamar_id . '/' : '') . 'permintaan-kamar'"><i class="bx bx-arrow-back"></i> Kembali</x-button>
         </x-slot:actions>
     </x-page-header>

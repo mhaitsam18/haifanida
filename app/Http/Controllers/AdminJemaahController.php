@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berkas;
+use App\Models\Bus;
 use App\Models\Grup;
 use App\Models\Jemaah;
 use App\Models\Kabupaten;
+use App\Models\Kamar;
 use App\Models\Paket;
 use App\Models\Pemesanan;
 use App\Models\Provinsi;
@@ -175,11 +178,21 @@ class AdminJemaahController extends Controller
     {
         $jemaah->load(['berkasJemaahs.berkas', 'kamarJemaahs.kamar.paketHotel.hotel']);
 
+        $paket_id = $jemaah->pemesanan->paket_id ?? null;
+
         return view('admin.paket.jemaah.show', [
             'title' => 'Detail jemaah',
             'page' => 'jemaah',
             'paket' => $paket,
             'jemaah' => $jemaah,
+            'berkass' => Berkas::all(),
+            'createBuses' => Bus::where('paket_id', $paket_id)->get(),
+            'createJemaahs' => Jemaah::whereHas('pemesanan', function ($query) use ($paket_id) {
+                $query->where('paket_id', $paket_id);
+            })->get(),
+            'kamars' => Kamar::whereHas('paketHotel', function ($query) use ($paket_id) {
+                $query->where('paket_id', $paket_id);
+            })->get(),
         ]);
     }
 

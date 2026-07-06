@@ -22,19 +22,6 @@ class AdminGaleriController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.galeri.create', [
-            'title' => 'Tambah Data galeri',
-            'page' => 'galeri',
-            'paket' => $paket,
-            'pakets' => Paket::all(),
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -65,19 +52,6 @@ class AdminGaleriController extends Controller
             'title' => 'Detail galeri',
             'page' => 'galeri',
             'galeri' => $galeri,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Galeri $galeri)
-    {
-        return view('admin.paket.galeri.edit', [
-            'title' => 'Edit galeri',
-            'page' => 'galeri',
-            'galeri' => $galeri,
-            'pakets' => Paket::all(),
         ]);
     }
 

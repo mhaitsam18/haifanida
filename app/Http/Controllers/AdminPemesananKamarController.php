@@ -50,6 +50,7 @@ class AdminPemesananKamarController extends Controller
             'title' => 'Detail Pemesanan Kamar',
             'page' => 'pemesanan-kamar',
             'pemesananKamar' => $pemesananKamar,
+            'permintaans' => Ekstra::where('jenis_ekstra', 'permintaan kamar')->get(),
         ]);
     }
 

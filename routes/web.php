@@ -200,7 +200,7 @@ Route::middleware('auth')->group(function () {
                 Route::resource('author', AdminAuthorController::class)->except(['create', 'edit'])->parameters([
                     'author' => 'author'
                 ]);
-                Route::resource('member', AdminMemberController::class)->parameters([
+                Route::resource('member', AdminMemberController::class)->except(['create', 'edit'])->parameters([
                     'member' => 'member'
                 ]);
                 Route::resource('agen', AdminAgenController::class)->except(['create', 'edit'])->parameters([
@@ -252,7 +252,6 @@ Route::middleware('auth')->group(function () {
                     });
                     Route::prefix('grup')->group(function () {
                         Route::get('/', [AdminGrupController::class, 'index'])->name('paket.grup.index');
-                        Route::get('/create', [AdminGrupController::class, 'create'])->name('paket.grup.create');
                     });
                     Route::prefix('penginapan')->group(function () {
                         Route::get('/', [AdminPenginapanController::class, 'index'])->name('paket.penginapan.index');
@@ -296,7 +295,6 @@ Route::middleware('auth')->group(function () {
                     });
                     Route::prefix('pembayaran')->group(function () {
                         Route::get('/', [AdminPembayaranController::class, 'index'])->name('pemesanan.pembayaran.index');
-                        Route::get('/create', [AdminPembayaranController::class, 'create'])->name('pemesanan.pembayaran.create');
                     });
                     Route::prefix('tagihan')->group(function () {
                         Route::get('/', [AdminTagihanController::class, 'index'])->name('pemesanan.tagihan');
@@ -312,7 +310,7 @@ Route::middleware('auth')->group(function () {
                 Route::resource('pemesanan-ekstra', AdminPemesananEkstraController::class)->except(['create', 'edit'])->parameters([
                     'pemesanan-ekstra' => 'pemesanan_ekstra'
                 ]);
-                Route::resource('pembayaran', AdminPembayaranController::class)->parameters([
+                Route::resource('pembayaran', AdminPembayaranController::class)->except(['create', 'edit'])->parameters([
                     'pembayaran' => 'pembayaran'
                 ]);
                 Route::post('pembayaran/{pembayaran}/verify', [AdminPembayaranController::class, 'verify'])->name('pembayaran.verify');
@@ -321,10 +319,9 @@ Route::middleware('auth')->group(function () {
                 Route::prefix('pemesanan-kamar/{pemesanan_kamar}')->group(function () {
                     Route::prefix('permintaan-kamar')->group(function () {
                         Route::get('/', [AdminPermintaanKamarController::class, 'index'])->name('pemesanan-kamar.permintaan-kamar.index');
-                        Route::get('/create', [AdminPermintaanKamarController::class, 'create'])->name('pemesanan-kamar.permintaan-kamar.create');
                     });
                 });
-                Route::resource('permintaan-kamar', AdminPermintaanKamarController::class)->parameters([
+                Route::resource('permintaan-kamar', AdminPermintaanKamarController::class)->except(['create', 'edit'])->parameters([
                     'permintaan-kamar' => 'permintaan_kamar'
                 ]);
 
@@ -345,7 +342,6 @@ Route::middleware('auth')->group(function () {
                 Route::prefix('kamar/{kamar}')->group(function () {
                     Route::prefix('kamar-jemaah')->group(function () {
                         Route::get('/', [AdminKamarJemaahController::class, 'index'])->name('kamar.kamar-jemaah.index');
-                        Route::get('/create', [AdminKamarJemaahController::class, 'create'])->name('kamar.kamar-jemaah.create');
                     });
                 });
                 Route::resource('kamar', AdminKamarController::class)->except(['create', 'edit'])->parameters([
@@ -374,27 +370,24 @@ Route::middleware('auth')->group(function () {
                     });
                     Route::prefix('isu-perjalanan')->group(function () {
                         Route::get('/', [AdminIsuPerjalananController::class, 'index'])->name('grup.isu-perjalanan.index');
-                        Route::get('/create', [AdminIsuPerjalananController::class, 'create'])->name('grup.isu-perjalanan.create');
                     });
                     Route::prefix('jadwal')->group(function () {
                         Route::get('/', [AdminJadwalController::class, 'index'])->name('grup.jadwal.index');
-                        Route::get('/create', [AdminJadwalController::class, 'create'])->name('grup.jadwal.create');
                     });
                 });
-                Route::resource('grup', AdminGrupController::class)->parameters([
+                Route::resource('grup', AdminGrupController::class)->except(['create', 'edit'])->parameters([
                     'grup' => 'grup'
                 ]);
 
-                Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->parameters([
+                Route::resource('isu-perjalanan', AdminIsuPerjalananController::class)->except(['create', 'edit'])->parameters([
                     'isu-perjalanan' => 'isu_perjalanan'
                 ]);
-                Route::resource('jadwal', AdminJadwalController::class)->parameters([
+                Route::resource('jadwal', AdminJadwalController::class)->except(['create', 'edit'])->parameters([
                     'jadwal' => 'jadwal'
                 ]);
                 Route::prefix('jemaah/{jemaah}')->group(function () {
                     Route::prefix('sertifikat')->group(function () {
                         Route::get('/', [AdminSertifikatJemaahController::class, 'index'])->name('jemaah.sertifikat.index');
-                        Route::get('/create', [AdminSertifikatJemaahController::class, 'create'])->name('jemaah.sertifikat.create');
                     });
                     Route::prefix('berkas')->group(function () {
                         Route::get('/', [AdminBerkasJemaahController::class, 'index'])->name('jemaah.berkas.index');
@@ -404,7 +397,6 @@ Route::middleware('auth')->group(function () {
                     });
                     Route::prefix('kamar')->group(function () {
                         Route::get('/', [AdminKamarJemaahController::class, 'index'])->name('jemaah.kamar.index');
-                        Route::get('/create', [AdminKamarJemaahController::class, 'create'])->name('jemaah.kamar.create');
                     });
                     Route::prefix('bus')->group(function () {
                         Route::get('/', [AdminBusJemaahController::class, 'index'])->name('jemaah.bus.index');
@@ -416,13 +408,13 @@ Route::middleware('auth')->group(function () {
                 Route::resource('berkas-jemaah', AdminBerkasJemaahController::class)->except(['create', 'edit'])->parameters([
                     'berkas-jemaah' => 'berkas_jemaah'
                 ]);
-                Route::resource('kamar-jemaah', AdminKamarJemaahController::class)->parameters([
+                Route::resource('kamar-jemaah', AdminKamarJemaahController::class)->except(['create', 'edit'])->parameters([
                     'kamar-jemaah' => 'kamar_jemaah'
                 ]);
                 Route::resource('bus-jemaah', AdminBusJemaahController::class)->except(['create', 'edit'])->parameters([
                     'bus-jemaah' => 'bus_jemaah'
                 ]);
-                Route::resource('sertifikat-jemaah', AdminSertifikatJemaahController::class)->parameters([
+                Route::resource('sertifikat-jemaah', AdminSertifikatJemaahController::class)->except(['create', 'edit'])->parameters([
                     'sertifikat-jemaah' => 'sertifikat_jemaah'
                 ]);
                 Route::prefix('bus-jemaah')->group(function () {});

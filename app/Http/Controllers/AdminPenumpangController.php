@@ -14,31 +14,28 @@ class AdminPenumpangController extends Controller
      */
     public function index(Bus $bus = null)
     {
+        $penumpangs = ($bus) ? $bus->penumpang()->paginate(200) : BusJemaah::paginate(200);
+
+        $pesertaJemaahs = $bus
+            ? Jemaah::whereHas('pemesanan', function ($query) use ($bus) {
+                $query->where('paket_id', $bus->paket_id);
+            })->get()
+            : collect();
+        $assignedJemaahIds = $bus ? $bus->penumpang()->pluck('jemaah_id') : collect();
+
         return view('admin.paket.bus.penumpang.index', [
             'title' => 'Data penumpang',
             'page' => 'penumpang',
             'bus' => $bus,
-            'penumpangs' => ($bus) ? $bus->penumpang()->paginate(200) : BusJemaah::paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Bus $bus = null)
-    {
-        $jemaahs = Jemaah::whereDoesntHave('busJemaahs', function ($query) use ($bus) {
-            $query->where('bus_id', $bus->id);
-        })->whereHas('pemesanan', function ($query) use ($bus) {
-            $query->where('paket_id', $bus->paket_id);
-        })->get();
-
-        return view('admin.paket.bus.penumpang.create', [
-            'title' => 'Tambah Data Penumpang',
-            'page' => 'penumpang',
-            'bus' => $bus,
-            'buses' => Bus::all(),
-            'jemaahs' => $jemaahs,
+            'penumpangs' => $penumpangs,
+            'createJemaahs' => $pesertaJemaahs->whereNotIn('id', $assignedJemaahIds),
+            'editJemaahsPerPenumpang' => collect($penumpangs->items())->mapWithKeys(function ($penumpang) use ($pesertaJemaahs, $assignedJemaahIds) {
+                return [
+                    $penumpang->id => $pesertaJemaahs->filter(function ($jemaah) use ($assignedJemaahIds, $penumpang) {
+                        return !$assignedJemaahIds->contains($jemaah->id) || $jemaah->id == $penumpang->jemaah_id;
+                    }),
+                ];
+            }),
         ]);
     }
 
@@ -66,29 +63,6 @@ class AdminPenumpangController extends Controller
             'title' => 'Detail Penumpang',
             'page' => 'bus',
             'bus' => $busJemaah,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(BusJemaah $busJemaah)
-    {
-        $bus = $busJemaah->bus;
-
-        $jemaahs = Jemaah::whereDoesntHave('busJemaahs', function ($query) use ($busJemaah) {
-            $query->where('bus_id', $busJemaah->bus_id);
-            $query->where('jemaah_id', '!=', $busJemaah->jemaah_id);
-        })->whereHas('pemesanan', function ($query) use ($bus) {
-            $query->where('paket_id', $bus->paket_id);
-        })->get();
-
-        return view('admin.paket.bus.penumpang.edit', [
-            'title' => 'Edit penumpang',
-            'page' => 'penumpang',
-            'penumpang' => $busJemaah,
-            'buses' => Bus::all(),
-            'jemaahs' => $jemaahs,
         ]);
     }
 

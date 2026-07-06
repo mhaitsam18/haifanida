@@ -20,18 +20,6 @@ class AdminGrupController extends Controller
             'page' => 'grup',
             'paket' => $paket,
             'grups' => ($paket) ? $paket->grups()->with('agen.user')->paginate(200) : Grup::with('agen.user')->paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.grup.create', [
-            'title' => 'Tambah Data Grup',
-            'page' => 'grup',
-            'paket' => $paket,
             'pakets' => Paket::all(),
             'agens' => Agen::all(),
         ]);
@@ -70,20 +58,6 @@ class AdminGrupController extends Controller
             'grup' => $grup,
             'jemaahs' => $jemaahs,
             'anggotas' => Jemaah::where('grup_id', $grup->id)->get(),
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Grup $grup)
-    {
-        return view('admin.paket.grup.edit', [
-            'title' => 'Edit grup',
-            'page' => 'grup',
-            'grup' => $grup,
-            'pakets' => Paket::all(),
-            'agens' => Agen::all(),
         ]);
     }
 

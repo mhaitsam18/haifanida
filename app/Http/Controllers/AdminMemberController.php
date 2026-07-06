@@ -115,20 +115,6 @@ class AdminMemberController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Member $member)
-    {
-        return view('admin.member.edit', [
-            'title' => 'Edit member',
-            'page' => 'member',
-            'member' => $member,
-            'provinsis' => Provinsi::all(),
-            'kabupatens' => (old('provinsi_id', $member->provinsi_id)) ? Kabupaten::where('provinsi_id', old('provinsi_id', $member->provinsi_id))->get() : Kabupaten::all(),
-        ]);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Member $member)

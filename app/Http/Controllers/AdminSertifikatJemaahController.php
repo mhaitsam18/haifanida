@@ -22,18 +22,6 @@ class AdminSertifikatJemaahController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Jemaah $jemaah = null)
-    {
-        return view('admin.paket.jemaah.sertifikat.create', [
-            'title' => 'Tambah sertifikat',
-            'page' => 'sertifikat-jemaah',
-            'jemaah' => $jemaah,
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -62,18 +50,6 @@ class AdminSertifikatJemaahController extends Controller
     {
         return view('admin.paket.jemaah.sertifikat.show', [
             'title' => 'Lihat sertifikat',
-            'page' => 'sertifikat-jemaah',
-            'sertifikatJemaah' => $sertifikatJemaah,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SertifikatJemaah $sertifikatJemaah)
-    {
-        return view('admin.paket.jemaah.sertifikat.edit', [
-            'title' => 'Edit Data sertifikat',
             'page' => 'sertifikat-jemaah',
             'sertifikatJemaah' => $sertifikatJemaah,
         ]);

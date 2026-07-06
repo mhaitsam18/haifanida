@@ -22,19 +22,6 @@ class AdminIsuPerjalananController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Grup $grup = null)
-    {
-        return view('admin.paket.grup.isu-perjalanan.create', [
-            'title' => 'Buat Isu Perjalanan',
-            'page' => 'isu-perjalanan',
-            'grup' => $grup,
-            'grups' => Grup::all(),
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -62,19 +49,6 @@ class AdminIsuPerjalananController extends Controller
             'title' => 'Detail Isu Perjalanan',
             'page' => 'isu-perjalanan',
             'isuPerjalanan' => $isuPerjalanan,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(IsuPerjalanan $isuPerjalanan)
-    {
-        return view('admin.paket.grup.isu-perjalanan.edit', [
-            'title' => 'Edit Isu Perjalanan',
-            'page' => 'isu-perjalanan',
-            'isuPerjalanan' => $isuPerjalanan,
-            'grups' => Grup::all(),
         ]);
     }
 

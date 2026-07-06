@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bus;
+use App\Models\Jemaah;
 use App\Models\Paket;
 use Illuminate\Http\Request;
 
@@ -18,19 +19,6 @@ class AdminBusController extends Controller
             'page' => 'bus',
             'paket' => $paket,
             'buses' => ($paket) ? $paket->buses()->paginate(200) : Bus::paginate(200),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Paket $paket = null)
-    {
-        return view('admin.paket.bus.create', [
-            'title' => 'Tambah Data bus',
-            'page' => 'bus',
-            'paket' => $paket,
-            'pakets' => Paket::all(),
         ]);
     }
 
@@ -57,23 +45,23 @@ class AdminBusController extends Controller
      */
     public function show(Bus $bus)
     {
+        $pesertaJemaahs = Jemaah::whereHas('pemesanan', function ($query) use ($bus) {
+            $query->where('paket_id', $bus->paket_id);
+        })->get();
+        $assignedJemaahIds = $bus->penumpang()->pluck('jemaah_id');
+
         return view('admin.paket.bus.show', [
             'title' => 'Detail bus',
             'page' => 'bus',
             'bus' => $bus,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Bus $bus)
-    {
-        return view('admin.paket.bus.edit', [
-            'title' => 'Edit bus',
-            'page' => 'bus',
-            'bus' => $bus,
-            'pakets' => Paket::all(),
+            'createJemaahs' => $pesertaJemaahs->whereNotIn('id', $assignedJemaahIds),
+            'editJemaahsPerPenumpang' => $bus->penumpang->mapWithKeys(function ($penumpang) use ($pesertaJemaahs, $assignedJemaahIds) {
+                return [
+                    $penumpang->id => $pesertaJemaahs->filter(function ($jemaah) use ($assignedJemaahIds, $penumpang) {
+                        return !$assignedJemaahIds->contains($jemaah->id) || $jemaah->id == $penumpang->jemaah_id;
+                    }),
+                ];
+            }),
         ]);
     }
 

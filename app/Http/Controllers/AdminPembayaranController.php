@@ -25,19 +25,6 @@ class AdminPembayaranController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Pemesanan $pemesanan = null)
-    {
-        return view('admin.paket.pemesanan.pembayaran.create', [
-            'title' => 'Tambah Pembayaran',
-            'page' => 'pembayaran',
-            'pemesanan' => $pemesanan,
-            'pemesanans' => Pemesanan::all(),
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -69,19 +56,6 @@ class AdminPembayaranController extends Controller
             'title' => 'Detail Pembayaran',
             'page' => 'pembayaran',
             'pembayaran' => $pembayaran,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pembayaran $pembayaran)
-    {
-        return view('admin.paket.pemesanan.pembayaran.edit', [
-            'title' => 'Edit Pembayaran',
-            'page' => 'pembayaran',
-            'pembayaran' => $pembayaran,
-            'pemesanans' => Pemesanan::all(),
         ]);
     }
 
