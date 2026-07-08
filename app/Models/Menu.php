@@ -23,10 +23,6 @@ class Menu extends Model
         return $this->hasMany(MenuRole::class);
     }
 
-    public function subMenus()
-    {
-        return $this->hasMany(SubMenu::class);
-    }
     public function parent()
     {
         return $this->belongsTo(Menu::class, 'parent_id');

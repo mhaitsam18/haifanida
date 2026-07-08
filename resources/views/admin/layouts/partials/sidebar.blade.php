@@ -1,7 +1,10 @@
 @php
     use App\Models\Menu;
+    use App\Models\Role;
     $role['is_superadmin'] = auth()->user()->admin->is_superadmin;
     $role['is_adminkantor'] = auth()->user()->admin->kantor_id;
+    $superadminRoleId = Role::idFor('superadmin');
+    $adminkantorRoleId = Role::idFor('adminkantor');
     $menus = Menu::with([
         'children' => function ($query) {
             $query->where('is_active', true);
@@ -15,12 +18,12 @@
         ->where('is_active', true)
         ->where('parent_id', null)
         ->orderBy('order')
-        ->whereHas('roles', function ($query) use ($role) {
-            if (!$role['is_superadmin']) {
-                $query->whereNot('roles.id', 5);
+        ->whereHas('roles', function ($query) use ($role, $superadminRoleId, $adminkantorRoleId) {
+            if (!$role['is_superadmin'] && $superadminRoleId) {
+                $query->whereNot('roles.id', $superadminRoleId);
             }
-            if (!$role['is_adminkantor']) {
-                $query->whereNot('roles.id', 6);
+            if (!$role['is_adminkantor'] && $adminkantorRoleId) {
+                $query->whereNot('roles.id', $adminkantorRoleId);
             }
         })
         ->whereHas('menuRoles', function ($query) {

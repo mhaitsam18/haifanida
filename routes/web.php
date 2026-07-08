@@ -171,7 +171,7 @@ Route::middleware('guest')->group(function () {
 
 //untuk User yang sudah terautentikasi
 Route::middleware('auth')->group(function () {
-    Route::middleware('admin')->group(function () {
+    Route::middleware(['admin', 'menu-permission'])->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [AdminController::class, 'index'])->name('');
             Route::get('/index', [AdminController::class, 'index'])->name('index');

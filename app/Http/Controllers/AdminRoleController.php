@@ -39,11 +39,25 @@ class AdminRoleController extends Controller
      */
     public function show(Role $role)
     {
+        $tree = Menu::with(['children.children'])
+            ->whereNull('parent_id')
+            ->orderBy('order')
+            ->get();
+
+        $flattened = collect();
+        $flatten = function ($menus, $depth) use (&$flatten, &$flattened) {
+            foreach ($menus as $menu) {
+                $flattened->push(['menu' => $menu, 'depth' => $depth]);
+                $flatten($menu->children, $depth + 1);
+            }
+        };
+        $flatten($tree, 0);
+
         return view('admin.role.show', [
             'title' => 'Detail role: ' . $role->role,
             'page' => 'role',
             'role' => $role,
-            'menus' => Menu::whereNull('parent_id')->get(),
+            'menuRows' => $flattened,
         ]);
     }
 

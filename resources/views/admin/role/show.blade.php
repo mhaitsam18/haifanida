@@ -24,10 +24,16 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-cream-200">
-                    @foreach ($menus as $menu)
+                    @foreach ($menuRows as $row)
+                        @php $menu = $row['menu']; @endphp
                         <tr data-menu-id="{{ $menu->id }}">
                             <td class="px-4 py-3">{{ $loop->iteration }}</td>
-                            <td class="px-4 py-3 font-medium text-stone-800">{{ $menu->menu }}</td>
+                            <td class="px-4 py-3 font-medium text-stone-800" style="padding-left: {{ 1 + $row['depth'] * 1.5 }}rem">
+                                @if ($row['depth'] > 0)
+                                    <i class="bx bx-subdirectory-right text-stone-400"></i>
+                                @endif
+                                {{ $menu->menu }}
+                            </td>
                             <td class="px-4 py-3 text-center">
                                 <input type="checkbox" class="permission-toggle rounded text-maroon-700 focus:ring-maroon-400" data-name="can_view"
                                     value="{{ $menu->id }}" @checked($menu->menuRoles()->where(['role_id' => $role->id, 'can_view' => 1])->exists())>

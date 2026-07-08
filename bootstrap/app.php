@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckMenuPermission;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsAdminKantor;
@@ -65,6 +66,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth' => Authenticate::class,
             'admin' => IsAdmin::class,
+            'menu-permission' => CheckMenuPermission::class,
             'superadmin' => IsSuperAdmin::class,
             'adminkantor' => IsAdminKantor::class,
             'author' => IsAuthor::class,
