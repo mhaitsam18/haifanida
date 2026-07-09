@@ -44,4 +44,72 @@
         height: 3px;
         opacity: 0.35;
     }
+
+    /* Gradient headline text for the cinematic hero — cream/gold sweep,
+       reusing the existing brand cream scale rather than inventing a new one. */
+    .text-gradient-hero {
+        background: linear-gradient(120deg, var(--color-cream-300) 0%, var(--color-cream-500) 45%, var(--color-cream-400) 70%, var(--color-cream-300) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+/* Lenis smooth-scroll: recommended baseline from the Lenis docs, scoped by
+   the `lenis` classes it adds to <html> itself so nothing else is affected. */
+html.lenis, html.lenis body {
+    height: auto;
+}
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+/* Cinematic hero atmosphere: god rays, birds, scroll cue */
+@keyframes hero-godrays-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.hero-godrays-spin {
+    animation: hero-godrays-spin 220s linear infinite;
+}
+
+@keyframes hero-bird-fly {
+    0% { transform: translate(0, 0) scale(var(--bird-scale)); }
+    50% { transform: translate(var(--bird-drift), -3vh) scale(var(--bird-scale)); }
+    100% { transform: translate(calc(var(--bird-drift) * 2), 0) scale(var(--bird-scale)); }
+}
+.hero-bird-fly {
+    animation: hero-bird-fly linear infinite;
+}
+
+@keyframes hero-bird-flap {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.4); }
+}
+.hero-bird-flap {
+    animation: hero-bird-flap 0.7s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes hero-scrollcue-bob {
+    0%, 100% { transform: translateY(0); opacity: 0.9; }
+    50% { transform: translateY(10px); opacity: 0.4; }
+}
+.hero-scrollcue-bob {
+    animation: hero-scrollcue-bob 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-godrays-spin,
+    .hero-bird-fly,
+    .hero-bird-flap,
+    .hero-scrollcue-bob {
+        animation: none !important;
+    }
 }

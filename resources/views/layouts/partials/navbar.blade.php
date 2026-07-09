@@ -1,16 +1,17 @@
 <header x-data="{ mobileOpen: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 12)"
     class="sticky top-0 z-40">
-    {{-- Top bar --}}
-    <div class="hidden bg-maroon-900 text-cream-100 transition-all md:block" :class="scrolled ? 'max-h-0 overflow-hidden opacity-0' : 'max-h-10 opacity-100'">
-        <div class="mx-auto flex max-w-7xl items-center justify-end gap-4 px-4 py-1.5 text-sm">
-            <a href="https://www.tiktok.com/@haifanidaofficial" target="_blank" class="hover:text-cream-300"><i class="bx bxl-tiktok"></i></a>
-            <a href="https://www.facebook.com/haifanidaofficial" target="_blank" class="hover:text-cream-300"><i class="bx bxl-facebook"></i></a>
-            <a href="https://x.com/haifanidaoffice" target="_blank" class="hover:text-cream-300"><i class="bx bxl-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/pt-haifa-nida-wisata/" target="_blank" class="hover:text-cream-300"><i class="bx bxl-linkedin-square"></i></a>
-            <a href="https://instagram.com/haifanidaofficial" target="_blank" class="hover:text-cream-300"><i class="bx bxl-instagram"></i></a>
-        </div>
-    </div>
-
+    {{--
+        The social-icon bar used to live in a separate block above this nav,
+        collapsing (animated max-height) once the page scrolled past 12px.
+        That made the sticky header's rendered height change mid-animation —
+        right as the Hero's ScrollTrigger pin engages — causing a document
+        reflow that desynced the pin/Lenis scroll position for a few frames
+        (visible as a jerk). The header's height must stay perfectly constant
+        across the whole scroll range, so the icons now live inline in this
+        single nav row instead of a second, size-changing bar. `scrolled` is
+        still used below, but only for a box-shadow — a paint-only property
+        that never triggers layout.
+    --}}
     {{-- Main nav --}}
     <nav class="border-b border-maroon-100 bg-cream-50/95 backdrop-blur transition-shadow" :class="scrolled && 'shadow-md'">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -77,8 +78,15 @@
                 @endauth
             </ul>
 
-            {{-- Right side: auth --}}
+            {{-- Right side: social + auth --}}
             <div class="hidden items-center gap-3 lg:flex">
+                <div class="flex items-center gap-3 border-r border-cream-200 pr-3 text-stone-400">
+                    <a href="https://www.tiktok.com/@haifanidaofficial" target="_blank" aria-label="TikTok" class="hover:text-maroon-700"><i class="bx bxl-tiktok"></i></a>
+                    <a href="https://www.facebook.com/haifanidaofficial" target="_blank" aria-label="Facebook" class="hover:text-maroon-700"><i class="bx bxl-facebook"></i></a>
+                    <a href="https://x.com/haifanidaoffice" target="_blank" aria-label="Twitter/X" class="hover:text-maroon-700"><i class="bx bxl-twitter"></i></a>
+                    <a href="https://www.linkedin.com/company/pt-haifa-nida-wisata/" target="_blank" aria-label="LinkedIn" class="hover:text-maroon-700"><i class="bx bxl-linkedin-square"></i></a>
+                    <a href="https://instagram.com/haifanidaofficial" target="_blank" aria-label="Instagram" class="hover:text-maroon-700"><i class="bx bxl-instagram"></i></a>
+                </div>
                 @guest
                     <x-button href="/login" variant="primary">Login <i class="bx bx-chevron-right"></i></x-button>
                 @endguest

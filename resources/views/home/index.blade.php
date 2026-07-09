@@ -2,57 +2,134 @@
 
 @section('content')
     @php
-        use Carbon\Carbon;
-        $slides = [$beranda1, $beranda2, $beranda3];
-        $startDate = Carbon::create(2007, 8, 2);
         $experienceYears = now()->year - 2007;
+        $heroHeadline = "Setiap langkah adalah awal dari perjalanan suci.";
+        $heroWords = explode(' ', $heroHeadline);
     @endphp
 
-    {{-- Hero --}}
-    <section
-        x-data="{ active: 0, count: {{ count($slides) }}, timer: null, start() { this.timer = setInterval(() => this.active = (this.active + 1) % this.count, 7000) } }"
-        x-init="start()" class="relative overflow-hidden bg-maroon-950">
-        @foreach ($slides as $i => $slide)
-            <div x-show="active === {{ $i }}" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 scale-105"
-                x-transition:enter-end="opacity-100 scale-100" x-cloak
-                class="relative flex min-h-125 items-center bg-cover bg-center sm:min-h-150"
-                style="background-image: linear-gradient(120deg, rgba(46,0,11,0.92) 0%, rgba(46,0,11,0.55) 55%, rgba(46,0,11,0.25) 100%), url('{{ asset('storage/' . $slide->gambar) }}')">
-                <div class="mx-auto w-full max-w-7xl px-4 py-20 sm:py-28">
-                    <div class="max-w-xl">
-                        <span class="mb-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-cream-300">
-                            <i class="bx bxs-moon text-maroon-300"></i> Haifa Nida Wisata
-                        </span>
-                        <h1 class="font-display mb-5 text-4xl font-semibold leading-tight text-cream-50 sm:text-5xl">{{ $slide->judul }}</h1>
-                        <div class="prose prose-invert mb-8 max-w-lg text-cream-200/90">{!! $slide->isi_konten !!}</div>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <x-button href="/profil" variant="primary">Tentang Kami <i class="bx bx-chevron-right"></i></x-button>
-                            <x-button href="/kontak-kami" variant="outline"
-                                class="border-cream-200! text-cream-100! hover:bg-cream-50/10!">Hubungi Kami</x-button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+    {{--
+        Cinematic hero — a fixed Masjidil Haram -> Ka'bah sequence rather than
+        the old 3-slide Konten carousel (beranda1-3's isi_konten is company
+        registration/license text, not marketing copy, so it doesn't fit as a
+        hero tagline). beranda1-3 remain fully intact and editable in the
+        admin panel; they're just no longer sourced into this hero.
 
-        {{-- Slide progress indicators --}}
-        <div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
-            @foreach ($slides as $i => $slide)
-                <button @click="active = {{ $i }}"
-                    class="h-1 w-10 overflow-hidden rounded-full bg-cream-50/25 transition">
-                    <span class="block h-full bg-cream-50 transition-all"
-                        :style="active === {{ $i }} ? 'width: 100%; transition: width 7s linear' : 'width: 0%'"></span>
-                </button>
-            @endforeach
+        Choreography lives in resources/js/cinematic-hero.js, gated entirely
+        behind the [data-cinematic-hero] marker below — it does nothing on
+        any other page. Imagery paths are fixed filenames under
+        public/assets/img/hero/ — swap those three files for real photography
+        later without touching this markup.
+    --}}
+    <section data-cinematic-hero class="relative h-screen w-full overflow-hidden bg-maroon-950">
+        <div data-hero-layer="sky" class="absolute inset-0">
+            <img src="{{ asset('assets/img/hero/sky.jpg') }}" alt="" class="h-full w-full object-cover"
+                style="object-position: center 30%" fetchpriority="high">
         </div>
 
-        {{-- Floating experience badge, bridges into next section --}}
-        <div class="pointer-events-none absolute -bottom-8 left-1/2 hidden -translate-x-1/2 sm:block">
-            <div class="pointer-events-auto flex items-center gap-4 rounded-2xl bg-cream-50 px-6 py-4 shadow-xl">
-                <span class="font-display text-3xl font-bold text-maroon-700">{{ $experienceYears }}+</span>
-                <span class="max-w-36 text-sm leading-snug text-stone-600">Tahun melayani perjalanan ibadah jema'ah Indonesia</span>
+        {{-- Volumetric light (god rays), anchored near the sun position in sky.jpg --}}
+        <div data-hero-layer="godrays" class="pointer-events-none absolute inset-0" style="mix-blend-mode: screen">
+            <div style="position:absolute; left:46%; top:18%; width:140vmax; height:140vmax; transform:translate(-50%,-50%)">
+                <div class="hero-godrays-spin" style="width:100%; height:100%; background: conic-gradient(from 0deg,
+                    transparent 0deg, rgba(255,226,160,0.5) 5deg, transparent 15deg, transparent 40deg,
+                    rgba(255,226,160,0.38) 47deg, transparent 57deg, transparent 96deg,
+                    rgba(232,200,119,0.45) 103deg, transparent 113deg, transparent 180deg,
+                    rgba(255,226,160,0.32) 189deg, transparent 199deg, transparent 360deg)"></div>
+            </div>
+            <div style="position:absolute; left:46%; top:18%; width:50vmax; height:50vmax; transform:translate(-50%,-50%); border-radius:50%;
+                background: radial-gradient(circle, rgba(255,250,235,0.85) 0%, rgba(255,244,214,0.6) 18%, rgba(232,200,119,0.4) 40%, rgba(232,200,119,0) 72%)"></div>
+            <div style="position:absolute; left:46%; top:18%; width:6vmax; height:6vmax; transform:translate(-50%,-50%); border-radius:50%;
+                background: radial-gradient(circle, rgba(255,255,250,0.95) 0%, rgba(255,255,250,0) 100%)"></div>
+        </div>
+
+        <div data-hero-layer="haram" class="absolute inset-0">
+            <img src="{{ asset('assets/img/hero/haram-far.jpg') }}" alt="Halaman Masjidil Haram saat golden hour"
+                class="h-full w-full object-cover" fetchpriority="high">
+        </div>
+
+        {{-- Golden-hour color grade: unifies the placeholder photos (shot in flat daylight) into one warm mood --}}
+        <div class="pointer-events-none absolute inset-0" style="mix-blend-mode: multiply; background: linear-gradient(160deg,
+            rgba(210,130,40,0.32) 0%, rgba(232,180,90,0.14) 30%, rgba(120,40,15,0.08) 65%, rgba(46,0,11,0.35) 100%)"></div>
+        <div class="pointer-events-none absolute inset-0" style="mix-blend-mode: soft-light;
+            background: radial-gradient(ellipse 70% 60% at 46% 22%, rgba(255,214,140,0.4) 0%, transparent 60%)"></div>
+
+        <div data-hero-layer="kaaba" class="absolute inset-0">
+            <img src="{{ asset('assets/img/hero/kaaba-mid.jpg') }}" alt="Ka'bah dan area Mataf dilihat dari atas"
+                class="h-full w-full object-cover">
+        </div>
+
+        <div data-hero-layer="atmosphere" class="absolute inset-0">
+            <canvas data-hero-canvas class="pointer-events-none absolute inset-0 h-full w-full" style="mix-blend-mode: screen"></canvas>
+        </div>
+
+        <div data-hero-layer="birds" class="pointer-events-none absolute inset-0 overflow-hidden">
+            @for ($i = 0; $i < 4; $i++)
+                @php
+                    $birdStartX = 8 + ($i * 21) % 70;
+                    $birdStartY = 14 + ($i * 13) % 30;
+                    $birdDrift = 26 + ($i % 3) * 10;
+                    $birdDuration = 22 + $i * 6;
+                    $birdDelay = -($i * 5.5);
+                    $birdScale = 0.6 + ($i % 3) * 0.18;
+                @endphp
+                <div class="hero-bird-fly"
+                    style="position:absolute; left:{{ $birdStartX }}%; top:{{ $birdStartY }}%; transform: scale({{ $birdScale }});
+                        animation-duration: {{ $birdDuration }}s; animation-delay: {{ $birdDelay }}s;
+                        --bird-drift: {{ $birdDrift }}vw; --bird-scale: {{ $birdScale }}">
+                    <svg width="28" height="14" viewBox="0 0 28 14" class="hero-bird-flap" style="opacity:0.55">
+                        <path d="M0 7 C 6 0, 11 2, 14 7 C 17 2, 22 0, 28 7" stroke="#f7f2e7" stroke-width="1.6" fill="none" stroke-linecap="round" />
+                    </svg>
+                </div>
+            @endfor
+        </div>
+
+        {{-- Vignette: darkens edges + bottom, also quiets the mundane foreground detail in the placeholder photo --}}
+        <div data-hero-layer="vignette" class="pointer-events-none absolute inset-0" style="background:
+            radial-gradient(ellipse 80% 70% at 50% 45%, transparent 30%, rgba(46,0,11,0.55) 80%, rgba(46,0,11,0.85) 100%),
+            linear-gradient(180deg, rgba(46,0,11,0.25) 0%, transparent 22%, transparent 55%, rgba(46,0,11,0.7) 100%)"></div>
+
+        <div class="relative z-20 flex h-full flex-col items-center justify-end gap-5 px-6 pb-24 text-center sm:pb-28">
+            {{-- Legibility scrim: guarantees text contrast regardless of what's busy/bright in the photo at this position --}}
+            <div class="pointer-events-none absolute inset-x-0 bottom-0 h-[70%]" style="background: linear-gradient(to top,
+                rgba(8,6,4,0.85) 0%, rgba(8,6,4,0.6) 30%, rgba(8,6,4,0.22) 65%, transparent 100%)"></div>
+
+            <span data-hero-eyebrow class="inline-flex items-center gap-2 font-sans text-xs uppercase tracking-[0.4em] text-cream-300"
+                style="filter: drop-shadow(0 1px 6px rgba(0,0,0,0.6))">
+                <i class="bx bxs-moon text-maroon-300"></i> Haifa Nida Wisata
+            </span>
+
+            <h1 data-hero-headline class="font-display max-w-3xl text-4xl italic leading-tight sm:text-6xl md:text-7xl">
+                @foreach ($heroWords as $word)
+                    <span data-word class="text-gradient-hero inline-block">{{ $word }}</span>{{ !$loop->last ? ' ' : '' }}
+                @endforeach
+            </h1>
+
+            <p data-hero-subhead class="max-w-xl font-sans text-sm text-cream-100/90 sm:text-base"
+                style="filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6))">
+                Rasakan momen sebelum tiba di Tanah Suci &mdash; dari halaman rumah Anda, hingga Ka'bah di hadapan mata.
+            </p>
+
+            <div data-hero-cta class="mt-2 flex flex-wrap items-center justify-center gap-3">
+                <x-button href="/profil" variant="primary">Tentang Kami <i class="bx bx-chevron-right"></i></x-button>
+                <x-button href="/kontak-kami" variant="outline"
+                    class="border-cream-200! text-cream-100! hover:bg-cream-50/10!">Hubungi Kami</x-button>
+            </div>
+
+            <div data-hero-scrollcue class="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-cream-200/70">
+                <span class="font-sans text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+                <span class="hero-scrollcue-bob block h-8 w-px bg-linear-to-b from-cream-200/70 to-transparent"></span>
             </div>
         </div>
     </section>
+
+    {{-- Floating experience badge, bridges hero into the next section. Kept
+         as a sibling rather than a hero child so it isn't swept up in the
+         hero's pin/scroll animation. --}}
+    <div class="relative z-30 hidden -mt-8 justify-center px-4 sm:-mt-10 sm:flex">
+        <div class="flex items-center gap-4 rounded-2xl bg-cream-50 px-6 py-4 shadow-xl">
+            <span class="font-display text-3xl font-bold text-maroon-700">{{ $experienceYears }}+</span>
+            <span class="max-w-36 text-sm leading-snug text-stone-600">Tahun melayani perjalanan ibadah jema'ah Indonesia</span>
+        </div>
+    </div>
 
     {{-- Pilihan perjalanan: bento layout --}}
     <section class="pb-16 pt-20 sm:pt-24">
