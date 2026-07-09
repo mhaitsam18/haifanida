@@ -9,29 +9,41 @@
 
     <section class="py-16">
         <div class="mx-auto max-w-6xl px-4">
+            {{--
+                Filter bar layout. The paired-input fields (Range Harga, Tanggal
+                Keberangkatan) each hold two controls side-by-side, so they need
+                roughly double the width of the single-select fields — an equal
+                5-column grid starves them and forces the native date inputs
+                (which have a large intrinsic min-width the browser won't shrink)
+                to overflow into the next column. Instead: a 4-column desktop grid
+                where paired fields span 2, singles span 1, actions span 2; on
+                tablet paired fields go full-width; on mobile everything stacks.
+                `min-w-0` lets the inputs shrink within their track rather than
+                overflow if a cell is ever tight.
+            --}}
             <form id="filterForm" action="/umroh" method="GET"
-                class="mb-12 grid gap-4 rounded-2xl border border-cream-200 bg-cream-50 p-5 shadow-sm md:grid-cols-2 lg:grid-cols-5 lg:items-end">
-                <div>
+                class="mb-12 grid grid-cols-1 gap-4 rounded-2xl border border-cream-200 bg-cream-50 p-5 shadow-sm md:grid-cols-2 lg:grid-cols-4 lg:items-end">
+                <div class="md:col-span-2 lg:col-span-2">
                     <label class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-stone-500">Range Harga</label>
                     <div class="flex items-center gap-2">
                         <input type="number" name="harga_min" placeholder="Min" value="{{ request('harga_min') }}"
-                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                            class="w-full min-w-0 rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                         <span class="text-stone-400">&ndash;</span>
                         <input type="number" name="harga_max" placeholder="Max" value="{{ request('harga_max') }}"
-                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                            class="w-full min-w-0 rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                     </div>
                 </div>
-                <div>
+                <div class="md:col-span-2 lg:col-span-2">
                     <label class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-stone-500">Tanggal Keberangkatan</label>
                     <div class="flex items-center gap-2">
                         <input type="date" name="tanggal_mulai" value="{{ request('tanggal_mulai') }}"
-                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                            class="w-full min-w-0 rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                         <span class="text-stone-400">&ndash;</span>
                         <input type="date" name="tanggal_akhir" value="{{ request('tanggal_akhir') }}"
-                            class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
+                            class="w-full min-w-0 rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                     </div>
                 </div>
-                <div>
+                <div class="lg:col-span-1">
                     <label class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-stone-500">Durasi Paket</label>
                     <select name="durasi" class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
                         <option value="">Pilih Durasi</option>
@@ -40,7 +52,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
+                <div class="lg:col-span-1">
                     <label class="mb-1.5 block text-xs font-medium uppercase tracking-wide text-stone-500">Urutkan</label>
                     <select name="urutkan" onchange="document.getElementById('filterForm').submit()"
                         class="w-full rounded-lg border border-cream-300 px-3 py-2 text-sm focus:border-maroon-400 focus:outline-none focus:ring-2 focus:ring-maroon-100">
@@ -51,11 +63,11 @@
                         <option value="durasi_terpanjang" {{ request('urutkan') == 'durasi_terpanjang' ? 'selected' : '' }}>Durasi Terpanjang</option>
                     </select>
                 </div>
-                <div class="flex gap-2">
+                <div class="flex gap-2 md:col-span-2 lg:col-span-2">
                     <button type="submit" class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
                         <i class="bx bx-search"></i> Cari
                     </button>
-                    <a href="/umroh" class="inline-flex items-center justify-center rounded-lg border border-cream-300 px-3 py-2 text-stone-600 hover:bg-cream-100">
+                    <a href="/umroh" title="Reset filter" class="inline-flex items-center justify-center rounded-lg border border-cream-300 px-3 py-2 text-stone-600 hover:bg-cream-100">
                         <i class="bx bx-refresh"></i>
                     </a>
                 </div>
