@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+:root {
+  /* Luxury palette — warm, restrained, dark-first */
+  --color-void: #0b0906;        /* base background, near-black warm */
+  --color-ink: #16130e;         /* elevated panels */
+  --color-ivory: #f7f2e7;       /* primary text on dark */
+  --color-cream: #ece2c8;       /* secondary text / muted */
+  --color-beige: #d8c8a2;       /* tertiary / borders */
+  --color-gold: #c9a24b;        /* primary accent */
+  --color-gold-bright: #e8c877; /* accent hover / highlight */
+  --color-gold-dim: #7a601f;    /* deep accent, shadows on gold */
+  --color-maroon: #4a1418;      /* legacy brand accent, used sparingly */
+
+  --background: var(--color-void);
+  --foreground: var(--color-ivory);
+
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-void: var(--color-void);
+  --color-ink: var(--color-ink);
+  --color-ivory: var(--color-ivory);
+  --color-cream: var(--color-cream);
+  --color-beige: var(--color-beige);
+  --color-gold: var(--color-gold);
+  --color-gold-bright: var(--color-gold-bright);
+  --color-gold-dim: var(--color-gold-dim);
+  --color-maroon: var(--color-maroon);
+  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-manrope);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+/* Reusable atmosphere utilities used across cinematic sections */
+.text-gradient-gold {
+  background: linear-gradient(
+    120deg,
+    var(--color-beige) 0%,
+    var(--color-gold-bright) 45%,
+    var(--color-gold) 70%,
+    var(--color-beige) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.glass-panel {
+  background: rgba(22, 19, 14, 0.45);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(216, 200, 162, 0.14);
+}
+
+/* Hero atmosphere: god rays, birds, scroll cue */
+@keyframes hero-godrays-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.hero-godrays-spin {
+  animation: hero-godrays-spin 220s linear infinite;
+}
+
+@keyframes hero-bird-fly {
+  0% { transform: translate(0, 0) scale(var(--bird-scale)); }
+  50% { transform: translate(var(--bird-drift), -3vh) scale(var(--bird-scale)); }
+  100% { transform: translate(calc(var(--bird-drift) * 2), 0) scale(var(--bird-scale)); }
+}
+.hero-bird-fly {
+  animation: hero-bird-fly linear infinite;
+}
+
+@keyframes hero-bird-flap {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.4); }
+}
+.hero-bird-flap {
+  animation: hero-bird-flap 0.7s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes hero-scrollcue-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(10px); opacity: 0.4; }
+}
+.hero-scrollcue-bob {
+  animation: hero-scrollcue-bob 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-godrays-spin,
+  .hero-bird-fly,
+  .hero-bird-flap,
+  .hero-scrollcue-bob {
+    animation: none !important;
+  }
+}
