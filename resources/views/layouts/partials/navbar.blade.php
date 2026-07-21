@@ -1,11 +1,8 @@
-@php
-    /* Homepage-only marker: resources/js/home-experience.js and the scoped CSS
-       in app.css key off this attribute. On every other page the attribute is
-       absent, so this partial renders exactly as before. */
-    $isHome = request()->is('/') || request()->is('home');
-@endphp
+{{-- data-premium-nav: resources/js/home-experience.js and the scoped CSS in
+     app.css key off this attribute (journey-line hover sweep, stagger-in,
+     reading-progress thread). Site-wide by design. --}}
 <header x-data="{ mobileOpen: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 12)"
-    class="sticky top-0 z-40" @if ($isHome) data-home-nav @endif>
+    class="sticky top-0 z-40" data-premium-nav>
     {{--
         The social-icon bar used to live in a separate block above this nav,
         collapsing (animated max-height) once the page scrolled past 12px.
@@ -124,11 +121,9 @@
             </button>
         </div>
 
-        {{-- Homepage-only reading-progress thread: absolutely positioned so it
-             adds zero height; starts scale-x-0 so it's invisible without JS. --}}
-        @if ($isHome)
-            <div data-nav-progress class="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-linear-to-r from-cream-500 via-cream-400 to-maroon-700"></div>
-        @endif
+        {{-- Reading-progress thread: absolutely positioned so it adds zero
+             height; starts scale-x-0 so it's invisible without JS. --}}
+        <div data-nav-progress class="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-linear-to-r from-cream-500 via-cream-400 to-maroon-700"></div>
 
         {{-- Mobile menu --}}
         <div x-show="mobileOpen" x-cloak x-transition class="border-t border-cream-200 bg-cream-50 lg:hidden">

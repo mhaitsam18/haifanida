@@ -4,24 +4,173 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Homepage-only experience choreography: nav micro-interactions, chapter
- * reveals, counters, card tilt, and image parallax. Gated behind markers
- * ([data-home-nav], [data-home-experience]) that only the homepage renders,
- * so this is a no-op on every other page.
+ * Experience choreography. Two scopes:
+ *  - [data-premium-nav] (site-wide): nav stagger-in, journey-line hover
+ *    sweep (CSS), reading-progress thread, glass-over-hero toggle.
+ *  - [data-home-experience] (homepage only): chapter reveals, counters,
+ *    card tilt, image parallax, and the Golden Thread journey line.
  *
  * Philosophy: markup is fully visible by default — all "hidden" initial
  * states are applied by GSAP at runtime (gsap.from), never by CSS. With JS
  * off or prefers-reduced-motion on, the page reads as a normal static page.
  *
- * Note: the Lenis instance is created by cinematic-hero.js (which always
- * runs first on the homepage); this module only adds ScrollTriggers, which
- * hook into the same ScrollTrigger.update() wiring.
+ * Note: on the homepage the Lenis instance is created by cinematic-hero.js;
+ * on other pages ScrollTrigger simply listens to native scroll.
  */
+
+/**
+ * The Golden Thread: a gold route-line drawn down the page's left gutter as
+ * the visitor scrolls, with a waypoint marker at each [data-journey-node].
+ * Geometry is computed at runtime (the gutter width and chapter positions
+ * depend on viewport and DB content), so the SVG only gets a path when
+ * there's a real gutter to live in — otherwise it stays empty/hidden.
+ */
+function initJourneyThread(reducedMotion) {
+    const wrap = document.querySelector('[data-journey-wrap]');
+    if (!wrap) return;
+    const svg = wrap.querySelector('[data-journey-svg]');
+    const path = wrap.querySelector('[data-journey-path]');
+    const nodes = [...wrap.querySelectorAll('[data-journey-node]')];
+    if (!svg || !path || !nodes.length) return;
+
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const CONTENT_MAX_WIDTH = 1280; // matches the chapters' max-w-7xl
+    let drawTween = null;
+    let nodeTriggers = [];
+    let circles = [];
+
+    function clear() {
+        drawTween?.scrollTrigger?.kill();
+        drawTween?.kill();
+        drawTween = null;
+        nodeTriggers.forEach((t) => t.kill());
+        nodeTriggers = [];
+        circles.forEach((c) => c.remove());
+        circles = [];
+        path.removeAttribute('d');
+    }
+
+    function build() {
+        clear();
+
+        // The thread needs genuine empty gutter beside the centered content;
+        // below that width it would cross text, so it simply doesn't render.
+        const gutter = (window.innerWidth - CONTENT_MAX_WIDTH) / 2;
+        if (gutter < 140) {
+            svg.style.display = 'none';
+            return;
+        }
+        svg.style.display = '';
+
+        const wrapRect = wrap.getBoundingClientRect();
+        const width = wrap.clientWidth;
+        const height = wrap.scrollHeight;
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+        const baseX = gutter * 0.5;
+        const amp = Math.min(gutter * 0.2, 30);
+
+        // Main points: the thread lives entirely in the left gutter — it
+        // enters at the top edge, passes a waypoint per chapter, and runs
+        // off the bottom toward the footer. Never routed toward center:
+        // any excursion out of the gutter would cross real content.
+        const points = [{ x: baseX, y: 0 }];
+        nodes.forEach((el, i) => {
+            const rect = el.getBoundingClientRect();
+            points.push({
+                x: baseX + (i % 2 ? amp : -amp * 0.3),
+                y: rect.top - wrapRect.top + rect.height / 2,
+            });
+        });
+        points.push({ x: baseX, y: height });
+
+        // Weave: a midpoint between each pair, alternating sides.
+        const woven = [points[0]];
+        for (let i = 1; i < points.length; i++) {
+            woven.push({
+                x: baseX + (i % 2 ? -amp : amp),
+                y: (points[i - 1].y + points[i].y) / 2,
+            });
+            woven.push(points[i]);
+        }
+
+        let d = `M ${woven[0].x.toFixed(1)},${woven[0].y.toFixed(1)}`;
+        for (let i = 1; i < woven.length; i++) {
+            const p0 = woven[i - 1];
+            const p1 = woven[i];
+            const dy = (p1.y - p0.y) / 2;
+            d += ` C ${p0.x.toFixed(1)},${(p0.y + dy).toFixed(1)} ${p1.x.toFixed(1)},${(p1.y - dy).toFixed(1)} ${p1.x.toFixed(1)},${p1.y.toFixed(1)}`;
+        }
+        path.setAttribute('d', d);
+
+        nodes.forEach((_, i) => {
+            const circle = document.createElementNS(SVG_NS, 'circle');
+            circle.setAttribute('cx', points[i + 1].x);
+            circle.setAttribute('cy', points[i + 1].y);
+            circle.setAttribute('r', '5');
+            circle.setAttribute('fill', 'var(--color-cream-500)');
+            circle.setAttribute('stroke', 'var(--color-maroon-700)');
+            circle.setAttribute('stroke-width', '2');
+            svg.appendChild(circle);
+            circles.push(circle);
+        });
+
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = `${length}`;
+
+        if (reducedMotion) {
+            path.style.strokeDashoffset = '0';
+            return;
+        }
+
+        path.style.strokeDashoffset = `${length}`;
+        drawTween = gsap.to(path, {
+            strokeDashoffset: 0,
+            ease: 'none',
+            scrollTrigger: { trigger: wrap, start: 'top 75%', end: 'bottom 90%', scrub: 0.6 },
+        });
+
+        circles.forEach((circle, i) => {
+            gsap.set(circle, {
+                opacity: 0,
+                scale: 0,
+                svgOrigin: `${points[i + 1].x} ${points[i + 1].y}`,
+            });
+            nodeTriggers.push(
+                ScrollTrigger.create({
+                    trigger: nodes[i],
+                    start: 'top 75%',
+                    once: true,
+                    onEnter: () => gsap.to(circle, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' }),
+                })
+            );
+        });
+    }
+
+    build();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            build();
+            ScrollTrigger.refresh();
+        }, 300);
+    });
+
+    // Late-loading images change section heights — rebuild once settled.
+    if (document.readyState !== 'complete') {
+        window.addEventListener('load', () => {
+            build();
+            ScrollTrigger.refresh();
+        }, { once: true });
+    }
+}
 function initHomeExperience() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // --- Prologue: the navigation frame -----------------------------------
-    const header = document.querySelector('[data-home-nav]');
+    const header = document.querySelector('[data-premium-nav]');
     if (header) {
         const hero = document.querySelector('[data-cinematic-hero]');
         if (hero) {
@@ -60,6 +209,11 @@ function initHomeExperience() {
     }
 
     if (!document.querySelector('[data-home-experience]')) return;
+
+    // The thread renders (fully drawn) even under reduced motion — it's
+    // wayfinding, not just decoration.
+    initJourneyThread(reducedMotion);
+
     if (reducedMotion) return; // everything below is decorative motion
 
     // --- Chapter reveals ---------------------------------------------------

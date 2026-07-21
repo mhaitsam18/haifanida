@@ -56,19 +56,19 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Homepage experience — everything below is scoped behind [data-home-nav] /
+   Premium nav (site-wide) + homepage experience — scoped behind [data-premium-nav] /
    [data-*] attributes that only exist on the homepage, so every other page's
    markup renders pixel-identical. Decorative only: nothing here hides content
    when JS is off or reduced motion is on.
 --------------------------------------------------------------------------- */
 
 /* Gold "journey line" underline sweep on desktop nav items (homepage only) */
-[data-home-nav] [data-nav-links] > li > a,
-[data-home-nav] [data-nav-links] > li > button {
+[data-premium-nav] [data-nav-links] > li > a,
+[data-premium-nav] [data-nav-links] > li > button {
     position: relative;
 }
-[data-home-nav] [data-nav-links] > li > a::after,
-[data-home-nav] [data-nav-links] > li > button::after {
+[data-premium-nav] [data-nav-links] > li > a::after,
+[data-premium-nav] [data-nav-links] > li > button::after {
     content: '';
     position: absolute;
     left: 0.75rem;
@@ -81,15 +81,15 @@
     transform-origin: left;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-[data-home-nav] [data-nav-links] > li > a:hover::after,
-[data-home-nav] [data-nav-links] > li > button:hover::after {
+[data-premium-nav] [data-nav-links] > li > a:hover::after,
+[data-premium-nav] [data-nav-links] > li > button:hover::after {
     transform: scaleX(1);
 }
 
 /* While the cinematic hero fills the viewport the nav melts slightly into it
    (more translucent, borderless). Paint-only properties — the header's
    height must never change (see navbar partial comment). */
-[data-home-nav].nav-on-hero nav {
+[data-premium-nav].nav-on-hero nav {
     background: linear-gradient(to bottom, rgba(255, 253, 249, 0.92), rgba(255, 253, 249, 0.78));
     border-color: transparent;
 }
@@ -113,8 +113,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    [data-home-nav] [data-nav-links] > li > a::after,
-    [data-home-nav] [data-nav-links] > li > button::after,
+    [data-premium-nav] [data-nav-links] > li > a::after,
+    [data-premium-nav] [data-nav-links] > li > button::after,
     [data-sheen]::after {
         transition: none !important;
     }

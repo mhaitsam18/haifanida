@@ -124,6 +124,12 @@
     {{-- Floating experience badge, bridges hero into the next section. Kept
          as a sibling rather than a hero child so it isn't swept up in the
          hero's pin/scroll animation. --}}
+    {{-- Dawn bridge: the hero ends at dusk (maroon-950); this gradient
+         dissolves night into the cream daylight of the chapters below, so
+         leaving the Kaaba scene reads as time passing rather than an
+         abrupt background change. --}}
+    <div aria-hidden="true" class="-mt-px h-28 bg-linear-to-b from-maroon-950 via-maroon-900/60 to-cream-100 sm:h-36"></div>
+
     {{-- data-bridge-badge: fades out shortly before sliding under the
          translucent sticky nav — a bright card showing through the nav's
          backdrop blur reads as a rendering glitch otherwise. --}}
@@ -134,6 +140,18 @@
         </div>
     </div>
 
+    {{-- The Golden Thread: a route-line (like a pilgrimage route on a map)
+         that draws itself down the left gutter as the visitor travels the
+         chapters, dropping a waypoint at each one. Path geometry is built at
+         runtime in home-experience.js from the [data-journey-node] anchors;
+         it only renders when the viewport is wide enough to have a real
+         gutter, and is fully drawn (static) under reduced motion. --}}
+    <div data-journey-wrap class="relative">
+        <svg data-journey-svg aria-hidden="true" class="pointer-events-none absolute inset-0 z-20 hidden h-full w-full lg:block">
+            <path data-journey-path d="" fill="none" stroke="var(--color-cream-500)" stroke-width="2"
+                stroke-linecap="round" opacity="0.55" />
+        </svg>
+
     {{-- Chapter 2 — Pilihan perjalanan: bento layout. Same cards/copy/links;
          data-* attributes drive the homepage-only choreography in
          resources/js/home-experience.js (unfold on arrival, 3D tilt + gold
@@ -141,7 +159,7 @@
          plainly visible. --}}
     <section data-home-experience class="pb-16 pt-20 sm:pt-24">
         <div class="mx-auto max-w-7xl px-4">
-            <div data-reveal class="mb-10 max-w-xl">
+            <div data-reveal data-journey-node class="mb-10 max-w-xl">
                 <span class="text-sm font-semibold uppercase tracking-widest text-maroon-700">Pilihan Perjalanan Anda</span>
                 <h2 class="font-display mt-2 text-3xl font-semibold text-maroon-900">Jelajahi Umroh, Haji, dan Wisata Halal</h2>
                 <p class="mt-3 text-stone-600">Wujudkan perjalanan ibadah dan wisata halal Anda dengan pelayanan terbaik dari Haifa Nida Wisata.</p>
@@ -184,7 +202,7 @@
          (parallax), and the "2007 Berdiri" seal settles into place. --}}
     <section class="bg-cream-50 py-20">
         <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 lg:grid-cols-2">
-            <div data-reveal class="order-2 lg:order-1">
+            <div data-reveal data-journey-node class="order-2 lg:order-1">
                 <span class="text-6xl leading-none text-maroon-200">&ldquo;</span>
                 <span class="-mt-4 block text-sm font-semibold uppercase tracking-widest text-maroon-700"><span data-counter="{{ $experienceYears }}">{{ $experienceYears }}</span> Tahun Pengalaman</span>
                 <h2 class="font-display mt-2 mb-4 text-3xl font-semibold text-maroon-900">{{ $beranda4->judul }}</h2>
@@ -207,4 +225,5 @@
             </div>
         </div>
     </section>
+    </div> {{-- /data-journey-wrap --}}
 @endsection
