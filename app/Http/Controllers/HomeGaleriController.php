@@ -2,68 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Galeri;
-use Illuminate\Http\Request;
+use App\Models\Album;
 
 class HomeGaleriController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Album-based public gallery: the index shows album cards so jema'ah can
+     * find their departure group's memories; an album opens to its photos.
      */
     public function index()
     {
         return view('home.galeri.index', [
             'title' => 'Galeri',
             'page' => 'galeri',
-            'galeries' => Galeri::latest()->get(),
+            'albums' => Album::withCount('galeris')
+                ->having('galeris_count', '>', 0)
+                ->orderByRaw('tanggal IS NULL, tanggal DESC')
+                ->orderByDesc('id')
+                ->get(),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(Album $album)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Galeri $galeri)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Galeri $galeri)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Galeri $galeri)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Galeri $galeri)
-    {
-        //
+        return view('home.galeri.show', [
+            'title' => $album->judul,
+            'page' => 'galeri',
+            'album' => $album,
+            'galeries' => $album->galeris()->orderBy('id')->get(),
+        ]);
     }
 }

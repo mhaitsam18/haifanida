@@ -46,8 +46,8 @@
                     </button>
                     <div class="invisible absolute left-0 top-full z-10 w-56 rounded-lg border border-cream-200 bg-cream-50 p-2 opacity-0 shadow-lg transition group-hover:visible group-hover:opacity-100">
                         <a href="/galeri" class="block rounded-md px-3 py-2 text-sm text-stone-700 hover:bg-maroon-50 hover:text-maroon-800">Galeri &amp; Testimoni</a>
-                        <a href="https://www.karawangmengaji.com/" class="block rounded-md px-3 py-2 text-sm text-stone-700 hover:bg-maroon-50 hover:text-maroon-800">Artikel</a>
-                        <a href="https://www.karawangmengaji.com/" target="_blank" class="block rounded-md px-3 py-2 text-sm text-stone-700 hover:bg-maroon-50 hover:text-maroon-800">Kajian</a>
+                        <a href="/artikel" class="block rounded-md px-3 py-2 text-sm text-stone-700 hover:bg-maroon-50 hover:text-maroon-800">Artikel</a>
+                        <a href="https://www.kajiannidaal-islam.com/" target="_blank" class="block rounded-md px-3 py-2 text-sm text-stone-700 hover:bg-maroon-50 hover:text-maroon-800">Kajian</a>
                     </div>
                 </li>
                 <li class="group relative">

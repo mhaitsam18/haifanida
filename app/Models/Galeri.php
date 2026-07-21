@@ -18,4 +18,9 @@ class Galeri extends Model
     {
         return $this->belongsTo(Paket::class);
     }
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
 }

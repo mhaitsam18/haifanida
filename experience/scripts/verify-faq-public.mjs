@@ -1,0 +1,13 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch({ args: ["--no-sandbox"] });
+const page = await (await browser.newContext({ viewport: { width: 1600, height: 900 } })).newPage();
+const errors = [];
+page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
+page.on("pageerror", (e) => errors.push(e.message));
+await page.goto("http://127.0.0.1:8015/faq", { waitUntil: "networkidle" });
+await page.waitForTimeout(1200);
+await page.click('button:has-text("Apa itu Paket Umroh Reguler?")');
+await page.waitForTimeout(600);
+await page.screenshot({ path: "scripts/out/p2-faq-public.png" });
+console.log(JSON.stringify({ errors }));
+await browser.close();

@@ -166,6 +166,41 @@ function initJourneyThread(reducedMotion) {
         }, { once: true });
     }
 }
+/**
+ * Legal-document TOC scroll-spy: marks the [data-toc-link] whose target
+ * [data-legal-section] is currently the topmost in view. Uses
+ * IntersectionObserver (no scroll-thrash) and no-ops when the page has no
+ * TOC, so it's safe to call on every page.
+ */
+function initLegalToc() {
+    const toc = document.querySelector('[data-legal-toc]');
+    if (!toc) return;
+    const sections = [...document.querySelectorAll('[data-legal-section]')];
+    if (!sections.length) return;
+
+    const linkFor = (id) => toc.querySelector(`[data-toc-link="${id}"]`);
+    const visible = new Map();
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                visible.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+            }
+            // Pick the section with the greatest visible ratio as "active".
+            let activeId = null;
+            let best = 0;
+            for (const [id, ratio] of visible) {
+                if (ratio > best) { best = ratio; activeId = id; }
+            }
+            toc.querySelectorAll('[data-toc-link]').forEach((l) => l.classList.remove('is-active'));
+            if (activeId) linkFor(activeId)?.classList.add('is-active');
+        },
+        { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.25, 0.5, 1] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+}
+
 function initHomeExperience() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -208,6 +243,47 @@ function initHomeExperience() {
         }
     }
 
+    // --- Site-wide: entrance reveals + stat counters -----------------------
+    // Any public page can use [data-reveal] / [data-counter]; these are
+    // usability-neutral entrance patterns, not homepage-specific story beats.
+    if (!reducedMotion) {
+        document.querySelectorAll('[data-reveal]').forEach((el) => {
+            gsap.from(el, {
+                opacity: 0,
+                y: 28,
+                duration: 0.8,
+                delay: parseFloat(el.dataset.revealDelay || '0'),
+                ease: 'power2.out',
+                clearProps: 'all',
+                scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+            });
+        });
+
+        document.querySelectorAll('[data-counter]').forEach((el) => {
+            const target = parseInt(el.dataset.counter, 10);
+            if (Number.isNaN(target)) return;
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 88%',
+                once: true,
+                onEnter: () => {
+                    const state = { value: 0 };
+                    gsap.to(state, {
+                        value: target,
+                        duration: 1.6,
+                        ease: 'power2.out',
+                        onUpdate: () => { el.textContent = Math.round(state.value); },
+                    });
+                },
+            });
+        });
+    }
+
+    // --- Site-wide: legal-document table-of-contents scroll-spy ------------
+    // Highlights the TOC entry for whichever section is currently in view.
+    // Pure wayfinding, so it runs even under reduced motion (no animation).
+    initLegalToc();
+
     if (!document.querySelector('[data-home-experience]')) return;
 
     // The thread renders (fully drawn) even under reduced motion — it's
@@ -215,19 +291,6 @@ function initHomeExperience() {
     initJourneyThread(reducedMotion);
 
     if (reducedMotion) return; // everything below is decorative motion
-
-    // --- Chapter reveals ---------------------------------------------------
-    document.querySelectorAll('[data-reveal]').forEach((el) => {
-        gsap.from(el, {
-            opacity: 0,
-            y: 28,
-            duration: 0.8,
-            delay: parseFloat(el.dataset.revealDelay || '0'),
-            ease: 'power2.out',
-            clearProps: 'all',
-            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-        });
-    });
 
     // Gateway cards unfold upward with a hint of perspective, staggered via
     // each card's data-unfold delay, all triggered by the shared grid.
@@ -268,26 +331,6 @@ function initHomeExperience() {
             y: -12,
             ease: 'none',
             scrollTrigger: { trigger: el, start: 'top 130', end: 'top 78', scrub: true },
-        });
-    });
-
-    // --- Counters (experience years) --------------------------------------
-    document.querySelectorAll('[data-counter]').forEach((el) => {
-        const target = parseInt(el.dataset.counter, 10);
-        if (Number.isNaN(target)) return;
-        ScrollTrigger.create({
-            trigger: el,
-            start: 'top 88%',
-            once: true,
-            onEnter: () => {
-                const state = { value: 0 };
-                gsap.to(state, {
-                    value: target,
-                    duration: 1.6,
-                    ease: 'power2.out',
-                    onUpdate: () => { el.textContent = Math.round(state.value); },
-                });
-            },
         });
     });
 

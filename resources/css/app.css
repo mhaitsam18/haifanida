@@ -120,6 +120,19 @@
     }
 }
 
+/* Legal-document TOC: active section (set by initLegalToc scroll-spy) */
+[data-legal-toc] a.is-active {
+    border-left-color: var(--color-maroon-700);
+    background: var(--color-maroon-50);
+    font-weight: 600;
+    color: var(--color-maroon-800);
+}
+
+/* Anchor targets sit below the sticky header when jumped to */
+[data-legal-section] {
+    scroll-margin-top: 6rem;
+}
+
 /* Lenis smooth-scroll: recommended baseline from the Lenis docs, scoped by
    the `lenis` classes it adds to <html> itself so nothing else is affected. */
 html.lenis, html.lenis body {

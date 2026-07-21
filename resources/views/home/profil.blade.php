@@ -23,7 +23,7 @@
         <div class="mx-auto max-w-4xl px-4 text-center">
             <h2 class="font-display text-2xl font-semibold text-maroon-900">Sertifikat Akreditasi PPIU</h2>
             <div class="mt-6 overflow-hidden rounded-2xl border border-cream-200 shadow-sm">
-                <iframe src="https://drive.google.com/file/d/1SsSRT8vEdf5vJTc69NoRWqsZ-5d0OgN_/preview"
+                <iframe src="https://drive.google.com/file/d/1e8qZ-ddmlfRyaexy9pBkxU4D35UOmA53/preview"
                     class="h-[70vh] w-full md:h-[90vh]" style="border: none;"></iframe>
             </div>
             <img class="mx-auto mt-6 max-w-md rounded-xl border border-cream-200" src="/assets/img/haifa/akreditasi-2.jpg" alt="Akreditasi PPIU" loading="lazy">

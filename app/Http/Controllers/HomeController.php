@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\FiltersPaketListing;
 use App\Models\Konten;
 use App\Models\Pesan;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
+    use FiltersPaketListing;
+
     private function allKontens()
     {
         return Cache::remember('konten.all', now()->addHours(6), fn () => Konten::all());
@@ -29,26 +32,29 @@ class HomeController extends Controller
 
     public function umroh()
     {
-        return view('home.umroh', [
-            'title' => 'Umroh',
-            'page' => 'umroh',
-            'kontens' => $this->allKontens()
-        ]);
+        // Legacy method; the live /umroh route uses UmrohController@index.
+        return redirect('/umroh');
     }
-    public function haji()
+    public function haji(Request $request)
     {
-        return view('home.haji', [
-            'title' => 'Haji',
+        return view('home.paket.listing', [
+            'title' => 'Paket Haji',
             'page' => 'haji',
-            'kontens' => $this->allKontens()
+            'jenis' => 'haji',
+            'action' => '/haji',
+            'subtitle' => 'Tunaikan rukun Islam kelima bersama pendamping berpengalaman dan pelayanan terbaik dari Haifa Nida Wisata.',
+            ...$this->paketListing($request, 'haji'),
         ]);
     }
-    public function wisataHalal()
+    public function wisataHalal(Request $request)
     {
-        return view('home.wisata-halal', [
+        return view('home.paket.listing', [
             'title' => 'Wisata Halal',
             'page' => 'wisata-halal',
-            'kontens' => $this->allKontens()
+            'jenis' => 'wisata halal',
+            'action' => '/wisata-halal',
+            'subtitle' => 'Jelajahi destinasi dunia dengan kenyamanan dan kepastian halal di setiap langkah perjalanan.',
+            ...$this->paketListing($request, 'wisata halal'),
         ]);
     }
 
@@ -112,9 +118,15 @@ class HomeController extends Controller
 
     public function faq()
     {
+        $faqGroups = \App\Models\Faq::active()
+            ->orderBy('urutan')
+            ->get()
+            ->groupBy(fn ($faq) => $faq->kategori ?: 'Umum');
+
         return view('home.faq', [
             'title' => 'FAQ',
             'page' => 'faq',
+            'faqGroups' => $faqGroups,
             'kontens' => $this->allKontens()
         ]);
     }

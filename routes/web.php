@@ -11,6 +11,8 @@ use App\Http\Controllers\AdminCabangController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLaporanKeuanganController;
 use App\Http\Controllers\AdminEkstraController;
+use App\Http\Controllers\AdminFaqController;
+use App\Http\Controllers\AdminAlbumController;
 use App\Http\Controllers\AdminGaleriController;
 use App\Http\Controllers\AdminGrupController;
 use App\Http\Controllers\AdminHotelController;
@@ -108,6 +110,7 @@ Route::get('/haji', [HomeController::class, 'haji'])->name('home.haji');
 Route::get('/wisata-halal', [HomeController::class, 'wisataHalal'])->name('home.wisata-halal');
 
 Route::get('/galeri', [HomeGaleriController::class, 'index'])->name('home.galeri');
+Route::get('/galeri/{album}', [HomeGaleriController::class, 'show'])->name('home.galeri.show');
 Route::get('/artikel', [HomeArtikelController::class, 'index'])->name('home.artikel');
 Route::get('/artikel/{artikel}', [HomeArtikelController::class, 'show'])->name('home.artikel.show');
 Route::get('/kajian', [HomeKajianController::class, 'index'])->name('home.kajian');
@@ -227,6 +230,9 @@ Route::middleware('auth')->group(function () {
                 Route::resource('ekstra', AdminEkstraController::class)->except(['create', 'edit'])->parameters([
                     'ekstra' => 'ekstra'
                 ]);
+                Route::resource('faq', AdminFaqController::class)->except(['create', 'edit', 'show'])->parameters([
+                    'faq' => 'faq'
+                ]);
                 Route::resource('pesan', AdminPesanController::class)->parameters([
                     'pesan' => 'pesan'
                 ]);
@@ -340,6 +346,11 @@ Route::middleware('auth')->group(function () {
                 Route::resource('galeri', AdminGaleriController::class)->except(['create', 'edit'])->parameters([
                     'galeri' => 'galeri'
                 ]);
+                Route::resource('album', AdminAlbumController::class)->except(['create', 'edit'])->parameters([
+                    'album' => 'album'
+                ]);
+                Route::post('album/{album}/foto', [AdminAlbumController::class, 'storeFoto'])->name('album.foto.store');
+                Route::delete('album/{album}/foto/{galeri}', [AdminAlbumController::class, 'destroyFoto'])->name('album.foto.destroy');
                 Route::resource('paket-ekstra', AdminPaketEkstraController::class)->except(['create', 'edit'])->parameters([
                     'paket-ekstra' => 'paket_ekstra'
                 ]);

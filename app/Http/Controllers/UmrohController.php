@@ -36,84 +36,33 @@ class UmrohController extends Controller
     // }
     // MODIFY
 
+    use \App\Http\Controllers\Concerns\FiltersPaketListing;
+
     public function index(Request $request)
     {
-        // Base query
-        $query = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at');
-
-        // Price range filter
-        if ($request->filled('harga_min')) {
-            $query->where('harga', '>=', $request->harga_min);
-        }
-
-        if ($request->filled('harga_max')) {
-            $query->where('harga', '<=', $request->harga_max);
-        }
-
-        // Departure date filter
-        if ($request->filled('tanggal_mulai')) {
-            $query->where('tanggal_mulai', '>=', $request->tanggal_mulai);
-        }
-
-        if ($request->filled('tanggal_akhir')) {
-            $query->where('tanggal_mulai', '<=', $request->tanggal_akhir);
-        }
-
-        // Duration filter - Modified
-        if ($request->filled('durasi')) {
-            $query->where('durasi', $request->durasi);
-        }
-
-        // Sort options
-        if ($request->filled('urutkan')) {
-            switch ($request->urutkan) {
-                case 'harga_terendah':
-                    $query->orderBy('harga', 'asc');
-                    break;
-                case 'harga_tertinggi':
-                    $query->orderBy('harga', 'desc');
-                    break;
-                case 'durasi_terpendek':
-                    $query->orderBy('durasi', 'asc');
-                    break;
-                case 'durasi_terpanjang':
-                    $query->orderBy('durasi', 'desc');
-                    break;
-                default:
-                    $query->latest();
-                    break;
-            }
-        } else {
-            $query->latest();
-        }
-
-        // Execute query
-        $pakets = $query->get();
-
-        // Get unique durations for filter options
-        $durasiOptions = Paket::where('jenis_paket', 'umroh')
-            ->whereNotNull('published_at')
-            ->distinct()
-            ->pluck('durasi')
-            ->sort()
-            ->values()
-            ->toArray();
-
-        return view('home.umroh', [
+        return view('home.paket.listing', [
             'title' => 'Paket Umroh',
-            'pakets' => $pakets,
-            'durasiOptions' => $durasiOptions,
-            'filters' => $request->all()
+            'page' => 'umroh',
+            'jenis' => 'umroh',
+            'action' => '/umroh',
+            'subtitle' => 'Pilih jadwal keberangkatan umroh Anda — semua paket sudah termasuk pendampingan penuh dari tim kami.',
+            ...$this->paketListing($request, 'umroh'),
         ]);
     }
 
     public function show($id)
     {
         $paket = Paket::findOrFail($id);
+
         return view('home.detail-paket', [
             'title' => $paket->nama_paket,
-            'paket' => $paket
+            'paket' => $paket,
+            'paketLainnya' => Paket::where('jenis_paket', $paket->jenis_paket)
+                ->whereNotNull('published_at')
+                ->where('id', '!=', $paket->id)
+                ->latest()
+                ->take(5)
+                ->get(),
         ]);
     }
 

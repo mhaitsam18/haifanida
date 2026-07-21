@@ -1,17 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <x-page-banner :title="$title" />
+    <x-page-banner :title="$title"
+        subtitle="Persiapan menyeluruh untuk perjalanan ibadah yang lancar, aman, dan khusyuk." />
 
-    <section class="py-16">
+    <section class="py-16 sm:py-20">
         <div class="mx-auto max-w-4xl px-4">
-            <div class="prose max-w-none prose-headings:font-display prose-headings:text-maroon-800 prose-p:text-stone-600 prose-strong:text-maroon-800">
+            <div data-reveal class="prose max-w-none prose-headings:font-display prose-headings:text-maroon-800 prose-p:text-stone-600">
                 <h3>Panduan Umroh</h3>
                 <p>Perjalanan umroh adalah ibadah yang membutuhkan persiapan fisik, mental, dan spiritual. Kami menyediakan panduan lengkap untuk memastikan perjalanan Anda berjalan lancar dan khusyuk. Mulai dari pengurusan dokumen hingga tata cara ibadah, kami akan memandu Anda di setiap langkah.</p>
                 <p>Pastikan Anda memahami syarat dan ketentuan perjalanan, termasuk jadwal keberangkatan, akomodasi, dan peraturan selama di Tanah Suci. Kami juga menyediakan pembimbing berpengalaman untuk membantu menjalankan ibadah sesuai tuntunan syariat.</p>
             </div>
 
-            <div class="my-10 rounded-2xl border border-cream-200 bg-cream-50 p-6 md:p-8">
+            {{-- 5 Pasti Umroh --}}
+            <div data-reveal class="my-10 overflow-hidden rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm md:p-8">
                 <div class="grid gap-8 md:grid-cols-3 md:items-center">
                     <div class="md:col-span-2">
                         <h3 class="font-display text-xl font-semibold text-maroon-900">5 Pasti Umroh dari Kementerian Agama</h3>
@@ -30,7 +32,10 @@
                 </div>
             </div>
 
-            <div class="space-y-10">
+            {{-- Preparation steps as a connected vertical stepper. The gold
+                 thread + numbered markers echo the homepage/sejarah language;
+                 all guidance text preserved verbatim. --}}
+            <div class="relative mt-12 space-y-6 before:absolute before:bottom-6 before:left-[23px] before:top-6 before:w-0.5 before:bg-linear-to-b before:from-cream-400 before:via-maroon-300 before:to-cream-400">
                 @foreach ([
                     ['no' => '01', 'title' => 'Persiapan Dokumen Perjalanan', 'body' => [
                         'Sebelum berangkat, pastikan Anda memiliki paspor yang berlaku minimal 6 bulan, kartu identitas, dan bukti vaksin meningitis. Kami akan membantu memverifikasi dokumen dan mengurus visa umroh agar prosesnya cepat dan mudah.',
@@ -53,18 +58,18 @@
                         'Simpan nomor kontak darurat tim kami dan pihak berwenang setempat. Pastikan Anda juga membawa perlengkapan pribadi seperti masker, hand sanitizer, dan obat-obatan pribadi untuk menjaga kesehatan.',
                     ]],
                 ] as $step)
-                    <div class="flex gap-5">
-                        <div class="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-maroon-700 text-lg font-semibold text-cream-50">
+                    <div data-reveal class="relative pl-16">
+                        <div class="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-full border-2 border-cream-300 bg-maroon-700 font-display text-lg font-semibold text-cream-50 shadow-sm">
                             {{ $step['no'] }}
                         </div>
-                        <div>
+                        <div class="rounded-2xl border border-cream-200 bg-cream-50 p-6 shadow-sm">
                             <h4 class="font-display text-lg font-semibold text-maroon-900">{{ $step['title'] }}</h4>
                             @foreach ($step['body'] as $paragraph)
                                 <p class="mt-2 text-sm leading-relaxed text-stone-600">{{ $paragraph }}</p>
                             @endforeach
                             @isset($step['link'])
-                                <a href="{{ $step['link']['url'] }}" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-maroon-700 underline hover:text-maroon-900">
-                                    {{ $step['link']['label'] }}
+                                <a href="{{ $step['link']['url'] }}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-maroon-50 px-3 py-2 text-sm font-medium text-maroon-700 transition hover:bg-maroon-100">
+                                    <i class="bx bx-download"></i> {{ $step['link']['label'] }}
                                 </a>
                             @endisset
                         </div>
