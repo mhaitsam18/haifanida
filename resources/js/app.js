@@ -1,5 +1,6 @@
 import './bootstrap';
 import './cinematic-hero';
+import './home-experience';
 
 import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';

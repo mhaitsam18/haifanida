@@ -1,5 +1,11 @@
+@php
+    /* Homepage-only marker: resources/js/home-experience.js and the scoped CSS
+       in app.css key off this attribute. On every other page the attribute is
+       absent, so this partial renders exactly as before. */
+    $isHome = request()->is('/') || request()->is('home');
+@endphp
 <header x-data="{ mobileOpen: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 12)"
-    class="sticky top-0 z-40">
+    class="sticky top-0 z-40" @if ($isHome) data-home-nav @endif>
     {{--
         The social-icon bar used to live in a separate block above this nav,
         collapsing (animated max-height) once the page scrolled past 12px.
@@ -20,7 +26,7 @@
             </a>
 
             {{-- Desktop menu --}}
-            <ul class="hidden items-center gap-1 lg:flex">
+            <ul data-nav-links class="hidden items-center gap-1 lg:flex">
                 <li>
                     <a href="/" class="rounded-lg px-3 py-2 text-sm font-medium text-stone-700 hover:bg-maroon-50 hover:text-maroon-800">Beranda</a>
                 </li>
@@ -117,6 +123,12 @@
                 <i class="bx" :class="mobileOpen ? 'bx-x' : 'bx-menu'" style="font-size: 1.75rem;"></i>
             </button>
         </div>
+
+        {{-- Homepage-only reading-progress thread: absolutely positioned so it
+             adds zero height; starts scale-x-0 so it's invisible without JS. --}}
+        @if ($isHome)
+            <div data-nav-progress class="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-linear-to-r from-cream-500 via-cream-400 to-maroon-700"></div>
+        @endif
 
         {{-- Mobile menu --}}
         <div x-show="mobileOpen" x-cloak x-transition class="border-t border-cream-200 bg-cream-50 lg:hidden">

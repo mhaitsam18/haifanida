@@ -55,6 +55,71 @@
     }
 }
 
+/* ---------------------------------------------------------------------------
+   Homepage experience — everything below is scoped behind [data-home-nav] /
+   [data-*] attributes that only exist on the homepage, so every other page's
+   markup renders pixel-identical. Decorative only: nothing here hides content
+   when JS is off or reduced motion is on.
+--------------------------------------------------------------------------- */
+
+/* Gold "journey line" underline sweep on desktop nav items (homepage only) */
+[data-home-nav] [data-nav-links] > li > a,
+[data-home-nav] [data-nav-links] > li > button {
+    position: relative;
+}
+[data-home-nav] [data-nav-links] > li > a::after,
+[data-home-nav] [data-nav-links] > li > button::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.25rem;
+    height: 2px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, var(--color-cream-500), var(--color-maroon-600));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-home-nav] [data-nav-links] > li > a:hover::after,
+[data-home-nav] [data-nav-links] > li > button:hover::after {
+    transform: scaleX(1);
+}
+
+/* While the cinematic hero fills the viewport the nav melts slightly into it
+   (more translucent, borderless). Paint-only properties — the header's
+   height must never change (see navbar partial comment). */
+[data-home-nav].nav-on-hero nav {
+    background: linear-gradient(to bottom, rgba(255, 253, 249, 0.92), rgba(255, 253, 249, 0.78));
+    border-color: transparent;
+}
+
+/* Gold sheen that sweeps across gateway cards on hover (homepage bento) */
+[data-sheen] {
+    position: relative;
+}
+[data-sheen]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 42%, rgba(255, 244, 214, 0.32) 50%, transparent 58%);
+    transform: translateX(-130%);
+}
+[data-sheen]:hover::after {
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(130%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-home-nav] [data-nav-links] > li > a::after,
+    [data-home-nav] [data-nav-links] > li > button::after,
+    [data-sheen]::after {
+        transition: none !important;
+    }
+}
+
 /* Lenis smooth-scroll: recommended baseline from the Lenis docs, scoped by
    the `lenis` classes it adds to <html> itself so nothing else is affected. */
 html.lenis, html.lenis body {

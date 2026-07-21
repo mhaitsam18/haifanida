@@ -124,24 +124,32 @@
     {{-- Floating experience badge, bridges hero into the next section. Kept
          as a sibling rather than a hero child so it isn't swept up in the
          hero's pin/scroll animation. --}}
-    <div class="relative z-30 hidden -mt-8 justify-center px-4 sm:-mt-10 sm:flex">
+    {{-- data-bridge-badge: fades out shortly before sliding under the
+         translucent sticky nav — a bright card showing through the nav's
+         backdrop blur reads as a rendering glitch otherwise. --}}
+    <div data-bridge-badge class="relative z-30 hidden -mt-8 justify-center px-4 sm:-mt-10 sm:flex">
         <div class="flex items-center gap-4 rounded-2xl bg-cream-50 px-6 py-4 shadow-xl">
-            <span class="font-display text-3xl font-bold text-maroon-700">{{ $experienceYears }}+</span>
+            <span class="font-display text-3xl font-bold text-maroon-700"><span data-counter="{{ $experienceYears }}">{{ $experienceYears }}</span>+</span>
             <span class="max-w-36 text-sm leading-snug text-stone-600">Tahun melayani perjalanan ibadah jema'ah Indonesia</span>
         </div>
     </div>
 
-    {{-- Pilihan perjalanan: bento layout --}}
-    <section class="pb-16 pt-20 sm:pt-24">
+    {{-- Chapter 2 — Pilihan perjalanan: bento layout. Same cards/copy/links;
+         data-* attributes drive the homepage-only choreography in
+         resources/js/home-experience.js (unfold on arrival, 3D tilt + gold
+         sheen on hover). Without JS or with reduced motion everything is
+         plainly visible. --}}
+    <section data-home-experience class="pb-16 pt-20 sm:pt-24">
         <div class="mx-auto max-w-7xl px-4">
-            <div class="mb-10 max-w-xl">
+            <div data-reveal class="mb-10 max-w-xl">
                 <span class="text-sm font-semibold uppercase tracking-widest text-maroon-700">Pilihan Perjalanan Anda</span>
                 <h2 class="font-display mt-2 text-3xl font-semibold text-maroon-900">Jelajahi Umroh, Haji, dan Wisata Halal</h2>
                 <p class="mt-3 text-stone-600">Wujudkan perjalanan ibadah dan wisata halal Anda dengan pelayanan terbaik dari Haifa Nida Wisata.</p>
             </div>
 
             <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
-                <a href="/umroh" class="group relative col-span-1 overflow-hidden rounded-2xl shadow-sm lg:col-span-2 lg:row-span-2">
+                <a href="/umroh" data-unfold="0" data-tilt data-sheen
+                    class="group relative col-span-1 overflow-hidden rounded-2xl shadow-sm lg:col-span-2 lg:row-span-2">
                     <img src="{{ asset('storage/paket-galeri/umroh.jpg') }}" alt="Umroh"
                         class="h-80 w-full object-cover transition duration-500 group-hover:scale-105 lg:h-full">
                     <div class="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-maroon-950/90 via-maroon-950/20 to-transparent p-7">
@@ -157,7 +165,8 @@
                     ['img' => 'haji.jpg', 'label' => 'Ingin Haji? Pesan Sekarang', 'href' => '/haji', 'no' => '02'],
                     ['img' => 'wisata-halal.jpg', 'label' => 'Wisata Halal? Jelajahi Sekarang', 'href' => '/wisata-halal', 'no' => '03'],
                 ] as $item)
-                    <a href="{{ $item['href'] }}" class="group relative overflow-hidden rounded-2xl shadow-sm">
+                    <a href="{{ $item['href'] }}" data-unfold="{{ 0.12 * $loop->iteration }}" data-tilt data-sheen
+                        class="group relative overflow-hidden rounded-2xl shadow-sm">
                         <img src="{{ asset('storage/paket-galeri/' . $item['img']) }}" alt="{{ $item['label'] }}"
                             class="h-44 w-full object-cover transition duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-maroon-950/90 via-maroon-950/10 to-transparent p-5">
@@ -170,22 +179,28 @@
         </div>
     </section>
 
-    {{-- Sejarah singkat --}}
+    {{-- Chapter 3 — Sejarah singkat: same content; text column reveals on
+         arrival, the year counts up, the photo drifts inside its frame
+         (parallax), and the "2007 Berdiri" seal settles into place. --}}
     <section class="bg-cream-50 py-20">
         <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 lg:grid-cols-2">
-            <div class="order-2 lg:order-1">
+            <div data-reveal class="order-2 lg:order-1">
                 <span class="text-6xl leading-none text-maroon-200">&ldquo;</span>
-                <span class="-mt-4 block text-sm font-semibold uppercase tracking-widest text-maroon-700">{{ $experienceYears }} Tahun Pengalaman</span>
+                <span class="-mt-4 block text-sm font-semibold uppercase tracking-widest text-maroon-700"><span data-counter="{{ $experienceYears }}">{{ $experienceYears }}</span> Tahun Pengalaman</span>
                 <h2 class="font-display mt-2 mb-4 text-3xl font-semibold text-maroon-900">{{ $beranda4->judul }}</h2>
                 <div class="prose max-w-none text-stone-600">{!! $beranda4->isi_konten !!}</div>
                 <a href="/sejarah" class="mt-5 inline-flex items-center gap-1 font-semibold text-maroon-700 hover:text-maroon-800">
                     Baca Selengkapnya <i class="bx bx-chevron-right"></i>
                 </a>
             </div>
-            <div class="relative order-1 lg:order-2">
+            <div data-reveal data-reveal-delay="0.1" class="relative order-1 lg:order-2">
                 <div class="absolute -inset-3 -z-10 rounded-2xl border-2 border-maroon-200"></div>
-                <img src="{{ asset('storage/' . $beranda4->gambar) }}" alt="Tentang Kami" class="w-full rounded-2xl object-cover shadow-sm">
-                <div class="absolute -bottom-5 -right-5 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-maroon-700 text-center text-cream-50 shadow-lg">
+                {{-- overflow-hidden frame + slight overscale so the parallax drift never exposes edges --}}
+                <div class="overflow-hidden rounded-2xl shadow-sm">
+                    <img src="{{ asset('storage/' . $beranda4->gambar) }}" alt="Tentang Kami"
+                        data-parallax-img class="w-full scale-[1.12] rounded-2xl object-cover">
+                </div>
+                <div data-seal class="absolute -bottom-5 -right-5 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-maroon-700 text-center text-cream-50 shadow-lg">
                     <span class="font-display text-lg font-bold leading-none">2007</span>
                     <span class="text-[0.6rem] uppercase tracking-wide text-cream-200">Berdiri</span>
                 </div>
