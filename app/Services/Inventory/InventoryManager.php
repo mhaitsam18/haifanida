@@ -3,13 +3,17 @@
 namespace App\Services\Inventory;
 
 use App\Services\Inventory\Contracts\InventoryProvider;
+use App\Services\Inventory\Contracts\SupportsContentSync;
+use App\Services\Inventory\Contracts\SupportsLiveInventory;
 use App\Services\Inventory\Tbo\TboService;
 use InvalidArgumentException;
 
 /**
- * Resolves a concrete InventoryProvider by name from config/inventory.php.
- * Adding a provider = one more match arm + a config block; business code
- * keeps asking for the InventoryProvider interface and never changes.
+ * Resolves inventory providers from config/inventory.php and exposes them by
+ * capability. Business code asks for the capability it needs
+ * (contentProvider / liveProvider) and gets a clear error if the configured
+ * provider does not offer it. Adding a provider = one match arm + a config
+ * block; nothing else changes.
  */
 class InventoryManager
 {
@@ -21,6 +25,30 @@ class InventoryManager
         $name ??= config('inventory.default');
 
         return $this->resolved[$name] ??= $this->build($name);
+    }
+
+    /** The provider as a STATIC-content source (throws if unsupported). */
+    public function contentProvider(?string $name = null): SupportsContentSync
+    {
+        $provider = $this->provider($name);
+
+        if (! $provider instanceof SupportsContentSync) {
+            throw new InvalidArgumentException("Provider [{$provider->key()}] does not support content synchronization.");
+        }
+
+        return $provider;
+    }
+
+    /** The provider as a DYNAMIC-inventory source (throws if unsupported). */
+    public function liveProvider(?string $name = null): SupportsLiveInventory
+    {
+        $provider = $this->provider($name);
+
+        if (! $provider instanceof SupportsLiveInventory) {
+            throw new InvalidArgumentException("Provider [{$provider->key()}] does not support live inventory.");
+        }
+
+        return $provider;
     }
 
     private function build(string $name): InventoryProvider

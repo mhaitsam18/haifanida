@@ -39,7 +39,7 @@ class SyncHotelDetailJob implements ShouldQueue
             return;
         }
 
-        $provider = $manager->provider($this->provider);
+        $provider = $manager->contentProvider($this->provider);
         $content = $provider->getHotelContent($this->hotelCode);
 
         if ($content !== null) {
@@ -51,6 +51,11 @@ class SyncHotelDetailJob implements ShouldQueue
                 ->update([
                     'sync_status' => 'synced',
                     'last_synced_at' => now(),
+                    // Provider's own last-modified, when the adapter supplies it,
+                    // so future incremental logic can trust the source timestamp.
+                    'provider_updated_at' => $content->providerUpdatedAt
+                        ? Carbon::parse($content->providerUpdatedAt)
+                        : null,
                     'sync_error' => null,
                 ]);
         }

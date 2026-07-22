@@ -2,8 +2,8 @@
 
 namespace App\Services\Inventory\Tbo;
 
-use App\Services\Inventory\Contracts\InventoryProvider;
 use App\Services\Inventory\Contracts\SupportsContentSync;
+use App\Services\Inventory\Contracts\SupportsLiveInventory;
 use App\Services\Inventory\DTO\BookingRequest;
 use App\Services\Inventory\DTO\BookingResult;
 use App\Services\Inventory\DTO\CancellationResult;
@@ -31,9 +31,12 @@ use Illuminate\Support\Facades\Http;
  * mapping is completed. No business code depends on any of this — it all
  * sits behind the InventoryProvider interface.
  *
- * @see \App\Services\Inventory\Contracts\InventoryProvider
+ * TBO offers BOTH capabilities: static content sync AND live inventory.
+ *
+ * @see \App\Services\Inventory\Contracts\SupportsContentSync
+ * @see \App\Services\Inventory\Contracts\SupportsLiveInventory
  */
-class TboService implements InventoryProvider, SupportsContentSync
+class TboService implements SupportsContentSync, SupportsLiveInventory
 {
     public function __construct(private readonly array $config) {}
 

@@ -3,7 +3,7 @@
 namespace App\Services\Inventory;
 
 use App\Models\Hotel;
-use App\Services\Inventory\Contracts\InventoryProvider;
+use App\Services\Inventory\Contracts\SupportsContentSync;
 use App\Services\Inventory\DTO\HotelContent;
 
 /**
@@ -23,7 +23,7 @@ class HotelSyncService
      * Link (or create) the local hotel that corresponds to a provider hotel,
      * then gap-fill master fields. Returns the local Hotel.
      */
-    public function syncContent(InventoryProvider $provider, HotelContent $content): Hotel
+    public function syncContent(SupportsContentSync $provider, HotelContent $content): Hotel
     {
         // 1. Find the local hotel already mapped to this provider code, if any.
         $hotel = Hotel::whereHas('externalIds', fn ($q) => $q

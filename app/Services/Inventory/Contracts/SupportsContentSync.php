@@ -2,23 +2,28 @@
 
 namespace App\Services\Inventory\Contracts;
 
+use App\Services\Inventory\DTO\HotelContent;
+
 /**
- * Opt-in capability for providers that can enumerate their hotel catalogue
- * for static-content synchronization. Kept separate from InventoryProvider
- * so a provider can offer live booking without content sync (or vice-versa).
+ * STATIC-content capability. A provider that can enumerate its hotel
+ * catalogue and return per-hotel descriptive content for synchronization
+ * into Haifa's curated master. This is the ONLY provider path that writes to
+ * the local database — and it writes slow-changing content only, never
+ * pricing/availability.
  *
- * A provider that implements this — together with
- * InventoryProvider::getHotelContent() — can drive the full/incremental/manual
- * sync pipeline with no changes to the jobs or admin UI. TBO implements it;
- * RateHawk/Hotelbeds/WebBeds adapters can implement it later unchanged.
+ * Implementing this (nothing else) is enough to drive the full/incremental/
+ * manual sync pipeline — jobs and admin UI are unchanged per provider.
  */
-interface SupportsContentSync
+interface SupportsContentSync extends InventoryProvider
 {
     /**
-     * Return the provider's hotel codes for a city (e.g. "Makkah").
-     * These become hotel_external_id.external_id values.
+     * The provider's hotel codes for a city (e.g. "Makkah"). These become
+     * hotel_external_id.external_id values.
      *
      * @return string[]
      */
     public function listHotelCodes(string $city): array;
+
+    /** Static descriptive content for one hotel (never pricing). */
+    public function getHotelContent(string $externalHotelId): ?HotelContent;
 }

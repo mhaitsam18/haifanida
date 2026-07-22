@@ -26,5 +26,7 @@ readonly class HotelContent
         /** @var string[] */
         public array $imageUrls = [],
         public ?string $description = null,
+        /** Provider's own last-modified timestamp for this content, if exposed. */
+        public ?string $providerUpdatedAt = null,
     ) {}
 }

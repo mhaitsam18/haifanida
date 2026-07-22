@@ -4,14 +4,12 @@ namespace App\Jobs\Inventory;
 
 use App\Models\HotelExternalId;
 use App\Models\HotelSyncRun;
-use App\Services\Inventory\Contracts\SupportsContentSync;
 use App\Services\Inventory\InventoryManager;
 use Illuminate\Bus\Batch;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
-use RuntimeException;
 use Throwable;
 
 /**
@@ -34,10 +32,9 @@ class SyncHotelCodesJob implements ShouldQueue
         $run = HotelSyncRun::findOrFail($this->runId);
         $run->update(['status' => 'running', 'started_at' => now()]);
 
-        $provider = $manager->provider($run->provider);
-        if (! $provider instanceof SupportsContentSync) {
-            throw new RuntimeException("Provider [{$run->provider}] does not support content synchronization.");
-        }
+        // Resolve as a content-sync provider — throws (→ run failed) if the
+        // configured provider can't enumerate content.
+        $provider = $manager->contentProvider($run->provider);
 
         // Enumerate + de-duplicate codes across the configured cities.
         $codes = collect(config('inventory.sync.cities', []))
