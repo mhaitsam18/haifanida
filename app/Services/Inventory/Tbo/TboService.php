@@ -3,6 +3,7 @@
 namespace App\Services\Inventory\Tbo;
 
 use App\Services\Inventory\Contracts\InventoryProvider;
+use App\Services\Inventory\Contracts\SupportsContentSync;
 use App\Services\Inventory\DTO\BookingRequest;
 use App\Services\Inventory\DTO\BookingResult;
 use App\Services\Inventory\DTO\CancellationResult;
@@ -32,13 +33,27 @@ use Illuminate\Support\Facades\Http;
  *
  * @see \App\Services\Inventory\Contracts\InventoryProvider
  */
-class TboService implements InventoryProvider
+class TboService implements InventoryProvider, SupportsContentSync
 {
     public function __construct(private readonly array $config) {}
 
     public function key(): string
     {
         return 'tbo';
+    }
+
+    /**
+     * List TBO hotel codes for a city (intended: TBOHotelCodeList /
+     * GiataHotelCodeList → city-wise, de-duplicated hotel codes). Mapping to be
+     * completed from the TBO HotelAPI docs — not guessed.
+     */
+    public function listHotelCodes(string $city): array
+    {
+        $this->guardConfigured();
+
+        throw new ProviderNotImplementedException(
+            'TboService::listHotelCodes — complete the TBO hotel-code-list mapping from the TBO HotelAPI docs.'
+        );
     }
 
     /**

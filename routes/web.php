@@ -353,6 +353,8 @@ Route::middleware('auth')->group(function () {
                 ]);
                 Route::post('album/{album}/foto', [AdminAlbumController::class, 'storeFoto'])->name('album.foto.store');
                 Route::delete('album/{album}/foto/{galeri}', [AdminAlbumController::class, 'destroyFoto'])->name('album.foto.destroy');
+                Route::get('hotel-sync', [\App\Http\Controllers\AdminHotelSyncController::class, 'index'])->name('hotel-sync.index');
+                Route::post('hotel-sync/start', [\App\Http\Controllers\AdminHotelSyncController::class, 'start'])->name('hotel-sync.start');
                 Route::resource('paket-ekstra', AdminPaketEkstraController::class)->except(['create', 'edit'])->parameters([
                     'paket-ekstra' => 'paket_ekstra'
                 ]);

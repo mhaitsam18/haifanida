@@ -16,6 +16,17 @@ return [
 
     'default' => env('INVENTORY_PROVIDER', 'tbo'),
 
+    /*
+     * Content-synchronization settings (provider-agnostic). Which cities to
+     * pull hotel content for, and how "stale" a hotel must be before a nightly
+     * incremental run re-fetches it.
+     */
+    'sync' => [
+        'cities' => array_filter(array_map('trim', explode(',', env('INVENTORY_SYNC_CITIES', 'Makkah,Madinah')))),
+        'incremental_after_hours' => (int) env('INVENTORY_SYNC_INCREMENTAL_HOURS', 24),
+        'detail_job_queue' => env('INVENTORY_SYNC_QUEUE', 'default'),
+    ],
+
     'providers' => [
 
         'tbo' => [

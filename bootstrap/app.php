@@ -136,4 +136,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], $statusCode);
             }
         });
+    })
+    ->withSchedule(function (Illuminate\Console\Scheduling\Schedule $schedule) {
+        // Nightly incremental hotel content sync (re-fetches only stale hotels);
+        // a weekly full sync catches newly-added / removed properties.
+        // Requires the scheduler running (e.g. `php artisan schedule:work` or cron).
+        $schedule->command('hotel:sync --type=incremental')->dailyAt('03:00')->withoutOverlapping();
+        $schedule->command('hotel:sync --type=full')->weeklyOn(1, '04:00')->withoutOverlapping();
     })->create();
