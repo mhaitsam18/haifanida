@@ -1,2 +1,12 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /login-admin
+Disallow: /register
+Disallow: /member
+Disallow: /agen
+Disallow: /author
+Disallow: /jemaah
+
+Sitemap: https://haifanida.id/sitemap.xml

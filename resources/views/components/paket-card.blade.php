@@ -9,7 +9,7 @@
     {{ $attributes->merge(['class' => 'group flex flex-col overflow-hidden rounded-2xl border border-cream-200 bg-cream-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl']) }}>
     <div class="relative aspect-4/3 overflow-hidden">
         <img src="{{ $paket->gambar ? asset('storage/' . $paket->gambar) : '/assets/img/mekkah/aviator70.jpg' }}"
-            alt="{{ $paket->nama_paket }}" loading="lazy"
+            alt="{{ $paket->nama_paket }}" loading="lazy" decoding="async"
             class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
         {{-- Warm gradient wash so white text/badges stay legible on any photo --}}
         <div class="pointer-events-none absolute inset-0 bg-linear-to-t from-maroon-950/40 via-transparent to-transparent"></div>

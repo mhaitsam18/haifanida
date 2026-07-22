@@ -92,6 +92,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+
 //untuk semua user
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');

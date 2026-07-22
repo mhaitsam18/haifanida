@@ -13,6 +13,13 @@
             </div>
 
             @forelse ($faqGroups as $kategori => $faqs)
+                @php
+                    // Split each category into two contiguous columns. Contiguous
+                    // (not alternating) so that when the grid collapses to one
+                    // column on mobile, the reading order stays 1..N top-to-bottom.
+                    $half = (int) ceil($faqs->count() / 2);
+                    $columns = [$faqs->slice(0, $half), $faqs->slice($half)];
+                @endphp
                 <div data-reveal class="mb-10">
                     @if (count($faqGroups) > 1 || $kategori !== 'Umum')
                         <h3 class="font-display mb-4 flex items-center gap-3 text-lg font-semibold text-maroon-800">
@@ -20,11 +27,15 @@
                             <span aria-hidden="true" class="motif-divider w-16 flex-none text-cream-500"></span>
                         </h3>
                     @endif
-                    <div class="space-y-3">
-                        @foreach ($faqs as $faq)
-                            <x-accordion-item :question="$faq->pertanyaan">
-                                {{ $faq->jawaban }}
-                            </x-accordion-item>
+                    <div class="grid gap-4 md:grid-cols-2 md:items-start">
+                        @foreach ($columns as $column)
+                            <div class="space-y-4">
+                                @foreach ($column as $faq)
+                                    <x-accordion-item :question="$faq->pertanyaan">
+                                        {{ $faq->jawaban }}
+                                    </x-accordion-item>
+                                @endforeach
+                            </div>
                         @endforeach
                     </div>
                 </div>

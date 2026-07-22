@@ -37,7 +37,7 @@
             </div>
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ([
-                    ['icon' => 'bx-certification', 'title' => 'Legal & Terakreditasi', 'text' => 'Memiliki izin resmi PPIU dan sedang dalam proses akreditasi terbaru untuk menjamin layanan berkualitas.'],
+                    ['icon' => 'bx-certification', 'title' => 'Legal & Terakreditasi', 'text' => 'Memiliki izin resmi PPIU dan telah meraih Akreditasi A dari Kementerian Agama untuk menjamin layanan berkualitas.'],
                     ['icon' => 'bx-shield-quarter', 'title' => 'Keamanan & Kenyamanan', 'text' => 'Menjamin perjalanan haji dan umroh yang aman, nyaman, dan penuh keberkahan bagi setiap jamaah.'],
                     ['icon' => 'bx-restaurant', 'title' => 'Catering Terbaik', 'text' => 'Didukung oleh Catering Al-Haidari, penyedia makanan nomor satu di Madinah untuk jamaah haji dan umroh.'],
                     ['icon' => 'bx-building-house', 'title' => 'Akomodasi Berkualitas', 'text' => 'Menyediakan hotel berbintang dengan lokasi strategis di Mekkah dan Madinah.'],

@@ -35,6 +35,14 @@
     h1, h2, h3, .font-display {
         font-family: var(--font-display);
     }
+
+    /* Consistent, visible keyboard-focus ring site-wide. Uses :focus-visible
+       so it only shows for keyboard/AT users, never on mouse click. */
+    :focus-visible {
+        outline: 2px solid var(--color-maroon-600);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
 }
 
 @layer utilities {

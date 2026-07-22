@@ -116,8 +116,9 @@
             </div>
 
             {{-- Mobile toggle --}}
-            <button @click="mobileOpen = !mobileOpen" class="lg:hidden rounded-lg p-2 text-maroon-800 hover:bg-maroon-50">
-                <i class="bx" :class="mobileOpen ? 'bx-x' : 'bx-menu'" style="font-size: 1.75rem;"></i>
+            <button @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen ? 'true' : 'false'" aria-controls="mobile-menu"
+                aria-label="Buka menu navigasi" class="lg:hidden rounded-lg p-2 text-maroon-800 hover:bg-maroon-50">
+                <i class="bx" :class="mobileOpen ? 'bx-x' : 'bx-menu'" style="font-size: 1.75rem;" aria-hidden="true"></i>
             </button>
         </div>
 
@@ -126,7 +127,7 @@
         <div data-nav-progress class="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-linear-to-r from-cream-500 via-cream-400 to-maroon-700"></div>
 
         {{-- Mobile menu --}}
-        <div x-show="mobileOpen" x-cloak x-transition class="border-t border-cream-200 bg-cream-50 lg:hidden">
+        <div id="mobile-menu" x-show="mobileOpen" x-cloak x-transition class="border-t border-cream-200 bg-cream-50 lg:hidden">
             <div class="space-y-1 px-4 py-3">
                 <a href="/" class="block rounded-md px-3 py-2 text-sm font-medium text-stone-700 hover:bg-maroon-50">Beranda</a>
                 <a href="/umroh" class="block rounded-md px-3 py-2 text-sm text-stone-700 hover:bg-maroon-50">Umroh</a>
