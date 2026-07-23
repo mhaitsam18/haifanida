@@ -188,7 +188,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/poin', [AdminPoinController::class, 'index'])->name('poin.index');
             Route::post('/poin', [AdminPoinController::class, 'store'])->name('poin.store');
             Route::delete('/poin/{poin}', [AdminPoinController::class, 'destroy'])->name('poin.destroy');
+            // Costing — FX policy: readable by any office admin (costing screens need it),
+            // but revising the rate shifts every production cost at once → superadmin only
+            // (relocates to direktur once executive roles land).
+            Route::get('fx-policy', [\App\Http\Controllers\AdminFxPolicyController::class, 'index'])->name('fx-policy.index');
             Route::middleware('superadmin')->group(function () {
+                Route::post('fx-policy', [\App\Http\Controllers\AdminFxPolicyController::class, 'store'])->name('fx-policy.store');
                 Route::resource('role', AdminRoleController::class)->except(['create', 'edit'])->parameters([
                     'role' => 'role'
                 ]);
@@ -355,9 +360,6 @@ Route::middleware('auth')->group(function () {
                 Route::delete('album/{album}/foto/{galeri}', [AdminAlbumController::class, 'destroyFoto'])->name('album.foto.destroy');
                 Route::get('hotel-sync', [\App\Http\Controllers\AdminHotelSyncController::class, 'index'])->name('hotel-sync.index');
                 Route::post('hotel-sync/start', [\App\Http\Controllers\AdminHotelSyncController::class, 'start'])->name('hotel-sync.start');
-                // Costing engine — Phase 1: FX policy master (HPP-adjacent, office-admin only).
-                Route::get('fx-policy', [\App\Http\Controllers\AdminFxPolicyController::class, 'index'])->name('fx-policy.index');
-                Route::post('fx-policy', [\App\Http\Controllers\AdminFxPolicyController::class, 'store'])->name('fx-policy.store');
                 Route::resource('paket-ekstra', AdminPaketEkstraController::class)->except(['create', 'edit'])->parameters([
                     'paket-ekstra' => 'paket_ekstra'
                 ]);

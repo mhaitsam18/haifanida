@@ -3,17 +3,21 @@
 @php
     $defaultUsd = $current ? (int) $current->usd_idr : 18000;
     $defaultSar = $current ? (int) $current->sar_idr : 5000;
+    // Revising the policy rate shifts every production cost at once — superadmin only.
+    $canRevise = auth()->user()->admin?->is_superadmin === true;
 @endphp
 
 @section('content')
     <div x-data="Object.assign(modalForm(), { usd: {{ $defaultUsd }}, sar: {{ $defaultSar }}, peg: {{ $peg }} })">
         <x-page-header :title="$title">
-            <x-slot:actions>
-                <button type="button" @click="show()"
-                    class="inline-flex items-center gap-1.5 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
-                    <i class="bx bx-refresh"></i> Ubah Kurs
-                </button>
-            </x-slot:actions>
+            @if ($canRevise)
+                <x-slot:actions>
+                    <button type="button" @click="show()"
+                        class="inline-flex items-center gap-1.5 rounded-lg bg-maroon-700 px-4 py-2 text-sm font-semibold text-cream-50 hover:bg-maroon-800">
+                        <i class="bx bx-refresh"></i> Ubah Kurs
+                    </button>
+                </x-slot:actions>
+            @endif
         </x-page-header>
 
         @if (session('success'))
@@ -55,7 +59,8 @@
             </div>
         @endif
 
-        {{-- Revise modal --}}
+        {{-- Revise modal (superadmin only) --}}
+        @if ($canRevise)
         <x-modal title="Ubah Kurs Kebijakan">
             <form action="{{ route('admin.fx-policy.store') }}" method="post" @submit="submit">
                 @csrf
@@ -112,6 +117,7 @@
                 </div>
             </form>
         </x-modal>
+        @endif
     </div>
 
     {{-- Version history --}}

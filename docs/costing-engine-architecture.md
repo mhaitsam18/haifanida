@@ -551,5 +551,21 @@ Component rates confirmed by the sheet (workbook overrides brief where they diff
 
 ## Phase 1 — build record (this revision)
 
-Delivered: `fx_policy_version` (versioned, effective-dated, peg column) + generic `audit_log`; `App\Models\Costing\{FxPolicyVersion,AuditLog}`; `App\Services\Costing\Fx\FxPolicyService` (current/forDate/policyFor/**validatePeg**/revise) + `Support\{FxPolicy VO, AuditLogger}` + `Exceptions\FxPolicyException` + `Events\Costing\FxPolicyRevised`; `config/costing.php` defaults; admin screen `/admin/fx-policy` (adminkantor gate, modal-based revise with live implied-SAR, peg block returns inline 422, history + audit trail); seeded USD 16,500 (closed) → USD 18,000 (open). Peg guard: **block SAR below `usd/3.75`**, warn above +10%.
+Delivered: `fx_policy_version` (versioned, effective-dated, peg column) + generic `audit_log`; `App\Models\Costing\{FxPolicyVersion,AuditLog}`; `App\Services\Costing\Fx\FxPolicyService` (current/forDate/policyFor/**validatePeg**/revise) + `Support\{FxPolicy VO, AuditLogger}` + `Exceptions\FxPolicyException` + `Events\Costing\FxPolicyRevised`; `config/costing.php` defaults; admin screen `/admin/fx-policy` (modal-based revise with live implied-SAR, peg block returns inline 422, history + audit trail); seeded USD 16,500 (closed) → USD 18,000 (open). Peg guard: **block SAR below `usd/3.75`**, warn above +10%.
+
+**Gate correction (owner review):** revising the FX rate shifts every production cost at once → it is a **superadmin** action, not adminkantor. Read is open to any office admin (costing screens need it); the revise route is wrapped in the `superadmin` group and the revise button/modal render only for `is_superadmin`. Relocates to `direktur` once executive roles land (Phase 6).
+
+## Phase 2 — build record (vendor master, rate cards, coverage taxonomy)
+
+Delivered (all additive): tables `coverage_tag`, `cost_component`, `visa_coverage_ruleset`, `vendor`, `vendor_service`, `rate_card`; models `App\Models\Costing\{CoverageTag,CostComponent,VisaCoverageRuleset,Vendor,VendorService,RateCard}`; services `Coverage\CoverageResolver` (+`CoverageProvider`/`CoverageResolution` VOs) and `Rates\RateResolver` (+`ResolvedRate` VO); seeders `CoverageTagSeeder`, `CostComponentSeeder` (23 components), `VisaCoverageRulesetSeeder` (2023 pre-Taif → 2025 Taif-free), `BaselineRateCardSeeder`, orchestrated by `CostingDatabaseSeeder`.
+
+Key decisions realised:
+- **Eligibility is per-component, not per-vendor.** `cost_component.requires_incorporated_vendor` / `rejects_individual_vendor`; only `tiket_pesawat` sets both (the 2022 rule). `CostComponent::allowsVendor()` — individuals pass for hotels, fail for tickets. Vendor legal-entity fields are descriptive only.
+- **Payment/bridging is first-class on the vendor** (`deposit_*`, `deposit_is_layered`, `contingent_liability_on_cancel`, `payment_rigidity`, `will_bridge_payment`, `bridging_window_days`, `bridging_ceiling`) — carried now for Module 2's supplier-credit-vs-cost-of-capital comparison; enforcement in Phase 4. `is_related_party` for internal catering (reporting only).
+- **Provenance: baseline vs contracted.** `rate_card.source`; baseline rates carry no vendor and link to a component; `RateResolver::resolve()` prefers a contracted vendor rate and falls back to baseline **flagged**; `componentsOnBaseline()` is the "still on assumption, no quote" report. Baseline never overwritten.
+- **Coverage resolver detects overlap + gap** (overlap is the normal case): visa (effective-dated ruleset) + LA both covering `city_tour` → overlap; an uncovered required tag → gap. Non-API hotel providers modelled as `vendor_service.hotel_id` → the same property sold by many providers at different prices, reusing the hotel master.
+
+Verified (6 temp tests, 43 assertions, since deleted): baseline reproduces workbook to the rupiah (visa USD 140, tasreh SAR 30, mutawwif SAR 250, handling USD 75, flight Rp16.5jt, farkiyah USD 20); contracted beats baseline; per-component eligibility; overlap/gap detection; visa effective-dating (no Taif 2024, Taif 2026); baseline report. Full suite green, `npm run build` OK.
+
+**NEXT — Phase 3:** cost-component behaviour strategies + `CostingEngine`, reproducing the workbook golden master (Rp1,174,975,000 / Rp33,570,714.29 per pilgrim / margins / TL cliff) to the rupiah. No UI.
 
