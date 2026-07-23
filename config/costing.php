@@ -38,6 +38,27 @@ return [
         'staff_salary_flat' => 1_000_000, // the workbook's per-pilgrim figure (used as an explicit override)
     ],
 
+    // Budget/promo three-scenario band (Addendum 4 §3). Promo economics swing on
+    // whether cheap ticket/hotel inventory is actually secured (Feb-2025: IndiGo
+    // ~Rp9jt turned a projected Rp900k margin into Rp1.5jt). Expected values and
+    // the pessimistic/optimistic band are editable; owner to tune.
+    'scenario_band' => [
+        'ticket_expected' => 12_000_000,     // promo transit carrier (mid)
+        'hotel_makkah_expected' => 3_500_000, // 3-star (mid)
+        'hotel_madinah_expected' => 3_000_000,
+        'ticket_up' => 0.25,    // pessimistic: fare rises
+        'ticket_down' => 0.25,  // optimistic: cheap fare secured (e.g. IndiGo)
+        'hotel_up' => 0.20,
+        'hotel_down' => 0.20,
+    ],
+
+    // FX policy-vs-market watch (Addendum 4 §Phase-5). Warn when the policy rate
+    // has fallen below market by more than this — costings then understate cost.
+    'fx_market_warn_pct' => 0.00,   // any policy-below-market is flagged
+
+    // Private quotation validity window (days) before a reopen warns.
+    'quotation_valid_days' => 14,
+
     // Staff-salary / overhead absorption (Addendum 2). PRODUCTION uses the annual
     // pool ÷ expected annual pilgrims; the flat figure above is an explicit,
     // labelled override. Pool figures are left null until the owner confirms them

@@ -192,8 +192,15 @@ Route::middleware('auth')->group(function () {
             // but revising the rate shifts every production cost at once → superadmin only
             // (relocates to direktur once executive roles land).
             Route::get('fx-policy', [\App\Http\Controllers\AdminFxPolicyController::class, 'index'])->name('fx-policy.index');
+            // Costing / HPP — office admins only (agen is a different gate). View is audited.
+            Route::get('costing', [\App\Http\Controllers\AdminCostingController::class, 'index'])->name('costing.index');
+            Route::get('costing/create', [\App\Http\Controllers\AdminCostingController::class, 'create'])->name('costing.create');
+            Route::post('costing/preview', [\App\Http\Controllers\AdminCostingController::class, 'preview'])->name('costing.preview');
+            Route::post('costing', [\App\Http\Controllers\AdminCostingController::class, 'store'])->name('costing.store');
+            Route::get('costing/{costing}', [\App\Http\Controllers\AdminCostingController::class, 'show'])->name('costing.show');
             Route::middleware('superadmin')->group(function () {
                 Route::post('fx-policy', [\App\Http\Controllers\AdminFxPolicyController::class, 'store'])->name('fx-policy.store');
+                Route::post('fx-market', [\App\Http\Controllers\AdminFxPolicyController::class, 'storeMarket'])->name('fx-market.store');
                 Route::resource('role', AdminRoleController::class)->except(['create', 'edit'])->parameters([
                     'role' => 'role'
                 ]);

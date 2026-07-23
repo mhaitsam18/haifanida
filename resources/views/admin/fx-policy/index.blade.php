@@ -59,6 +59,51 @@
             </div>
         @endif
 
+        {{-- Policy-vs-market buffer (Addendum 4) --}}
+        <div class="mb-6 rounded-xl border border-cream-200 bg-cream-50 p-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h3 class="font-display text-base font-semibold text-maroon-900">Bantalan Kurs vs Pasar</h3>
+                    @if ($market)
+                        <p class="mt-1 text-sm text-stone-600">
+                            Pasar: <strong>Rp{{ number_format($market->usd_idr, 0, ',', '.') }}</strong>
+                            <span class="text-stone-400">({{ $market->observed_on->format('d M Y') }}{{ $market->source ? ' · '.$market->source : '' }})</span>
+                        </p>
+                        @if ($marketBuffer !== null)
+                            @php $below = $marketBuffer < config('costing.fx_market_warn_pct', 0); @endphp
+                            <p class="mt-1 text-sm font-medium {{ $below ? 'text-red-600' : 'text-emerald-600' }}">
+                                @if ($below)
+                                    ⚠ Kurs kebijakan {{ number_format(abs($marketBuffer) * 100, 2) }}% DI BAWAH pasar — costing & kuotasi meremehkan biaya.
+                                @else
+                                    Bantalan +{{ number_format($marketBuffer * 100, 2) }}% di atas pasar.
+                                @endif
+                            </p>
+                        @endif
+                    @else
+                        <p class="mt-1 text-sm text-stone-500">Belum ada data kurs pasar.</p>
+                    @endif
+                </div>
+                @if ($canRevise)
+                    <form action="{{ route('admin.fx-market.store') }}" method="post" class="flex flex-wrap items-end gap-2">
+                        @csrf
+                        <div>
+                            <label class="mb-1 block text-xs text-stone-500">Kurs pasar USD</label>
+                            <input type="number" name="usd_idr" step="1" value="{{ $market->usd_idr ?? '' }}"
+                                class="w-32 rounded-lg border border-cream-300 px-2 py-1.5 text-sm focus:border-maroon-400 focus:outline-none" />
+                        </div>
+                        <div>
+                            <label class="mb-1 block text-xs text-stone-500">Tanggal</label>
+                            <input type="date" name="observed_on" value="{{ now()->toDateString() }}"
+                                class="rounded-lg border border-cream-300 px-2 py-1.5 text-sm focus:border-maroon-400 focus:outline-none" />
+                        </div>
+                        <input type="text" name="source" placeholder="Sumber (opsional)"
+                            class="w-40 rounded-lg border border-cream-300 px-2 py-1.5 text-sm focus:border-maroon-400 focus:outline-none" />
+                        <button type="submit" class="rounded-lg bg-maroon-700 px-3 py-1.5 text-sm font-semibold text-cream-50 hover:bg-maroon-800">Catat</button>
+                    </form>
+                @endif
+            </div>
+        </div>
+
         {{-- Revise modal (superadmin only) --}}
         @if ($canRevise)
         <x-modal title="Ubah Kurs Kebijakan">

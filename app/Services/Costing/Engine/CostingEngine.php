@@ -168,6 +168,11 @@ class CostingEngine
             return [$amount, 'IDR', 'overhead', false, null];
         }
 
+        // Explicit rate override (wizard edit / promo scenario) beats the rate card.
+        if (array_key_exists($component->key, $ctx->rateOverrides)) {
+            return [(float) $ctx->rateOverrides[$component->key], $component->default_currency, 'override', false, null];
+        }
+
         $resolved = $this->rates->resolve($component, $ctx->costingDate);
         if (! $resolved) {
             return [0.0, $component->default_currency, 'missing', false, null];

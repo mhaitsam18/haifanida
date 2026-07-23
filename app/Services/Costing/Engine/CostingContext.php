@@ -51,6 +51,13 @@ final class CostingContext
         public readonly bool $tlOptIn = false,              // on-demand: TL only if requested
         public readonly string $packageTier = 'standard',
         public readonly string $materialisationBasis = 'booked', // booked | paid | flown
+        /**
+         * Per-component rate overrides (component key => amount in native currency).
+         * Lets the wizard try a different ticket/hotel price and drives the promo
+         * three-scenario range, without touching rate cards.
+         * @var array<string, float>
+         */
+        public readonly array $rateOverrides = [],
     ) {}
 
     public function totalPax(): int

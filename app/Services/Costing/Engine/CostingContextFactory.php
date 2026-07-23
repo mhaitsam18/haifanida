@@ -52,6 +52,7 @@ class CostingContextFactory
             tlOptIn: (bool) ($o['tl_opt_in'] ?? false),
             packageTier: (string) ($o['package_tier'] ?? 'standard'),
             materialisationBasis: (string) ($o['materialisation_basis'] ?? 'booked'),
+            rateOverrides: (array) ($o['rate_overrides'] ?? []),
         );
     }
 }

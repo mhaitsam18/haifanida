@@ -624,3 +624,19 @@ Verified (8 temp tests / 26 assertions, deleted): snapshot reproduces golden mas
 
 **NEXT — Phase 5:** costing workflow UI (block + private/quotation modes of one wizard), coverage overlap/gap panel, packaging comparison, sensitivity + materialisation display, baseline flag per line.
 
+## Phase 5 — build record (costing workflow UI + Addendum 4)
+
+**Engine:** added `rateOverrides` (component key → amount, native currency) to `CostingContext` (wizard rate edits + promo scenarios); engine prefers an override over the rate card (`source='override'`).
+
+**Backend:** `CostingPreviewService` — runs the engine and shapes a display-ready array WITHOUT persisting: per-pilgrim **and total departure margin** (Addendum 4: the real buffer against per-departure unforeseen cost), per-occupancy matrix (block), materialisation (block only, null otherwise), sensitivity (block), packaging comparison (all-in equivalent price + guaranteed margin = package + all-in ancillary), per-line **baseline flag**, and — budget tier only — a **pessimistic/expected/optimistic** range on the ticket+hotel band (config `scenario_band`). `QuotationService` — persists a private quote with **reference (Q-YYYY-NNNN) + version + config + pinned costing snapshot + expiry**; re-quoting a reference makes a new version and supersedes the prior; `Quotation::isExpired()`. `FxMarketRate` + the FX screen now show the **policy-vs-market buffer** (a policy rate below market silently understates cost — flagged red).
+
+**UI:** `/admin/costing` (list of costings + quotations, expired quotes flagged), the **single-page two-mode wizard** (`AdminCostingController`) where **procurement mode chosen at step 1 reshapes the remaining steps** — a private quote shows no seat-block step and no materialisation panel at all (not greyed out); result partial renders margins/matrix/materialisation/sensitivity/packaging/scenarios/lines. `show` view **audits HPP views** (`AuditLogger` action `costing.viewed`) so the interim wide `adminkantor` exposure is observable; a reopened expired quote warns rather than silently recosting. Gate: plain `admin` group (office admins incl. superadmin; `agen` excluded); menu granted to superadmin/adminkantor only.
+
+**New tables (additive):** `quotation`, `fx_market_rate`. Config: `scenario_band`, `fx_market_warn_pct`, `quotation_valid_days`.
+
+Verified (6 temp tests / 25 assertions, deleted): preview reproduces golden master + total departure margin; private suppresses materialisation/sensitivity/matrix and produces a quoted price; budget three-scenario (optimistic > pessimistic); packaging guaranteed margin = package + all-in; quotation reference/versioning/supersede/expiry; FX policy-below-market buffer negative. Full suite green, `npm run build` OK.
+
+**Deferred (noted to owner):** printable quotation document (the *record* ships now, the PDF later); coverage overlap/gap panel wired live in the wizard needs vendor-service selection UI (the resolver exists from Phase 2) — folded into a later polish; season surfacing (Addendum 4 §4) as a planning hint.
+
+**NEXT — Phase 6:** executive roles (`komisaris`/`direktur`/`manajer_umum`) + ability layer; **FX revise gate → `direktur`**; `agen` structurally denied cost/margin; **two-regime endgame pricing panel** + fast recorded `direktur` override; wire the Addendum-4 tier floors (premium target Rp10jt / floor ≥10% production; budget pending owner); HPP audit hardening.
+

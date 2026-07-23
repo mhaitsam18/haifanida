@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Costing\AuditLog;
+use App\Models\Costing\FxMarketRate;
 use App\Models\Costing\FxPolicyVersion;
 use App\Services\Costing\Fx\FxPolicyService;
 use Illuminate\Http\Request;
@@ -19,16 +20,45 @@ class AdminFxPolicyController extends Controller
             // No policy configured yet — the view shows an empty state.
         }
 
+        // Policy-vs-market buffer (Addendum 4): a policy rate below market
+        // silently understates cost in every costing built on it.
+        $market = FxMarketRate::latest();
+        $marketBuffer = null;
+        if ($current && $market && (float) $market->usd_idr > 0) {
+            $marketBuffer = ((float) $current->usd_idr - (float) $market->usd_idr) / (float) $market->usd_idr;
+        }
+
         return view('admin.fx-policy.index', [
             'title' => 'Kurs Kebijakan (FX)',
             'page' => 'fx-policy',
             'current' => $current,
             'peg' => $service->peg(),
+            'market' => $market,
+            'marketBuffer' => $marketBuffer,
             'history' => FxPolicyVersion::with('creator')
                 ->orderByDesc('effective_from')->orderByDesc('id')->limit(50)->get(),
             'audits' => AuditLog::where('action', 'like', 'fx_policy.%')
                 ->with('user')->latest('id')->limit(20)->get(),
         ]);
+    }
+
+    /** Record a manual market USD/IDR observation (superadmin). */
+    public function storeMarket(Request $request)
+    {
+        $data = $request->validate([
+            'usd_idr' => ['required', 'numeric', 'min:1000'],
+            'observed_on' => ['required', 'date'],
+            'source' => ['nullable', 'string', 'max:120'],
+        ]);
+
+        FxMarketRate::create([
+            'usd_idr' => $data['usd_idr'],
+            'observed_on' => $data['observed_on'],
+            'source' => $data['source'] ?? null,
+            'created_by' => auth()->id(),
+        ]);
+
+        return redirect()->route('admin.fx-policy.index')->with('success', 'Kurs pasar tercatat.');
     }
 
     public function store(Request $request, FxPolicyService $service)
