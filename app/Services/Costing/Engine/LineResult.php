@@ -15,6 +15,7 @@ final class LineResult
         public readonly bool $active,
         public readonly bool $isBaseline,
         public readonly string $rateSource,
+        public readonly ?int $rateCardId = null,
         public readonly ?string $suppressedReason = null,
     ) {}
 }

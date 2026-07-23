@@ -48,6 +48,10 @@ class CostingContextFactory
             overheadAnnualPool: isset($o['overhead_annual_pool']) ? (float) $o['overhead_annual_pool'] : $overhead['annual_pool'],
             departuresPerYear: isset($o['departures_per_year']) ? (int) $o['departures_per_year'] : $overhead['departures_per_year'],
             pilgrimsPerDeparture: isset($o['pilgrims_per_departure']) ? (int) $o['pilgrims_per_departure'] : $overhead['pilgrims_per_departure'],
+            procurementMode: (string) ($o['procurement_mode'] ?? 'block'),
+            tlOptIn: (bool) ($o['tl_opt_in'] ?? false),
+            packageTier: (string) ($o['package_tier'] ?? 'standard'),
+            materialisationBasis: (string) ($o['materialisation_basis'] ?? 'booked'),
         );
     }
 }

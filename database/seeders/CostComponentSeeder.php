@@ -25,8 +25,8 @@ class CostComponentSeeder extends Seeder
             ['visa_umroh', 'Visa Umroh', 'production', 'PER_PILGRIM', 'orang', 'USD', null, null, false, false, true, null],
             ['farkiyah', 'Farkiyah (kurang dari ambang)', 'production', 'MIN_GUARANTEE', 'kursi', 'USD', null, null, false, false, false, ['basis' => 'total']],
             ['tasreh_raudhah', 'Tasreh Raudhah', 'production', 'PER_PILGRIM', 'orang', 'SAR', null, null, false, false, true, null],
-            ['mutawwif', 'Mutawwif / Tour Guide', 'production', 'PER_GROUP_PER_DAY', 'hari', 'SAR', null, ['mutawwif'], false, false, false, ['days_key' => 'saudi_ground', 'suppress_when' => 'mutawwif_free']],
-            ['tour_leader', 'Alokasi Tour Leader', 'production', 'PER_PILGRIM', 'orang', 'IDR', null, null, false, false, true, null],
+            ['mutawwif', 'Mutawwif / Tour Guide', 'production', 'PER_GROUP_PER_DAY', 'hari', 'SAR', null, ['mutawwif'], false, false, false, ['days_key' => 'saudi_ground', 'suppress_when' => 'mutawwif_free', 'never_suppress_on_demand' => true]],
+            ['tour_leader', 'Alokasi Tour Leader', 'production', 'PER_PILGRIM', 'orang', 'IDR', null, null, false, false, true, ['optional_on_demand' => true]],
             ['local_arrangement', 'Local Arrangement tambahan', 'production', 'PER_PILGRIM', 'orang', 'IDR', null, null, false, false, false, null],
             // Transit villa: maths is PER_PILGRIM; "conditional" is a shared activation switch, not a bespoke behaviour.
             ['transit_villa', 'Transit Villa', 'production', 'PER_PILGRIM', 'orang', 'IDR', null, null, false, false, false, ['active_when' => 'transit_villa']],

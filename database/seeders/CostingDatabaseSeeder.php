@@ -19,6 +19,8 @@ class CostingDatabaseSeeder extends Seeder
             CoverageTagSeeder::class,
             CostComponentSeeder::class,
             VisaCoverageRulesetSeeder::class,
+            PackageTierSeeder::class,
+            AncillaryProductSeeder::class,
             BaselineRateCardSeeder::class,
         ]);
     }

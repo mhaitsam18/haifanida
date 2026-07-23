@@ -610,3 +610,17 @@ Verified (10 temp tests / behaviour + golden-master, since deleted): baseline to
 
 **Where your five named features land:** two-regime endgame + `direktur` override → **Phase 6**; agent concession simulator → **Phase 7**; waiting list → **Phase 7**; executive roles + FX-gate relocation → **Phase 6**; components-on-baseline — the per-line baseline **flag** shows in **Phase 5**, the standalone fleet **report** (contracted contrast) in **Phase 9**.
 
+## Phase 4 — build record (persistence, procurement modes, deposit risk)
+
+**Addendum 3 integrated.** Engine corrections (fix the live defect): `procurement_mode` (block | on_demand) + `tl_opt_in` + `package_tier` + `materialisation_basis` on `CostingContext`. On-demand suppresses the **entire** ticket-risk model (materialisation `applicable=false`, no deposit-at-risk, not shown); tour leader is **opt-in off by default** on on-demand (param `optional_on_demand`) so a 5-pax private group is no longer charged a phantom TL seat (the Rp23jt defect); mutawwif is **never suppressed on-demand** (param `never_suppress_on_demand`) — the guide is always present privately, the TL is the one absent; farkiyah still applies. `CONDITIONAL` note stands (activation mechanism, not a behaviour).
+
+**Persistence (9 tables, additive):** `package_tier`, `rate_card.tier` (baseline→standard), `keberangkatan` (Departure — the costed unit, with procurement mode + open-trip nullable date), `ticket_lot` (fit|group, layered/contingent deposit terms), `costing` (immutable snapshot), `costing_line` (pins `rate_card_id`), `costing_published_price` (per-occupancy matrix), `ancillary_product`, `costing_ancillary`. Models under `App\Models\Costing\`.
+
+**Services:** `MarginFloorService` (per-tier: absolute | greater_of | per_quotation, reports the rule like `staffSalaryRule`); `DepositRiskService` (+`DepositRisk` VO — deposit-at-risk rupiah from ticket lots; whole|prorated forfeit; booked|paid|flown basis carried and shown; not-applicable on-demand); `AncillaryService` (all-in vs optional margins, `counts_to_floor` only for all-in); `CostingSnapshotService` (builds from a Departure or overrides, **pins FX version + each line's rate-card + visa ruleset + overhead rule/divisor**, persists lines/prices/ancillaries, `publish()` syncs the **quad headline → `paket.harga`** additively, `freeze()` makes it immutable). Engine threads `rate_card_id` per line for pinning.
+
+**Tiers (Addendum 3):** package tier is a template above the departure; workbook rates seeded as **standard** only, never a global default. Seeded budget/standard/premium/private (only standard's Rp2jt floor is a confirmed value; others owner-set before Phase 6). Private = per-quotation target.
+
+Verified (8 temp tests / 26 assertions, deleted): snapshot reproduces golden master (Rp1,174,975,000 / Rp33,570,714.29 / margin Rp3,429,285.71) + pins FX & visa versions + rate-card per line; per-occupancy matrix (lower occupancy → higher price); **deposit-at-risk = Rp144,375,000** (35×16.5jt×25%, the Addendum-1 example); on-demand private suppresses materialisation + deposit + TL while keeping mutawwif; **freeze immutable against a later FX revision**; publish syncs `paket.harga`; ancillary all-in Rp21jt / optional Rp7.35jt; greater-of floor mechanism. Full suite green.
+
+**NEXT — Phase 5:** costing workflow UI (block + private/quotation modes of one wizard), coverage overlap/gap panel, packaging comparison, sensitivity + materialisation display, baseline flag per line.
+

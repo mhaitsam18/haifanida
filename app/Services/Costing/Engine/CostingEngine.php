@@ -31,7 +31,7 @@ class CostingEngine
         $staffRule = '';
 
         foreach ($components as $component) {
-            [$rawRate, $currency, $source, $isBaseline] = $this->resolveRate($component, $ctx, $staffRule);
+            [$rawRate, $currency, $source, $isBaseline, $rateCardId] = $this->resolveRate($component, $ctx, $staffRule);
             $rateIdr = $rawRate * $ctx->fx->rateFor($currency);
 
             [$active, $suppressedReason] = $this->activation($component, $ctx);
@@ -49,6 +49,7 @@ class CostingEngine
                 isBaseline: $isBaseline,
                 rateSource: $source,
                 suppressedReason: $suppressedReason,
+                rateCardId: $rateCardId,
             );
 
             $groupTotal = $active
@@ -66,6 +67,7 @@ class CostingEngine
                 active: $active,
                 isBaseline: $isBaseline,
                 rateSource: $source,
+                rateCardId: $rateCardId,
                 suppressedReason: $suppressedReason,
             );
         }
@@ -130,7 +132,9 @@ class CostingEngine
             $r = $this->cost($ctx);
             $mat = $r->materialisation;
 
-            $status = $mat->breached ? SensitivityRow::STATUS_DEPOSIT_FORFEIT : $r->marginStatus;
+            $status = ($mat->applicable && $mat->breached)
+                ? SensitivityRow::STATUS_DEPOSIT_FORFEIT
+                : $r->marginStatus;
 
             $rows[] = new SensitivityRow(
                 pax: $pax,
@@ -142,6 +146,7 @@ class CostingEngine
                 marginPerPilgrim: $r->packageMargin,
                 distanceToFloor: $r->distanceToFloor,
                 marginStatus: $r->marginStatus,
+                materialisationApplicable: $mat->applicable,
                 materialisationPct: $mat->pct,
                 materialisationBreached: $mat->breached,
                 depositAtRisk: $mat->depositAtRisk,
@@ -152,7 +157,7 @@ class CostingEngine
         return $rows;
     }
 
-    /** @return array{0: float, 1: string, 2: string, 3: bool} [rawRate, currency, source, isBaseline] */
+    /** @return array{0: float, 1: string, 2: string, 3: bool, 4: ?int} [rawRate, currency, source, isBaseline, rateCardId] */
     private function resolveRate(CostComponent $component, CostingContext $ctx, string &$staffRule): array
     {
         // Staff salary is not a rate card — it is resolved from overhead policy.
@@ -160,28 +165,41 @@ class CostingEngine
             [$amount, $rule] = $this->overhead->staffSalaryPerPilgrim($ctx);
             $staffRule = $rule;
 
-            return [$amount, 'IDR', 'overhead', false];
+            return [$amount, 'IDR', 'overhead', false, null];
         }
 
         $resolved = $this->rates->resolve($component, $ctx->costingDate);
         if (! $resolved) {
-            return [0.0, $component->default_currency, 'missing', false];
+            return [0.0, $component->default_currency, 'missing', false, null];
         }
 
-        return [$resolved->amount, $resolved->currency, $resolved->source, $resolved->isBaseline];
+        return [$resolved->amount, $resolved->currency, $resolved->source, $resolved->isBaseline, $resolved->rateCardId];
     }
 
     /** @return array{0: bool, 1: ?string} [active, suppressedReason] */
     private function activation(CostComponent $component, CostingContext $ctx): array
     {
         $params = $component->params ?? [];
+        $onDemand = $ctx->isOnDemand();
 
+        // Explicit activation switch (transit villa).
         if (isset($params['active_when']) && ! $ctx->flag($params['active_when'])) {
             return [false, "tidak aktif ({$params['active_when']})"];
         }
 
+        // Tour leader on-demand: opt-in, off by default — no allocation charged
+        // unless requested (fixes the small-group phantom deficit, Addendum 3).
+        if (($params['optional_on_demand'] ?? false) && $onDemand && ! $ctx->tlOptIn) {
+            return [false, 'on-demand: tour leader opsional & tidak dipilih'];
+        }
+
+        // Bundle/handler suppression — but a mutawwif is ALWAYS present on-demand,
+        // so the "covered by TL/handler" switch cannot zero it there.
         if (isset($params['suppress_when']) && $ctx->flag($params['suppress_when'])) {
-            return [false, "tercakup bundel/handler ({$params['suppress_when']})"];
+            $guarded = $onDemand && ($params['never_suppress_on_demand'] ?? false);
+            if (! $guarded) {
+                return [false, "tercakup bundel/handler ({$params['suppress_when']})"];
+            }
         }
 
         return [true, null];
@@ -209,6 +227,12 @@ class CostingEngine
 
     private function tlSufficiency(CostingContext $ctx): TlSufficiency
     {
+        // On-demand without an opted-in TL: the 1-per-45 step does not apply,
+        // so a 5-person private group is not charged a phantom TL seat.
+        if (! $ctx->tlApplicable()) {
+            return new TlSufficiency(0, 0.0, 0.0, 0.0, 0, applicable: false);
+        }
+
         $required = (int) ceil($ctx->payingPax / max(1, $ctx->tlRatio));
         $seatCost = $required * $ctx->tlSeatCost;
         $collected = $ctx->payingPax * $ctx->tlAllocation;
@@ -220,11 +244,23 @@ class CostingEngine
 
     private function materialisation(CostingContext $ctx): Materialisation
     {
+        // On-demand (FIT, buy-on-order) carries no block, so the whole model is
+        // inapplicable and must not be shown (Addendum 3).
+        if ($ctx->isOnDemand()) {
+            return new Materialisation(
+                $ctx->seatsBooked, $ctx->payingPax, 1.0, $ctx->materialisationPct,
+                false, null, applicable: false, basis: $ctx->materialisationBasis,
+            );
+        }
+
         $pct = $ctx->seatsBooked > 0 ? $ctx->payingPax / $ctx->seatsBooked : 1.0;
         $breached = ($pct + 1e-9) < $ctx->materialisationPct;
 
-        // Rupiah at risk needs deposit terms (phase 4) — null for now.
-        return new Materialisation($ctx->seatsBooked, $ctx->payingPax, $pct, $ctx->materialisationPct, $breached, null);
+        // Rupiah at risk is filled by DepositRiskService from ticket lots — null here.
+        return new Materialisation(
+            $ctx->seatsBooked, $ctx->payingPax, $pct, $ctx->materialisationPct,
+            $breached, null, applicable: true, basis: $ctx->materialisationBasis,
+        );
     }
 
     /** @param LineResult[] $lines @return string[] */
@@ -232,10 +268,10 @@ class CostingEngine
     {
         $w = [];
 
-        if ($mat->breached) {
+        if ($mat->applicable && $mat->breached) {
             $w[] = sprintf(
-                'MATERIALISASI %.0f%% di bawah ambang %.0f%% — deposit tiket hangus (%d dari %d kursi).',
-                $mat->pct * 100, $mat->thresholdPct * 100, $mat->realised, $mat->seatsBooked,
+                'MATERIALISASI %.0f%% di bawah ambang %.0f%% (basis: %s) — deposit tiket hangus (%d dari %d kursi).',
+                $mat->pct * 100, $mat->thresholdPct * 100, $mat->basis, $mat->realised, $mat->seatsBooked,
             );
         }
 

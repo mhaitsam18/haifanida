@@ -22,6 +22,7 @@ final class ComponentLine
         public readonly bool $isBaseline,
         public readonly string $rateSource,
         public readonly ?string $suppressedReason = null,
+        public readonly ?int $rateCardId = null,
     ) {}
 
     public function param(string $key, mixed $default = null): mixed

@@ -23,6 +23,7 @@ final class SensitivityRow
         public readonly float $marginPerPilgrim,
         public readonly float $distanceToFloor,
         public readonly string $marginStatus,
+        public readonly bool $materialisationApplicable,
         public readonly float $materialisationPct,
         public readonly bool $materialisationBreached,
         public readonly ?float $depositAtRisk,

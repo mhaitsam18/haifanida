@@ -17,5 +17,10 @@ final class Materialisation
         public readonly float $thresholdPct,
         public readonly bool $breached,
         public readonly ?float $depositAtRisk = null,
+        // On-demand (private/FIT) departures buy against a confirmed order, so
+        // there is no block, no threshold and no deposit at risk — the whole
+        // model is inapplicable and must not be displayed (Addendum 3).
+        public readonly bool $applicable = true,
+        public readonly ?string $basis = null, // booked | paid | flown — visible so a default isn't mistaken for contract
     ) {}
 }

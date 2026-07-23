@@ -16,10 +16,13 @@ final class TlSufficiency
         public readonly float $surplus,
         /** Pax at which this step count becomes self-funding again (surplus ≥ 0). */
         public readonly int $selfFundingAt,
+        // On-demand departures don't budget a TL unless one is requested, so the
+        // 1-per-45 step (and its small-group phantom deficit) does not apply.
+        public readonly bool $applicable = true,
     ) {}
 
     public function inDeficit(): bool
     {
-        return $this->surplus < 0;
+        return $this->applicable && $this->surplus < 0;
     }
 }

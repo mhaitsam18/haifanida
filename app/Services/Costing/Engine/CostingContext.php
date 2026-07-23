@@ -46,11 +46,27 @@ final class CostingContext
         // Divisor split so the 10-vs-12-month decision is explicit (Addendum 2).
         public readonly ?int $departuresPerYear = null,
         public readonly ?int $pilgrimsPerDeparture = null,
+        // Procurement & tier (Addendum 3).
+        public readonly string $procurementMode = 'block',  // 'block' | 'on_demand'
+        public readonly bool $tlOptIn = false,              // on-demand: TL only if requested
+        public readonly string $packageTier = 'standard',
+        public readonly string $materialisationBasis = 'booked', // booked | paid | flown
     ) {}
 
     public function totalPax(): int
     {
         return $this->payingPax + $this->freeSeats;
+    }
+
+    public function isOnDemand(): bool
+    {
+        return $this->procurementMode === 'on_demand';
+    }
+
+    /** Whether a tour leader is budgeted: always for block; on-demand only if opted in. */
+    public function tlApplicable(): bool
+    {
+        return ! $this->isOnDemand() || $this->tlOptIn;
     }
 
     public function nights(string $key): int

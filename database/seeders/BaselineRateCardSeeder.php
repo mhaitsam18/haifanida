@@ -65,6 +65,7 @@ class BaselineRateCardSeeder extends Seeder
                     'currency' => $component->default_currency,
                     'amount' => $amount,
                     'unit' => $component->default_unit,
+                    'tier' => 'standard',   // workbook rates are the standard tier (Addendum 3)
                     'valid_to' => null,
                     'notes' => 'Baseline internal (tarif prevailing dari workbook). Bukan tarif kontrak vendor.',
                 ],
