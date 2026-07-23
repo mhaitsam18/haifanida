@@ -43,7 +43,9 @@ final class CostingContext
         public readonly string $staffSalaryMode,     // 'flat' | 'pool'
         public readonly float $staffSalaryFlat,
         public readonly ?float $overheadAnnualPool = null,
-        public readonly ?int $expectedAnnualPilgrims = null,
+        // Divisor split so the 10-vs-12-month decision is explicit (Addendum 2).
+        public readonly ?int $departuresPerYear = null,
+        public readonly ?int $pilgrimsPerDeparture = null,
     ) {}
 
     public function totalPax(): int

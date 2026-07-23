@@ -46,7 +46,8 @@ class CostingContextFactory
             staffSalaryMode: (string) ($o['staff_salary_mode'] ?? $overhead['mode']),
             staffSalaryFlat: (float) ($o['staff_salary_flat'] ?? $d['staff_salary_flat']),
             overheadAnnualPool: isset($o['overhead_annual_pool']) ? (float) $o['overhead_annual_pool'] : $overhead['annual_pool'],
-            expectedAnnualPilgrims: isset($o['expected_annual_pilgrims']) ? (int) $o['expected_annual_pilgrims'] : $overhead['expected_annual_pilgrims'],
+            departuresPerYear: isset($o['departures_per_year']) ? (int) $o['departures_per_year'] : $overhead['departures_per_year'],
+            pilgrimsPerDeparture: isset($o['pilgrims_per_departure']) ? (int) $o['pilgrims_per_departure'] : $overhead['pilgrims_per_departure'],
         );
     }
 }

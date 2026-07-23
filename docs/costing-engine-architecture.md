@@ -587,3 +587,26 @@ Verified (10 temp tests / behaviour + golden-master, since deleted): baseline to
 
 **NEXT — Phase 4:** `costing` snapshot + freeze-on-publish, per-occupancy price matrix, ticket-lot deposit terms (→ deposit-at-risk rupiah), ancillary tables (→ packaging comparison), sync base price → `paket.harga` (additive).
 
+**Phase 3 correction (owner review):** the overhead divisor is split into two explicit inputs — `departures_per_year` (default 10, the ~10-month year) × `pilgrims_per_departure` — so "monthly capacity × 12" can't be entered by reflex. 504,000,000 ÷ (10 × 35 = 350) = Rp1,440,000; the rule string states the divisor. (`CostingContext.expectedAnnualPilgrims` → `departuresPerYear` + `pilgrimsPerDeparture`.)
+
+---
+
+# Revision 3 — full phase map (2026-07-23)
+
+**10 phases total; 3 done, 7 remaining.** The two addendums reshaped the back half: Addendum 1 (risk) inserted deposit-at-risk + ticket lots + endgame margin + waiting list; Addendum 2 (seasonality) inserted the annual overhead pool (shipped, Phase 3) and Module 2's annual cash-flow with its structural Hajj-gap trough.
+
+| Phase | Status | One-line scope |
+|---|---|---|
+| **1** | ✅ done | FX policy master — versioned, peg-guarded, audited; read=any office admin, revise=superadmin |
+| **2** | ✅ done | Vendor / service-tier / rate-card master + coverage taxonomy + effective-dated visa ruleset; per-component eligibility; baseline vs contracted provenance |
+| **3** | ✅ done | Behaviour strategies + `CostingEngine`; golden master to the rupiah; materialisation cliff in output; annual overhead pool |
+| **4** | next | **Persistence & risk rupiah** — immutable `costing` snapshot + freeze-on-publish (pins FX + rate-card **+ visa ruleset + overhead rule/divisor** versions); Departure + `ticket_lot` deposit terms → **deposit-at-risk rupiah**; per-occupancy price matrix; ancillary tables (all-in/optional margins); vendor-eligibility **enforced** on ticket purchase (director override); additive sync → `paket.harga` |
+| **5** | | **Costing workflow UI** — build-a-costing wizard (departure basics → vendors/bundles w/ live coverage overlap/gap panel → ancillary packaging → result matrix), sensitivity + materialisation display, scenario what-ifs, **packaging comparison** (all-in vs stripped), baseline-flag surfaced per line. adminkantor+; HPP hidden from `agen` |
+| **6** | | **Roles, security & margin governance** — executive roles `komisaris` / `direktur` / `manajer_umum` + ability layer (`costing.manage`, `costing.view_margin`); **relocate FX revise gate → `direktur`**; `agen` structurally denied all cost/margin; **two-regime endgame pricing panel** (aggregate departure profit + next-seat marginal contribution + distance-to-materialisation, side by side) with a **fast recorded `direktur` below-floor override** (not a workflow); HPP audit hardening |
+| **7** | | **Agent commercial tools** — **agent concession simulator** (free seats / keep fee / raise publish / absorb margin → instant publish price + margin + floor verdict); **waiting list** as a first-class departure object (cancellation surfaces next candidate; late demand visible for seat additions); agent allotment + payment-deadline + default/backfill (seat-block credit risk) |
+| **8** | | **Module 2 — working capital & cash flow** — annual projection with the structural Hajj-gap trough; **aggregate exposure across all open departures**; **supplier-credit vs cost-of-capital** vendor comparison (bridging premium annualised against the bank rate); PIHK-window placement-fee offset |
+| **9** | | **Budget vs actual & reporting** — `costing_actual` variance per component/group/time (all-in attendance captured); **components-on-baseline fleet report** now contrasted against contracted rates; management/bank reporting; related-party (internal catering) group-vs-entity margin split |
+| **10** | | **Realised-FX variance + B2B seam** — record realised rates paid → FX variance vs the pinned policy; Bank Indonesia market-watch adapter (`SupportsFxRates`, never costing); `PricingView` net-price-to-agent seam for the future B2B subdomain (never exposes HPP) |
+
+**Where your five named features land:** two-regime endgame + `direktur` override → **Phase 6**; agent concession simulator → **Phase 7**; waiting list → **Phase 7**; executive roles + FX-gate relocation → **Phase 6**; components-on-baseline — the per-line baseline **flag** shows in **Phase 5**, the standalone fleet **report** (contracted contrast) in **Phase 9**.
+

@@ -18,16 +18,20 @@ class OverheadService
     {
         if ($ctx->staffSalaryMode === 'pool'
             && $ctx->overheadAnnualPool !== null
-            && $ctx->expectedAnnualPilgrims
+            && $ctx->departuresPerYear
+            && $ctx->pilgrimsPerDeparture
         ) {
-            $amount = $ctx->overheadAnnualPool / $ctx->expectedAnnualPilgrims;
+            $divisor = $ctx->departuresPerYear * $ctx->pilgrimsPerDeparture;
+            $amount = $ctx->overheadAnnualPool / $divisor;
 
             return [
                 $amount,
                 sprintf(
-                    'pool overhead tahunan (Rp%s) ÷ %s jemaah/tahun',
+                    'pool overhead tahunan (Rp%s) ÷ (%d keberangkatan/tahun × %d jemaah = %s jemaah/tahun)',
                     number_format($ctx->overheadAnnualPool, 0, ',', '.'),
-                    number_format($ctx->expectedAnnualPilgrims, 0, ',', '.'),
+                    $ctx->departuresPerYear,
+                    $ctx->pilgrimsPerDeparture,
+                    number_format($divisor, 0, ',', '.'),
                 ),
             ];
         }

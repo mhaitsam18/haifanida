@@ -45,6 +45,9 @@ return [
     'overhead' => [
         'mode' => 'flat',                 // 'flat' | 'pool' — default until the pool is configured
         'annual_pool' => null,            // total annual fixed overhead (salaries, bank, ops, utilities, annual events)
-        'expected_annual_pilgrims' => null, // over the ~10-month operating year (no Umrah in Hajj months)
+        // Divisor is split into two EXPLICIT inputs so the ~10-month year is a
+        // conscious choice, not "monthly capacity × 12" entered by reflex.
+        'departures_per_year' => 10,      // Hajj months carry no departures (Addendum 2)
+        'pilgrims_per_departure' => null, // expected average; divisor = departures × pilgrims
     ],
 ];
