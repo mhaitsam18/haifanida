@@ -569,3 +569,21 @@ Verified (6 temp tests, 43 assertions, since deleted): baseline reproduces workb
 
 **NEXT — Phase 3:** cost-component behaviour strategies + `CostingEngine`, reproducing the workbook golden master (Rp1,174,975,000 / Rp33,570,714.29 per pilgrim / margins / TL cliff) to the rupiah. No UI.
 
+## Phase 3 — build record (calculation engine)
+
+Delivered (backend only, no UI): 9 behaviour strategies in `App\Services\Costing\Behaviors\` (`PerPilgrim`, `PerRoomNight`, `PerGroup`, `PerGroupPerDay`, `Stepped`, `MinGuarantee`, `Markup`, `ChannelDependent`, `FocDiluted`) + `BehaviorRegistry`; engine layer in `App\Services\Costing\Engine\` (`CostingContext` + `CostingContextFactory`, `ComponentLine`, `LineResult`, `TlSufficiency`, `Materialisation`, `SensitivityRow`, `CostingResult`, `OverheadService`, `CostingEngine`); additive `cost_component.params` json (behaviour params as data); config `overhead` + `staff_salary_flat`/`tl_seat_cost_estimate`/`occupancy`.
+
+Behaviours are **genuinely generic** — every threshold is data: TL step = `Stepped`, farkiyah = `MinGuarantee` (floor 35, basis=total), transit-villa trigger = `PER_PILGRIM` + a shared **activation switch** (`active_when`), mutawwif/handling bundle-suppression = shared `suppress_when`. **Taxonomy note flagged to owner:** `CONDITIONAL` was not a distinct cost-*maths* behaviour — it is the activation mechanism — so it was collapsed into `PER_PILGRIM` + activation rather than a bespoke class (`transit_villa` behavior changed `CONDITIONAL`→`PER_PILGRIM`).
+
+**Staff-salary resolution (Addendum 2):** `OverheadService` returns `[perPilgrim, ruleLabel]`; production default = annual pool ÷ expected annual pilgrims; flat = explicit labelled override. `CostingResult::staffSalaryRule` always states which rule ran. Golden master uses the flat Rp1,000,000 input to prove mechanics; pool path tested separately (Rp504,000,000 ÷ 420 = Rp1,200,000).
+
+**Materialisation (Addendum 1) added to the engine's own output** — `Materialisation` (pct vs seats_booked, breach at <90%, `depositAtRisk` null until deposit terms wired in Phase 4). In `sensitivity()` the breach **dominates** the status column: e.g. 31 pax shows margin Rp3.3jt + TL surplus yet status `DEPOSIT_HANGUS` (89%), flipping to `AMAN` at 32 (91%). No sub-threshold departure ever displays as safe.
+
+**Documented divergence from the workbook (not smoothed over):** the workbook's sensitivity table holds hotel cost at its 35-pax per-pilgrim value and only re-varies farkiyah + mutawwif; the engine does a full recompute, so hotel room-rounding (`ceil(pax/occupancy)`) differs at other group sizes. At 20 pax the engine's burden is **Rp36,305,000 vs the workbook's Rp36,555,000 — Rp250,000/pilgrim lower** (20 fit exactly in 5 quad rooms; 35 waste a bed across 9). Locked by an explicit test.
+
+Verified (10 temp tests / behaviour + golden-master, since deleted): baseline to the rupiah (production Rp1,174,975,000; per-pilgrim Rp33,570,714.29; burden Rp36,070,714.29; margin Rp3,429,285.71; expected Rp3,579,285.71; min-publish Rp38,070,714.29; target Rp39,070,714.29); per-line amounts (visa 2,520,000, tasreh 150,000, mutawwif 285,714.29, hotels, handling×2 legs); TL cliff +7jt@35 → −10jt@46; farkiyah@5 = 2,160,000; mutawwif@20 = 500,000; suppression switches; materialisation 32 ok / 31 breach; breach-dominates-status; pool derivation; the 20-pax divergence. Full suite green.
+
+**Deferred to Phase 4** (needs new tables): ancillary all-in/optional margins (Produk Tambahan sheet — needs `ancillary_product`/`costing_ancillary` with sell/take-up/packaging), the rupiah deposit-at-risk (needs ticket-lot deposit terms), and persisting a `costing` snapshot.
+
+**NEXT — Phase 4:** `costing` snapshot + freeze-on-publish, per-occupancy price matrix, ticket-lot deposit terms (→ deposit-at-risk rupiah), ancillary tables (→ packaging comparison), sync base price → `paket.harga` (additive).
+

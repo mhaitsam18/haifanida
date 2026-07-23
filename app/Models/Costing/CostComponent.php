@@ -18,6 +18,7 @@ class CostComponent extends Model
     protected $casts = [
         'provides_tags' => 'array',
         'requires_tags' => 'array',
+        'params' => 'array',
         'requires_incorporated_vendor' => 'boolean',
         'rejects_individual_vendor' => 'boolean',
         'is_mandatory' => 'boolean',

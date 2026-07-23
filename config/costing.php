@@ -30,8 +30,21 @@ return [
         'channel_mix_agent_pct' => 0.90,  // ~90% of pilgrims come through agents
         'tl_ratio' => 45,                 // Saudi regulation: 1 tour leader per 45 pax
         'tl_allocation' => 1_000_000,     // budgeted TL levy per pilgrim
+        'tl_seat_cost_estimate' => 28_000_000, // cost of one TL seat (~1 pilgrim's production) for the sufficiency test
         'farkiyah_floor' => 35,           // minimum billed seats (ground transport)
         'farkiyah_rate_usd' => 20,        // USD per seat below the floor
         'materialisation_pct' => 0.90,    // flight deposit forfeits below this (addendum 1)
+        'occupancy' => 4,                 // quad base
+        'staff_salary_flat' => 1_000_000, // the workbook's per-pilgrim figure (used as an explicit override)
+    ],
+
+    // Staff-salary / overhead absorption (Addendum 2). PRODUCTION uses the annual
+    // pool ÷ expected annual pilgrims; the flat figure above is an explicit,
+    // labelled override. Pool figures are left null until the owner confirms them
+    // — with the pool unset, the engine falls back to the flat override and says so.
+    'overhead' => [
+        'mode' => 'flat',                 // 'flat' | 'pool' — default until the pool is configured
+        'annual_pool' => null,            // total annual fixed overhead (salaries, bank, ops, utilities, annual events)
+        'expected_annual_pilgrims' => null, // over the ~10-month operating year (no Umrah in Hajj months)
     ],
 ];
