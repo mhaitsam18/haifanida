@@ -25,7 +25,9 @@
     <div class="flex min-h-screen flex-col lg:flex-row">
         @include('admin.layouts.partials.sidebar')
 
-        <div class="flex min-h-screen flex-1 flex-col">
+        {{-- lg:pl-64 offsets the now-fixed sidebar so main content clears it and
+             still scrolls with the document as normal. --}}
+        <div class="flex min-h-screen flex-1 flex-col lg:pl-64">
             @include('admin.layouts.partials.topbar')
 
             <main class="flex-1 p-4 sm:p-6">

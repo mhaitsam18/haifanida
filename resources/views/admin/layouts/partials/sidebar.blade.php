@@ -32,7 +32,7 @@
         ->get();
 @endphp
 
-<aside x-data="{ mobileOpen: false }" class="lg:w-64 lg:flex-shrink-0">
+<aside x-data="{ mobileOpen: false }" class="lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:w-64 lg:flex-shrink-0">
     {{-- Mobile toggle bar --}}
     <div class="flex items-center justify-between bg-maroon-900 px-4 py-3 lg:hidden">
         <a href="/admin" class="flex items-center">
@@ -43,7 +43,10 @@
         </button>
     </div>
 
-    <nav :class="mobileOpen ? 'block' : 'hidden'" class="min-h-screen bg-maroon-900 px-3 py-4 text-cream-100 lg:block">
+    {{-- lg: fill the fixed aside (inset-y-0 → full viewport height) with its own
+         scroll, so a menu taller than the viewport scrolls independently instead
+         of being clipped. Mobile: natural height, shown/hidden by the toggle. --}}
+    <nav :class="mobileOpen ? 'block' : 'hidden'" class="bg-maroon-900 px-3 py-4 text-cream-100 lg:block lg:h-full lg:overflow-y-auto">
         <a href="/admin" class="mb-6 hidden items-center px-2 lg:flex">
             <img src="/assets/img/logos/logo-lanskap-2.png" alt="Haifa Nida Wisata" class="h-10 w-auto">
         </a>
