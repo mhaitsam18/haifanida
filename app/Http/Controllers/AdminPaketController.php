@@ -110,11 +110,14 @@ class AdminPaketController extends Controller
             'page' => 'paket',
             'paket' => $paket,
             'jemaahs' => $jemaahs,
-            'kantors' => Kantor::all(),
-            'ekstras' => Ekstra::all(),
-            'hotels' => Hotel::all(),
-            'maskapais' => Maskapai::all(),
-            'agens' => Agen::all(),
+            // Reference data for the embedded add/edit dropdowns — select only the
+            // columns the selects use, so e.g. 300 maskapai rows don't drag their
+            // full payload into a page that only needs id + name.
+            'kantors' => Kantor::all(['id', 'nama_kantor']),
+            'ekstras' => Ekstra::all(['id', 'nama_ekstra', 'harga_default']),
+            'hotels' => Hotel::all(['id', 'nama_hotel']),
+            'maskapais' => Maskapai::all(['id', 'nama_maskapai']),
+            'agens' => Agen::with('user:id,name')->get(['id', 'user_id']),
         ]);
     }
 

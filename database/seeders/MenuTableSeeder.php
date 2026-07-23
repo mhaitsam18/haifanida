@@ -109,9 +109,17 @@ class MenuTableSeeder extends Seeder
                 'order' => $value['parent_id'] . $index++ . '00'
             ]);
         }
+
+        // Resolve parents by NAME, not by hardcoded auto-increment id. The three
+        // top wrappers (Main/Superadmin/Adminkantor) were added after these rows
+        // were first written, shifting every submenu id and leaving the hardcoded
+        // parents pointing at the wrong sections. Name resolution is drift-proof:
+        // future menu additions (e.g. executive-role screens) can't misfile.
+        $parent = fn (string $name) => Menu::where('menu', $name)->value('id');
+
         Menu::create([
             'menu' => "Profil Saya",
-            'parent_id' => '5',
+            'parent_id' => $parent('Akun Saya'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/profile',
@@ -120,7 +128,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Saran dan Keluhan",
-            'parent_id' => '5',
+            'parent_id' => $parent('Akun Saya'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/pesan',
@@ -129,7 +137,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Role",
-            'parent_id' => '7',
+            'parent_id' => $parent('Autentikasi & Otorisasi'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/role',
@@ -138,7 +146,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Akses",
-            'parent_id' => '7',
+            'parent_id' => $parent('Autentikasi & Otorisasi'),
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/role-menu',
@@ -147,7 +155,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Admin",
-            'parent_id' => '8',
+            'parent_id' => $parent('Manajemen Pengguna'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/user-admin',
@@ -156,7 +164,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Author",
-            'parent_id' => '8',
+            'parent_id' => $parent('Manajemen Pengguna'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/author',
@@ -165,7 +173,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Member",
-            'parent_id' => '8',
+            'parent_id' => $parent('Manajemen Pengguna'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/member',
@@ -174,7 +182,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Agen",
-            'parent_id' => '8',
+            'parent_id' => $parent('Manajemen Pengguna'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/agen',
@@ -183,7 +191,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Menu",
-            'parent_id' => '9',
+            'parent_id' => $parent('Manajemen Aplikasi'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/menu',
@@ -192,7 +200,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Sub Menu",
-            'parent_id' => '9',
+            'parent_id' => $parent('Manajemen Aplikasi'),
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/sub-menu',
@@ -201,7 +209,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Konten",
-            'parent_id' => '9',
+            'parent_id' => $parent('Manajemen Aplikasi'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/konten',
@@ -210,7 +218,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Kantor",
-            'parent_id' => '10',
+            'parent_id' => $parent('Manajemen Kantor'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/kantor',
@@ -219,7 +227,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Perwakilan",
-            'parent_id' => '10',
+            'parent_id' => $parent('Manajemen Kantor'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/perwakilan',
@@ -228,7 +236,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Manajemen Cabang",
-            'parent_id' => '10',
+            'parent_id' => $parent('Manajemen Kantor'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/cabang',
@@ -237,7 +245,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Hotel",
-            'parent_id' => '11',
+            'parent_id' => $parent('Master Data'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/hotel',
@@ -246,7 +254,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Maskapai",
-            'parent_id' => '11',
+            'parent_id' => $parent('Master Data'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/maskapai',
@@ -255,7 +263,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Berkas",
-            'parent_id' => '11',
+            'parent_id' => $parent('Master Data'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/berkas',
@@ -264,7 +272,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Ekstra",
-            'parent_id' => '11',
+            'parent_id' => $parent('Master Data'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/ekstra',
@@ -273,7 +281,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Data Paket",
-            'parent_id' => '13',
+            'parent_id' => $parent('Manajemen Paket Wisata'),
             'has_dropdown' => 0,
             'is_active' => 1,
             'url' => '/admin/paket',
@@ -282,7 +290,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Galeri",
-            'parent_id' => '13',
+            'parent_id' => $parent('Manajemen Paket Wisata'),
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/galeri',
@@ -291,7 +299,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Isu Perjalanan",
-            'parent_id' => '13',
+            'parent_id' => $parent('Manajemen Paket Wisata'),
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/isu-perjalanan',
@@ -300,7 +308,7 @@ class MenuTableSeeder extends Seeder
         ]);
         Menu::create([
             'menu' => "Jadwal",
-            'parent_id' => '13',
+            'parent_id' => $parent('Manajemen Paket Wisata'),
             'has_dropdown' => 0,
             'is_active' => 0,
             'url' => '/admin/jadwal',

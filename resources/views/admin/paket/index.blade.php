@@ -233,17 +233,35 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
+        // Lazy-load the TinyMCE library only when an editor is first opened,
+        // instead of downloading ~500KB from the CDN on every index page load.
+        let _tinymceLoading = null;
+
+        function loadTinyMCE() {
+            if (window.tinymce) return Promise.resolve();
+            if (_tinymceLoading) return _tinymceLoading;
+            _tinymceLoading = new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = 'https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js';
+                s.referrerPolicy = 'origin';
+                s.onload = resolve;
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+            return _tinymceLoading;
+        }
+
         function initTinyMCE(selectorId) {
-            if (typeof tinymce === 'undefined') return;
-            if (tinymce.get(selectorId)) return;
-            tinymce.init({
-                selector: '#' + selectorId,
-                height: 350,
-                plugins: 'advlist autolink lists link image charmap preview anchor searchreplace wordcount visualblocks visualchars code fullscreen',
-                toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
-                license_key: 'gpl',
+            loadTinyMCE().then(() => {
+                if (!window.tinymce || tinymce.get(selectorId)) return;
+                tinymce.init({
+                    selector: '#' + selectorId,
+                    height: 350,
+                    plugins: 'advlist autolink lists link image charmap preview anchor searchreplace wordcount visualblocks visualchars code fullscreen',
+                    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+                    license_key: 'gpl',
+                });
             });
         }
     </script>
