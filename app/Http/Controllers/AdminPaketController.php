@@ -82,6 +82,18 @@ class AdminPaketController extends Controller
      */
     public function show(Paket $paket)
     {
+        // Eager-load the embedded child tables + their nested relations to kill
+        // the N+1 the show view triggers ($ekstra->ekstra, $penginapan->hotel,
+        // $penerbangan->maskapai, $grup->agen->user).
+        $paket->load([
+            'paketEkstras.ekstra',
+            'penginapans.hotel',
+            'penerbangans.maskapai',
+            'grups.agen.user',
+            'buses',
+            'galeris',
+        ]);
+
         $jemaahs = Jemaah::query();
 
         if ($paket) {
